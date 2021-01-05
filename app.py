@@ -1,10 +1,10 @@
-from flask import request, jsonify
+from flask import Flask
 from flask_restful import Api
 
 from src.api import resouce
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app = Flask(__name__)
+api = Api(app)
 
 bots = {
     717660707650273280: {
