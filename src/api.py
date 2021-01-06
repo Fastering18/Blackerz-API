@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import jsonify, make_response
+import time
 from threading import Timer
 
 from firebase import firebase
@@ -7,21 +8,22 @@ from firebase import firebase
 def updated(status):
     updated = bool(status)
 
+global timeStamp    
+    
 class data():
     def __init__(self, dataName):
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist', None)
         self.data = result
-        botlist = result
-        updated = bool(0)
-        Timer(60, updated, 1)
+        timeStamp = time.time()
         
 class resouce(Resource):
   def get(self, id):
+    global botlist
     if (updated == False):
         botum = data("botlist")
-        global botlist = botum.data
+        botlist = botum.data
     print(botlist)
     
     if str(id) in botlist:
