@@ -23,7 +23,7 @@ class resouce(Resource):
     global botlist
     if (updated == False):
         botum = data("botlist")
-        botlist = botum.data
+        global botlist = botum.data
     print(botlist)
     
     if str(id) in botlist:
