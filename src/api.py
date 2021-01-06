@@ -17,7 +17,4 @@ class resouce(Resource):
     bots = botum.data
     print(bots)
 
-    if id in bots:
-        return jsonify(bots[id])
-    else:
-        return "<h1>404 Bot tidak ditemukan untuk id: {}".format(id), 404
+    return jsonify(bots[id]), 200
