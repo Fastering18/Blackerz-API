@@ -30,4 +30,4 @@ class resouce(Resource):
     if str(id) in botlist:
         return make_response(jsonify(botlist[str(id)]), 200)
     else: 
-        return make_response("404 Bot tidak ditemukan., 200)
+        return make_response("404 Bot tidak ditemukan.", 200)
