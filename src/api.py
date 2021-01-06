@@ -5,10 +5,10 @@ from threading import Timer
 from firebase import firebase
 
 botlist = {}
-updated = false
+updated = bool(1)
 
-def updated(bool):
-    updated = bool
+def updated(status):
+    updated = bool(status)
 
 class data():
     def __init__(self, dataName):
@@ -17,12 +17,12 @@ class data():
         result = firebaseDB.get('/Infrastructure/botlist', None)
         self.data = result
         botlist = result
-        updated = true
-        Timer(60, updated, false)
+        updated = bool(0)
+        Timer(60, updated, 1)
         
 class resouce(Resource):
   def get(self, id):
-    if (updated == false):
+    if (updated == False):
         botum = data("botlist")
         botlist = botum.data
     print(botlist)
@@ -30,4 +30,4 @@ class resouce(Resource):
     if str(id) in botlist:
         return make_response(jsonify(botlist[str(id)]), 200)
     else: 
-        return make_response("404 Bot tidak ditemukan.", 200)
+        return make_response("404 Bot tidak ditemukan.", 404)
