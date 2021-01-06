@@ -9,14 +9,14 @@ class data():
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist', None)
-        print(result)
         self.data = result
         
 class resouce(Resource):
   def get(self, id):
     botum = data("botlist")
     bots = botum.data
-    
+    print(bots)
+
     if id in bots:
         return jsonify(bots[id])
     else:
