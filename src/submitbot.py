@@ -11,8 +11,7 @@ parser.add_argument('data')
 timeStamp = 0
 botlistGlobal = {}
 
- firebaseDB = firebase.FirebaseApplication(
-            'https://blackerz-default-rtdb.firebaseio.com/', None)   
+firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)   
     
 class postBot():
     def __init__(self, dataREQ):
