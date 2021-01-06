@@ -17,7 +17,7 @@ class data():
         botlistGlobal = result
         timeStamp = time.time()
         
-class resouce(Resource):
+class resource3(Resource):
   def put(self, id):
     data = request.form['data']
 
