@@ -19,7 +19,7 @@ bots = {
     }
 }
 
-api.add_resource(resouce, "/api/v1/bots<int:id>")
+api.add_resource(resouce, "/api/v1/bots/<int:id>")
 
 if __name__ == "__main__":
   app.run()
