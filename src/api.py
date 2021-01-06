@@ -1,4 +1,5 @@
 from flask_restful import Resource
+from flask import jsonify
 
 bots = {
     717660707650273280: {
@@ -18,4 +19,4 @@ class resouce(Resource):
     if id in bots:
         return jsonify(bots[id])
     else:
-        return "<h1>404</h1><p>Bot tidak ditemukan untuk id: {}</p>".format(id), 404
+        return "<h1>404 Bot tidak ditemukan untuk id: {}".format(id), 404
