@@ -21,7 +21,7 @@ class resouce(Resource):
   def get(self, id):
     if (updated == False):
         botum = data("botlist")
-        botlist = botum.data
+        global botlist = botum.data
     print(botlist)
     
     if str(id) in botlist:
