@@ -4,9 +4,6 @@ from threading import Timer
 
 from firebase import firebase
 
-global botlist 
-global updated 
-
 def updated(status):
     updated = bool(status)
 
@@ -16,15 +13,15 @@ class data():
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist', None)
         self.data = result
-        botlist = result
-        updated = bool(0)
+        global botlist = result
+        global updated = bool(0)
         Timer(60, updated, 1)
         
 class resouce(Resource):
   def get(self, id):
     if (updated == False):
         botum = data("botlist")
-        botlist = botum.data
+        global botlist = botum.data
     print(botlist)
     
     if str(id) in botlist:
