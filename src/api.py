@@ -17,4 +17,4 @@ class resouce(Resource):
     bots = botum.data
     print(bots)
 
-    return jsonify(bots[id]), 200
+    return jsonify(bots[str(id)]), 200
