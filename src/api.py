@@ -5,7 +5,7 @@ from threading import Timer
 from firebase import firebase
 
 global botlist 
-global updated = bool(1)
+global updated 
 
 def updated(status):
     updated = bool(status)
