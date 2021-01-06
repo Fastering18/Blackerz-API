@@ -1,12 +1,22 @@
 from flask_restful import Resource
 from flask import jsonify
 
-from config.database import data
+from firebase import firebase
 
-bots = data("botlist")
 
+class data():
+    def __init__(self, dataName):
+        firebaseDB = firebase.FirebaseApplication(
+            'https://blackerz-default-rtdb.firebaseio.com/', None)
+        result = firebaseDB.get('/Infrastructure/botlist', None)
+        print(result)
+        self.data = result
+        
 class resouce(Resource):
   def get(self, id):
+    botum = data("botlist")
+    bots = botum.data
+    
     if id in bots:
         return jsonify(bots[id])
     else:
