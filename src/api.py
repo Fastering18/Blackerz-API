@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify
+from flask import jsonify, make_response
 
 from firebase import firebase
 
@@ -17,4 +17,4 @@ class resouce(Resource):
     bots = botum.data
     print(bots)
 
-    return jsonify(bots[str(id)]), 200
+    return make_response(jsonify(bots[str(id)]), 200)
