@@ -13,15 +13,15 @@ class data():
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist', None)
         self.data = result
-        global botlist = result
-        global updated = bool(0)
+        botlist = result
+        updated = bool(0)
         Timer(60, updated, 1)
         
 class resouce(Resource):
   def get(self, id):
     if (updated == False):
         botum = data("botlist")
-        global botlist = botum.data
+        botlist = botum.data
     print(botlist)
     
     if str(id) in botlist:
