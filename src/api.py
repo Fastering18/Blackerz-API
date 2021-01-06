@@ -4,8 +4,8 @@ from threading import Timer
 
 from firebase import firebase
 
-botlist = {}
-updated = bool(1)
+global botlist = {}
+global updated = bool(1)
 
 def updated(status):
     updated = bool(status)
