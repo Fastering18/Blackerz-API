@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import jsonify
 
-from database import data
+from config.database import data
 
 bots = data("botlist")
 
