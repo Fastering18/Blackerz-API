@@ -1,5 +1,11 @@
+
 from firebase import firebase
 
-firebase = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-result = firebase.get('/Infrastructure/botlist', None)
-print result
+
+class data():
+    def __init__(self, dataName):
+        firebaseDB = firebase.FirebaseApplication(
+            'https://blackerz-default-rtdb.firebaseio.com/', None)
+        result = firebaseDB.get('/Infrastructure/botlist', None)
+        print(result)
+        self.data = result
