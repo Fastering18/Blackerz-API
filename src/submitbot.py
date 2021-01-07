@@ -20,8 +20,8 @@ class postBot():
     def __init__(self, dataREQ):
         data = {'name': dataREQ['name'],
                 'owner': {
-                    'id': dataREQ['author']['id'],
-                    'name': dataREQ['author']['name']
+                    'id': dataREQ['owner']['id'],
+                    'name': dataREQ['owner']['name']
                 },
                 'tag': dataREQ['tag'],
                 'upvotes': 0
