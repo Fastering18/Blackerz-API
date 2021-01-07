@@ -26,8 +26,13 @@ class postBot():
                 'tag': dataREQ['tag'],
                 'upvotes': 0
                 }
-        self.result = firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], data=dataFinal, params={'print': 'pretty'})
-
+        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
+        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
+                    'id': dataREQ['owner']['id'],
+                    'name': dataREQ['owner']['name']
+                })
+        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
+        self.result = {'error': None, 'status': sucess}
 
 class resource3(Resource):
     def post(self, id):
