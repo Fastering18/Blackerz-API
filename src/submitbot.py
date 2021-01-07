@@ -31,7 +31,7 @@ class postBot():
 class resource3(Resource):
     def post(self, id):
         if not request.json or not 'name' in request.json or not 'owner' in request.json:
-           abort(400)
+           make_response("Invalid request, body data.", 400)
         print(request.json)
         result = postBot(request.json)
         
