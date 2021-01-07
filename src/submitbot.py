@@ -10,7 +10,6 @@ parser = reqparse.RequestParser()
 parser.add_argument('data')
 
 timeStamp = 0
-botlistGlobal = {}
 
 firebaseDB = firebase.FirebaseApplication(
     'https://blackerz-default-rtdb.firebaseio.com/', None)
@@ -32,7 +31,8 @@ class postBot():
                     'name': dataREQ['owner']['name']
                 })
         firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
-        self.result = {'error': None, 'status': sucess}
+        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "upvotes", 0)
+        self.result = {'error': None, 'status': "sucess"}
 
 class resource3(Resource):
     def post(self, id):
