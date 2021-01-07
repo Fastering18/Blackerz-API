@@ -36,6 +36,6 @@ class resource3(Resource):
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData:
             return make_response("Invalid request, body data.", 400)
         
-        result = postBot(request.json)
+        result = postBot(jsonData)
         
         return make_response("result: " + result.result, 201)
