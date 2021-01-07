@@ -26,7 +26,7 @@ class postBot():
                 'tag': dataREQ['tag'],
                 'upvotes': 0
                 }
-        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ['id'], data=dataFinal, params={'print': 'pretty'})
+        self.result = firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], data=dataFinal, params={'print': 'pretty'})
 
 
 class resource3(Resource):
@@ -39,4 +39,4 @@ class resource3(Resource):
         
         result = postBot(jsonData)
         
-        return make_response("result: " + result.result, 201)
+        return make_response(jsonify(result.result), 201)
