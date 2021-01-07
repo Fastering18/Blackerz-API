@@ -11,6 +11,9 @@ parser.add_argument('data')
 
 timeStamp = 0
 
+error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
+unauthorizedAcess = {'error': "Unauthorized Acess, please provide Api Key", 'status': "Not success"}
+
 firebaseDB = firebase.FirebaseApplication(
     'https://blackerz-default-rtdb.firebaseio.com/', None)
 
@@ -37,10 +40,13 @@ class postBot():
 class resource3(Resource):
     def post(self, id):
         jsonData = request.get_json()
-        print(jsonData)
+        apiKey = request.headers.get('apiKey')
         
-        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData:
-            return make_response("Invalid request, body data.", 400)
+        if not apiKey or not apiKey == "anjirbangjago500eaaApiDEV001njir": 
+            return make_response(jsonify(unauthorizedAcess), 401)
+        
+        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
+            return make_response(jsonify(error1), 400)
         
         result = postBot(jsonData)
         
