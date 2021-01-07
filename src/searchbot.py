@@ -4,7 +4,7 @@ import time
 from threading import Timer
 
 from firebase import firebase
-from ../util/database import data
+from ..util.database import data
 
 timeStamp = 0
 botlistGlobal = {}
