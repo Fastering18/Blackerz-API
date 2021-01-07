@@ -32,6 +32,7 @@ class resource3(Resource):
     def put(self, id):
         if not request.json or not 'name' in request.json or not 'owner' in request.json:
            abort(400)
+        print(request.json)
         result = postBot(request.json)
         
         return make_response("result: " + result.result, 201)
