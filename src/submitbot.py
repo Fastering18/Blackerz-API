@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 import time
 from threading import Timer
 
@@ -25,12 +25,13 @@ class postBot():
                 'tag': dataREQ.tag,
                 'upvotes': 0
                 }
-        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ.id, data)
+        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ.id, data, {'print': 'pretty'}, {'X_FANCY_HEADER': 'VERY FANCY'})
 
 
 class resource3(Resource):
     def put(self, id):
-        data = parser.parse_args()['data']
-        result = postBot(data)
-
+        if not request.json or not 'name' in request.json or not 'owner' in request.json:
+           abort(400)
+        result = postBot(request.json)
+        
         return make_response("result: " + result.result, 201)
