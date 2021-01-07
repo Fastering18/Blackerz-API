@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, request, abort
 import time
+import json
 from threading import Timer
 
 from firebase import firebase
@@ -36,6 +37,6 @@ class resource3(Resource):
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData:
             return make_response("Invalid request, body data.", 400)
         
-        result = postBot(jsonData)
+        result = postBot(json.loads(jsonData))
         
         return make_response("result: " + result.result, 201)
