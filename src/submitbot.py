@@ -18,15 +18,15 @@ firebaseDB = firebase.FirebaseApplication(
 
 class postBot():
     def __init__(self, dataREQ):
-        data = {'name': dataREQ.name,
+        data = {'name': dataREQ['name'],
                 'owner': {
-                    'id': dataREQ.author.id,
-                    'name': dataREQ.author.name
+                    'id': dataREQ['author']['id'],
+                    'name': dataREQ['author']['name']
                 },
-                'tag': dataREQ.tag,
+                'tag': dataREQ['tag'],
                 'upvotes': 0
                 }
-        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ.id, data, {'print': 'pretty'}, {'X_FANCY_HEADER': 'VERY FANCY'})
+        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ['id'], data, {'print': 'pretty'}, {'X_FANCY_HEADER': 'VERY FANCY'})
 
 
 class resource3(Resource):
@@ -37,6 +37,6 @@ class resource3(Resource):
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData:
             return make_response("Invalid request, body data.", 400)
         
-        result = postBot(json.loads(jsonData))
+        result = postBot(jsonData)
         
         return make_response("result: " + result.result, 201)
