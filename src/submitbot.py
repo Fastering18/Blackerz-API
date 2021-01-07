@@ -30,12 +30,12 @@ class postBot():
 
 class resource3(Resource):
     def post(self, id):
-        data = str(request.args)
-        json_dumps = json.dumps(data)
-        print(json_dumps)
-        if not request.json or not 'name' in request.json or not 'owner' in request.json:
+        jsonData = request.get_json()
+        print(jsonData)
+        
+        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData:
             return make_response("Invalid request, body data.", 400)
-        print(request.json)
+        
         result = postBot(request.json)
         
         return make_response("result: " + result.result, 201)
