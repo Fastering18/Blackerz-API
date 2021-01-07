@@ -18,7 +18,7 @@ firebaseDB = firebase.FirebaseApplication(
 
 class postBot():
     def __init__(self, dataREQ):
-        data = {'name': dataREQ['name'],
+        dataFinal = {'name': dataREQ['name'],
                 'owner': {
                     'id': dataREQ['owner']['id'],
                     'name': dataREQ['owner']['name']
@@ -26,7 +26,7 @@ class postBot():
                 'tag': dataREQ['tag'],
                 'upvotes': 0
                 }
-        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ['id'], data, {'print': 'pretty'}, {'X_FANCY_HEADER': 'VERY FANCY'})
+        self.result = firebaseDB.post('/Infrastructure/botlist/' + dataREQ['id'], data=dataFinal, params={'print': 'pretty'})
 
 
 class resource3(Resource):
