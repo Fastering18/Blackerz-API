@@ -1,7 +1,10 @@
 import os
+import random
+import string
 from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
+from firebase import firebase
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -11,13 +14,27 @@ API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
+firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+
 if 'http://' in OAUTH2_REDIRECT_URI:
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
-
 
 def token_updater(token):
     session['oauth2_token'] = token
 
+def generateRandomKey(length):
+    letters_and_digits = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
+    return result_str
+
+class data():
+    def __init__(self, user):        
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "tag", user.tag)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "time", user.tag)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "tag", user.tag)
+        self.data = result
+        botlistGlobal = result
+        timeStamp = time.time()
 
 def make_session(token=None, state=None, scope=None):
     return OAuth2Session(
@@ -54,8 +71,8 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-     print(jsonify(token))
-     return redirect("https://blackerz-id.web.app/?" + "clientId=" + "123", code=200) 
+        
+     return redirect(url_for('.me')) 
   
 class me(Resource):
   def get(self):
