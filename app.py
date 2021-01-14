@@ -4,13 +4,19 @@ from flask_restful import Api
 from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
+import src.Discord.login as discordLoginSource
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 api = Api(app)
 
 api.add_resource(resouce, "/api/v1/bots/<int:id>")
 api.add_resource(resource2, "/api/v1/bots/all")
 api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
+# Discord login resource
+api.add_resource(discordLoginSource.login, "/api/v1/discord/login")
+api.add_resource(discordLoginSource.callback, "/api/v1/discord/callback")
+api.add_resource(discordLoginSource.me, "/api/v1/discord/me")
 
 if __name__ == "__main__":
   app.run()
