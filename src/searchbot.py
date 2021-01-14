@@ -22,7 +22,6 @@ class resouce(Resource):
   def get(self, id):
     botum = data("botlist")
     botlist = botum.data
-    print(botlist)
     
     if str(id) in botlist:
         return make_response(jsonify(botlist[str(id)]), 200)
