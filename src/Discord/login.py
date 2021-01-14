@@ -35,7 +35,7 @@ def make_session(token=None, state=None, scope=None):
         
 
 class login(Resource):
-  def get(self, id):
+  def get(self):
     scope = request.args.get(
         'scope',
         'identify')
@@ -50,7 +50,7 @@ class login(Resource):
         return make_response(jsonify(error1), 404)
         
 class callback(Resource):
-  def get(self, id):
+  def get(self):
      if request.values.get('error'):
          return request.values['error']
      discord = make_session(state=session.get('oauth2_state'))
@@ -62,7 +62,7 @@ class callback(Resource):
      return redirect(url_for('.me'))
   
 class me(Resource):
-  def get(self, id):
+  def get(self):
      discord = make_session(token=session.get('oauth2_token'))
      user = discord.get(API_BASE_URL + '/users/@me').json()
      guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
