@@ -55,7 +55,7 @@ class callback(Resource):
          authorization_response=request.url)
      session['oauth2_token'] = token
      print(jsonify(token))
-     return redirect("https://blackerz-id.web.app/?" + "clientId=" + token.client_id, code=200) 
+     return redirect("https://blackerz-id.web.app/?" + "clientId=" + "123", code=200) 
   
 class me(Resource):
   def get(self):
