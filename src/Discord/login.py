@@ -54,7 +54,7 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-     print(token.client_id)
+     print(jsonify(token))
      return redirect("https://blackerz-id.web.app/?" + "clientId=" + token.client_id, code=200) 
   
 class me(Resource):
