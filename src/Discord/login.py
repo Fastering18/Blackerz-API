@@ -43,7 +43,7 @@ class login(Resource):
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
     return redirect(authorization_url)
-    
+    print(authorization_url)
     if str(id) in botlist:
         return make_response(jsonify(botlist[str(id)]), 200)
     else: 
