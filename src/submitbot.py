@@ -36,8 +36,12 @@ class postBot():
                 })
         firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
         firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "upvotes", 0)
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
+        
+        if "avatar" in dataREQ:
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
+        if "inviteLink" in dataREQ:
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
+        
         self.result = {'error': None, 'status': "sucess"}
 
 class resource3(Resource):
