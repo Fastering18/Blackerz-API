@@ -15,8 +15,7 @@ firebaseDB = firebase.FirebaseApplication(
     'https://blackerz-default-rtdb.firebaseio.com/', None)
 
 def identifyAPiKey(apiKey):
-    result = firebaseDB.get('/Infrastructure/Users/' + "lol", None)
-    print(result)
+    result = firebaseDB.get('/Infrastructure/Users/' + apiKey, None)
     return result
 
 class postBot():
@@ -48,9 +47,8 @@ class resource3(Resource):
     def post(self, id):
         jsonData = request.get_json()
         apiKey = request.headers.get('apiKey')
-        identifyAPiKey(apiKey)
         
-        if not apiKey or not apiKey == "anjirbangjago500eaaApiDEV001njir": 
+        if identifyAPiKey(apiKey) == None: 
             return make_response(jsonify(unauthorizedAcess), 401)
         
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
