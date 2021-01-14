@@ -80,11 +80,13 @@ class me(Resource):
      guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
      connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
+     oneTimeCode = generateRandomKey(8)
+     userID = user["id"]
      data({
-      'client_id': user["id"],
+      'client_id': userID,
       'tag': user["username"] + user["discriminator"],
       'avatar': user["avatar"],
-      'code': generateRandomKey(8)
+      'code': oneTimeCode
      })
-     Response = make_response(jsonify(user=user), 200)
-     return Response   
+     # Response = make_response(jsonify(user=user), 200)
+     return redirect("https://blackerz-id.web.app?code=" + oneTimeCode + "&client_id=" + userID, 200)     
