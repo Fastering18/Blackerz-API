@@ -55,7 +55,7 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-     return redirect("https://blackerz-id.web.app/?" + "sessionId=" + token, code=200) 
+     return redirect("https://blackerz-id.web.app/?" + "sessionId=" + session['oauth2_token'], code=200) 
   
 class me(Resource):
   def get(self):
