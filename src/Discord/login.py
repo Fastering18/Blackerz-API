@@ -42,8 +42,8 @@ class login(Resource):
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
+    print("URL NYA:  " + authorization_url)
     return redirect(authorization_url)
-    print("URL NYA " + authorization_url)
         
 class callback(Resource):
   def get(self):
