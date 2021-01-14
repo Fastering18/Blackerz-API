@@ -29,9 +29,9 @@ def generateRandomKey(length):
 
 class data():
     def __init__(self, user):        
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "tag", user.tag)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "avatar", user.avatar)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "code", user.code)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
         self.data = result
         #timeStamp = time.time()
 
