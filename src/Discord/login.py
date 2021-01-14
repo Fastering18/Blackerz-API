@@ -42,7 +42,6 @@ class login(Resource):
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
-    print("URL NYA:  " + authorization_url)
     return redirect(authorization_url)
         
 class callback(Resource):
@@ -55,6 +54,7 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
+     print(token.scope)
      return redirect("https://blackerz-id.web.app/?" + "sessionId=" + session['oauth2_token'], code=200) 
   
 class me(Resource):
