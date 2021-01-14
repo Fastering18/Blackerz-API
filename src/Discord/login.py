@@ -63,4 +63,5 @@ class me(Resource):
      user = discord.get(API_BASE_URL + '/users/@me').json()
      guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
      connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
-     return jsonify(user=user, guilds=guilds, connections=connections)
+     # return jsonify(user=user, guilds=guilds, connections=connections)
+     return redirect("https://blackerz-id.web.app/", 200, jsonify(user=user, guilds=guilds, connections=connections))   
