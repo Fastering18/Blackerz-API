@@ -55,7 +55,7 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-     return redirect(url_for('.me'))
+     return redirect("https://blackerz-id.web.app/?" + "sessionId=" + token, code=200) 
   
 class me(Resource):
   def get(self):
@@ -64,5 +64,5 @@ class me(Resource):
      guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
      connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
-     Response = make_response(jsonify(user=user, guilds=guilds, connections=connections))
-     return redirect("https://blackerz-id.web.app/", code=200)   
+     Response = make_response(jsonify(user=user, guilds=guilds, connections=connections), 200)
+     return Response   
