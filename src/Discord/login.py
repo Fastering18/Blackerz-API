@@ -29,12 +29,11 @@ def generateRandomKey(length):
 
 class data():
     def __init__(self, user):        
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "tag", user.tag)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "time", user.tag)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.id, "tag", user.tag)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "tag", user.tag)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "avatar", user.tag)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "id", user.key)
         self.data = result
-        botlistGlobal = result
-        timeStamp = time.time()
+        #timeStamp = time.time()
 
 def make_session(token=None, state=None, scope=None):
     return OAuth2Session(
@@ -81,5 +80,10 @@ class me(Resource):
      guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
      connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
-     Response = make_response(jsonify(user=user, guilds=guilds, connections=connections), 200)
+     data({
+      'client_id': user.id,
+      'tag': user.username + user.discriminator,
+      'avatar': user.avatar
+     })
+     Response = make_response(jsonify(user=user), 200)
      return Response   
