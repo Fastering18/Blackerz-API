@@ -15,7 +15,7 @@ firebaseDB = firebase.FirebaseApplication(
     'https://blackerz-default-rtdb.firebaseio.com/', None)
 
 def identifyAPiKey(apiKey):
-    result = firebaseDB.get('/Infrastructure/Users/' + apiKey, None)
+    result = firebaseDB.get('/Infrastructure/Users/' + "lol", None)
     print(result)
     return result
 
