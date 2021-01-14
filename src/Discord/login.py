@@ -30,8 +30,8 @@ def generateRandomKey(length):
 class data():
     def __init__(self, user):        
         result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "tag", user.tag)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "avatar", user.tag)
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "id", user.key)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "avatar", user.avatar)
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user.client_id, "code", user.code)
         self.data = result
         #timeStamp = time.time()
 
@@ -81,9 +81,10 @@ class me(Resource):
      connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
      data({
-      'client_id': user.id,
-      'tag': user.username + user.discriminator,
-      'avatar': user.avatar
+      'client_id': user["id"],
+      'tag': user["username"] + user["discriminator"],
+      'avatar': user["avatar"],
+      'code': generateRandomKey(8)
      })
      Response = make_response(jsonify(user=user), 200)
      return Response   
