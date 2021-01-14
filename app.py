@@ -6,6 +6,8 @@ from src.allbot import resource2
 from src.submitbot import resource3
 import src.Discord.login as discordLoginSource
 
+OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 api = Api(app)
