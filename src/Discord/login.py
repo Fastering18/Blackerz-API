@@ -110,6 +110,7 @@ class checkUser(Resource):
         result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
         if result == None:
             return make_response(jsonify(errorInvalidUser), 404)
+        print(result)
         if not result.code == code:
             return make_response(jsonify(UnauthorizedAccess1), 401)
         respon = {clientId: clientId, avatar: result.avatar, tag: result.tag}
