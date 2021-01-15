@@ -16,9 +16,6 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
-loginUsersEntry = [
-
-]
 errorInvalidHeaders1 = {'error': "Invalid headers data request, read our documentation for details", 'status': "Not success"}
 errorInvalidUser = {'error': "User not found", 'status': "Not success"}
 UnauthorizedAccess1 = {'error': "Unauthoried access, please enter correct code", 'status': "Not success"}
