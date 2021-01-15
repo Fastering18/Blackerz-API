@@ -95,7 +95,7 @@ class me(Resource):
      data({
       'client_id': userID,
       'tag': user["username"] + "#" + user["discriminator"],
-      'username': user["username"]
+      'username': user["username"],
       'avatar': user["avatar"],
       'code': oneTimeCode
      })
