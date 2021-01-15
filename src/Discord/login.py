@@ -94,7 +94,8 @@ class me(Resource):
      userID = user["id"]
      data({
       'client_id': userID,
-      'tag': user["username"] + user["discriminator"],
+      'tag': user["username"] + "#" + user["discriminator"],
+      'username': user["username"]
       'avatar': user["avatar"],
       'code': oneTimeCode
      })
@@ -111,7 +112,7 @@ class checkUser(Resource):
         if result == None:
             return make_response(jsonify(errorInvalidUser), 404)
         print(result)
-        if not result["code"] == code:
+        if not "code" in result or not result["code"] == code:
             return make_response(jsonify(UnauthorizedAccess1), 401)
-        respon = {'clientId': clientId, 'avatar': result["avatar"], 'tag': result["tag"]}
+        respon = {'clientId': clientId, 'avatar': result["avatar"], 'tag': result["tag"], 'username': result["username"]}
         return make_response(jsonify(respon), 200)
