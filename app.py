@@ -19,6 +19,7 @@ api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
 api.add_resource(discordLoginSource.login, "/api/v1/discord/login")
 api.add_resource(discordLoginSource.callback, "/api/v1/discord/callback")
 api.add_resource(discordLoginSource.me, "/api/v1/discord/me")
+api.add_resource(discordLoginSource.checkUser, "/api/v1/discord/check")
 
 if __name__ == "__main__":
   app.run()
