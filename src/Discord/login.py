@@ -16,6 +16,13 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
+loginUsersEntry = [
+
+]
+errorInvalidHeaders1 = {'error': "Invalid headers data request, read our documentation for details", 'status': "Not success"}
+errorInvalidUser = {'error': "User not found", 'status': "Not success"}
+UnauthorizedAccess1 = {'error': "Unauthoried access, please enter correct code", 'status': "Not success"}
+
 if 'http://' in OAUTH2_REDIRECT_URI:
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
@@ -52,6 +59,9 @@ def make_session(token=None, state=None, scope=None):
 
 class login(Resource):
   def get(self):
+    if request.values.get('code'):
+         code = request.values['code']
+         loginUsersEntry.append(code)
     scope = request.args.get(
         'scope',
         'identify')
@@ -89,4 +99,18 @@ class me(Resource):
       'code': oneTimeCode
      })
      # Response = make_response(jsonify(user=user), 200)
-     return redirect("https://blackerz-id.web.app?code=" + oneTimeCode + "&client_id=" + userID, 200)     
+     return redirect("https://blackerz-id.web.app?code=" + oneTimeCode + "&client_id=" + userID)     
+
+class checkUser(Resource):
+    def get(self):
+        code = request.headers.get('code')
+        clientId = request.headers.get('clientId')
+        if clientId == None or code == None:
+            return make_response(jsonify(errorInvalidHeaders1), 400)
+        result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
+        if result == None:
+            return make_response(jsonify(errorInvalidUser), 404)
+        if result.code ~= code:
+            return make_response(jsonify(UnauthorizedAccess1), 401)
+        respon = {clientId: clientId, avatar: result.avatar, tag: result.tag}
+        return make_response(jsonify(respon), 200)
