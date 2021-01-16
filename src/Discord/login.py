@@ -94,7 +94,7 @@ class me(Resource):
      # return jsonify(user=user, guilds=guilds, connections=connections)
      oneTimeCode = generateRandomKey(8)
      userID = user["id"]
-        print("JUMLAH: " + len(origins))
+     print("JUMLAH: " + len(origins))
      data({
       'client_id': userID,
       'tag': user["username"] + "#" + user["discriminator"],
