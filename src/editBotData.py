@@ -30,7 +30,7 @@ def verifyOwner(clientId, code):
         return False
     return True         
 
-class resouce(Resource):
+class editData(Resource):
   def put(self, id):
     jsonData = request.get_json()
     clientId = request.headers.get('clientId')
