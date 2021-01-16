@@ -15,7 +15,7 @@ AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 loginUsersEntry = {}
-currentUser = ""
+origins = []
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
@@ -63,7 +63,7 @@ class login(Resource):
     if request.values.get('code'):
          code = request.values['code']
          loginUsersEntry[code] = request.headers.get('Access-Control-Allow-Origin')
-         currentUser = code
+         origins.append(request.headers.get('Access-Control-Allow-Origin'))
     scope = request.args.get(
         'scope',
         'identify')
@@ -100,10 +100,10 @@ class me(Resource):
       'username': user["username"],
       'avatar': user["avatar"],
       'code': oneTimeCode,
-      'origin': loginUsersEntry[currentUser]
+      'origin': origins[len(origins) - 1]
      })
      # Response = make_response(jsonify(user=user), 200)
-     return redirect(loginUsersEntry[currentUser] + "?code=" + oneTimeCode + "&client_id=" + userID)     
+     return redirect(origins[len(origins) - 1] + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
     def get(self):
