@@ -12,7 +12,7 @@ error2 = {'error': "Failed to update bot data", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
-class edit(data):
+class edit():
     def __init__(self, data):
          if name in data:
              firebaseDB.put('/Infrastructure/botlist/' + data['id'], "name", data['name'])
