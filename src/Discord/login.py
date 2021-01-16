@@ -39,6 +39,7 @@ class data():
         result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
         result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
         result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
+        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
         self.data = result
         #timeStamp = time.time()
 
@@ -98,7 +99,8 @@ class me(Resource):
       'tag': user["username"] + "#" + user["discriminator"],
       'username': user["username"],
       'avatar': user["avatar"],
-      'code': oneTimeCode
+      'code': oneTimeCode,
+      'origin': loginUsersEntry[currentUser]
      })
      # Response = make_response(jsonify(user=user), 200)
      return redirect(loginUsersEntry[currentUser] + "?code=" + oneTimeCode + "&client_id=" + userID)     
