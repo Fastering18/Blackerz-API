@@ -14,7 +14,6 @@ API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
-loginUsersEntry = {}
 origins = []
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
@@ -62,8 +61,6 @@ class login(Resource):
   def get(self):
     if request.values.get('code'):
          code = request.values['code']
-         loginUsersEntry[code] = request.headers.get('Access-Control-Allow-Origin')
-    origins.append(request.headers.get('Access-Control-Allow-Origin'))
     scope = request.args.get(
         'scope',
         'identify')
@@ -100,11 +97,10 @@ class me(Resource):
       'tag': user["username"] + "#" + user["discriminator"],
       'username': user["username"],
       'avatar': user["avatar"],
-      'code': oneTimeCode,
-      'origin': origins[len(origins) - 1]
+      'code': oneTimeCode
      })
      # Response = make_response(jsonify(user=user), 200)
-     return redirect(origins[len(origins) - 1] + "?code=" + oneTimeCode + "&client_id=" + userID)     
+     return redirect("https://blackerz.web.app/" + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
     def get(self):
