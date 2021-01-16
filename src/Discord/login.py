@@ -14,7 +14,8 @@ API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
-loginUsersEntry = []
+loginUsersEntry = {}
+currentUser = ""
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
@@ -60,7 +61,8 @@ class login(Resource):
   def get(self):
     if request.values.get('code'):
          code = request.values['code']
-         loginUsersEntry.append(code)
+         loginUsersEntry[code] = request.headers.get('Access-Control-Allow-Origin')
+         currentUser = code
     scope = request.args.get(
         'scope',
         'identify')
@@ -99,7 +101,7 @@ class me(Resource):
       'code': oneTimeCode
      })
      # Response = make_response(jsonify(user=user), 200)
-     return redirect("https://blackerz-id.web.app?code=" + oneTimeCode + "&client_id=" + userID)     
+     return redirect(loginUsersEntry[currentUser] + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
     def get(self):
@@ -110,7 +112,6 @@ class checkUser(Resource):
         result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
         if result == None:
             return make_response(jsonify(errorInvalidUser), 404)
-        print(result)
         if not "code" in result or not result["code"] == code:
             return make_response(jsonify(UnauthorizedAccess1), 401)
         respon = {'clientId': clientId, 'avatar': result["avatar"], 'tag': result["tag"], 'username': result["username"]}
