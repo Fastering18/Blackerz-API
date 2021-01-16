@@ -63,7 +63,7 @@ class login(Resource):
     if request.values.get('code'):
          code = request.values['code']
          loginUsersEntry[code] = request.headers.get('Access-Control-Allow-Origin')
-         origins.append(request.headers.get('Access-Control-Allow-Origin'))
+    origins.append(request.headers.get('Access-Control-Allow-Origin'))
     scope = request.args.get(
         'scope',
         'identify')
