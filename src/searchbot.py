@@ -12,27 +12,31 @@ class data():
     def __init__(self, dataName, id):
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
-        result = firebaseDB.get('/Infrastructure/botlist', None)
+        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
         
         url = "https://discord.com/api/v8/users/" + str(id)
         r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
         response = r.json() 
         print(response)
-        
+        if result["name"] != response["username"]:
+            result["name"] = response["username"]
+            firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+        if result["avatar"] != response["avatar"]:
+            result["avatar"] = response["avatar"]
+            firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+            
         self.data = result
-        botlistGlobal = result
-        timeStamp = time.time()
+        self.timeStamp = time.time()
 
 timeStamp = 0
-botlistGlobal = {}
 error1 = {'error': "Bot not found", 'status': "Not success"}
         
 class resouce(Resource):
   def get(self, id):
     botum = data("botlist", id)
-    botlist = botum.data
+    bot = botum.data
     
-    if str(id) in botlist:
-        return make_response(jsonify(botlist[str(id)]), 200)
+    if bot != None:
+        return make_response(jsonify(bot, 200)
     else: 
         return make_response(jsonify(error1), 404)
