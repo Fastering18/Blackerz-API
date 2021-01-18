@@ -21,10 +21,13 @@ class data():
         if result["name"] != response["username"]:
             result["name"] = response["username"]
             firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-        if ("avatar" in result and "avatar" in response) and result["avatar"] != response["avatar"]:
+        if "avatar" in result and "avatar" in response:
+            if result["avatar"] != response["avatar"]:
+                 result["avatar"] = response["avatar"]
+                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+        elif "avatar" in response and not "avatar" in result:
             result["avatar"] = response["avatar"]
             firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
-            
         self.data = result
         self.timeStamp = time.time()
 
