@@ -9,7 +9,8 @@ from firebase import firebase
 timeStamp = 0
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
-unauthorizedAcess = {'error': "Unauthorized Acess, please provide Api Key", 'status': "Not success"}
+unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
+unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
 
 firebaseDB = firebase.FirebaseApplication(
     'https://blackerz-default-rtdb.firebaseio.com/', None)
@@ -47,9 +48,10 @@ class resource3(Resource):
     def post(self, id):
         jsonData = request.get_json()
         apiKey = request.headers.get('apiKey')
-        
+        if not apiKey:
+            return make_response(jsonify(unauthorizedAcess1), 401)
         if identifyAPiKey(apiKey) == None: 
-            return make_response(jsonify(unauthorizedAcess), 401)
+            return make_response(jsonify(unauthorizedAcess2), 401)
         
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
             return make_response(jsonify(error1), 400)
