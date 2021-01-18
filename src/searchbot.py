@@ -14,7 +14,7 @@ class data():
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist', None)
         
-        url = "https://discord.com/api/v8/users/" + id
+        url = "https://discord.com/api/v8/users/" + str(id)
         r = requests.get(url = URL, headers={'Authorization': 'Bot ' + botToken}) 
         response = r.json() 
         print(response)
