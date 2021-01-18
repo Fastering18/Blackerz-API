@@ -15,7 +15,7 @@ class data():
         result = firebaseDB.get('/Infrastructure/botlist', None)
         
         url = "https://discord.com/api/v8/users/" + str(id)
-        r = requests.get(url = URL, headers={'Authorization': 'Bot ' + botToken}) 
+        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
         response = r.json() 
         print(response)
         
