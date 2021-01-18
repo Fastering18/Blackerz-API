@@ -21,7 +21,7 @@ class data():
         if result["name"] != response["username"]:
             result["name"] = response["username"]
             firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-        if result["avatar"] != response["avatar"]:
+        if ("avatar" in result and "avatar" in response) and result["avatar"] != response["avatar"]:
             result["avatar"] = response["avatar"]
             firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
             
