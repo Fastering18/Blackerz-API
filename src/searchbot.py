@@ -33,10 +33,10 @@ error1 = {'error': "Bot not found", 'status': "Not success"}
         
 class resouce(Resource):
   def get(self, id):
-    botum = data("botlist", id)
+    botum = data("getbot", id)
     bot = botum.data
     
     if bot != None:
-        return make_response(jsonify(bot, 200)
+        return make_response(jsonify(bot), 200)
     else: 
         return make_response(jsonify(error1), 404)
