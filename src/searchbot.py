@@ -13,6 +13,7 @@ class data():
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
+        if result == None : return;
         
         url = "https://discord.com/api/v8/users/" + str(id)
         r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
