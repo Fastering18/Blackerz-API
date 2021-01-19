@@ -22,9 +22,9 @@ class data():
 timeStamp = 0
 error1 = {'error': "Server not found", 'status': "Not success"}
         
-class resouce(Resource):
+class findServer(Resource):
   def get(self, id):
-    servers = data("getbot", id)
+    servers = data("getserver", id)
     server = servers.data
     
     if server != None:
