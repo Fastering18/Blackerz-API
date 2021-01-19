@@ -38,6 +38,7 @@ error1 = {'error': "Bot not found", 'status': "Not success"}
 class resouce(Resource):
   def get(self, id):
     botum = data("getbot", id)
+    print(botum)
     if not "data" in botum : return; 
     bot = botum.data
     
