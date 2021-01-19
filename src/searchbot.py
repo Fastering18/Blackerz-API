@@ -13,24 +13,25 @@ class data():
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
         result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
-        if result == None : return;
-        
-        url = "https://discord.com/api/v8/users/" + str(id)
-        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
-        response = r.json() 
-        print(response)
-        if result["name"] != response["username"]:
-            result["name"] = response["username"]
-            firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-        if "avatar" in result and "avatar" in response:
-            if result["avatar"] != response["avatar"]:
-                 result["avatar"] = response["avatar"]
-                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
-        elif "avatar" in response and not "avatar" in result:
-            result["avatar"] = response["avatar"]
-            firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
-        self.data = result
-        self.timeStamp = time.time()
+        if result != None:       
+            url = "https://discord.com/api/v8/users/" + str(id)
+            r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+            response = r.json() 
+            print(response)
+            if result["name"] != response["username"]:
+                result["name"] = response["username"]
+                firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+            if "avatar" in result and "avatar" in response:
+                if result["avatar"] != response["avatar"]:
+                    result["avatar"] = response["avatar"]
+                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+            elif "avatar" in response and not "avatar" in result:
+                result["avatar"] = response["avatar"]
+                firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+            self.data = result
+            self.timeStamp = time.time()
+        else:
+            self.data = None
 
 timeStamp = 0
 error1 = {'error': "Bot not found", 'status': "Not success"}
@@ -38,8 +39,6 @@ error1 = {'error': "Bot not found", 'status': "Not success"}
 class resouce(Resource):
   def get(self, id):
     botum = data("getbot", id)
-    print(len(botum))
-    if not "data" in botum : return; 
     bot = botum.data
     
     if bot != None:
