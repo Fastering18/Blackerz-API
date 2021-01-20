@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response
+from flask import jsonify, make_response, request
 import time
 from threading import Timer
 
@@ -18,7 +18,7 @@ class resource2(Resource):
   def get(self):
     botum = data("botlist")
     botlist = botum.data
-    
+    print(request.host)
     if botlist:
         return make_response(jsonify(botlist), 200)
     else: 
