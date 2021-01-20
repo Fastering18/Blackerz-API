@@ -17,7 +17,7 @@ class data():
             url = "https://discord.com/api/v8/users/" + str(id)
             r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
             response = r.json() 
-            print(response)
+
             if result["name"] != response["username"]:
                 result["name"] = response["username"]
                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
