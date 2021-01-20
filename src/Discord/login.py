@@ -80,7 +80,7 @@ class callback(Resource):
          authorization_response=request.url)
      session['oauth2_token'] = token
         
-     return redirect(url_for('.me')) 
+     return redirect(url_for('.me') + "?host=" + request.host) 
   
 class me(Resource):
   def get(self):
@@ -100,8 +100,11 @@ class me(Resource):
       'code': oneTimeCode
      })
      # Response = make_response(jsonify(user=user), 200)
-     print(request.host)
-     return redirect("https://" + request.host + "?code=" + oneTimeCode + "&client_id=" + userID)     
+     host = "blackerz.web.app/"
+     if request.values.get('host'):
+        host = request.values['host']
+        
+     return redirect("https://" + host + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
     def get(self):
