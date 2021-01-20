@@ -100,6 +100,7 @@ class me(Resource):
       'code': oneTimeCode
      })
      # Response = make_response(jsonify(user=user), 200)
+     print(request.host)
      return redirect("https://blackerz.web.app/" + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
