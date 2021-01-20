@@ -24,15 +24,15 @@ def identifyVoter(clientID, code):
         
 class addVote():
     def __init__(self, botID, client):
-        clientVote = firebaseDB.get('/Infrastructure/Votes/botVotes/' + botID + "/" + client["id"], None)
+        clientVote = firebaseDB.get('/Infrastructure/Votes/botVotes/' + str(botID) + "/" + client["id"], None)
         currentTime = time.time() * 1000    #to JavaScript timestamps
         if (clientVote == None) or (int(currentTime) - int(clientVote) >= 4.32e+7):
-            botData = firebaseDB.get('/Infrastructure/botlist/' + botID, None)
-            firebaseDB.put('/Infrastructure/Votes/botVotes/' + botID, client["id"], currentTime)
+            botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None)
+            firebaseDB.put('/Infrastructure/Votes/botVotes/' + str(botID), client["id"], currentTime)
             
             currentVotes = int(botData["upvotes"])
             currentVotes += 1
-            result = firebaseDB.put('/Infrastructure/botlist/' + botID, "upvotes", currentVotes)
+            result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes)
             self.result = result
         else:
             self.result = None
