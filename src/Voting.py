@@ -17,7 +17,7 @@ forbiddenAcess1 = {'status': "Not success"}
 
 def identifyVoter(clientID, code):
     result = firebaseDB.get('/Infrastructure/WebUsers/' + clientID, None)
-    if "code" in result and result["code"] == code:
+    if result and "code" in result and result["code"] == code:
         return result
     else:
         return None
@@ -70,7 +70,8 @@ class voteBot(Resource):
             return make_response(jsonify(unauthorizedAcess1), 401)
         if not clientCode:
             return make_response(jsonify(unauthorizedAcess2), 401)
-            
+        
+        print(clientID)    
         voter = identifyVoter(clientID, clientCode)
         if voter == None:
             return make_response(jsonify(unauthorizedAcess3), 401)    
