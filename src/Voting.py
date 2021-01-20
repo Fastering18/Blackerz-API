@@ -81,6 +81,6 @@ class voteBot(Resource):
         if vote.result == None:
             warnVote = forbiddenAcess1
             warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
-            return make_response(jsonify(warnVote), 401)   
+            return make_response(jsonify(warnVote), 403)   
         else: 
             return make_response(jsonify(vote.result), 201)
