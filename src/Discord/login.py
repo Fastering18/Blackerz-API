@@ -101,7 +101,7 @@ class me(Resource):
      })
      # Response = make_response(jsonify(user=user), 200)
      print(request.host)
-     return redirect("https://blackerz.web.app/" + "?code=" + oneTimeCode + "&client_id=" + userID)     
+     return redirect("https://" + request.host + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
     def get(self):
