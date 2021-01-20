@@ -61,3 +61,25 @@ class voteBot(Resource):
             return make_response(jsonify(warnVote), 401)   
         else: 
             return make_response(jsonify(vote.result), 201)
+    def put(self, id):
+        clientID = request.headers.get('clientId')
+        clientCode = request.headers.get('code')
+        if (not clientID) and (not clientCode):
+            return make_response(jsonify(unauthorizedAcess), 401)
+        if not clientID:
+            return make_response(jsonify(unauthorizedAcess1), 401)
+        if not clientCode:
+            return make_response(jsonify(unauthorizedAcess2), 401)
+            
+        voter = identifyVoter(clientID, clientCode)
+        if voter == None:
+            return make_response(jsonify(unauthorizedAcess3), 401)    
+            
+        voter["id"] = clientID    
+        vote = addVote(id, voter)
+        if vote.result == None:
+            warnVote = forbiddenAcess1
+            warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
+            return make_response(jsonify(warnVote), 401)   
+        else: 
+            return make_response(jsonify(vote.result), 201)
