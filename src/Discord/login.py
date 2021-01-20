@@ -67,6 +67,7 @@ class login(Resource):
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
+    print("LOGIN: " + request.host)
     return redirect(authorization_url)
         
 class callback(Resource):
