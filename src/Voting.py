@@ -26,9 +26,9 @@ class addVote():
     def __init__(self, botID, client):
         clientVote = firebaseDB.get('/Infrastructure/Votes/botVotes/' + str(botID) + "/" + client["id"], None)
         currentTime = time.time() * 1000    #to JavaScript timestamps
-        if (clientVote == None) or (int(currentTime) - int(clientVote) >= 4.32e+7):
+        if (clientVote == None) or (int(currentTime) - int(clientVote) >= 0):
             botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None)
-            firebaseDB.put('/Infrastructure/Votes/botVotes/' + str(botID), client["id"], currentTime)
+            firebaseDB.put('/Infrastructure/Votes/botVotes/' + str(botID), client["id"], currentTime + 4.32e+7)
             
             currentVotes = int(botData["upvotes"])
             currentVotes += 1
