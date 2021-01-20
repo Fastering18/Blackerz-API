@@ -113,5 +113,7 @@ class checkUser(Resource):
             return make_response(jsonify(errorInvalidUser), 404)
         if not "code" in result or not result["code"] == code:
             return make_response(jsonify(UnauthorizedAccess1), 401)
-        respon = {'clientId': clientId, 'avatar': result["avatar"], 'tag': result["tag"], 'username': result["username"]}
+        respon = {'clientId': clientId, 'tag': result["tag"], 'username': result["username"]}        
+        if 'avatar' in result : respon['avatar'] = result["avatar"];
+            
         return make_response(jsonify(respon), 200)
