@@ -36,7 +36,7 @@ class addVote():
             self.result = result
         else:
             self.result = None
-            self.canVoteTime = 4.32e+7 - (currentTime - clientVote)
+            self.canVoteTime = 4.32e+7 - (int(currentTime) - int(clientVote))
              
 class voteBot(Resource):
     def post(self, id):
