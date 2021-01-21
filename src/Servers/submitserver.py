@@ -57,7 +57,9 @@ class resource3(Resource):
         
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'memberCount' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
             return make_response(jsonify(error1), 400)
-        
+        if (not "id" in jsonData) and id:
+            jsonData["id"] = id
+            
         result = postBot(jsonData)
         
         return make_response(jsonify(result.result), 201)
