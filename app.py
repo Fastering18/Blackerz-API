@@ -7,9 +7,10 @@ from src.submitbot import resource3
 from src.editBotData import editData
 
 import src.Discord.login as discordLoginSource
-import src.Servers.searchserver as searchServer
 
+import src.Servers.searchserver as searchServer
 import src.Servers.allservers as allServers
+import src.Servers.submitserver as submitServer
 
 import src.Voting as VotingManager
 
@@ -34,6 +35,7 @@ api.add_resource(discordLoginSource.checkUser, "/api/v1/discord/check")
 # Discord servers resource
 api.add_resource(allServers.findAllServer, "/api/v1/servers/all")
 api.add_resource(searchServer.findServer, "/api/v1/servers/<int:id>")
+api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 
 # Votes bots and servers resource
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
