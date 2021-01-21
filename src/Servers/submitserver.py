@@ -31,7 +31,7 @@ class postBot():
         if not "upvotes" in serverinfo:
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "upvotes", 0)          
         
-        if ("avatar" in dataREQ) and (dataREQ["avatar"] != None):
+        if ("avatar" in dataREQ):
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
         if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != None):
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "joinLink", dataREQ['joinLink'])
