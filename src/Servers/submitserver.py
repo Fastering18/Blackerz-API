@@ -20,14 +20,6 @@ def identifyAPiKey(apiKey):
 
 class postBot():
     def __init__(self, dataREQ):
-        dataFinal = {'name': dataREQ['name'],
-                'owner': {
-                    'id': dataREQ['owner']['id'],
-                    'name': dataREQ['owner']['name']
-                },
-                'tag': dataREQ['tag'],
-                'upvotes': 0
-                }
         firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "name", dataREQ['name'])
         firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "owner", {
                     'id': dataREQ['owner']['id'],
