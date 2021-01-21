@@ -53,6 +53,7 @@ class postServer(Resource):
         if (not "id" in jsonData) and id:
             jsonData["id"] = id
             
+        jsonData["id"] = str(jsonData["id"])    
         result = postBot(jsonData)
         
         return make_response(jsonify(result.result), 201)
