@@ -47,6 +47,7 @@ class postServer(Resource):
         if identifyAPiKey(apiKey) == None: 
             return make_response(jsonify(unauthorizedAcess2), 401)
         
+        print(jsonData)
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'memberCount' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
             return make_response(jsonify(error1), 400)
         if (not "id" in jsonData) and id:
