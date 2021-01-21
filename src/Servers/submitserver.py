@@ -46,7 +46,7 @@ class postBot():
         
         self.result = {'error': None, 'status': "sucess"}
 
-class resource3(Resource):
+class postServer(Resource):
     def post(self, id):
         jsonData = request.get_json()
         apiKey = request.headers.get('apiKey')
