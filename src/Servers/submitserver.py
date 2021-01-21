@@ -31,9 +31,9 @@ class postBot():
         if not "upvotes" in serverinfo:
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "upvotes", 0)          
         
-        if "avatar" in dataREQ:
+        if ("avatar" in dataREQ) and dataREQ["avatar"] !== None:
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
-        if "joinLink" in dataREQ:
+        if ("joinLink" in dataREQ) and dataREQ["joinLink"] !== None:
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "joinLink", dataREQ['joinLink'])
         
         self.result = {'error': None, 'status': "sucess"}
@@ -48,7 +48,7 @@ class postServer(Resource):
             return make_response(jsonify(unauthorizedAcess2), 401)
         
         print(jsonData)
-        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'memberCount' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
+        if (not jsonData) or (not 'name' in jsonData) or (not 'owner' in jsonData) or (not 'memberCount' in jsonData) or (not 'id' in jsonData['owner']) or (not 'name' in jsonData['owner']):
             return make_response(jsonify(error1), 400)
         if (not "id" in jsonData) and id:
             jsonData["id"] = id
