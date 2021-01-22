@@ -15,7 +15,6 @@ unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner 
 
 class edit():
     def __init__(self, data):
-        print(data)
         if 'name' in data:
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "name", data['name'])
         if 'avatar' in data:
@@ -26,8 +25,6 @@ class edit():
 
 def verifyOwner(clientId, code):
     result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
-    print(clientId)
-    print(result)
     if result == None:
         return False
     if ("AuthorizationV1" in result) and (result["AuthorizationV1"] == code):
