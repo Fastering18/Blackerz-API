@@ -26,6 +26,7 @@ class edit():
 
 def verifyOwner(clientId, code):
     result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
+    print(result)
     if result == None:
         return False
     if ("AuthorizationV1" in result) and (result["AuthorizationV1"] == code):
