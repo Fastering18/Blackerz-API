@@ -62,10 +62,11 @@ class editData(Resource):
     clientCode = request.headers.get('code')
     clientAuthV1 = request.headers.get('Authorization')
     authentication = clientCode
-    
+
     if clientCode == None:
         authentication = clientAuthV1
     if verifyOwner(clientId, authentication) == False: 
+       print(authentication)
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData or not 'id' in jsonData:
        return make_response(jsonify(error1), 400)
