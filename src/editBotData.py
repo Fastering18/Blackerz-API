@@ -70,10 +70,11 @@ class editData(Resource):
     if verifyOwner(clientId, authentication) == False: 
        print(authentication)
        return make_response(jsonify(unauthorizedAcess), 401)
-    if not jsonData or not 'id' in jsonData:
+    if not jsonData:
        return make_response(jsonify(error1), 400)
     if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 30:
        return make_response(jsonify(error3), 400)
+    jsonData["id"] = str(id)
     botum = edit(jsonData)
     
     if botum.result == True:
