@@ -9,6 +9,7 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 error2 = {'error': "Failed to update bot data", 'status': "Not success"}
+error3 = {'error': "shortDescription too long, must lower than 30 characters length!", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
@@ -27,7 +28,9 @@ def verifyOwner(clientId, code):
     result = firebaseDB.get('/Infrastructure/WebUsers/'+ clientId, None)
     if result == None:
         return False
-    if not "code" in result or result["code"] != code:
+    if ("AuthorizationV1" in result) and (result["AuthorizationV1"] == code):
+        return True
+    if (not "code" in result) or (result["code"] != code):
         return False
     return True         
 
@@ -36,11 +39,17 @@ class editData(Resource):
     jsonData = request.get_json()
     clientId = request.headers.get('clientId')
     clientCode = request.headers.get('code')
-        
-    if verifyOwner(clientId, clientCode) == False: 
+    clientAuthV1 = request.headers.get('Authorization')
+    authentication = clientCode
+    
+    if clientCode == None:
+        authentication = clientAuthV1
+    if verifyOwner(clientId, authentication) == False: 
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData or not 'id' in jsonData:
        return make_response(jsonify(error1), 400)
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 30:
+       return make_response(jsonify(error3), 400)
     botum = edit(jsonData)
     
     if botum.result == True:
@@ -51,11 +60,17 @@ class editData(Resource):
     jsonData = request.get_json()
     clientId = request.headers.get('clientId')
     clientCode = request.headers.get('code')
-        
-    if verifyOwner(clientId, clientCode) == False: 
+    clientAuthV1 = request.headers.get('Authorization')
+    authentication = clientCode
+    
+    if clientCode == None:
+        authentication = clientAuthV1
+    if verifyOwner(clientId, authentication) == False: 
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData or not 'id' in jsonData:
        return make_response(jsonify(error1), 400)
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 30:
+       return make_response(jsonify(error3), 400)
     botum = edit(jsonData)
     
     if botum.result == True:
