@@ -32,14 +32,22 @@ def generateRandomKey(length):
     letters_and_digits = string.ascii_letters + string.digits
     result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
     return result_str
-
+def generateAuthorizationV1():
+    # Random string with the combination of lower and upper case
+    letters = string.ascii_letters
+    result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
+    print(result_str)
+    
 class data():
-    def __init__(self, user):        
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
-        result = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
-        self.data = result
+    def __init__(self, user):
+        self.data = {}
+        self.data["tag"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
+        self.data["avatar"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
+        self.data["code"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
+        self.data["username"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
+        authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
+        if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
+        
         #timeStamp = time.time()
 
 def make_session(token=None, state=None, scope=None):
@@ -93,7 +101,7 @@ class me(Resource):
      userID = user["id"]
      print("JUMLAH: " + str(len(origins)))
      data({
-      'client_id': userID,
+      'client_id': str(userID),
       'tag': user["username"] + "#" + user["discriminator"],
       'username': user["username"],
       'avatar': user["avatar"],
