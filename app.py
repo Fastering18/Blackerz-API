@@ -19,7 +19,7 @@ import src.Voting as VotingManager
 
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['UPLOAD_FOLDER'] = "Images"
 api = Api(app)
