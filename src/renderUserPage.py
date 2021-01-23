@@ -42,7 +42,9 @@ class botPage(Resource):
     
     if bot != None:
         botName = bot["name"]
-        short_description = bot["ShortDescription"]
+        short_description = ""
+        if "ShortDescription" in bot:
+            short_description = bot["ShortDescription"]
         return make_response(render_template('botPage.html', botName = botName, short_description = short_description, botId=id), 200, headers)
     else:
         botName = "Bot not found"
