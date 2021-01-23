@@ -26,7 +26,7 @@ api = Api(app)
 
 # Home resource
 api.add_resource(Home.homePage, "/")
-api.add_resource(renderUserPage.blackerzProfile, "/Images/<str:filename>")
+api.add_resource(renderUserPage.blackerzProfile, "/Images/<string:filename>")
 
 # Discord bots resource
 api.add_resource(resouce, "/api/v1/bots/<int:id>")
