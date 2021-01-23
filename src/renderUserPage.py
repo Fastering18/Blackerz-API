@@ -8,6 +8,7 @@ from firebase import firebase
 
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+headers = {'Content-Type': 'text/html'}
             
 class data():
     def __init__(self, dataName, id):
@@ -42,8 +43,8 @@ class botPage(Resource):
     if bot != None:
         botName = bot["name"]
         short_description = bot["ShortDescription"]
-        return render_template('botPage.html', botName = botName, short_description = short_description)
+        return make_response(render_template('botPage.html', botName = botName, short_description = short_description), 200, headers)
     else:
         botName = "Bot not found"
         short_description = ""
-        return render_template('botPage.html', botName = botName, short_description = short_description)
+        return make_response(render_template('botPage.html', botName = botName, short_description = short_description), 200, headers)
