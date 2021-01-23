@@ -105,11 +105,14 @@ class me(Resource):
       'avatar': user["avatar"],
       'code': oneTimeCode
      })
+     if request.values.get('fromOrigin'):
+        return make_response(jsonify(user), 200)
+        
      # Response = make_response(jsonify(user=user), 200)
      host = "blackerz.web.app/"
      if request.values.get('host'):
         host = request.values['host']
-        
+       
      return redirect("https://" + host + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
 class checkUser(Resource):
