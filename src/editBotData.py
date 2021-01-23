@@ -21,6 +21,8 @@ class edit():
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "avatar", data['avatar'])
         if 'shortDescription' in data:
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "ShortDescription", data['shortDescription'])
+        if 'serverCount' in data:
+            firebaseDB.put('/Infrastructure/botlist/' + data['id'], "serverCount", data['serverCount'])
         self.result = True
 
 def verifyOwner(clientId, code):
