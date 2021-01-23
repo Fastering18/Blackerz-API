@@ -11,5 +11,5 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 headers = {'Content-Type': 'text/html'}
                     
 class homePage(Resource):
-  def get(self, id):
+  def get(self):
     return make_response(render_template('home.html'), 200, headers)
