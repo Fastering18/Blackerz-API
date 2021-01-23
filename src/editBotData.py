@@ -10,7 +10,7 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 error2 = {'error': "Failed to update bot data", 'status': "Not success"}
-error3 = {'error': "shortDescription too long, must lower than 40 characters length!", 'status': "Not success"}
+error3 = {'error': "shortDescription too long, must lower than 50 characters length!", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
@@ -50,7 +50,7 @@ class editData(Resource):
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData or not 'id' in jsonData:
        return make_response(jsonify(error1), 400)
-    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 30:
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
        return make_response(jsonify(error3), 400)
     botum = edit(jsonData)
     
@@ -72,7 +72,7 @@ class editData(Resource):
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData:
        return make_response(jsonify(error1), 400)
-    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 40:
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
        return make_response(jsonify(error3), 400)
     jsonData["id"] = str(id)
     botum = edit(jsonData)
