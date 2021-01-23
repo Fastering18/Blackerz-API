@@ -42,7 +42,7 @@ api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
 
 # Render pages
-api.add_resource(renderUserPage.botPage, "/api/v1/bots/<int:id>")
+api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
 
 if __name__ == "__main__":
   app.run()
