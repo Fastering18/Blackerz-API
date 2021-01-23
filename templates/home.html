@@ -32,7 +32,8 @@
     </amp-ad>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        console.log(JSON.parse("{{ user }}"))
+        const client = ("{{ user }}").replace(/&#39/gi, "")
+        console.log(JSON.stringify(JSON.parse(client)))
         $("#discordLogOut").hide()
         let currentBot = 0
         let botIdlist = []
