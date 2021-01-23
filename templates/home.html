@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
   <head>
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
+    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="stylesheet" href="/static/CSS/home.css">
     <title>Home</title>
@@ -135,21 +136,18 @@
             const url = 'https://blackerz-api.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
             //Authorization
 
-            if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "" && getParameterByName("code") !== null && getParameterByName("client_id") !== null) || (getCookie("clientID") !== "" && getCookie("code") !== "")) {
-                const loginCode = getParameterByName("code") || getCookie("code");
-                const clientId = getParameterByName("client_id") || getCookie("clientID");
+            if (getCookie("session") !== "") {
+                const sessionCode = getCookie("session");
 
                 //console.log("dah nyampe sini aja")
-                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/check`, {
+                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/me`, {
                     method: 'GET',
                     mode: 'cors',
                     headers: new Headers({
                         'Content-Type': 'application/json',
                         'X-Requested-With': 'fetch',
                         'Origin': window.location.origin,
-                        'Access-Control-Allow-Origin': window.location.origin,
-                        'code': loginCode,
-                        'clientId': clientId
+                        'Access-Control-Allow-Origin': window.location.origin
                     })
                 })
                     .then(res => {
@@ -164,8 +162,6 @@
                                 }
                                 return;
                             } else {
-                                setCookie("clientID", clientId, 7)
-                                setCookie("code", loginCode, 7)
                                 if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "")) window.location.href = window.location.origin;
 
                                 const { tag, avatar, username } = response;
@@ -190,7 +186,7 @@
             } else {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
-                localStorage.setItem('stateParameter', randStr);
+                //localStorage.setItem('stateParameter', randStr);
                 $("#discordLogOut").hide()
                 updateBotData()
                 //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
