@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response
+from flask import jsonify, make_response, render_template
 import time
 import requests
 from threading import Timer
