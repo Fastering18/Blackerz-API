@@ -42,8 +42,8 @@ class botPage(Resource):
     if bot != None:
         botName = bot.name
         short_description = bot.ShortDescription
-        return render_template('botPage.html', botName, short_description)
+        return render_template('botPage.html', {botName: botName, short_description: short_description})
     else:
         botName = "Bot not found"
         short_description = ""
-        return render_template('botPage.html', botName, short_description)
+        return render_template('botPage.html', {botName: botName, short_description: short_description})
