@@ -32,7 +32,7 @@
     </amp-ad>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        const client = ('{{ user }}').replace(/&#39;/gi, '"')
+        const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
         console.log(client)
         console.log(JSON.stringify(JSON.parse(client)))
         $("#discordLogOut").hide()
