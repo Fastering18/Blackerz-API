@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template
+from flask import jsonify, make_response, render_template, send_from_directory
 import time
 import requests
 from threading import Timer
@@ -48,3 +48,7 @@ class botPage(Resource):
         botName = "Bot not found"
         short_description = ""
         return make_response(render_template('botPage.html', botName = botName, short_description = short_description), 404, headers)
+
+class blackerzProfile(Resource):
+  def get(self, filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
