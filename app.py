@@ -19,6 +19,7 @@ OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
+app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 api = Api(app)
 
 # Discord bots resource
