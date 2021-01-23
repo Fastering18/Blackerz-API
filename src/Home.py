@@ -70,5 +70,6 @@ class homePage(Resource):
       'code': oneTimeCode
     }
     data(userData)
+    userData = jsonify(userData)
     
-    return make_response(render_template('home.html', user=jsonify(userData)), 200, headers)
+    return make_response(render_template('home.html', user=userData), 200, headers)
