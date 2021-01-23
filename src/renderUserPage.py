@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, send_from_directory
+from flask import jsonify, make_response, render_template, send_from_directory, redirect
 import time
 import requests
 from threading import Timer
@@ -51,4 +51,4 @@ class botPage(Resource):
 
 class blackerzProfile(Resource):
   def get(self, filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return redirect("https://blackerz-api.herokuapp.com/static/Images/"+filename)
