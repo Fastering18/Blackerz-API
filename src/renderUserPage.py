@@ -47,4 +47,4 @@ class botPage(Resource):
     else:
         botName = "Bot not found"
         short_description = ""
-        return make_response(render_template('botPage.html', botName = botName, short_description = short_description), 200, headers)
+        return make_response(render_template('botPage.html', botName = botName, short_description = short_description), 404, headers)
