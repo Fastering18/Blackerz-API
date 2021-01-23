@@ -5,7 +5,7 @@ from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
 from src.editBotData import editData
-import src.Templates.renderUserPage as renderUserPage
+import src.renderUserPage as renderUserPage
 
 import src.Discord.login as discordLoginSource
 
