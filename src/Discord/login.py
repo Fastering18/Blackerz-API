@@ -94,8 +94,6 @@ class me(Resource):
   def get(self):
      discord = make_session(token=session.get('oauth2_token'))
      user = discord.get(API_BASE_URL + '/users/@me').json()
-     guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
-     connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
      oneTimeCode = generateRandomKey(8)
      userID = user["id"]
