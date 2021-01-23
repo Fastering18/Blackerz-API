@@ -72,4 +72,4 @@ class homePage(Resource):
     data(userData)
     userData = jsonify(user)
     
-    return make_response(render_template('home.html', user=userData), 200, headers)
+    return make_response(render_template('home.html', user=user), 200, headers)
