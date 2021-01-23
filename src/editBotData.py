@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request, abort
 import time
 from threading import Timer
+import math
 
 from firebase import firebase
 
@@ -21,7 +22,7 @@ class edit():
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "avatar", data['avatar'])
         if 'shortDescription' in data:
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "ShortDescription", data['shortDescription'])
-        if 'serverCount' in data:
+        if ('serverCount' in data) and (math.isnan(int(data["serverCount"])) == False):
             firebaseDB.put('/Infrastructure/botlist/' + data['id'], "serverCount", data['serverCount'])
         self.result = True
 
