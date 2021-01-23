@@ -21,6 +21,8 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 headers = {'Content-Type': 'text/html'}
 
+def token_updater(token):
+    session['oauth2_token'] = token
 def make_session(token=None, state=None, scope=None):
     return OAuth2Session(
         client_id=OAUTH2_CLIENT_ID,
