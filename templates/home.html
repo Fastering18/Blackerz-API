@@ -140,7 +140,7 @@
                 const sessionCode = getCookie("session");
 
                 //console.log("dah nyampe sini aja")
-                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/me`, {
+                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/me?fromOrigin=${window.location.origin}`, {
                     method: 'GET',
                     mode: 'cors',
                     headers: new Headers({
