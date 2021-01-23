@@ -4,11 +4,227 @@
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
     <title>Home</title>
   </head>
   <body>
-    <div>
-      <h1>Welcome to Blackerz</h1>
+    <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a class="active" id="profiletab" href="/">Home</a>
+            <a href="/servers">Servers</a>
+            <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+            <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+        </div>
     </div>
-  </body>
+    <div id="headerPage">
+        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
+    </div>
+    <br>
+    <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Loading bots...</p>
+    <div id="botListParent">
+
+    </div>
+    <amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-9419528436883042" data-ad-slot="1095974537"
+        data-auto-format="rspv" data-full-width="">
+        <div overflow=""></div>
+    </amp-ad>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#discordLogOut").hide()
+        let currentBot = 0
+        let botIdlist = []
+        let jsonBotData = {}
+        let logined = false
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";  // https://cors-proxy.htmldriven.com/?url= 
+        function updateData(jsonData, query) {
+            if (query === "" || typeof (query) !== "string") query = undefined;
+            $("#botListParent").empty();
+            for (dataChild in jsonData) {
+                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
+
+                currentBot++
+                botIdlist.push(dataChild)
+                var para = document.createElement("DIV");
+                var gambar = document.createElement("img");
+                var teks = document.createElement("P");
+                gambar.setAttribute("width", "7%")
+                gambar.setAttribute("height", "7%")
+                gambar.style = "display:inline-block; position: relative;"
+                teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
+
+                para.id = "Bot-" + currentBot
+                para.style = "background:rgba(255, 255, 255, 0.6); display:none; margin-bottom: 1%; border-color: black"
+                gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
+                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
+                teks.innerText = jsonData[dataChild].name;
+                para.appendChild(gambar)
+                para.appendChild(teks)
+                //document.body
+                document.getElementById("botListParent").appendChild(para)
+                $(para).slideDown(325);
+                $(para).mouseenter(function () {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+                });
+                $(para).mouseleave(function () {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+                });
+                (function (index) {
+                    para.addEventListener('click', function () {
+                        console.log(para.id)
+                        window.location.pathname = `/bots/${index}`
+                    });
+                })(dataChild);
+            }
+        };
+        function searchBotQuery(nameQuery) {
+            updateData(jsonBotData, nameQuery)
+        }
+        function discordLogOutAPI(force) {
+            setCookie("clientID", "", -1)
+            setCookie("code", "", -1)
+            if (force === true) window.location.href = window.location.origin;
+
+        }
+        function discordLoginAPI() {
+            if (logined == true) {
+                window.location.href = window.location.origin + "/profile"
+            } else {
+                window.location.href = "https://blackerz-api.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter")
+            }
+        }
+        function generateRandomString() {
+            const rand = Math.floor(Math.random() * 10);
+            let randStr = '';
+
+            for (let i = 0; i < 20 + rand; i++) {
+                randStr += String.fromCharCode(33 + Math.floor(Math.random() * 94));
+            }
+
+            return randStr;
+        }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results || !results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        window.onload = function () {
+            const url = 'https://blackerz-api.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
+            //Authorization
+
+            if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "" && getParameterByName("code") !== null && getParameterByName("client_id") !== null) || (getCookie("clientID") !== "" && getCookie("code") !== "")) {
+                const loginCode = getParameterByName("code") || getCookie("code");
+                const clientId = getParameterByName("client_id") || getCookie("clientID");
+
+                //console.log("dah nyampe sini aja")
+                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/check`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'fetch',
+                        'Origin': window.location.origin,
+                        'Access-Control-Allow-Origin': window.location.origin,
+                        'code': loginCode,
+                        'clientId': clientId
+                    })
+                })
+                    .then(res => {
+                        res.json().then(response => {
+                            if (response.error) {
+                                $("#discordLogOut").hide()
+                                if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "")) {
+                                    discordLogOutAPI(true)
+                                } else {
+                                    discordLogOutAPI()
+                                    updateBotData()
+                                }
+                                return;
+                            } else {
+                                setCookie("clientID", clientId, 7)
+                                setCookie("code", loginCode, 7)
+                                if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "")) window.location.href = window.location.origin;
+
+                                const { tag, avatar, username } = response;
+                                //console.log(JSON.stringify(response));
+                                $("#discordLogin").text(username)
+                                $("#discordLogOut").show()
+                                logined = true
+
+                                updateBotData()
+                            }
+                        })
+                            .catch(err => {
+                                $("#discordLogOut").hide()
+                                console.log(err)
+                                updateBotData()
+                            });
+                    }).catch(err => {
+                        $("#discordLogOut").hide()
+                        updateBotData()
+                    });
+
+            } else {
+                if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
+                const randStr = generateRandomString();
+                localStorage.setItem('stateParameter', randStr);
+                $("#discordLogOut").hide()
+                updateBotData()
+                //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
+            }
+            function updateBotData() {
+                fetch(`${proxyurl}${url}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'fetch',
+                        'Origin': window.location.origin,
+                        'Access-Control-Allow-Origin': window.location.origin
+                    }),
+                })
+                    .then(response => {
+                        response.json()
+                            .then(data => {
+                                let botumName = ""
+                                for (bot in data) {
+                                    botumName += data[bot].name + ", ";
+                                }
+                                botumName = botumName.substring(0, botumName.length - 2)
+                                $("#botlist").html("<p>" + botumName + "</p>");
+                                jsonBotData = data
+                                updateData(data)
+                                console.log("updated")
+                            }).catch(err => {
+                                console.log(err)
+                                $("#botlist").html(`<p>${response.status} Gagal mengambil data dari endpoint, coba lagi nanti.</p>`)
+                            })
+                    })
+            }
+        };</script>
+</body>
+
 </html>
