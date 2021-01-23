@@ -32,7 +32,7 @@
     </amp-ad>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        console.log(JSON.stringify({{ user }}))
+        console.log(JSON.parse("{{ user }}"))
         $("#discordLogOut").hide()
         let currentBot = 0
         let botIdlist = []
@@ -138,51 +138,6 @@
             //Authorization
 
             if (getCookie("session") !== "") {
-                const sessionCode = getCookie("session");
-
-                //console.log("dah nyampe sini aja")
-                fetch(`${proxyurl}https://blackerz-api.herokuapp.com/api/v1/discord/me?fromOrigin=${window.location.origin}`, {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: new Headers({
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'fetch',
-                        'Origin': window.location.origin,
-                        'Access-Control-Allow-Origin': window.location.origin
-                    })
-                })
-                    .then(res => {
-                        res.json().then(response => {
-                            if (response.error) {
-                                $("#discordLogOut").hide()
-                                if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "")) {
-                                    discordLogOutAPI(true)
-                                } else {
-                                    discordLogOutAPI()
-                                    updateBotData()
-                                }
-                                return;
-                            } else {
-                                if ((getParameterByName("code") !== "" && getParameterByName("client_id") !== "")) window.location.href = window.location.origin;
-
-                                const { tag, avatar, username } = response;
-                                //console.log(JSON.stringify(response));
-                                $("#discordLogin").text(username)
-                                $("#discordLogOut").show()
-                                logined = true
-
-                                updateBotData()
-                            }
-                        })
-                            .catch(err => {
-                                $("#discordLogOut").hide()
-                                console.log(err)
-                                updateBotData()
-                            });
-                    }).catch(err => {
-                        $("#discordLogOut").hide()
-                        updateBotData()
-                    });
 
             } else {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
