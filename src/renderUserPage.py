@@ -40,8 +40,8 @@ class botPage(Resource):
     bot = botum.data
     
     if bot != None:
-        botName = bot.name
-        short_description = bot.ShortDescription
+        botName = bot["name"]
+        short_description = bot["ShortDescription"]
         return render_template('botPage.html', botName = botName, short_description = short_description)
     else:
         botName = "Bot not found"
