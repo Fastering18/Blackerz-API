@@ -5,6 +5,7 @@ from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
 from src.editBotData import editData
+from src.Templates.renderUserPage as renderUserPage
 
 import src.Discord.login as discordLoginSource
 
@@ -39,6 +40,9 @@ api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 
 # Votes bots and servers resource
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
+
+# Render pages
+api.add_resource(renderUserPage.botPage, "/api/v1/bots/<int:id>")
 
 if __name__ == "__main__":
   app.run()
