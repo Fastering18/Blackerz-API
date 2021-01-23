@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Api
 
+import src.Home as Home
+
 from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
@@ -21,6 +23,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 api = Api(app)
+
+# Home resource
+api.add_resource(Home.homePage, "/")
 
 # Discord bots resource
 api.add_resource(resouce, "/api/v1/bots/<int:id>")
