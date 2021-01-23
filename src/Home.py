@@ -62,11 +62,13 @@ class homePage(Resource):
      # return jsonify(user=user, guilds=guilds, connections=connections)
     oneTimeCode = generateRandomKey(8)
     userID = user["id"]
-    data({
+    userData = {
       'client_id': str(userID),
       'tag': user["username"] + "#" + user["discriminator"],
       'username': user["username"],
       'avatar': user["avatar"],
       'code': oneTimeCode
-    })
-    return make_response(render_template('home.html', user=user), 200, headers)
+    }
+    data(userData)
+    
+    return make_response(render_template('home.html', user=jsonify(userData)), 200, headers)
