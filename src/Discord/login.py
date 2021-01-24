@@ -1,6 +1,7 @@
 import os
 import random
 import string
+import requests
 from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
@@ -125,6 +126,14 @@ class me(Resource):
      print(host)  
      return redirect(host + params)     
 
+class logOut(Resource):
+  def post(self):
+      headers = {
+          Authorization: "Bearer " + session.get('oauth2_token')
+      }
+      user = requests.post(API_BASE_URL + '/oauth2/token/revoke', headers= headers).json()
+      return user, (user != None and 201 or 401)
+        
 class checkUser(Resource):
     def get(self):
         code = request.headers.get('code')
