@@ -82,6 +82,7 @@ class login(Resource):
         
 class callback(Resource):
   def get(self):
+     print(request.values)
      if request.values.get('error'):
          return request.values['error']
      discord = make_session(state=session.get('oauth2_state'))
