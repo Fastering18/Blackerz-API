@@ -150,6 +150,7 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
         async function autentikasi(data) {
+            console.log(data)
             if (data["username"]) $("#discordLogin").text(data["username"]);
         }
         if (loginedUser !== null) autentikasi(loginedUser);
