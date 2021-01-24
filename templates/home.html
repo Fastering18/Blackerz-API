@@ -108,7 +108,7 @@
             if (logined == true) {
                 window.location.href = window.location.origin + "/profile"
             } else {
-                window.location.href = "https://blackerz-api.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter")
+                window.location.href = "https://blackerz-api.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz-api.herokuapp.com"
             }
         }
         function generateRandomString() {
