@@ -9,7 +9,7 @@ from firebase import firebase
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
-OAUTH2_REDIRECT_URI = 'https://blackerz-api.herokuapp.com/api/v1/discord/callback'
+OAUTH2_REDIRECT_URI = 'https://blackerz.herokuapp.com/api/v1/discord/callback'
 
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
@@ -120,7 +120,7 @@ class me(Resource):
      params = "?code=" + oneTimeCode + "&client_id=" + userID
      if request.cookies.get('dariLink'):
         host = request.cookies['dariLink']
-        if (host == "blackerz-api.herokuapp.com"): 
+        if (host == "blackerz.herokuapp.com"): 
             params = ""
             host = "https://" + host
      print(host)  
