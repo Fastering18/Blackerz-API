@@ -120,7 +120,7 @@ class me(Resource):
      if request.cookies.get('dariLink'):
         host = request.cookies['dariLink']
         if (host == "blackerz-api.herokuapp.com") : params = ""
-       
+     print(host)  
      return redirect(host + params)     
 
 class checkUser(Resource):
