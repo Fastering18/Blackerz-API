@@ -72,10 +72,13 @@ class login(Resource):
     scope = request.args.get(
         'scope',
         'identify')
+    host = ""
+    if request.values.get('host'):
+         host = "&host=" + request.values['host']
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
-    return redirect(authorization_url)
+    return redirect(authorization_url + host)
         
 class callback(Resource):
   def get(self):
@@ -87,8 +90,11 @@ class callback(Resource):
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
+     host = ""
+     if request.values.get('host'):
+         host = "?host=" + request.values['host']  
         
-     return redirect(url_for('.me')) 
+     return redirect(url_for('.me') + host) 
   
 class me(Resource):
   def get(self):
