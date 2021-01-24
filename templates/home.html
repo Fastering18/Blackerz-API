@@ -15,8 +15,8 @@
   "@context" : "http://schema.org",
   "@type" : "Organization",
   "name" : "Blackerz",
-  "url" : "https://blackerz-api.herokuapp.com/",
-  "logo": "https://blackerz-api.herokuapp.com/static/Images/Blackerz.jpg",
+  "url" : "https://blackerz.herokuapp.com/",
+  "logo": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
   "sameAs" : [
     "https://discord.gg/WaAVUVDVTA",
     "https://youtube.com/channel/UCMqJa15Sfr2a7JhyTb_mmvg"
@@ -52,7 +52,6 @@
         <div overflow=""></div>
     </amp-ad>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-s"></script>
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
@@ -115,7 +114,7 @@
             if (logined == true) {
                 window.location.href = window.location.origin + "/profile"
             } else {
-                window.location.href = "https://blackerz-api.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz-api.herokuapp.com"
+                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             }
         }
         function generateRandomString() {
@@ -163,7 +162,7 @@
         }
         if (loginedUser !== null) autentikasi(loginedUser);
         window.onload = function () {
-            const url = 'https://blackerz-api.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
+            const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
             //Authorization
 
             if (getCookie("session") !== "") {
@@ -206,12 +205,6 @@
                     })
             }
             setCookie("dariLink", window.location.host, 1)
-            workbox.routing.registerRoute(
-               new RegExp('\.png$'),
-               workbox.strategies.cacheFirst({
-                  cacheName: 'images-cache',
-               })
-            );
         };
     </script>
 </body>
