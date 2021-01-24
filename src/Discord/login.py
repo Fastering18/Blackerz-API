@@ -77,7 +77,7 @@ class login(Resource):
     host = ""
     if request.values.get('host'):
          host = "&host=" + request.values['host']
-    response = redirect(authorization_url + host)
+    response = redirect(authorization_url)
     return response
         
 class callback(Resource):
@@ -95,7 +95,7 @@ class callback(Resource):
      if request.values.get('host'):
          host = "?host=" + request.values['host']  
         
-     return redirect(url_for('.me') + host) 
+     return redirect(url_for('.me')) 
   
 class me(Resource):
   def get(self):
