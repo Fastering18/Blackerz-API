@@ -57,11 +57,10 @@ class data():
 
 class homePage(Resource):
   def get(self):
-    session = session.get('oauth2_token')
-    user = "null"
-    if session != None:
-        discord = make_session(token=session)
-        user = discord.get(API_BASE_URL + '/users/@me').json()
+    discord = make_session(token=session.get('oauth2_token'))
+    user = discord.get(API_BASE_URL + '/users/@me').json()
+    print(user)
+    if session != None:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
         userID = user["id"]
@@ -73,5 +72,6 @@ class homePage(Resource):
            'code': oneTimeCode
         }
         data(userData)
-        
+    else:
+        user = "null"
     return make_response(render_template('home.html', user=user), 200, headers)
