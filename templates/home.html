@@ -60,7 +60,7 @@
         let currentBot = 0
         let botIdlist = []
         let jsonBotData = {}
-        let logined = false
+        let logined = client != null
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
@@ -171,7 +171,7 @@
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
                 //localStorage.setItem('stateParameter', randStr);
-                $("#discordLogOut").hide()
+                //$("#discordLogOut").hide()
                 updateBotData()
                 //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
             }
