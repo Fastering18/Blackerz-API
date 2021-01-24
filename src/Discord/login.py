@@ -71,14 +71,15 @@ class login(Resource):
     scope = request.args.get(
         'scope',
         'identify')
-    host = ""
-    print(request.cookies)
-    if request.values.get('host'):
-         host = "&host=" + request.values['host']
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
-    return redirect(authorization_url + host)
+    host = ""
+    response = make_response(redirect(authorization_url))
+    if request.values.get('host'):
+         host = "&host=" + request.values['host']
+         response = make_response(redirect(authorization_url + host)).set_cookie('dariLink', request.values['host'])    
+    return response
         
 class callback(Resource):
   def get(self):
@@ -116,8 +117,8 @@ class me(Resource):
         
      # Response = make_response(jsonify(user=user), 200)
      host = "blackerz.web.app/"
-     if request.values.get('host'):
-        host = request.values['host']
+     if request.cookies.get('dariLink'):
+        host = request.cookies['dariLink']
        
      return redirect("https://" + host + "?code=" + oneTimeCode + "&client_id=" + userID)     
 
