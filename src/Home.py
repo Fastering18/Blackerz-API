@@ -57,19 +57,21 @@ class data():
 
 class homePage(Resource):
   def get(self):
-    discord = make_session(token=session.get('oauth2_token'))
-    user = discord.get(API_BASE_URL + '/users/@me').json()
-     # return jsonify(user=user, guilds=guilds, connections=connections)
-    oneTimeCode = generateRandomKey(8)
-    userID = user["id"]
-    userData = {
-      'client_id': str(userID),
-      'tag': user["username"] + "#" + user["discriminator"],
-      'username': user["username"],
-      'avatar': user["avatar"],
-      'code': oneTimeCode
-    }
-    data(userData)
-    userData = jsonify(user)
-    
+    session = session.get('oauth2_token')
+    user = "null"
+    if session != None:
+        discord = make_session(token=session)
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        # return jsonify(user=user, guilds=guilds, connections=connections)
+        oneTimeCode = generateRandomKey(8)
+        userID = user["id"]
+        userData = {
+           'client_id': str(userID),
+           'tag': user["username"] + "#" + user["discriminator"],
+           'username': user["username"],
+           'avatar': user["avatar"],
+           'code': oneTimeCode
+        }
+        data(userData)
+        
     return make_response(render_template('home.html', user=user), 200, headers)
