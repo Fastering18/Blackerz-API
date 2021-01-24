@@ -75,10 +75,9 @@ class login(Resource):
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
     host = ""
-    response = make_response(redirect(authorization_url))
     if request.values.get('host'):
          host = "&host=" + request.values['host']
-         response = make_response(redirect(authorization_url + host)).set_cookie('dariLink', request.values['host'])    
+    response = redirect(authorization_url + host)
     return response
         
 class callback(Resource):
