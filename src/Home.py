@@ -13,7 +13,7 @@ from firebase import firebase
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
-OAUTH2_REDIRECT_URI = 'https://blackerz-api.herokuapp.com/api/v1/discord/callback'
+OAUTH2_REDIRECT_URI = 'https://blackerz.herokuapp.com/api/v1/discord/callback'
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
