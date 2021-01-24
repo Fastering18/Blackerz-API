@@ -9,8 +9,8 @@ from firebase import firebase
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 MongoClient = mongopy.MongoClient("mongodb+srv://FirstUser:koliman12345@firstcluster.mksml.mongodb.net/FirstDB?retryWrites=true&w=majority")
-mongo = MongoClient.test
-print(mongo)
+dbmongoAPI = MongoClient["Api"]
+print(dbmongoAPI)
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 error2 = {'error': "Failed to update bot data", 'status': "Not success"}
@@ -35,6 +35,8 @@ def verifyOwner(clientId, code):
     if result == None:
         return False
     if ("AuthorizationV1" in result) and (result["AuthorizationV1"] == code):
+        apiUser = dbmongoAPI[clientId]
+        print(apiUser.find({},{ "_id": 0, "name": 1, "apiUsage": 1 }))
         
         return True
     if (not "code" in result) or (result["code"] != code):
