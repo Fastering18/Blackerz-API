@@ -2,7 +2,7 @@ import os
 import random
 import string
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session
+from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
 import time
 import requests
@@ -57,6 +57,8 @@ class data():
 
 class homePage(Resource):
   def get(self):
+    if request.url_root == "http://blackerz-api.herokuapp.com/":
+        return redirect("https://blackerz-api.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     print(user)
