@@ -5,7 +5,6 @@ import requests
 from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
-from flask_login import logout_user
 from firebase import firebase
 
 OAUTH2_CLIENT_ID = "798496088750292993"
@@ -130,7 +129,8 @@ class me(Resource):
 
 class logOut(Resource):
   def get(self):
-      return logout_user()
+      session.clear()
+      return {sucess: True}, 200
         
 class checkUser(Resource):
     def get(self):
