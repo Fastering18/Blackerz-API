@@ -39,6 +39,7 @@ api.add_resource(discordLoginSource.login, "/api/v1/discord/login")
 api.add_resource(discordLoginSource.callback, "/api/v1/discord/callback")
 api.add_resource(discordLoginSource.me, "/api/v1/discord/me")
 api.add_resource(discordLoginSource.checkUser, "/api/v1/discord/check")
+api.add_resource(discordLoginSource.logOut, "/api/v1/discord/logout")
 
 # Discord servers resource
 api.add_resource(allServers.findAllServer, "/api/v1/servers/all")
