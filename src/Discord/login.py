@@ -130,7 +130,13 @@ class me(Resource):
 class logOut(Resource):
   def get(self):
       session.clear()
-      return {sucess: True}, 200
+      host = "https://blackerz.web.app/" 
+      if request.cookies.get('dariLink'):
+          host = request.cookies['dariLink']
+          if (host == "blackerz.herokuapp.com"): 
+              params = ""
+              host = "https://" + host
+      return redirect(host)
         
 class checkUser(Resource):
     def get(self):
