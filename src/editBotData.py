@@ -77,7 +77,6 @@ class editData(Resource):
     if clientCode == None:
         authentication = clientAuthV1
     if verifyOwner(clientId, authentication) == False: 
-       print(authentication)
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData:
        return make_response(jsonify(error1), 400)
