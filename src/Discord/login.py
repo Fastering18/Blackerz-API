@@ -5,6 +5,7 @@ import requests
 from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
+from flask_login import logout_user
 from firebase import firebase
 
 OAUTH2_CLIENT_ID = "798496088750292993"
@@ -129,9 +130,7 @@ class me(Resource):
 
 class logOut(Resource):
   def get(self):
-      discord = make_session(token=session.get('oauth2_token'))
-      revoke = discord.revoke_token(LOGOUT_BASE_URL, token=session.get('oauth2_token')['access_token'])
-      return revoke, (revoke != None and 201 or 401)
+      return logout_user()
         
 class checkUser(Resource):
     def get(self):
