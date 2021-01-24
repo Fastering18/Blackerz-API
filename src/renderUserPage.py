@@ -53,4 +53,4 @@ class botPage(Resource):
 
 class blackerzProfile(Resource):
   def get(self, filename):
-    return redirect("https://blackerz-api.herokuapp.com/static/Images/"+filename)
+    return redirect("https://blackerz.herokuapp.com/static/Images/"+filename)
