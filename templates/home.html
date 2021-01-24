@@ -30,8 +30,13 @@
         <div class="topnav">
             <a class="active" id="profiletab" href="/">Home</a>
             <a href="/servers">Servers</a>
-            <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
-            <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {% if user and "username" in user %}
+               <a id="discordLogin" onclick="discordLoginAPI()">{{ user["username"] }}</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {% else %}
+               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+            {% endif %}
         </div>
     </div>
     <div id="headerPage">
