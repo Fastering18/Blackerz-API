@@ -108,8 +108,8 @@
             updateData(jsonBotData, nameQuery)
         }
         function discordLogOutAPI(force) {
-            setCookie("session", "ae", -1)
-            if (force === true) window.location.href = window.location.origin;
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            //if (force === true) window.location.href = window.location.origin;
         }
         function discordLoginAPI() {
             if (logined == true) {
