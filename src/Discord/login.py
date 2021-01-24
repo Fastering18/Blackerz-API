@@ -115,11 +115,13 @@ class me(Resource):
         return make_response(jsonify(user), 200)
         
      # Response = make_response(jsonify(user=user), 200)
-     host = "blackerz.web.app/"
+     host = "blackerz.web.app/" 
+     params = "?code=" + oneTimeCode + "&client_id=" + userID
      if request.cookies.get('dariLink'):
         host = request.cookies['dariLink']
+        if (host == "blackerz-api.herokuapp.com") : params = ""
        
-     return redirect("https://" + host + "?code=" + oneTimeCode + "&client_id=" + userID)     
+     return redirect(host + params)     
 
 class checkUser(Resource):
     def get(self):
