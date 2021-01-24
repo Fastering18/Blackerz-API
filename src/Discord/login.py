@@ -13,6 +13,7 @@ OAUTH2_REDIRECT_URI = 'https://blackerz.herokuapp.com/api/v1/discord/callback'
 
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
+LOGOUT_BASE_URL = API_BASE_URL + '/oauth2/revoke'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 origins = []
@@ -127,12 +128,10 @@ class me(Resource):
      return redirect(host + params)     
 
 class logOut(Resource):
-  def post(self):
-      headers = {
-          Authorization: "Bearer " + session.get('oauth2_token')
-      }
-      user = requests.post(API_BASE_URL + '/oauth2/token/revoke', headers= headers).json()
-      return user, (user != None and 201 or 401)
+  def get(self):
+      discord = make_session(token=session.get('oauth2_token'))
+      revoke = discord.revoke_token(LOGOUT_BASE_URL, token=session.get('oauth2_token')['access_token'])
+      return revoke, (revoke != None and 201 or 401)
         
 class checkUser(Resource):
     def get(self):
