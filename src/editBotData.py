@@ -38,7 +38,7 @@ def verifyOwner(clientId, code):
         data = apiUser.find({})
         mydict = { "name": "John", "address": "Highway 37" }
         print(data)
-        data.insert_one(mydict)
+        apiUser.insert_one(mydict)
         
         return True
     if (not "code" in result) or (result["code"] != code):
