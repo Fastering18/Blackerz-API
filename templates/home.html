@@ -50,7 +50,7 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
-        const loginedUser = JSON.stringify(JSON.parse(client))
+        const loginedUser = JSON.parse(client)
         
         $("#discordLogOut").hide()
         let currentBot = 0
