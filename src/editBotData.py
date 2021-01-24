@@ -9,7 +9,7 @@ from firebase import firebase
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 MongoClient = mongopy.MongoClient("mongodb+srv://FirstUser:koliman12345@firstcluster.mksml.mongodb.net/FirstDB?retryWrites=true&w=majority")
-dbmongoAPI = MongoClient["Api"][1]
+dbmongoAPI = MongoClient["Api"]["1"]
 dbmongoAPI.insert({ "name": "John", "address": "Highway 37" })
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
