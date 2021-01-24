@@ -99,10 +99,8 @@
             updateData(jsonBotData, nameQuery)
         }
         function discordLogOutAPI(force) {
-            setCookie("clientID", "", -1)
-            setCookie("code", "", -1)
+            setCookie("session", "", -1)
             if (force === true) window.location.href = window.location.origin;
-
         }
         function discordLoginAPI() {
             if (logined == true) {
@@ -158,7 +156,7 @@
             //Authorization
 
             if (getCookie("session") !== "") {
-
+                updateBotData()
             } else {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
@@ -196,7 +194,9 @@
                             })
                     })
             }
-        };</script>
+            setCookie("dariLink", window.location.origin, 1)
+        };
+    </script>
 </body>
 
 </html>
