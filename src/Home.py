@@ -47,7 +47,7 @@ def generateAuthorizationV1():
     print(result_str)
 class data():
     def __init__(self, tipe, **Data):
-        if tipe === "postUserStats":
+        if tipe == "postUserStats":
             user = Data.get('user', None)
             self.data = {}
             self.data["tag"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
@@ -56,7 +56,7 @@ class data():
             self.data["username"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
             authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
-        elif tipe === "allBot":
+        elif tipe == "allBot":
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
                 
