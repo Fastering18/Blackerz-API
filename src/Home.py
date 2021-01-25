@@ -70,8 +70,6 @@ class homePage(Resource):
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
     print(request.remote_addr)
-    location = DbIpCity.get(request.remote_addr, api_key='free')
-    print(location)
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
