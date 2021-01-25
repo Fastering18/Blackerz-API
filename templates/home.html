@@ -68,7 +68,7 @@
             $("#botListParent").empty();
             "{% set query = '"+ query + "' %}"
             console.log(jsonBotData)
-            {% for dataChild in bots if dataChild == query.lower() %}
+            {% for dataChild in json.loads(bots) if dataChild == query.lower() %}
                 //if (query !== undefined && jsonData[{{dataChild}}].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
 
                 currentBot++
