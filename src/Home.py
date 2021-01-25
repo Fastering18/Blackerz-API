@@ -69,8 +69,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
-    location = requests.get("https://api.ksoft.si/kumo/geoip?ip=" + request.remote_addr, headers=ksoftHeaders)
-    print(location.json())
+    useragent = request.headers.get('User-Agent')
+    
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
