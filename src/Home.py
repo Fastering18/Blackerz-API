@@ -8,6 +8,7 @@ import time
 import json
 import requests
 from threading import Timer
+from ip2geotools.databases.noncommercial import DbIpCity
 
 from firebase import firebase
 
@@ -68,7 +69,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
-    
+    location = DbIpCity.get(request.remote_addr, api_key='free')
+    print(location)
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
