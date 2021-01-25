@@ -77,6 +77,7 @@
         /*function botDetailClick(index) {
             window.location.pathname = `/bots/${index}`
         }*/
+        if (jsonBotData) $("#botlist").hide();
         for (let bot in jsonBotData) {
             $(`#${bot}`).mouseenter(function () {
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
@@ -108,7 +109,7 @@
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
 
                 para.id = "Bot-" + currentBot
-                para.style = "background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black"
+                para.style = "background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
                 if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
                 teks.innerText = jsonData[dataChild].name;
@@ -116,7 +117,7 @@
                 para.appendChild(teks)
                 //document.body
                 document.getElementById("botListParent").appendChild(para)
-                $(para).slideDown(325);
+                $(para).slideDown(300);
                 $(para).mouseenter(function () {
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
                 });
@@ -200,37 +201,7 @@
                 const randStr = generateRandomString();
                 //localStorage.setItem('stateParameter', randStr);
                 //$("#discordLogOut").hide()
-                //updateBotData()
                 //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
-            }
-            function updateBotData() {
-                fetch(`${proxyurl}${url}`, {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: new Headers({
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'fetch',
-                        'Origin': window.location.origin,
-                        'Access-Control-Allow-Origin': window.location.origin
-                    }),
-                })
-                    .then(response => {
-                        response.json()
-                            .then(data => {
-                                let botumName = ""
-                                for (bot in data) {
-                                    botumName += data[bot].name + ", ";
-                                }
-                                botumName = botumName.substring(0, botumName.length - 2)
-                                $("#botlist").html("<p>" + botumName + "</p>");
-                                jsonBotData = JSON.parse(({{ bots | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
-                                //updateData(data)
-                                console.log("updated")
-                            }).catch(err => {
-                                console.log(err)
-                                $("#botlist").html(`<p>${response.status} Gagal mengambil data dari endpoint, coba lagi nanti.</p>`)
-                            })
-                    })
             }
             setCookie("dariLink", window.location.host, 1)
         };
