@@ -54,7 +54,7 @@
              {%- if dataChild and "avatar" in dictBots[dataChild] -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="bot-{{currentBot}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black">
+             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" onclick="botDetailClick(this.id)">
                <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
                <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 120%">{{dictBots[dataChild]["name"]}}</p>
              </div>
@@ -69,13 +69,17 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
         const loginedUser = JSON.parse(client)
-        
+        $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+           console.log(JSON.stringify(data, null, 2));
+        });
         let currentBot = 0
         let botIdlist = []
         let jsonBotData = {}
         let logined = client != "null"
-        console.log(client +"\nlogined, " + String(logined))
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
+        function botDetailClick(index) {
+            window.location.pathname = `/bots/${index}`
+        }
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
@@ -179,13 +183,13 @@
             //Authorization
 
             if (getCookie("session") !== "") {
-                updateBotData()
+                //updateBotData()
             } else {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
                 //localStorage.setItem('stateParameter', randStr);
                 //$("#discordLogOut").hide()
-                updateBotData()
+                //updateBotData()
                 //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
             }
             function updateBotData() {
