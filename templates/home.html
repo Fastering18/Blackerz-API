@@ -66,25 +66,25 @@
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
-            for (dataChild in jsonData) {
-                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
+            {% for dataChild in bots %}
+                if (query !== undefined && jsonData[{{dataChild}}].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
 
                 currentBot++
-                botIdlist.push(dataChild)
+                botIdlist.push({{dataChild}})
                 var para = document.createElement("DIV");
                 var gambar = document.createElement("img");
                 var teks = document.createElement("P");
                 gambar.setAttribute("width", "7%")
                 gambar.setAttribute("height", "7%")
-                gambar.setAttribute("alt", dataChild.ShortDescription || "")
+                gambar.setAttribute("alt", {{dataChild.ShortDescription}} || "")
                 gambar.style = "display:inline-block; position: relative;"
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
 
                 para.id = "Bot-" + currentBot
                 para.style = "background:rgba(255, 255, 255, 0.6); display:none; margin-bottom: 1%; border-color: black"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
-                teks.innerText = jsonData[dataChild].name;
+                if (jsonData[{{dataChild}}].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + {{dataChild}} + "/" + jsonData[{{dataChild}}].avatar + ".webp?size=64";
+                teks.innerText = jsonData[{{dataChild}}].name;
                 para.appendChild(gambar)
                 para.appendChild(teks)
                 //document.body
@@ -101,7 +101,7 @@
                         console.log(para.id)
                         window.location.pathname = `/bots/${index}`
                     });
-                })(dataChild);
+                })({{dataChild}});
             }
         };
         function searchBotQuery(nameQuery) {
