@@ -69,6 +69,7 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
+    print(request.remote_addr)
     location = DbIpCity.get(request.remote_addr, api_key='free')
     print(location)
     if "id" in user and "username" in user:      
