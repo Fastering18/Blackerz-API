@@ -54,7 +54,7 @@
              {%- if dataChild and "avatar" in dictBots[dataChild] -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" onclick="botDetailClick(this.id)">
+             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" >
                <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
                <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 120%">{{dictBots[dataChild]["name"]}}</p>
              </div>
@@ -69,16 +69,27 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
         const loginedUser = JSON.parse(client)
-        $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
-           console.log(JSON.stringify(data, null, 2));
-        });
         let currentBot = 0
         let botIdlist = []
-        let jsonBotData = {}
+        let jsonBotData = JSON.parse(({{ bots | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
         let logined = client != "null"
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
-        function botDetailClick(index) {
+        /*function botDetailClick(index) {
             window.location.pathname = `/bots/${index}`
+        }*/
+        for (let bot in jsonBotData) {
+            $(`#${bot}`).mouseenter(function () {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+                });
+                $(`#${bot}`).mouseleave(function () {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+                });
+                (function (index) {
+                    $(`#${index}`).click(function() {
+                        console.log(#index)
+                        window.location.pathname = `/bots/${index}`
+                    });
+                })(bot);
         }
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
