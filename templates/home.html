@@ -198,7 +198,7 @@
                                 }
                                 botumName = botumName.substring(0, botumName.length - 2)
                                 $("#botlist").html("<p>" + botumName + "</p>");
-                                jsonBotData = {{ bots | tojson }};
+                                jsonBotData = JSON.parse(("{{ bots | tojson }}").replace(/&#39;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
                                 updateData(data)
                                 console.log("updated")
                             }).catch(err => {
