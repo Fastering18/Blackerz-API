@@ -46,22 +46,28 @@ def generateAuthorizationV1():
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
     print(result_str)
 class data():
-    def __init__(self, user):
-        self.data = {}
-        self.data["tag"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
-        self.data["avatar"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
-        self.data["code"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
-        self.data["username"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
-        authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
-        if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
-
+    def __init__(self, tipe, **Data):
+        if tipe === "postUserStats":
+            user = Data.get('user', None)
+            self.data = {}
+            self.data["tag"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "tag", user["tag"])
+            self.data["avatar"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "avatar", user["avatar"])
+            self.data["code"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
+            self.data["username"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
+            authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
+            if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
+        elif tipe === "allBot":
+            result = firebaseDB.get('/Infrastructure/botlist', None)
+            self.data = result
+                
 class homePage(Resource):
   def get(self):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    print(user)
+    botDataList = data("allBot")
+    
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
@@ -73,7 +79,7 @@ class homePage(Resource):
            'avatar': user["avatar"],
            'code': oneTimeCode
         }
-        data(userData)
+        data("postUserStats", user=userData)
     else:
         user = "null"
-    return make_response(render_template('home.html', user=user), 200, headers)
+    return make_response(render_template('home.html', user=user, bots=botDataList.data), 200, headers)
