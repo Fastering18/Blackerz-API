@@ -53,7 +53,7 @@
              {%- if dataChild and "avatar" in dictBots[dataChild] -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="bot-{{currentBot}}" style="background:rgba(255, 255, 255, 0.6); display:none; margin-bottom: 1%; border-color: black">
+             <div id="bot-{{currentBot}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black">
                <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
                <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%">{{dictBots["name"]}}</p>
              </div>
@@ -92,7 +92,7 @@
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
 
                 para.id = "Bot-" + currentBot
-                para.style = "background:rgba(255, 255, 255, 0.6); display:none; margin-bottom: 1%; border-color: black"
+                para.style = "background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
                 if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
                 teks.innerText = jsonData[dataChild].name;
