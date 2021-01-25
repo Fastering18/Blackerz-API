@@ -67,7 +67,8 @@
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
             "{% set query = '"+ query + "' %}"
-            {% for dataChild in bots if dataChild.name.lower() == query.lower() %}
+            console.log({{ bots }})
+            {% for dataChild in bots if dataChild == query.lower() %}
                 //if (query !== undefined && jsonData[{{dataChild}}].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
 
                 currentBot++
