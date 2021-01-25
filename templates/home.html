@@ -55,7 +55,7 @@
              {%- endif -%}
              <div id="bot-{{currentBot}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black">
                <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
-               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%">{{dictBots["name"]}}</p>
+               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 120%">{{dictBots[dataChild]["name"]}}</p>
              </div>
           {%- endfor -%}
     </div>
