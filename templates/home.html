@@ -66,8 +66,9 @@
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
-            {% for dataChild in bots %}
-                if (query !== undefined && jsonData[{{dataChild}}].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
+            "{% set query = '"+ query + "' %}"
+            {% for dataChild in bots if dataChild.name.lower() == query.lower() %}
+                //if (query !== undefined && jsonData[{{dataChild}}].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
 
                 currentBot++
                 botIdlist.push({{dataChild}})
@@ -196,7 +197,7 @@
                                 }
                                 botumName = botumName.substring(0, botumName.length - 2)
                                 $("#botlist").html("<p>" + botumName + "</p>");
-                                jsonBotData = data
+                                jsonBotData = {{ config | bots }};
                                 updateData(data)
                                 console.log("updated")
                             }).catch(err => {
