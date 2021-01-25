@@ -102,7 +102,7 @@
                         window.location.pathname = `/bots/${index}`
                     });
                 })({{dataChild}});
-            }
+            {% endfor %}
         };
         function searchBotQuery(nameQuery) {
             updateData(jsonBotData, nameQuery)
