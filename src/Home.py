@@ -8,7 +8,6 @@ import time
 import json
 import requests
 from threading import Timer
-import geoip2.database as geoip
 
 from firebase import firebase
 
@@ -21,8 +20,8 @@ AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-readerCountry = geoip.Reader("ip_country_db.mmdb")
 headers = {'Content-Type': 'text/html'}
+ksoftHeaders = {'Authorization': 'de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -70,8 +69,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
-    country = reader.country(request.remote_addr)
-    print(country)
+    location = requests.get("https://api.ksoft.si/kumo/geoip?ip=" + request.remote_addr, headers=ksoftHeaders)
+    print(location)
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
