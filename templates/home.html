@@ -77,7 +77,7 @@
         /*function botDetailClick(index) {
             window.location.pathname = `/bots/${index}`
         }*/
-        if (jsonBotData) $("#botlist").hide();
+        if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
         for (let bot in jsonBotData) {
             $(`#${bot}`).mouseenter(function () {
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
