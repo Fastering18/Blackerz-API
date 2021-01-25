@@ -113,6 +113,7 @@
                         window.location.pathname = `/bots/${index}`
                     });
                 })(dataChild);
+            }
         };
         function searchBotQuery(nameQuery) {
             updateData(jsonBotData, nameQuery)
@@ -207,7 +208,7 @@
                                 botumName = botumName.substring(0, botumName.length - 2)
                                 $("#botlist").html("<p>" + botumName + "</p>");
                                 jsonBotData = JSON.parse(({{ bots | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
-                                updateData(data)
+                                //updateData(data)
                                 console.log("updated")
                             }).catch(err => {
                                 console.log(err)
