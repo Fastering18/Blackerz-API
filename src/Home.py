@@ -5,6 +5,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
 import time
+import json
 import requests
 from threading import Timer
 
@@ -82,4 +83,4 @@ class homePage(Resource):
         data("postUserStats", user=userData)
     else:
         user = "null"
-    return make_response(render_template('home.html', user=user, bots=jsonify(botDataList.data)), 200, headers)
+    return make_response(render_template('home.html', user=user, bots=jsonify(botDataList.data), json=json), 200, headers)
