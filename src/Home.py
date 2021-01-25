@@ -8,7 +8,7 @@ import time
 import json
 import requests
 from threading import Timer
-from ip2geotools.databases.noncommercial import DbIpCity
+import geoip2.database as geoip
 
 from firebase import firebase
 
@@ -21,6 +21,7 @@ AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+readerCountry = geoip.Reader("ip_country_db.mmdb")
 headers = {'Content-Type': 'text/html'}
 
 def token_updater(token):
@@ -69,7 +70,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
-    print(request.remote_addr)
+    country = reader.country(request.remote_addr)
+    print(country)
     if "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
