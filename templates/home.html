@@ -54,7 +54,7 @@
              {%- if dataChild and "avatar" in dictBots[dataChild] -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" mouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" mouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${index}`">
+             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
                <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
                <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 120%">{{dictBots[dataChild]["name"]}}</p>
              </div>
