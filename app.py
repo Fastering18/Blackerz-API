@@ -3,12 +3,12 @@ from flask_restful import Api
 
 import src.Pages.Home as Home
 import src.Pages.UserProfile as Profile
+import src.Pages.renderUserPage as renderUserPage
 
 from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
 from src.editBotData import editData
-import src.renderUserPage as renderUserPage
 
 import src.Discord.login as discordLoginSource
 
