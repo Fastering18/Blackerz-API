@@ -13,19 +13,23 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 error2 = {'error': "Failed to update bot data", 'status': "Not success"}
 error3 = {'error': "shortDescription too long, must lower than 50 characters length!", 'status': "Not success"}
+error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
 class edit():
-    def __init__(self, data):
+    def __init__(self, data, id):
+        currentBot = firebase.get('/Infrastructure/botlist/' + id, None)
+        if currentBot == None:
+            return self.result = error4
         if 'name' in data:
-            firebaseDB.put('/Infrastructure/botlist/' + data['id'], "name", data['name'])
+            firebaseDB.put('/Infrastructure/botlist/' + id, "name", data['name'])
         if 'avatar' in data:
-            firebaseDB.put('/Infrastructure/botlist/' + data['id'], "avatar", data['avatar'])
+            firebaseDB.put('/Infrastructure/botlist/' + id, "avatar", data['avatar'])
         if 'shortDescription' in data:
-            firebaseDB.put('/Infrastructure/botlist/' + data['id'], "ShortDescription", data['shortDescription'])
+            firebaseDB.put('/Infrastructure/botlist/' + id, "ShortDescription", data['shortDescription'])
         if ('serverCount' in data) and (math.isnan(int(data["serverCount"])) == False):
-            firebaseDB.put('/Infrastructure/botlist/' + data['id'], "serverCount", data['serverCount'])
+            firebaseDB.put('/Infrastructure/botlist/' + id, "serverCount", data['serverCount'])
         self.result = True
 
 def verifyOwner(clientId, code):
@@ -45,30 +49,8 @@ class editData(Resource):
     clientCode = request.headers.get('code')
     clientAuthV1 = request.headers.get('Authorization')
     authentication = clientCode
-    
-    if clientCode == None:
-        authentication = clientAuthV1
-    if verifyOwner(clientId, authentication) == False: 
-       return make_response(jsonify(unauthorizedAcess), 401)
-    if not jsonData or not 'id' in jsonData:
-       return make_response(jsonify(error1), 400)
-    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
-       return make_response(jsonify(error3), 400)
-    botum = edit(jsonData)
-    
-    if botum.result == True:
-        return make_response(jsonify(sucess), 201)
-    else: 
-        return make_response(jsonify(error2), 422)
-  def post(self, id):
-    jsonData = request.get_json()
-    clientId = request.headers.get('clientId')
-    clientCode = request.headers.get('code')
-    clientAuthV1 = request.headers.get('Authorization')
-    authentication = clientCode
 
-    if clientCode == None:
-        authentication = clientAuthV1
+    if clientCode == None : authentication = clientAuthV1
     if verifyOwner(clientId, authentication) == False: 
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData:
@@ -76,9 +58,30 @@ class editData(Resource):
     if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
        return make_response(jsonify(error3), 400)
     jsonData["id"] = str(id)
-    botum = edit(jsonData)
+    botum = edit(jsonData, str(id))
     
     if botum.result == True:
         return make_response(jsonify(sucess), 201)
     else: 
-        return make_response(jsonify(error2), 422)
+        return make_response(jsonify(botum.result), 400)
+  def post(self, id):
+    jsonData = request.get_json()
+    clientId = request.headers.get('clientId')
+    clientCode = request.headers.get('code')
+    clientAuthV1 = request.headers.get('Authorization')
+    authentication = clientCode
+
+    if clientCode == None : authentication = clientAuthV1
+    if verifyOwner(clientId, authentication) == False: 
+       return make_response(jsonify(unauthorizedAcess), 401)
+    if not jsonData:
+       return make_response(jsonify(error1), 400)
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
+       return make_response(jsonify(error3), 400)
+    jsonData["id"] = str(id)
+    botum = edit(jsonData, str(id))
+    
+    if botum.result == True:
+        return make_response(jsonify(sucess), 201)
+    else: 
+        return make_response(jsonify(botum.result), 400)
