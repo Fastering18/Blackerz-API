@@ -19,7 +19,7 @@ unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner 
 
 class edit():
     def __init__(self, data, id):
-        currentBot = firebase.get('/Infrastructure/botlist/' + id, None)
+        currentBot = firebaseDB.get('/Infrastructure/botlist/' + id, None)
         self.result = None
         if currentBot == None:
             self.result = error4
