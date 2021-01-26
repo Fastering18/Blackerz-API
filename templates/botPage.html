@@ -27,7 +27,7 @@
     <body>
     <div class="botumInfo">
     <h1 id="botName">{{ botData["name"] }}</h1>
-    <img id="botAvatar" src={{ botData['avatar'] if "avatar" in botData else 'https://cdn.discordapp.com/embed/avatars/1.png' }}
+    <img id="botAvatar" src={{ avatarUser }}
       style="display:inline-block; position: relative;" width="10%" height="10%">
     <button id="addBotBTN" class="button" onclick="addBot()"><span>Add Bot</span></button>
     <button id="editBotData" class="button"><span>Edit</span></button>
