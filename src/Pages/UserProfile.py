@@ -68,7 +68,7 @@ class ProfileUsers(Resource):
         return redirect("https://blackerz.herokuapp.com/user/" + str(id))
     discord = make_session(token=session.get('oauth2_token'))
     userProfile = discord.get(API_BASE_URL + '/users/@me').json()
-    if userProfile and "id" in user and "username" in userProfile:      
+    if userProfile and "username" in userProfile and "discriminator" in userProfile:      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
         userData = {
