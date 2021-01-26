@@ -88,7 +88,7 @@ class ProfileUsers(Resource):
     userData["userId"] = str(id)
     
     if user and userProfile and "id" in user and "id" in userProfile:  
-        if user["id"] != userProfile["id"]:
+        if str(id) != userProfile["id"]:
             del userData["AuthorizationV1"]
     else:
         del userData["AuthorizationV1"]
