@@ -89,6 +89,6 @@ class ProfileUsers(Resource):
            'code': oneTimeCode
         }
         data("postUserStats", user=userData)
-    else:
+    if not user:
         return make_response(render_template('profile.html', json=json), 404, headers)
     return make_response(render_template('profile.html', user=userData, json=json), 200, headers)
