@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="light">
+<html data-theme="dark">
     
 <head>
     <meta charset="UTF-8">
@@ -27,6 +27,20 @@
     <title>Blackerz - {{ botData["name"] }}</title>
 </head>
     <body>
+        <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a id="profiletab" href="/">Home</a>
+            <a href="/servers">Servers</a>
+            {%- if clientUser and "username" in clientUser -%}
+               <a class="active" id="discordLogin" onclick="discordLoginAPI()">{{ clientUser["username"] }}</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+            {%- endif -%}
+        </div>
+    </div>
     <div class="botumInfo">
     <h1 id="botName">{{ botData["name"] }}</h1>
     <img id="botAvatar" src={{ avatarUser }}
@@ -50,5 +64,23 @@
        '<p id="ownerInfo">Developer: {{botData["owner"]["name"]}}</p>' 
     {%- endif -%}
   </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        if (window.location.protocol === "http:") window.location.protocol = "https:";
+        const client = JSON.parse(('{{ clientUser }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
+        let logined = client != "null"
+        
+        function discordLogOutAPI(force) {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            //if (force === true) window.location.href = window.location.origin;
+        }
+        function discordLoginAPI() {
+            if (logined == true) {
+                window.location.href = window.location.origin + "/user/" + loginedUser.id
+            } else {
+                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            }
+        }
+    </script>
   </body>
 </html>
