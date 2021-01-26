@@ -31,10 +31,10 @@
       </form>
     </label>
     <hr>
-    {{ '<p id="shortDescription">botData["LongDescription"]</p>' if "LongDescription" in botData }}
-    <p id="longDescription"></p>
-    {{ '<p id="shortDescription">botData["owner"]["name"]</p>' if "owner" in botData and "name" in botData["owner"]}}
-    <p id="ownerInfo"></p>
+    <p id="shortDescription">{{botData["LongDescription"]}}</p>
+    {%- if "owner" in botData and "name" in botData["owner"] -%}
+       '<p id="ownerInfo">Developer: {{botData["owner"]["name"]}}</p>' 
+    {%- endif -%}
   </div>
   </body>
 </html>
