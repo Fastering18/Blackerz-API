@@ -71,7 +71,7 @@ class ProfileUsers(Resource):
     useragent = request.headers.get('User-Agent')
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     userData = user
-    userData["userId "] = str(id)
+    userData["userId"] = str(id)
     
     if user and userProfile and "id" in user and "id" in userProfile:  
         if user["id"] != userProfile["id"]:
