@@ -19,10 +19,8 @@
     <button id="editBotData" class="button"><span>Edit</span></button>
     <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
     <br>
-    {{ '<p id="shortDescription">botData['shortDescription']</p>' if "shortDescription" in botData }}
-    <p id="shortDescription"></p>
-    {{ '<p id="shortDescription">botData["serverCount"]</p>' if "serverCount" in botData }}
-    <p id="serverCount"></p>
+    <p id="shortDescription">{{ botData['shortDescription'] }}</p>
+    <p id="serverCount">{{ botData["serverCount"] }}</p>
     <label id="editBotForm" style="display: none">
       <span for="botDescriptionForm">Deskripsi baru:</span>
       <textarea id="botDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
