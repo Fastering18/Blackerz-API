@@ -62,7 +62,7 @@ class data():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
                 
-class homePage(Resource):
+class ProfileUsers(Resource):
   def get(self, id):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/user/" + str(id))
