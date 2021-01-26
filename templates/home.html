@@ -54,9 +54,9 @@
              {%- if dataChild and "avatar" in dictBots[dataChild] -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
-               <img width="7%" height="7%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
-               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 120%">{{dictBots[dataChild]["name"]}}</p>
+             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
+               <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
+               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{dictBots[dataChild]["name"]}}</p>
              </div>
           {%- endfor -%}
     </div>
@@ -87,13 +87,13 @@
                 var para = document.createElement("DIV");
                 var gambar = document.createElement("img");
                 var teks = document.createElement("P");
-                gambar.setAttribute("width", "7%")
-                gambar.setAttribute("height", "7%")
+                gambar.setAttribute("width", "6%")
+                gambar.setAttribute("height", "6%")
                 gambar.style = "display:inline-block; position: relative;"
-                teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
+                teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 140%"
 
                 para.id = currentBot
-                para.style = "background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black; display: none"
+                para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
                 if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
                 teks.innerText = jsonData[dataChild].name;
