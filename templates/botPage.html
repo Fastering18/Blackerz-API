@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta property="og:title" content="{{ botName }}" />
-    <meta property="og:description" content="{{ short_description }}" />
-    <meta name="description" content="{{ short_description }}" >
+    <meta property="og:title" content="{{ botData["name"] }}" />
+    <meta property="og:description" content="{{ botData["ShortDescription"] }}" />
+    <meta name="description" content="{{ botData["ShortDescription"] }}" >
     <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="canonical" href="https://blackerz-api.herokuapp.com/bots/{{ botId }}">
     
-    <title>{{ botName }}</title>
+    <title>Blackerz - {{ botName }}</title>
 </head>
     <body>
-    <div>
-      <h1>{{ botName }} Bot</h1>
-    </div>
+    <div class="botumInfo">
+    <h1 id="botName">{{ botData["name"] }}</h1>
+    <img id="botAvatar" src={{ botData['avatar'] if "avatar" in botData else 'https://cdn.discordapp.com/embed/avatars/1.png' }}
+      style="display:inline-block; position: relative;" width="10%" height="10%">
+    <button id="addBotBTN" class="button" onclick="addBot()"><span>Add Bot</span></button>
+    <button id="editBotData" class="button"><span>Edit</span></button>
+    <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
+    <br>
+    {{ '<p id="shortDescription">botData['shortDescription']</p>' if "shortDescription" in botData }}
+    <p id="shortDescription"></p>
+    {{ '<p id="shortDescription">botData["serverCount"]</p>' if "serverCount" in botData }}
+    <p id="serverCount"></p>
+    <label id="editBotForm" style="display: none">
+      <span for="botDescriptionForm">Deskripsi baru:</span>
+      <textarea id="botDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
+        name="botDescriptionForm" oninput="this.parentNode.dataset.value = this.value" rows="1"
+        placeholder="Deskripsi baru"></textarea>
+      </form>
+    </label>
+    <hr>
+    {{ '<p id="shortDescription">botData["LongDescription"]</p>' if "LongDescription" in botData }}
+    <p id="longDescription"></p>
+    {{ '<p id="shortDescription">botData["owner"]["name"]</p>' if "owner" in botData and "name" in botData["owner"]}}
+    <p id="ownerInfo"></p>
+  </div>
   </body>
 </html>
