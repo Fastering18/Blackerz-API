@@ -71,13 +71,14 @@ class ProfileUsers(Resource):
     useragent = request.headers.get('User-Agent')
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     userData = user
+    userData["userId "] = str(id)
     
-    if "id" in user and "id" in userProfile:  
+    if user and userProfile and "id" in user and "id" in userProfile:  
         if user["id"] != userProfile["id"]:
             del userData["AuthorizationV1"]
     else:
         del userData["AuthorizationV1"]
-    if "id" in user and "username" in userProfile:      
+    if userProfile and "id" in user and "username" in userProfile:      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
         userData = {
