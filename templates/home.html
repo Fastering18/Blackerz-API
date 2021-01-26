@@ -125,7 +125,7 @@
         }
         function discordLoginAPI() {
             if (logined == true) {
-                window.location.href = window.location.origin + "/profile"
+                window.location.href = window.location.origin + "/user/" + client.id
             } else {
                 window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             }
