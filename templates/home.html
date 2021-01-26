@@ -74,23 +74,8 @@
         let jsonBotData = JSON.parse(({{ bots | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
         let logined = client != "null"
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
-        /*function botDetailClick(index) {
-            window.location.pathname = `/bots/${index}`
-        }*/
         if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
-        /*function mouseEnter() {
-                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
-                };
-                function mouseLeave() {
-                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
-                });
-                (function (index) {
-                    $(`#${index}`).click(function() {
-                        console.log(index)
-                        window.location.pathname = `/bots/${index}`
-                    });
-                })(bot);
-        }*/
+      
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
@@ -107,7 +92,7 @@
                 gambar.style = "display:inline-block; position: relative;"
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 120%"
 
-                para.id = "Bot-" + currentBot
+                para.id = currentBot
                 para.style = "background:rgba(255, 255, 255, 0.6); margin-bottom: 1%; border-color: black; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
                 if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
