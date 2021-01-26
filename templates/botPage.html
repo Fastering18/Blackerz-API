@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 <head>
-    <meta property="og:title" content="{{ botData["name"] }}" />
+    <meta property="og:title" content="Blackerz - {{ botData["name"] }}" />
     <meta property="og:description" content="{{ botData["ShortDescription"] }}" />
+    <meta property="og:url" content="https://blackerz-id.web.app/bots/{{ botId }}" />
+    <meta name="og:site_name" content="Blackerz Bot List">
+    <meta property="og:image" content="{{ avatarUser }}" />
     <meta name="description" content="{{ botData["ShortDescription"] }}" >
+    <meta name="keywords" content="{{ botData["name"] }} Blackerz">
+    <meta name="theme-color" content="#7289DA">
     <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="canonical" href="https://blackerz-api.herokuapp.com/bots/{{ botId }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Blackerz - {{ botName }}</title>
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:title" content="{{ botData["name"] }}">
+    <meta name="twitter:description" content="{{ botData["ShortDescription"] }}">
+    <meta name="twitter:image" content="https://top.gg/static/Images/Blackerz.jpg">
+    <title>Blackerz - {{ botData["name"] }}</title>
 </head>
     <body>
     <div class="botumInfo">
