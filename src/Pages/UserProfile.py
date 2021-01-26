@@ -68,16 +68,6 @@ class ProfileUsers(Resource):
         return redirect("https://blackerz.herokuapp.com/user/" + str(id))
     discord = make_session(token=session.get('oauth2_token'))
     userProfile = discord.get(API_BASE_URL + '/users/@me').json()
-    useragent = request.headers.get('User-Agent')
-    user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
-    userData = user
-    userData["userId"] = str(id)
-    
-    if user and userProfile and "id" in user and "id" in userProfile:  
-        if user["id"] != userProfile["id"]:
-            del userData["AuthorizationV1"]
-    else:
-        del userData["AuthorizationV1"]
     if userProfile and "id" in user and "username" in userProfile:      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
@@ -89,6 +79,18 @@ class ProfileUsers(Resource):
            'code': oneTimeCode
         }
         data("postUserStats", user=userData)
+        
+    useragent = request.headers.get('User-Agent')
+    user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     if not user:
         return make_response(render_template('profile.html', json=json), 404, headers)
+    userData = user
+    userData["userId"] = str(id)
+    
+    if user and userProfile and "id" in user and "id" in userProfile:  
+        if user["id"] != userProfile["id"]:
+            del userData["AuthorizationV1"]
+    else:
+        del userData["AuthorizationV1"]
+
     return make_response(render_template('profile.html', user=userData, json=json), 200, headers)
