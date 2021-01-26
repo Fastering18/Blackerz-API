@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api
 
 import src.Pages.Home as Home
+import src.Pages.UserProfile as Profile
 
 from src.searchbot import resouce
 from src.allbot import resource2
@@ -26,6 +27,7 @@ api = Api(app)
 
 # Home resource
 api.add_resource(Home.homePage, "/")
+api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Images/<string:filename>")
 
 # Discord bots resource
