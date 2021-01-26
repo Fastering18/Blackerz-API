@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#7289DA">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blackerz-id.web.app/user/{{ userId }}" />
+    <meta name="og:site_name" content="Blackerz Bot List">
+    <meta property="og:title" content="Blackerz - {{ user["username"] }}" />
+    <meta property="og:description" content="{{ user.description }}">
+    {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+    {%- if "avatar" in user -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + userId + "/" + user["avatar"] + ".webp?size=64" -%}
+    {% endif %}
+    <meta property="og:image" content="{{ avatarUser }}" />
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Blackerz - {{ user["username"] }}">
+    <meta property="twitter:description" content="{{ user.description }}">
+    <meta name="description" content="{{ user.description }}">
+    <meta name="keywords" content="{{ user.username }} Blackerz">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/jpg" href="../../Images/Blackerz.jpg" />
+    <script data-ad-client="ca-pub-9419528436883042" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="google-site-verification" content="b10OoWMdH8oSIGjd-Lp06ajgSmTFtml140QikmrK_qk" />
+    <link rel="stylesheet" href="utama.css">
+    <style media="screen">
+        mark {
+            background-color: rgba(0, 0, 0, 0.68);
+            color: rgba(255, 26, 26, 1);
+            font-weight: medium;
+            font-family: verdana;
+        }
+    </style>
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0XCB9EJMH7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0XCB9EJMH7');
+    </script>
+    <title>"Blackerz - {{ user["username"] }}"</title>
+</head>
+
+<body>
+    <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a class="active" id="profiletab" href="/">Home</a>
+            <a href="/servers">Servers</a>
+            {%- if user and "username" in user -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">{{ user["username"] }}</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+            {%- endif -%}
+        </div>
+    </div>
+    <div id="userInfo">
+        <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
+        <br>
+        <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["username"] }}</p>
+        <br>
+        <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
+        <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);">{{ user["AuthorizationV1"] }}</p>
+    </div>
+    <amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-9419528436883042" data-ad-slot="1095974537"
+        data-auto-format="rspv" data-full-width="">
+        <div overflow=""></div>
+    </amp-ad>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const proxyurl = "";
+        function generateRandomString() {
+            const rand = Math.floor(Math.random() * 10);
+            let randStr = '';
+
+            for (let i = 0; i < 20 + rand; i++) {
+                randStr += String.fromCharCode(33 + Math.floor(Math.random() * 94));
+            }
+
+            return randStr;
+        }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results || !results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        window.onload = function () {
+            
+        }
+    </script>
+</body>
+
+</html>
