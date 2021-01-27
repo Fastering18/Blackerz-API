@@ -108,7 +108,7 @@
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
                 })
                 (function (index) {
-                    para.setAttribute("onclick", function()
+                    para.setAttribute("onclick", function(index)
                         window.location.pathname = `/bots/${index}`
                     })
                 })(dataChild);
