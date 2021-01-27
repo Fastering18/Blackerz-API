@@ -64,6 +64,7 @@
     <br>
     <p id="shortDescription">{{ botData['shortDescription'] }}</p>
     <p id="serverCount">{{ botData["serverCount"] }}</p>
+    {%- if clientUser and "username" in clientUser and clientUser["username"] == botData["owner"]["id"] -%}
     <label id="editBotForm" style="display: none">
       <span for="botDescriptionForm">Deskripsi baru:</span>
       <textarea id="botDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
@@ -71,6 +72,7 @@
         placeholder="Deskripsi baru"></textarea>
       </form>
     </label>
+    {%- endif -%}
     <hr>
     <p id="shortDescription">{{botData["LongDescription"]}}</p>
     {%- if "owner" in botData and "name" in botData["owner"] -%}
