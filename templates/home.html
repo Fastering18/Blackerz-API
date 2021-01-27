@@ -102,14 +102,13 @@
                 //document.body
                 document.getElementById("botListParent").appendChild(para)
                 $(para).slideDown(280);
-                para.setAttribute("onmouseenter", function(element)
-                    element.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
-                })
-                para.setAttribute("onmouseleave", function(element)
-                    element.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+                $(para).hover(function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+                }, function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
                 })
                 (function (index) {
-                    para.setAttribute("onclick", function(element)
+                    para.setAttribute("onclick", function()
                         window.location.pathname = `/bots/${index}`
                     })
                 })(dataChild);
