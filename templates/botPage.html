@@ -34,7 +34,7 @@
             font-weight: medium;
             font-family: verdana;
         }
-        p {
+        p, h1 {
             color: rgba(255, 255, 255, 0.9)
         }
     </style>
@@ -81,7 +81,7 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ clientUser }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
-        let logined = client != "null"
+        let logined = client.message != "401: Unauthorized"
         
         function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
