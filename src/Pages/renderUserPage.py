@@ -88,7 +88,9 @@ class botPage(Resource):
             short_description = bot["ShortDescription"]
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user), 200, headers)
     else:
-        notFound = {description: "Bot not found"}
+        notFound = {
+            'description': "Bot not found"
+        }
         return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
 
 class blackerzProfile(Resource):
