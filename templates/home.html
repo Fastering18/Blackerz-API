@@ -101,18 +101,17 @@
                 para.appendChild(teks)
                 //document.body
                 document.getElementById("botListParent").appendChild(para)
-                $(para).slideDown(300);
-                $(para).mouseenter(function () {
+                $(para).slideDown(280);
+                para.setAttribute("onmouseenter", function()
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
-                });
-                $(para).mouseleave(function () {
+                })
+                para.setAttribute("onmouseleave", function()
                     this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
-                });
+                })
                 (function (index) {
-                    para.addEventListener('click', function () {
-                        console.log(para.id)
+                    para.setAttribute("onclick", function()
                         window.location.pathname = `/bots/${index}`
-                    });
+                    })
                 })(dataChild);
             }
         };
