@@ -21,10 +21,10 @@
     <meta name="description" content="{{ user.description }}">
     <meta name="keywords" content="{{ user.username }} Blackerz">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://blackerz-api.herokuapp.com/user/{{ user["userId"] }}">
     <link rel="shortcut icon" type="image/jpg" href="../../Images/Blackerz.jpg" />
     <link rel="stylesheet" href="/static/CSS/home.css">
-    <script data-ad-client="ca-pub-9419528436883042" async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <meta name="google-site-verification" content="b10OoWMdH8oSIGjd-Lp06ajgSmTFtml140QikmrK_qk" />
     <style media="screen">
         mark {
@@ -34,16 +34,6 @@
             font-family: verdana;
         }
     </style>
-    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0XCB9EJMH7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-0XCB9EJMH7');
-    </script>
     <title>Blackerz - {{ user["username"] }}</title>
 </head>
 
@@ -64,8 +54,7 @@
     </div>
     <div id="userInfo">
         <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
-        <br>
-        <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["username"] }}</p>
+        <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
