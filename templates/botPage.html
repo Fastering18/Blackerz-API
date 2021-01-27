@@ -44,7 +44,7 @@
       color: #FFFFFF;
       text-align: center;
       font-size: 100%;
-      width: 11%;
+      <!-- width: 11%; -->
       padding: 1%;
       height: 8%;
       transition: all 0.45s;
@@ -58,7 +58,7 @@
       color: #FFFFFF;
       text-align: center;
       font-size: 100%;
-      width: 13.5%;
+      <!-- width: 13.5%; -->
       padding: 1%;
       height: 8%;
       transition: all 0.45s;
@@ -189,8 +189,10 @@
     {%- endif -%}
     <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
     <br>
-    <p id="shortDescription">{{ botData['shortDescription'] }}</p>
-    <p id="serverCount">{{ botData["serverCount"] }}</p>
+    <p id="shortDescription">{{ botData["ShortDescription"] }}</p>
+    {%- if "serverCount" in botData -%}
+        <p id="serverCount">In {{ botData["serverCount"] }} servers</p>
+    {%- endif -%}
     {%- if clientUser and "username" in clientUser and clientUser["username"] == botData["owner"]["id"] -%}
     <label id="editBotForm" style="display: none">
       <span for="botDescriptionForm">Deskripsi baru:</span>
@@ -201,7 +203,7 @@
     </label>
     {%- endif -%}
     <hr>
-    <p id="shortDescription">{{botData["LongDescription"]}}</p>
+    <p id="longDescription">{{botData["LongDescription"]}}</p>
     {%- if "owner" in botData and "name" in botData["owner"] -%}
        <p id="ownerInfo">Developer: {{botData["owner"]["name"]}}</p>
     {%- endif -%}
