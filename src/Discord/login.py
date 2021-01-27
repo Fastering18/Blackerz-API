@@ -86,7 +86,12 @@ class callback(Resource):
   def get(self):
      print(request.url)
      if request.values.get('error'):
-         return request.values['error']
+         host = "https://blackerz.web.app/" 
+         if request.cookies.get('dariLink'):
+             host = request.cookies['dariLink']
+             if (host == "blackerz.herokuapp.com"): 
+                 host = "https://" + host
+         return redirect(host)
      discord = make_session(state=session.get('oauth2_state'))
      token = discord.fetch_token(
          TOKEN_URL,
