@@ -83,7 +83,10 @@ class ProfileUsers(Resource):
     useragent = request.headers.get('User-Agent')
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     if not user:
-        return make_response(render_template('profile.html', json=json), 404, headers)
+        notFound = {
+            'description': "Bot not found"
+        }
+        return make_response(render_template('404.html', notFound=notFound, clientUser=userProfile), 404, headers)
     userData = user
     userData["userId"] = str(id)
     
