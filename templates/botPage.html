@@ -59,7 +59,9 @@
     <img id="botAvatar" src={{ avatarUser }}
       style="display:inline-block; position: relative;" width="10%" height="10%">
     <button id="addBotBTN" class="button" onclick="addBot()"><span>Add Bot</span></button>
-    <button id="editBotData" class="button"><span>Edit</span></button>
+    {%- if clientUser and "username" in clientUser and clientUser["username"] == botData["owner"]["id"] -%}
+        <button id="editBotData" class="button"><span>Edit</span></button>
+    {%- endif -%}
     <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
     <br>
     <p id="shortDescription">{{ botData['shortDescription'] }}</p>
@@ -91,7 +93,7 @@
         }
         function discordLoginAPI() {
             if (logined == true) {
-                window.location.href = window.location.origin + "/user/" + loginedUser.id
+                window.location.href = window.location.origin + "/user/" + client.id
             } else {
                 window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             }
