@@ -108,13 +108,13 @@
                 //document.body
                 document.getElementById("botListParent").appendChild(para)
                 $(para).slideDown(280);
-                $(para).hover(function() {
+                $(`#${dataChild}`).hover(function() {
                     $(this).css("background-color", "rgba(255, 255, 255, 0.85)");
                 }, function() {
                     $(this).css("background-color", "rgba(255, 255, 255, 0.6)");
                 })
                 (function (index) {
-                    para.setAttribute("onclick", function() {
+                    $(`#${index}`).click(function() {
                         window.location.pathname = `/bots/${index}`
                     })
                 })(dataChild);
