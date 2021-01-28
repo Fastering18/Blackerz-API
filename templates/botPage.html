@@ -184,7 +184,7 @@
     <h1 id="botName">{{ botData["name"] }}</h1>
     <img id="botAvatar" src={{ avatarUser }}
       style="display:inline-block; position: relative;" width="10%" height="10%">
-    <button id="addBotBTN" class="button" onclick="window.location.href = "('{{ botData['inviteLink'] if botData and 'inviteLink' in botData else 'https://discord.com/oauth2/authorize?client_id=' + botId + '&permissions=335578198&scope=bot' }}").replace("/amp;/gi")"><span>Add Bot</span></button>
+    <button id="addBotBTN" class="button" onclick="window.location.href = "('{{ botData['inviteLink'] if botData and 'inviteLink' in botData else 'https://discord.com/oauth2/authorize?client_id=' + botId + '&permissions=335578198&scope=bot}}').replace(/amp;/gi)"><span>Add Bot</span></button>
     {%- if clientUser and "username" in clientUser and clientUser["username"] == botData["owner"]["id"] -%}
         <button id="editBotData" class="button"><span>Edit</span></button>
     {%- endif -%}
