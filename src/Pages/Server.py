@@ -62,7 +62,7 @@ class data():
             result = firebaseDB.get('/Infrastructure/serverlist', None)
             self.data = result
                 
-class homePage(Resource):
+class allServersPage(Resource):
   def get(self):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/")
