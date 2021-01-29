@@ -97,7 +97,7 @@ class specificServerPage(Resource):
         return redirect("https://blackerz.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverData = data("specificServer", str(id))
+    serverData = data("specificServer", serverId=str(id))
     useragent = request.headers.get('User-Agent')
     
     if not "id" in user and not "username" in user:      
