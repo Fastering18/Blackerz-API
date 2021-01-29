@@ -171,8 +171,8 @@
         <div class="topnav">
             <a id="profiletab" href="/">Home</a>
             <a href="/servers">Servers</a>
-            {%- if clientUser and "username" in clientUser -%}
-               <a id="discordLogin" onclick="discordLoginAPI()">{{ clientUser["username"] }}</a>
+            {%- if user and "username" in user -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">{{ user["username"] }}</a>
                <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
             {%- else -%}
                <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
@@ -185,7 +185,7 @@
     <img id="serverAvatar" src={{ avatarUser }}
       style="display:inline-block; position: relative;" width="10%" height="10%">
     <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
-    {%- if clientUser and "id" in clientUser and clientUser["id"] == server["owner"]["id"] -%}
+    {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
         <button id="editServerData" class="button"><span>Edit</span></button>
     {%- endif -%}
     <button id="voteServer" class="button" onclick="voteServer()"><span>Vote </span></button>
@@ -194,7 +194,7 @@
     {%- if "memberCount" in server -%}
         <p id="serverCount">With {{ server["memberCount"] }} members</p>
     {%- endif -%}
-    {%- if clientUser and "id" in clientUser and clientUser["id"] == server["owner"]["id"] -%}
+    {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
     <label id="editServerForm" style="display: none">
       <span for="serverDescriptionForm">Deskripsi baru:</span>
       <textarea id="serverDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
@@ -212,7 +212,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        const client = JSON.parse(('{{ clientUser }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
+        const client = JSON.parse(('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
         let logined = client.message != "401: Unauthorized"
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'inviteLink' in server else 'https://discord.gg/'}}"
         inviteLink = inviteLink.replace(/amp;/gi, "")
