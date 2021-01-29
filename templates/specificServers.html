@@ -215,7 +215,7 @@
         const client = JSON.parse(('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
         let logined = client.message != "401: Unauthorized"
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/'}}"
-        joinLink = inviteLink.replace(/amp;/gi, "")
+        joinLink = joinLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
