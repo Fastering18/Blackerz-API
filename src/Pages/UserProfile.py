@@ -96,4 +96,4 @@ class ProfileUsers(Resource):
     else:
         del userData["AuthorizationV1"]
 
-    return make_response(render_template('profile.html', user=userData, json=json), 200, headers)
+    return make_response(render_template('profile.html', user=userData, json=json, client=userProfile), 200, headers)
