@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api
 
 import src.Pages.Home as Home
+import src.Pages.Server as Servers
 import src.Pages.UserProfile as Profile
 import src.Pages.renderUserPage as renderUserPage
 
@@ -27,6 +28,7 @@ api = Api(app)
 
 # Home resource
 api.add_resource(Home.homePage, "/")
+api.add_resource(Servers.homePage, "/servers")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Images/<string:filename>")
 
