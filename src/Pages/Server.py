@@ -100,10 +100,9 @@ class specificServerPage(Resource):
     serverData = data("specificServer", str(id))
     useragent = request.headers.get('User-Agent')
     
-    if "id" in user and "username" in user:      
-        # return jsonify(user=user, guilds=guilds, connections=connections)
-    else:
-        user = "null"
+    if not "id" in user and not "username" in user:      
+        user = "null"        
+        
     if serverData.data != None:
         return make_response(render_template('specificServers.html', user=user, server=json.dumps(serverData.data), json=json, serverID=str(id)), 200, headers)
     else:
