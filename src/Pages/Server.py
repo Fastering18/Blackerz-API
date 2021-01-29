@@ -67,7 +67,7 @@ class data():
             self.data = result
                 
 class allServersPage(Resource):
-  def get(self, id):
+  def get(self):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
