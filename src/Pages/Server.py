@@ -105,6 +105,6 @@ class specificServerPage(Resource):
     else:
         user = "null"
     if serverData.data != None:
-        return make_response(render_template('specificServers.html', user=user, server=json.dumps(serverData.data), json=json), 200, headers)
+        return make_response(render_template('specificServers.html', user=user, server=json.dumps(serverData.data), json=json, serverID=str(id)), 200, headers)
     else:
         return make_response(render_template('404.html', user=user), 404, headers)
