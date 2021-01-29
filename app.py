@@ -28,7 +28,7 @@ api = Api(app)
 
 # Home resource
 api.add_resource(Home.homePage, "/")
-api.add_resource(Servers.homePage, "/servers")
+api.add_resource(Servers.allServersPage, "/servers")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Images/<string:filename>")
 
