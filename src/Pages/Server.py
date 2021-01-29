@@ -91,7 +91,7 @@ class allServersPage(Resource):
         user = "null"
     return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
 
-class allServersPage(Resource):
+class specificServerPage(Resource):
   def get(self, id):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/")
