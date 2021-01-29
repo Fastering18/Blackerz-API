@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:title" content="Server - {{ server["name"] }}" />
+    <meta property="og:description" content="{{ server["ShortDescription"] }}" />
+    <meta property="og:url" content="https://blackerz.herokuapp.com/server/{{ serverID }}" />
+    <meta name="og:site_name" content="Blackerz Bot List">
+    {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+    {%- if "avatar" in server -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + serverID + "/" + server["avatar"] + ".webp?size=64" -%}
+    {%- endif -%}
+    <meta property="og:image" content="{{ avatarUser }}" />
+    <meta name="description" content="{{ server["ShortDescription"] }}">
+    <meta name="keywords" content="{{ server["name"] }} Blackerz">
+    <meta name="theme-color" content="#7289DA">
+    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="canonical" href="https://blackerz.herokuapp.com/server/{{ serverID }}">
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:title" content="{{ server["name"] }}">
+    <meta name="twitter:description" content="{{ server["ShortDescription"] }}">
+    <meta name="twitter:image" content="{{ avatarUser }}">
+    <title>Blackerz - {{ server["name"] }}</title>
+    
+    <style media="screen">
+        mark {
+            background-color: rgba(0, 0, 0, 0.68);
+            color: rgba(255, 26, 26, 1);
+            font-weight: medium;
+            font-family: verdana;
+        }
+        p, h1 {
+            color: rgba(255, 255, 255, 0.9)
+        }
+        #voteServer {
+      border-radius: 4px;
+      background-color: #1e7bf4;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 100%;
+      min-width: 11%;
+      padding: 1%;
+      height: 8%;
+      transition: all 0.45s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    #addServerBTN {
+      border-radius: 4px;
+      background-color: #17bd1f;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 100%;
+      min-width: 13.5%; 
+      padding: 1%;
+      height: 8%;
+      transition: all 0.45s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    #ServerDescriptionForm {
+      vertical-align: top;
+      align-items: center;
+      position: relative;
+      border: solid 1px;
+      padding: 0.25em 0.5em;
+      margin: 5px;
+    }
+    #ServerDescriptionForm {
+      padding: 0.5em;
+      align-items: stretch;
+    }
+
+    #ServerDescriptionForm:after,
+    #ServerDescriptionForm input,
+    #ServerDescriptionForm textarea {
+      grid-area: 2/1;
+    }
+    #ServerDescriptionForm::after,
+    #ServerDescriptionForm input,
+    #ServerDescriptionForm textarea {
+      width: auto;
+      min-width: 1em;
+      grid-area: 1/2;
+      font: inherit;
+      padding: 0.25em;
+      margin: 0;
+      resize: none;
+      background: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border: none;
+    }
+    #ServerDescriptionForm span {
+      padding: 0.25em;
+    }
+    #ServerDescriptionForm::after {
+      content: attr(data-value) " ";
+      visibility: hidden;
+      white-space: pre-wrap;
+    }
+    #ServerDescriptionForm:focus-within {
+      outline: solid 1px rgba(33, 33, 42, 0.85);
+      box-shadow: 4px 4px 0px rgba(33, 33, 42, 0.8);
+    }
+    #ServerDescriptionForm:focus-within>span {
+      color: rgba(33, 33, 42, 0.85);
+    }
+    #ServerDescriptionForm:focus-within textarea:focus,
+    #ServerDescriptionForm:focus-within input:focus {
+      outline: none;
+    }
+    #ServerDescriptionForm {
+      box-shadow: 4px 4px 0px #000;
+    }
+    #ServerDescriptionForm>span {
+      text-transform: uppercase;
+      font-size: 0.8em;
+      font-weight: bold;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+    }
+    #editServerData {
+      border-radius: 4px;
+      background-color: #9daa9e;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 100%;
+      width: 12%;
+      padding: 1%;
+      height: 8%;
+      transition: all 0.45s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    .button:hover span {
+      padding-right: 25px;
+    }
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+    </style>
+</head>
+    <body>
+        <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a id="profiletab" href="/">Home</a>
+            <a href="/servers">Servers</a>
+            {%- if clientUser and "username" in clientUser -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">{{ clientUser["username"] }}</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+            {%- endif -%}
+        </div>
+    </div>
+    <div class="serverInfo">
+    <h1 id="serverName">{{ server["name"] }}</h1>
+    <img id="serverAvatar" src={{ avatarUser }}
+      style="display:inline-block; position: relative;" width="10%" height="10%">
+    <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
+    {%- if clientUser and "id" in clientUser and clientUser["id"] == server["owner"]["id"] -%}
+        <button id="editServerData" class="button"><span>Edit</span></button>
+    {%- endif -%}
+    <button id="voteServer" class="button" onclick="voteServer()"><span>Vote </span></button>
+    <br>
+    <p id="shortDescription">{{ server["ShortDescription"] }}</p>
+    {%- if "memberCount" in server -%}
+        <p id="serverCount">With {{ server["memberCount"] }} members</p>
+    {%- endif -%}
+    {%- if clientUser and "id" in clientUser and clientUser["id"] == server["owner"]["id"] -%}
+    <label id="editServerForm" style="display: none">
+      <span for="serverDescriptionForm">Deskripsi baru:</span>
+      <textarea id="serverDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
+        name="serverDescriptionForm" oninput="this.parentNode.dataset.value = this.value" rows="1"
+        placeholder="Deskripsi baru"></textarea>
+      </form>
+    </label>
+    {%- endif -%}
+    <hr>
+    <p id="longDescription">{{server["LongDescription"]}}</p>
+    {%- if "owner" in server and "name" in server["owner"] -%}
+       <p id="ownerInfo">Owner: {{server["owner"]["name"]}}</p>
+    {%- endif -%}
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        if (window.location.protocol === "http:") window.location.protocol = "https:";
+        const client = JSON.parse(('{{ clientUser }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
+        let logined = client.message != "401: Unauthorized"
+        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'inviteLink' in server else 'https://discord.gg/'}}"
+        inviteLink = inviteLink.replace(/amp;/gi, "")
+        
+        function discordLogOutAPI(force) {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            //if (force === true) window.location.href = window.location.origin;
+        }
+        function joinServer(element) {
+            window.location.href = joinLink
+        }
+        function discordLoginAPI() {
+            if (logined == true) {
+                window.location.href = window.location.origin + "/user/" + client.id
+            } else {
+                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            }
+        }
+        
+    </script>
+  </body>
+</html>
