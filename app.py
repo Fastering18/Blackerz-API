@@ -26,7 +26,7 @@ app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['UPLOAD_FOLDER'] = "Images"
 api = Api(app)
 
-# Home resource
+# Static pages resource
 api.add_resource(Home.homePage, "/")
 api.add_resource(Servers.allServersPage, "/servers")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
