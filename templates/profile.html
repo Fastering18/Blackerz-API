@@ -43,8 +43,8 @@
         <div class="topnav">
             <a id="profiletab" href="/">Home</a>
             <a href="/servers">Servers</a>
-            {%- if user and "username" in user -%}
-               <a class="active" id="discordLogin" onclick="discordLoginAPI()">{{ user["username"] }}</a>
+            {%- if client and "username" in client -%}
+               <a class="{{ "active" if client["username"] == user["username"] else "" }}"  id="discordLogin" onclick="discordLoginAPI()">{{ client["username"] }}</a>
                <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
             {%- else -%}
                <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
@@ -55,6 +55,7 @@
     <div id="userInfo">
         <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
         <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
+        <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
@@ -98,13 +99,6 @@
                 }
             }
             return "";
-        }
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results || !results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
         window.onload = function () {
             console.log("loaded")
