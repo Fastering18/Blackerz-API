@@ -7,11 +7,11 @@
     <meta property="og:description" content="{{ server["ShortDescription"] }}" />
     <meta property="og:url" content="https://blackerz.herokuapp.com/server/{{ serverID }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
-    {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+    {%- set serverIcon = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "avatar" in server -%}
-        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + serverID + "/" + server["avatar"] + ".webp?size=64" -%}
+        {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["avatar"] + ".webp?size=64" -%}
     {%- endif -%}
-    <meta property="og:image" content="{{ server["icon"] }}" />
+    <meta property="og:image" content="{{ serverIcon }}" />
     <meta name="description" content="{{ server["ShortDescription"] }}">
     <meta name="keywords" content="{{ server["name"] }} Blackerz">
     <meta name="theme-color" content="#7289DA">
