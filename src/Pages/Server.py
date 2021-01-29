@@ -61,9 +61,13 @@ class data():
         elif tipe == "allServers":
             result = firebaseDB.get('/Infrastructure/serverlist', None)
             self.data = result
+        elif tipe == "specificServer":
+            serverID = Data.get('serverId', "")
+            result = firebaseDB.get('/Infrastructure/serverlist/' + serverID, None)
+            self.data = result
                 
 class allServersPage(Resource):
-  def get(self):
+  def get(self, id):
     if request.url_root == "http://blackerz.herokuapp.com/":
         return redirect("https://blackerz.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
@@ -86,3 +90,21 @@ class allServersPage(Resource):
     else:
         user = "null"
     return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
+
+class allServersPage(Resource):
+  def get(self, id):
+    if request.url_root == "http://blackerz.herokuapp.com/":
+        return redirect("https://blackerz.herokuapp.com/")
+    discord = make_session(token=session.get('oauth2_token'))
+    user = discord.get(API_BASE_URL + '/users/@me').json()
+    serverData = data("specificServer", str(id))
+    useragent = request.headers.get('User-Agent')
+    
+    if "id" in user and "username" in user:      
+        # return jsonify(user=user, guilds=guilds, connections=connections)
+    else:
+        user = "null"
+    if serverData.data != None:
+        return make_response(render_template('specificServers.html', user=user, server=json.dumps(serverData.data), json=json), 200, headers)
+    else:
+        return make_response(render_template('404.html', user=user), 404, headers)
