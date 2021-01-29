@@ -85,4 +85,4 @@ class homePage(Resource):
         data("postUserStats", user=userData)
     else:
         user = "null"
-    return make_response(render_template('home.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
