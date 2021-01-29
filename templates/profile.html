@@ -68,7 +68,7 @@
     </amp-ad>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        const client = ('{{ client }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
+        const client = JSON.parse(('{{ client }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
         let logined = client.error == undefined
         const proxyurl = "";
         function generateRandomString() {
