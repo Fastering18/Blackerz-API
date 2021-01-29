@@ -182,7 +182,7 @@
     </div>
     <div class="serverInfo">
     <h1 id="serverName">{{ server["name"] }}</h1>
-    <img id="serverAvatar" src={{ server["icon"] }}
+    <img id="serverAvatar" src={{ serverIcon }}
       style="display:inline-block; position: relative;" width="10%" height="10%">
     <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
