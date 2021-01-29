@@ -3,18 +3,18 @@
   
   <head>
     <meta property="og:title" content="Blackerz" />
-    <meta property="og:description" content="Search any Discord bots and servers here." />
+    <meta property="og:description" content="Search any Discord servers here." />
     <meta property="og:url" content="https://blackerz.herokuapp.com/" />
     <meta property="og:image" content="../../static/Images/Blackerz.jpg" />
     <meta name="og:site_name" content="Blackerz Bot List">
-    <meta name="description" content="Search any Discord bots and servers here.">
+    <meta name="description" content="Search any Discord bots servers here.">
     <link rel="canonical" href="https://blackerz.herokuapp.com/">
     <meta charset=UTF-8>
     <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="stylesheet" href="/static/CSS/home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Servers</title>
     <script type="application/ld+json">
 {
   "@context" : "http://schema.org",
@@ -135,16 +135,6 @@
                 window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             }
         }
-        function generateRandomString() {
-            const rand = Math.floor(Math.random() * 10);
-            let randStr = '';
-
-            for (let i = 0; i < 20 + rand; i++) {
-                randStr += String.fromCharCode(33 + Math.floor(Math.random() * 94));
-            }
-
-            return randStr;
-        }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -166,13 +156,6 @@
             }
             return "";
         }
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results || !results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
         async function autentikasi(data) {
             console.log(data)
             //if (data["username"] !== undefined) $("#discordLogin").text(data["username"]);
@@ -180,18 +163,8 @@
         }
         if (loginedUser !== null) autentikasi(loginedUser);
         window.onload = function () {
-            const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
+            //const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
             //Authorization
-
-            if (getCookie("session") !== "") {
-                //updateBotData()
-            } else {
-                if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
-                const randStr = generateRandomString();
-                //localStorage.setItem('stateParameter', randStr);
-                //$("#discordLogOut").hide()
-                //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
-            }
             setCookie("dariLink", window.location.host, 1)
         };
     </script>
