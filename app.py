@@ -31,7 +31,7 @@ api.add_resource(Home.homePage, "/")
 api.add_resource(Servers.allServersPage, "/servers")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
-api.add_resource(renderUserPage.blackerzProfile, "/assets/<path:filename>")
+api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
 
 # Discord bots resource
 api.add_resource(resouce, "/api/v1/bots/<int:id>")
