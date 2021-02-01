@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ imageName }}</title>
+    <meta charset="utf-8">
+    <title>{{ path }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta property="og:title" content="fastering.dev" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blackerz.herokuapp.com" />
+    <meta property="og:image" content="{{ imageURL }}" />
+    <meta property="og:description" content="{{ path }}" />
+    <meta name="theme-color" content="#23272A">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-    <img src="{{ Image }}" alt="{{ imageType }}">
+    <p align="center" id="ImageCenter"><a href="https://github.com/Fastering18"><img src="{{ imageURL }}"></a></p>
 </body>
 </html>
