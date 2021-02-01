@@ -4,15 +4,28 @@
     <meta charset="utf-8">
     <title>{{ path }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <meta property="og:title" content="fastering.dev" />
+    <meta name="og:site_name" content="fastering.dev">
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blackerz.herokuapp.com" />
     <meta property="og:image" content="{{ imageURL }}" />
     <meta property="og:description" content="{{ path }}" />
     <meta name="theme-color" content="#23272A">
     <meta name="twitter:card" content="summary_large_image">
+    <style media="screen">
+        html, body {
+          height: 100%;
+          margin: 0;
+          background: rgba(0, 0, 0, 0.75) no-repeat center center fixed;
+        }
+        background {
+          width: 100%;
+          height: 100%;
+          position: fixed;
+        }
+    </style>
 </head>
 <body>
+    <div id='background'></div>
     <p align="center" id="ImageCenter"><a href="https://github.com/Fastering18"><img src="{{ imageURL }}"></a></p>
 </body>
 </html>
