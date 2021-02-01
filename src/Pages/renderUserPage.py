@@ -107,5 +107,8 @@ class botPage(Resource):
 class blackerzProfile(Resource):
   def get(self, filename):
     imageURL = storage.child(filename).get_url(token="3581d47e-3e11-433b-b6b3-007d5c6b2e43")
+    exist = requests.get(imageURL).status_code
+    if exist >= 400:
+      imageURL = storage.child("Default/AssetNotFound.png").get_url(token="3581d47e-3e11-433b-b6b3-007d5c6b2e43")
     return make_response(render_template('Images.html', imageURL=imageURL, path=filename), 200, headers)
     #return redirect("https://blackerz.herokuapp.com/static/Images/"+filename)
