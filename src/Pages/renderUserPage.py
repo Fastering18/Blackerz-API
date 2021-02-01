@@ -9,6 +9,16 @@ import random
 import string
 
 from firebase import firebase
+import pyrebase
+
+configPyrebase = {
+  "apiKey": "AIzaSyAQtuu-xm9Fvq1YNW9QNVlr07TduPFXEDI",
+  "authDomain": "blackerz.firebaseapp.com",
+  "databaseURL": "https://blackerz-default-rtdb.firebaseio.com",
+  "storageBucket": "blackerz.appspot.com"
+}
+
+Fyrebase = pyrebase.initialize_app(configPyrebase)
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -21,6 +31,7 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 headers = {'Content-Type': 'text/html'}
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
+storage = pyrebase.storage()
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -95,4 +106,6 @@ class botPage(Resource):
 
 class blackerzProfile(Resource):
   def get(self, filename):
-    return redirect("https://blackerz.herokuapp.com/static/Images/"+filename)
+    imageURL = storage.child(filename).get_url()
+    return make_response(render_template('Images.html', imageURL=imageURL, path=filename), 200, headers)
+    #return redirect("https://blackerz.herokuapp.com/static/Images/"+filename)
