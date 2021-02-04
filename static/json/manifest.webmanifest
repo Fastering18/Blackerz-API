@@ -1,0 +1,40 @@
+{
+  "short_name": "Blackerz",
+  "name": "Weather: Do I need an umbrella?",
+  "icons": [
+    {
+      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
+      "type": "image/jpg",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#7289DA",
+  "shortcuts": [
+    {
+      "name": "Bot list",
+      "short_name": "Bots",
+      "description": "View any discord bot list",
+      "url": "/",
+      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Server list",
+      "short_name": "Servers",
+      "description": "View any discord servers list",
+      "url": "/servers",
+      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "192x192" }]
+    }
+  ],
+  "description": "Discord bots and servers information",
+  "screenshots": [
+    {
+      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    }
+  ]
+}
