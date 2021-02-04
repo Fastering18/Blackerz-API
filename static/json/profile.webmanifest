@@ -5,7 +5,7 @@
     {
       "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
       "type": "image/png",
-      "sizes": "393x365"
+      "sizes": "192x192"
     }
   ],
   "start_url": "/",
@@ -19,14 +19,14 @@
       "short_name": "Bots",
       "description": "View any discord bot list",
       "url": "/",
-      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "393x365" }]
+      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png", "sizes": "192x192" }]
     },
     {
       "name": "Server list",
       "short_name": "Servers",
       "description": "View any discord servers list",
       "url": "/servers",
-      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "393x365" }]
+      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png", "sizes": "192x192" }]
     }
   ],
   "description": "Discord bots and servers information",
@@ -34,7 +34,7 @@
     {
       "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
       "type": "image/png",
-      "sizes": "540x720"
+      "sizes": "192x192"
     }
   ]
 }
