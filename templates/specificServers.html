@@ -9,7 +9,7 @@
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set serverIcon = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "icon" in server -%}
-        {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["icon"] + ".webp?size=64" -%}
+        {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["icon"] -%}
     {%- endif -%}
     <meta property="og:image" content="{{ serverIcon }}" />
     <meta name="description" content="{{ server["ShortDescription"] }}">
