@@ -12,7 +12,7 @@
     <meta property="og:description" content="{{ user.description }}">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "avatar" in user -%}
-        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + user["userId"] + "/" + user["avatar"] + ".webp?size=64" -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + user["userId"] + "/" + user["avatar"] -%}
     {% endif %}
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta property="twitter:card" content="summary">
@@ -55,6 +55,7 @@
     <div id="userInfo">
         <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
         <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
+        <img id="serverAvatar" src="{{avatarUser}}" style="display:inline-block; position: relative;" width="14.9%" height="15%">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
