@@ -104,7 +104,7 @@
                 para.id = dataChild
                 para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; margin-bottom: 0.75%; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/icon/" + dataChild + "/" + jsonData[dataChild].icon + "?size=64";
+                if (jsonData[dataChild].icon !== undefined) gambar.src = "https://cdn.discordapp.com/icon/" + dataChild + "/" + jsonData[dataChild].icon + "?size=64";
                 teks.innerText = jsonData[dataChild].name;
                 para.appendChild(gambar)
                 para.appendChild(teks)
