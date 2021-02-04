@@ -56,7 +56,7 @@ def generateAuthorizationV1():
     # Random string with the combination of lower and upper case
     letters = string.ascii_letters
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
-    print(result_str)
+    return result_str
             
 class data():
     def __init__(self, dataName, id):
