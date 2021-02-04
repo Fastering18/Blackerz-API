@@ -1,10 +1,10 @@
 {
   "short_name": "Blackerz",
-  "name": "Weather: Do I need an umbrella?",
+  "name": "Blackerz profile",
   "icons": [
     {
-      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
-      "type": "image/jpg",
+      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
+      "type": "image/png",
       "sizes": "192x192"
     }
   ],
@@ -32,8 +32,8 @@
   "description": "Discord bots and servers information",
   "screenshots": [
     {
-      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
-      "type": "image/jpg",
+      "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
+      "type": "image/png",
       "sizes": "540x720"
     }
   ]
