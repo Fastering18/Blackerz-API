@@ -5,7 +5,7 @@
     {
       "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "393x365"
     }
   ],
   "start_url": "/",
@@ -26,7 +26,7 @@
       "short_name": "Servers",
       "description": "View any discord servers list",
       "url": "/servers",
-      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "192x192" }]
+      "icons": [{ "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg", "sizes": "393x365" }]
     }
   ],
   "description": "Discord bots and servers information",
@@ -34,7 +34,7 @@
     {
       "src": "https://blackerz.herokuapp.com/static/Images/Blackerz.png",
       "type": "image/png",
-      "sizes": "540x720"
+      "sizes": "393x365"
     }
   ]
 }
