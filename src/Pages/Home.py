@@ -89,9 +89,9 @@ class homePage(Resource):
         userID = user["id"]
         userData = [
            str(userID),
-           userProfile["username"] + "#" + userProfile["discriminator"],
-           userProfile["username"],
-           userProfile["avatar"],
+           user["username"] + "#" + user["discriminator"],
+           user["username"],
+           user["avatar"],
            oneTimeCode
         ]
         Thread(target=updateUserData, args=userData).start() 
