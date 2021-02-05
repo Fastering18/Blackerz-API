@@ -87,13 +87,13 @@ class homePage(Resource):
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
         userID = user["id"]
-        userData = {
-           'client_id': str(userID),
-           'tag': user["username"] + "#" + user["discriminator"],
-           'username': user["username"],
-           'avatar': user["avatar"],
-           'code': oneTimeCode
-        }
+        userData = [
+           str(userID),
+           userProfile["username"] + "#" + userProfile["discriminator"],
+           userProfile["username"],
+           userProfile["avatar"],
+           oneTimeCode
+        ]
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
