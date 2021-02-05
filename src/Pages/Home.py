@@ -5,6 +5,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
 import time
+import datetime
 import json
 import requests
 from threading import Timer
@@ -57,7 +58,9 @@ class data():
             # self.data["code"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "code", user["code"])
             self.data["username"] = firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "username", user["username"])
             authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
+            createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
+            if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
         elif tipe == "allBot":
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
@@ -82,7 +85,10 @@ class homePage(Resource):
            'avatar': user["avatar"],
            'code': oneTimeCode
         }
+        createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
+        if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
         data("postUserStats", user=userData)
     else:
         user = "null"
+    print(user)
     return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers)
