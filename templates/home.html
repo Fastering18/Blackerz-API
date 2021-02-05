@@ -66,7 +66,7 @@
     <label for="searchBar" id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Loading bots...</label>
     <div id="botListParent">
           {%- set currentBot = 0 -%}
-          {%- set dictBots = json(bots) -%}
+          {%- set dictBots = json.loads(bots) -%}
           {%- for dataChild in dictBots -%}
              {%- set currentBot = currentBot + 1 -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
@@ -75,7 +75,7 @@
              {%- endif -%}
              <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 0.75%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}"></img>
-               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{dictBots[dataChild]["name"]}}</p>
+               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{ dictBots[dataChild]["name"] }}</p>
              </div>
           {%- endfor -%}
     </div>
