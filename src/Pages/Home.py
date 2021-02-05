@@ -79,7 +79,7 @@ def updateUserData(id, tag, username, avatar, code):
     data("postUserStats", user=UserData)                
 class homePage(Resource):
   def get(self):
-    if request.url_root == "http://blackerz.herokuapp.com/":
+    if "http:" in request.url_root:
         return redirect("https://blackerz.herokuapp.com/")
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
