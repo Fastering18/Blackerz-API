@@ -8,7 +8,7 @@ import time
 import datetime
 import json
 import requests
-from threading import Timer
+from threading import Timer, Thread
 
 from firebase import firebase
 
@@ -64,7 +64,16 @@ class data():
         elif tipe == "allBot":
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
-                
+            
+def updateUserData(id, tag, username, avatar, code):
+    UserData = {
+       'client_id': id,
+       'tag': tag,
+       'username': username,
+       'avatar': avatar,
+       'code': code
+    }
+    data("postUserStats", user=UserData)                
 class homePage(Resource):
   def get(self):
     if request.url_root == "http://blackerz.herokuapp.com/":
@@ -85,9 +94,7 @@ class homePage(Resource):
            'avatar': user["avatar"],
            'code': oneTimeCode
         }
-        createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["id"] + "/CreatedAt", None)
-        if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["id"], "CreatedAt", datetime.datetime.now().isoformat())
-        data("postUserStats", user=userData)
+        Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
     print(user)
