@@ -64,8 +64,15 @@ class data():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
 
-def updateUserData(userData):
-    data("postUserStats", user=userData)
+def updateUserData(id, tag, username, avatar, code):
+    data = {
+       'client_id': id,
+       'tag': tag,
+       'username': username,
+       'avatar': avatar,
+       'code': code
+    }
+    data("postUserStats", user=data)
     
 class ProfileUsers(Resource):
   def get(self, id):
