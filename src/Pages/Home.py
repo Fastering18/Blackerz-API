@@ -78,6 +78,7 @@ def updateUserData(id, tag, username, avatar, code):
     data("postUserStats", user=UserData)                
 class homePage(Resource):
   def get(self):
+    print(request.url)
     if request.url.startswith('http://'):
         url = request.url.replace('http:', 'https:', 1)
         code = 301
