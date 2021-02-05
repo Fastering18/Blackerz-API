@@ -21,7 +21,10 @@ AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-headers = {'Content-Type': 'text/html'}
+headers = {
+    'Content-Type': 'text/html',
+    'X-XSS-Protection': '1; mode=block'
+}
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
 
 def token_updater(token):
@@ -98,4 +101,4 @@ class homePage(Resource):
     else:
         user = "null"
     print(user)
-    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers).set_cookie('cross-site-cookie', 'CrossSiteCookie', samesite='Lax', secure=True);
+    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers);
