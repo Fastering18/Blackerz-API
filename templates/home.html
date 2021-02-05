@@ -61,7 +61,6 @@
     </div>
     <div id="headerPage">
         <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
-        <label for="searchBar" id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Loading bots...</label>
     </div>
     <br>
     <div id="botListParent">
@@ -92,7 +91,7 @@
         let currentBot = 0
         let botIdlist = []
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
-        if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
+        # if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
         let logined = client != "null"
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
       
