@@ -63,7 +63,7 @@
         <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
     </div>
     <br>
-    <label id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</label>
+    <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
     <div id="botListParent">
           {%- set currentBot = 0 -%}
           {%- set dictBots = json.loads(bots) -%}
