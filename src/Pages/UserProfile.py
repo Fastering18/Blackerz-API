@@ -65,14 +65,14 @@ class data():
             self.data = result
 
 def updateUserData(id, tag, username, avatar, code):
-    data = {
+    UserData = {
        'client_id': id,
        'tag': tag,
        'username': username,
        'avatar': avatar,
        'code': code
     }
-    data("postUserStats", user=data)
+    data("postUserStats", user=UserData)
     
 class ProfileUsers(Resource):
   def get(self, id):
