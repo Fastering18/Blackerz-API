@@ -57,7 +57,7 @@ api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
 # Render pages
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
 
-@app.before_request
+@api.before_request
 def before_request():
     if request.url.startswith('http://'):
         url = request.url.replace('http://', 'https://', 1)
