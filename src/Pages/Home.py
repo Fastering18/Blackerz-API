@@ -98,4 +98,4 @@ class homePage(Resource):
     else:
         user = "null"
     print(user)
-    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers)
+    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers).set_cookie('cross-site-cookie', 'CrossSiteCookie', samesite='Lax', secure=True);
