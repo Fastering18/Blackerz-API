@@ -84,13 +84,13 @@ class ProfileUsers(Resource):
     if userProfile and "username" in userProfile and "discriminator" in userProfile:      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
-        userData = {
-           'client_id': str(userID),
-           'tag': userProfile["username"] + "#" + userProfile["discriminator"],
-           'username': userProfile["username"],
-           'avatar': userProfile["avatar"],
-           'code': oneTimeCode
-        }
+        userData = [
+           str(userID),
+           userProfile["username"] + "#" + userProfile["discriminator"],
+           userProfile["username"],
+           userProfile["avatar"],
+           oneTimeCode
+        ]
         t1 = Thread(target=updateUserData, args=userData)
         t1.start()   
     useragent = request.headers.get('User-Agent')
