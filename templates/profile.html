@@ -21,10 +21,10 @@
     <meta name="description" content="{{ user.description or 'Discord user'}}">
     <meta name="keywords" content="{{ user.username }} Blackerz">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://blackerz-api.herokuapp.com/user/{{ user["userId"] }}">
+    <link rel="canonical" href="https://blackerz.herokuapp.com/user/{{ user["userId"] }}">
     <script type="application/ld+json">
      {
-       "@context":"http://schema.org","@type":"ProfilePage","url":"https://blackerz-api.herokuapp.com/user/{{ user['userId'] }}","dateCreated":"{{ user['CreatedAt'] }},"creator":{"@type":"Person","alternateName":"{{ client['username'] }}"}
+       "@context":"http://schema.org","@type":"ProfilePage","url":"https://blackerz.herokuapp.com/user/{{ user['userId'] }}","dateCreated":"{{ user['CreatedAt'] }},"creator":{"@type":"Person","alternateName":"{{ client['username'] }}"}
      }
     </script>
     <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
