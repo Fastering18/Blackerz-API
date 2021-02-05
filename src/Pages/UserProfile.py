@@ -83,7 +83,7 @@ class ProfileUsers(Resource):
            'avatar': userProfile["avatar"],
            'code': oneTimeCode
         }
-        t1 = Thread(target=updateUserData, args=(userData))
+        t1 = Thread(target=updateUserData, args=userData)
         t1.start()   
     useragent = request.headers.get('User-Agent')
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
