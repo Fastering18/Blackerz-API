@@ -7,7 +7,7 @@ from requests_oauthlib import OAuth2Session
 import time
 import json
 import requests
-from threading import Timer
+from threading import Timer, Thread
 
 from firebase import firebase
 
@@ -63,7 +63,10 @@ class data():
         elif tipe == "allBot":
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
-                
+
+def updateUserData(userData):
+    data("postUserStats", user=userData)
+    
 class ProfileUsers(Resource):
   def get(self, id):
     if request.url_root == "http://blackerz.herokuapp.com/":
@@ -80,8 +83,8 @@ class ProfileUsers(Resource):
            'avatar': userProfile["avatar"],
            'code': oneTimeCode
         }
-        data("postUserStats", user=userData)
-        
+        updateTr = Thread(target=updateUserData, args=(userData)
+        updateTr.start()   
     useragent = request.headers.get('User-Agent')
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     if not user:
