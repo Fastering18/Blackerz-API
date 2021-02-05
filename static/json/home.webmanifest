@@ -36,5 +36,11 @@
       "type": "image/png",
       "sizes": "192x192"
     }
-  ]
+  ],
+  "serviceworker": {
+      "src": "https://blackerz.herokuapp.com/static/build/sw.js",
+      "scope": "/build",
+      "type": "",
+      "update_via_cache": "none"
+  }
 }
