@@ -38,7 +38,7 @@
     }
   ],
   "serviceworker": {
-      "src": "/static/build/sw.js",
+      "src": "https://blackerz.herokuapp.com/static/build/sw.js",
       "scope": "/build",
       "type": "",
       "update_via_cache": "none"
