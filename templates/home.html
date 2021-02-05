@@ -66,7 +66,7 @@
     <label for="searchBar" id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Loading bots...</label>
     <div id="botListParent">
           {%- set currentBot = 0 -%}
-          {%- set dictBots = bots -%}
+          {%- set dictBots = json(bots) -%}
           {%- for dataChild in dictBots -%}
              {%- set currentBot = currentBot + 1 -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
