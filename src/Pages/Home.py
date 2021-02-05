@@ -83,7 +83,7 @@ class homePage(Resource):
     botDataList = data("allBot")
     useragent = request.headers.get('User-Agent')
     
-    if "id" in user and "username" in user:      
+    if user and "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
         userID = user["id"]
