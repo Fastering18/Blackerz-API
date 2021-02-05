@@ -85,8 +85,8 @@ class homePage(Resource):
            'avatar': user["avatar"],
            'code': oneTimeCode
         }
-        createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
-        if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
+        createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["id"] + "/CreatedAt", None)
+        if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["id"], "CreatedAt", datetime.datetime.now().isoformat())
         data("postUserStats", user=userData)
     else:
         user = "null"
