@@ -97,5 +97,5 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    print(user)
+    # print(user)
     return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers);
