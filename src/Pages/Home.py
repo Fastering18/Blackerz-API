@@ -78,6 +78,10 @@ def updateUserData(id, tag, username, avatar, code):
     data("postUserStats", user=UserData)                
 class homePage(Resource):
   def get(self):
+    if request.url.startswith('http://'):
+        url = request.url.replace('http:', 'https:', 1)
+        code = 301
+        return redirect(url, code=code)
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = data("allBot")
