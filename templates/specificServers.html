@@ -16,7 +16,7 @@
         {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["icon"] -%}
     {%- endif -%}
     <meta property="og:image" content="{{ serverIcon }}" />
-    <meta itemprop="name" content="{{ server["name"] }} | Discord Server">
+    <meta itemprop="name" content="{{ server["name"] }} - Discord Server">
     <meta itemprop="image" content="{{ serverIcon }}">
     <meta itemprop="description" content="Join {{ server["name"] }} Discord server!">
     <meta name="description" content="{{ server["ShortDescription"] or 'Discord server' }}">
