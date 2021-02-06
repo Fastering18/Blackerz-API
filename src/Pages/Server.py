@@ -7,7 +7,7 @@ from requests_oauthlib import OAuth2Session
 import time
 import json
 import requests
-from threading import Timer
+from threading import Timer, Thread
 
 from firebase import firebase
 
@@ -65,7 +65,16 @@ class data():
             serverID = Data.get('serverId', "")
             result = firebaseDB.get('/Infrastructure/serverlist/' + serverID, None)
             self.data = result
-                
+def updateUserData(id, tag, username, avatar, code):
+    UserData = {
+       'client_id': id,
+       'tag': tag,
+       'username': username,
+       'avatar': avatar,
+       'code': code
+    }
+    data("postUserStats", user=UserData)  
+    
 class allServersPage(Resource):
   def get(self):
     if request.url_root == "http://blackerz.herokuapp.com/":
@@ -76,17 +85,16 @@ class allServersPage(Resource):
     useragent = request.headers.get('User-Agent')
     
     if "id" in user and "username" in user:      
-        # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
         userID = user["id"]
-        userData = {
-           'client_id': str(userID),
-           'tag': user["username"] + "#" + user["discriminator"],
-           'username': user["username"],
-           'avatar': user["avatar"],
-           'code': oneTimeCode
-        }
-        data("postUserStats", user=userData)
+        userData = [
+           str(userID),
+           user["username"] + "#" + user["discriminator"],
+           user["username"],
+           user["avatar"],
+           oneTimeCode
+        ]
+        Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
     return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
