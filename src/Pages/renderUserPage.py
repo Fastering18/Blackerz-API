@@ -85,8 +85,8 @@ error1 = {'error': "Bot not found", 'status': "Not success"}
         
 class botPage(Resource):
   def get(self, id):
-    if request.url_root == "http://blackerz.herokuapp.com/":
-        return redirect("https://blackerz.herokuapp.com/bots/" + str(id))
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botum = data("getbot", id)
