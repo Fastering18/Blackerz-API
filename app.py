@@ -1,5 +1,6 @@
 from flask import Flask, make_response, render_template, request, redirect
 from flask_restful import Api
+from flask_compress import Compress
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -24,6 +25,7 @@ OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['UPLOAD_FOLDER'] = "Images"
+Compress(app)
 api = Api(app)
 
 # Static pages resource
