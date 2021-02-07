@@ -77,8 +77,8 @@ def updateUserData(id, tag, username, avatar, code):
     
 class allServersPage(Resource):
   def get(self):
-    if request.url_root == "http://blackerz.herokuapp.com/":
-        return redirect("https://blackerz.herokuapp.com/")
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     serverDataList = data("allServers")
@@ -101,8 +101,8 @@ class allServersPage(Resource):
 
 class specificServerPage(Resource):
   def get(self, id):
-    if request.url_root == "http://blackerz.herokuapp.com/":
-        return redirect("https://blackerz.herokuapp.com/")
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     serverData = data("specificServer", serverId=str(id))
