@@ -77,8 +77,8 @@ def updateUserData(id, tag, username, avatar, code):
     
 class ProfileUsers(Resource):
   def get(self, id):
-    if request.url_root == "http://blackerz.herokuapp.com/":
-        return redirect("https://blackerz.herokuapp.com/user/" + str(id))
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     userProfile = discord.get(API_BASE_URL + '/users/@me').json()
     if userProfile and "username" in userProfile and "discriminator" in userProfile:      
