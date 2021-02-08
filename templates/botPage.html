@@ -202,7 +202,7 @@
     <div class="botumInfo">
     <h1 id="botName">{{ botData["name"] }}</h1>
     <img id="botAvatar" src={{ avatarUser }}
-      style="display:inline-block; position: relative;" width="10%" height="10%" alt="bot avatar">
+      style="display:inline-block; position: relative;" width="10%" height="10%" alt="bot avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <button id="addBotBTN" class="button" onclick="inviteBot(this)"><span>Add Bot</span></button>
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] -%}
         <button id="editBotData" class="button"><span>Edit</span></button>
