@@ -20,9 +20,9 @@ class data():
             print(response)
             if "name" in result and result["name"] != response["username"]:
                 result["name"] = response["username"]
-                result["tag"] = response["tag"]
+                result["tag"] = response["username"] + "#" + response["discriminator"]
                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", response["username"] + "#" + response["discriminator"])
+                firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
             if "avatar" in result and "avatar" in response:
                 if result["avatar"] != response["avatar"]:
                     result["avatar"] = response["avatar"]
