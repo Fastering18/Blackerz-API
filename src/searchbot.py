@@ -18,9 +18,11 @@ class data():
             r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
             response = r.json() 
             print(response)
-            if result["name"] != response["username"]:
+            if "name" in result and result["name"] != response["username"]:
                 result["name"] = response["username"]
                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+            if "tag" in response and result["tag"] != response["tag"]:
+                result["tag"] = response["tag"]
                 firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", response["tag"])
             if "avatar" in result and "avatar" in response:
                 if result["avatar"] != response["avatar"]:
