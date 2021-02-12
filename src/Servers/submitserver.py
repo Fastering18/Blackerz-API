@@ -61,8 +61,8 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        result = postBot(jsonData)
-        if "result" in result and "error" in result.result and result.result.error != None:
-            return make_response(jsonify(result.result), 400)
+        data = postBot(jsonData)
+        if data.result["error"] != None:
+            return make_response(jsonify(data.result), 400)
         
-        return make_response(jsonify(result.result), 201)
+        return make_response(jsonify(data.result), 201)
