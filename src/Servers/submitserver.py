@@ -25,15 +25,17 @@ class postBot():
                     'id': dataREQ['owner']['id'],
                     'name': dataREQ['owner']['name']
                 })
-        firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "memberCount", dataREQ['memberCount'])
+        if ("memberCount" in dataREQ):
+            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "memberCount", dataREQ['memberCount'])
         serverinfo = firebaseDB.get('/Infrastructure/serverlist/' + dataREQ['id'], None)
         
         if not "upvotes" in serverinfo:
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "upvotes", 0)          
-        
+        if ("ShortDescription" in dataREQ):
+            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "ShortDescription", dataREQ['ShortDescription'])
         if ("icon" in dataREQ):
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "icon", dataREQ['avatar'])
-        if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != None):
+            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "icon", dataREQ['icon'])
+        if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != ""):
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "joinLink", dataREQ['joinLink'])
         
         self.result = {'error': None, 'status': "sucess"}
