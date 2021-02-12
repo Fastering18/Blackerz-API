@@ -18,7 +18,7 @@ class data():
             r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
             response = r.json() 
             print(response)
-            if "code" in response and response["code"] == 0 : return self.data = None;
+            if "code" in response and response["code"] == 0 : self.data = None; return;
             if "name" in result and "username"in response and result["name"] != response["username"]:
                 result["name"] = response["username"]
                 result["tag"] = response["username"] + "#" + response["discriminator"]
