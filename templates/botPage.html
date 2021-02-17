@@ -223,7 +223,11 @@
     </label>
     {%- endif -%}
     <hr>
-    <p id="longDescription">{{botData["LongDescription"]}}</p>
+    {%- if "LongDescription" in botData -%}
+        <div id="longDescription">
+            {{botData["LongDescription"]}}
+        </div>
+    {%- endif -%}
     {%- if "owner" in botData and "name" in botData["owner"] -%}
        <p id="ownerInfo">Developer: {{botData["owner"]["name"]}}</p>
     {%- endif -%}
