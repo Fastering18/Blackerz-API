@@ -236,7 +236,7 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
-        const botData = JSON.parse('{{ botData | safe }}')
+        const botData = JSON.parse("{{ botData | safe }}")
         let logined = client.message != "401: Unauthorized"
         let inviteLink = "{{ botData['inviteLink'] if botData and 'inviteLink' in botData else 'https://discord.com/oauth2/authorize?client_id=' + botId + '&permissions=335578198&scope=bot'}}"
         inviteLink = inviteLink.replace(/amp;/gi, "")
