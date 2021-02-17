@@ -209,7 +209,7 @@
     {%- endif -%}
     <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
     <br>
-    <p id="shortDescription">{{ botData["ShortDescription"] }}</p>
+    <p id="shortDescription">{{ botData["ShortDescription"] | tojson | safe }}</p>
     {%- if "serverCount" in botData -%}
         <p id="serverCount">In {{ botData["serverCount"] }} servers</p>
     {%- endif -%}
@@ -235,7 +235,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        const client = JSON.parse(('{{ clientUser }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
+        const client = JSON.parse(('{{ clientUser | tojson | safe }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
         let logined = client.message != "401: Unauthorized"
         let inviteLink = "{{ botData['inviteLink'] if botData and 'inviteLink' in botData else 'https://discord.com/oauth2/authorize?client_id=' + botId + '&permissions=335578198&scope=bot'}}"
         inviteLink = inviteLink.replace(/amp;/gi, "")
