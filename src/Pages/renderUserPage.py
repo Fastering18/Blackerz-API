@@ -7,6 +7,7 @@ import requests
 import os
 import random
 import string
+import markdown
 
 from firebase import firebase
 import pyrebase
@@ -95,10 +96,9 @@ class botPage(Resource):
     bot = botum.data
     
     if bot != None:
-        botName = bot["name"]
-        short_description = ""
-        if "ShortDescription" in bot:
-            short_description = bot["ShortDescription"]
+        
+        if "LongDescription" in bot:
+            bot["LongDescription"] = markdown.markdown(bot["LongDescription"])
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user), 200, headers)
     else:
         notFound = {
