@@ -66,7 +66,7 @@
       </div>
       <div class="botumInfo">
         <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="botName">{{ botData["name"] }}</h1>
-        <p style="text-align:center;"><img style="margin: 0 auto; width: 30%; height: 30%;" src="{{avatarUser}}"></p>
+        <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
       </div>
       <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">
        {{ hcaptcha }}
