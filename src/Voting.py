@@ -30,7 +30,7 @@ def identifyVoter(clientID, code):
         return None
 
 def verifyHCaptcha(response=None, remote_ip=None, client=None):
-    if client == None or "username" in client:
+    if client == None or not "username" in client:
         return False
     data = {
             "secret": "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6",
@@ -87,7 +87,7 @@ class voteBot(Resource):
         user = discord.get(API_BASE_URL + '/users/@me').json()
         print(user)
         if verifyHCaptcha(client=user) == False:
-            return make_response(jsonify(warnVote), 401)   
+            return make_response(jsonify(unauthorizedAcess3), 401)   
         #clientID = request.headers.get('clientId')
         #clientCode = request.headers.get('code')
         #if (not clientID) and (not clientCode):
