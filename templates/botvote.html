@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    
+  <head>
+    <title>{{ botData["name"] }} - Bot</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <meta property="og:title" content="{{ botData["name"] }} - Bot" />
+    <meta property="og:description" content="{{ botData["ShortDescription"] }}" />
+    <meta property="og:url" content="https://blackerz.herokuapp.com/bots/{{ botId }}" />
+    <meta name="og:site_name" content="Blackerz Bot List">
+    {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+    {%- if "avatar" in botData -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + botId + "/" + botData["avatar"] + ".webp?size=64" -%}
+    {%- endif -%}
+    <meta property="og:image" content="{{ avatarUser }}" />
+    <meta itemprop="name" content="{{ botData["name"] }} - Discord bot">
+    <meta itemprop="image" content="{{ avatarUser }}">
+    <meta itemprop="description" content="Add {{ botData["name"] }} Discord bot!">
+    <meta name="description" content="{{ botData["ShortDescription"] or 'Discord bot' }}">
+    <meta name="keywords" content="{{ botData["name"] }} Discord bot">
+    <meta name="theme-color" content="#7289DA">
+    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+  
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:title" content="{{ botData["name"] }}">
+    <meta name="twitter:description" content="{{ botData["ShortDescription"] }}">
+    <meta name="twitter:image" content="{{ avatarUser }}">
+    
+    <script type="application/ld+json">
+      {"@context":"https://schema.org/","@type":"Product","description":"Add {{ botData["name"] }} Discord bot!","image":"{{ avatarUser }}","name":"{{ botData["name"] }}","sku":"{{ botId }}","review":null,"aggregateRating":null,"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX"}}
+    </script>
+  </head>
+    <body>
+      <div id='background'></div>
+      <div style="overflow:auto">
+        <div class="topnav">
+            <a id="profiletab" href="/">Home</a>
+            <a href="/servers">Servers</a>
+            {%- if clientUser and "username" in clientUser -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">{{ clientUser["username"] }}</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+            {%- endif -%}
+        </div>
+      </div>
+      <div class="botumInfo">
+        <h1 id="botName">{{ botData["name"] }}</h1>
+      </div>
+    </body>
+</html>
