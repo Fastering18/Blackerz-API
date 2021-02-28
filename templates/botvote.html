@@ -65,9 +65,9 @@
         </div>
       </div>
       <div class="botumInfo">
-        <h1 id="botName">{{ botData["name"] }}</h1>
+        <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="botName">{{ botData["name"] }}</h1>
       </div>
-      <form method="post" action="/api/v1/bots/{{ botId }}/vote">
+      <form style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">
        {{ hcaptcha }}
        <br>
        <input type="submit" value="Vote" />
@@ -92,6 +92,13 @@
             window.location.search = ""
             break;
         }
+        document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
+           var hcaptchaVal = document.querySelector('[name="h-captcha-response"]').value;
+           if (hcaptchaVal === "") {
+              event.preventDefault();
+              alert("Please complete the hCaptcha");
+           }
+        });
         function discordLogOutAPI() {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
         };
