@@ -207,7 +207,7 @@
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] -%}
         <button id="editBotData" class="button"><span>Edit</span></button>
     {%- endif -%}
-    <button id="voteBot" class="button" onclick="voteBot()"><span>Vote </span></button>
+    <button id="voteBot" class="button" onclick="voteBot()"><span id="voteBotSpan">{{ botData["upvotes"] }} Votes </span></button>
     <br>
     <p id="shortDescription">{{ botData["ShortDescription"] | safe }}</p>
     {%- if "serverCount" in botData -%}
