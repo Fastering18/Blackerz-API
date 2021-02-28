@@ -8,6 +8,7 @@ gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.0
+Flask-hCaptcha==0.5.4
 pytz==2018.9
 six==1.12.0
 Werkzeug==1.0.1
