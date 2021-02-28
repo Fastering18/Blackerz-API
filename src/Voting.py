@@ -31,14 +31,14 @@ def identifyVoter(clientID, code):
 
 def verifyHCaptcha(response=None, remote_ip=None, client=None):
     if client == None or not "username" in client:
-        return {success: False, reason: "You have to login to vote!"}
+        return {"success": False, "reason": "You have to login to vote!"}
     data = {
             "secret": "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6",
             "response": response or request.form.get('h-captcha-response'),
             "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
             }
     r = requests.post("https://hcaptcha.com/siteverify", data=data)
-    return {success: r.json()["success"] if r.status_code == 200 else False, reason: "success identifying" if r.status_code == 200 else "invalid captcha provided"}
+    return {"success": r.json()["success"] if r.status_code == 200 else False, "reason": "success identifying" if r.status_code == 200 else "invalid captcha provided"}
 
 def token_updater(token):
     session['oauth2_token'] = token
