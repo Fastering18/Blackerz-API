@@ -31,14 +31,14 @@ def identifyVoter(clientID, code):
 
 def verifyHCaptcha(response=None, remote_ip=None, client=None):
     if client == None or not "username" in client:
-        return {"success": False, "reason": "You have to login to vote!"}
+        return {"success": False, "reason": "notlogined"}
     data = {
             "secret": "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6",
             "response": response or request.form.get('h-captcha-response'),
             "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
             }
     r = requests.post("https://hcaptcha.com/siteverify", data=data)
-    return {"success": r.json()["success"] if r.status_code == 200 else False, "reason": "success identifying" if r.status_code == 200 else "invalid captcha provided"}
+    return {"success": r.json()["success"] if r.status_code == 200 else False, "reason": "invalidcaptcha"}
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -88,18 +88,17 @@ class voteBot(Resource):
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
         isVerified = verifyHCaptcha(client=user)
-        print(isVerified)
         if isVerified["success"] == False:
-            return make_response(jsonify(isVerified["reason"]), 401)   
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err={isVerified['reason']}")
         
         vote = addVote(id, user)
         if vote.result == None:
             #warnVote = forbiddenAcess1
             #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
             #return make_response(jsonify(warnVote), 401)   
-            return redirect(request.url.replace("/vote", f"?err=AlreadyVoted", 1))
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
         else: 
-            return redirect(request.url.replace("/vote", "", 1)) # make_response(jsonify({success: True}), 201) #vote.result
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
         
     def put(self, id):
         clientID = request.headers.get('clientId')
