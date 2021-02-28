@@ -83,31 +83,24 @@ class addVote():
              
 class voteBot(Resource):
     def post(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        isVerified = verifyHCaptcha(client=user)
-        if isVerified.success == False:
+        isVerified = verifyHCaptcha(client=user)'
+        print(isVerified)
+        if isVerified["success"] == False:
             return make_response(jsonify(isVerified.reason), 401)   
-        #clientID = request.headers.get('clientId')
-        #clientCode = request.headers.get('code')
-        #if (not clientID) and (not clientCode):
-            #return make_response(jsonify(unauthorizedAcess), 401)
-        #if not clientID:
-            #return make_response(jsonify(unauthorizedAcess1), 401)
-        #if not clientCode:
-            #return make_response(jsonify(unauthorizedAcess2), 401)
-            
-        #voter = identifyVoter(clientID, clientCode)
-        #if voter == None:
-            #return make_response(jsonify(unauthorizedAcess3), 401)          
-        #voter["id"] = clientID    
+        
         vote = addVote(id, user)
         if vote.result == None:
-            warnVote = forbiddenAcess1
-            warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
-            return make_response(jsonify(warnVote), 401)   
+            #warnVote = forbiddenAcess1
+            #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
+            #return make_response(jsonify(warnVote), 401)   
+            return redirect(request.url.replace("/vote", f"?err=AlreadyVoted", 1))
         else: 
-            return make_response(jsonify({success: True}), 201) #vote.result
+            return redirect(request.url.replace("/vote", "", 1)) # make_response(jsonify({success: True}), 201) #vote.result
+        
     def put(self, id):
         clientID = request.headers.get('clientId')
         clientCode = request.headers.get('code')
