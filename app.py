@@ -6,6 +6,7 @@ import src.Pages.Home as Home
 import src.Pages.Server as Servers
 import src.Pages.UserProfile as Profile
 import src.Pages.renderUserPage as renderUserPage
+import src.Pages.VotingPage as votingPage
 
 from src.searchbot import resouce
 from src.allbot import resource2
@@ -58,6 +59,7 @@ api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
 
 # Render pages
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
+api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
 
 if __name__ == "__main__":
   app.run()
