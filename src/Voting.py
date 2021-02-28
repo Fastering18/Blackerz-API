@@ -87,7 +87,7 @@ class voteBot(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        isVerified = verifyHCaptcha(client=user)'
+        isVerified = verifyHCaptcha(client=user)
         print(isVerified)
         if isVerified["success"] == False:
             return make_response(jsonify(isVerified.reason), 401)   
