@@ -1,13 +1,19 @@
 from flask_restful import Resource, reqparse
-from flask import jsonify, make_response, request, abort
-import time
-import json
-import requests
+from flask import jsonify, make_response, render_template, g, session, request, redirect
+from requests_oauthlib import OAuth2Session
+import time, json, requests, os, random, string
 from threading import Timer
 
 from firebase import firebase
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+OAUTH2_CLIENT_ID = "798496088750292993"
+OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
+botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
+OAUTH2_REDIRECT_URI = 'https://blackerz.herokuapp.com/api/v1/discord/callback'
+API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
+AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
+TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, input clientId and code in headers.", 'status': "Not success"}
@@ -23,7 +29,9 @@ def identifyVoter(clientID, code):
     else:
         return None
 
-def verifyHCaptcha(response=None, remote_ip=None):
+def verifyHCaptcha(response=None, remote_ip=None, client=None):
+    if client == None or "username" in client:
+        return False
     data = {
             "secret": "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6",
             "response": response or request.form.get('h-captcha-response'),
@@ -31,6 +39,31 @@ def verifyHCaptcha(response=None, remote_ip=None):
             }
     r = requests.post("https://hcaptcha.com/siteverify", data=data)
     return r.json()["success"] if r.status_code == 200 else False
+
+def token_updater(token):
+    session['oauth2_token'] = token
+def make_session(token=None, state=None, scope=None):
+    return OAuth2Session(
+        client_id=OAUTH2_CLIENT_ID,
+        token=token,
+        state=state,
+        scope=scope,
+        redirect_uri=OAUTH2_REDIRECT_URI,
+        auto_refresh_kwargs={
+            'client_id': OAUTH2_CLIENT_ID,
+            'client_secret': OAUTH2_CLIENT_SECRET,
+        },
+        auto_refresh_url=TOKEN_URL,
+        token_updater=token_updater)
+def generateRandomKey(length):
+    letters_and_digits = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
+    return result_str
+def generateAuthorizationV1():
+    # Random string with the combination of lower and upper case
+    letters = string.ascii_letters
+    result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
+    return result_str
         
 class addVote():
     def __init__(self, botID, client):
@@ -50,7 +83,10 @@ class addVote():
              
 class voteBot(Resource):
     def post(self, id):
-        if verifyHCaptcha() == False:
+        discord = make_session(token=session.get('oauth2_token'))
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        print(user)
+        if verifyHCaptcha(client=user) == False:
             return make_response(jsonify(warnVote), 401)   
         #clientID = request.headers.get('clientId')
         #clientCode = request.headers.get('code')
@@ -83,7 +119,6 @@ class voteBot(Resource):
         if not clientCode:
             return make_response(jsonify(unauthorizedAcess2), 401)
         
-        print(clientID)    
         voter = identifyVoter(clientID, clientCode)
         if voter == None:
             return make_response(jsonify(unauthorizedAcess3), 401)    
