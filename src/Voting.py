@@ -90,7 +90,7 @@ class voteBot(Resource):
         isVerified = verifyHCaptcha(client=user)
         print(isVerified)
         if isVerified["success"] == False:
-            return make_response(jsonify(isVerified.reason), 401)   
+            return make_response(jsonify(isVerified["reason"]), 401)   
         
         vote = addVote(id, user)
         if vote.result == None:
