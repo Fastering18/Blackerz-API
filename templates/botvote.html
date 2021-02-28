@@ -63,5 +63,10 @@
       <div class="botumInfo">
         <h1 id="botName">{{ botData["name"] }}</h1>
       </div>
+      <form method="post" action="/api/v1/bots/{{ botId }}/vote">
+       {{ hcaptcha }}
+       <br>
+       <input type="submit" value="Vote" />
+      </form>
     </body>
 </html>
