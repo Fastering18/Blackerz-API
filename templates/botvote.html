@@ -35,7 +35,11 @@
        gtag('js', new Date());
        gtag('config', 'G-HJFCLE2FTR');
     </script>
-  
+    <style media="screen">
+      p, h1 {
+            color: rgba(255, 255, 255, 0.9)
+      }  
+    </style>
     <meta name="twitter:card" value="summary">
     <meta name="twitter:title" content="{{ botData["name"] }}">
     <meta name="twitter:description" content="{{ botData["ShortDescription"] }}">
@@ -68,5 +72,34 @@
        <br>
        <input type="submit" value="Vote" />
       </form>
+      <script>
+        if (window.location.protocol === "http:") window.location.protocol = "https:";
+        const client = JSON.parse('{{ clientUser | tojson | safe }}')
+        const url = new URL(window.location.href);
+        var errRES = url.searchParams.get("err");
+        switch(errRES) {
+          case "notlogined":
+            alert("You have to login to vote bots")
+            window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login"
+            break;
+          case "invalidcaptcha":
+            alert("Invalid captcha provided")
+            break;
+          case "alreadyvoted":
+            alert("You already voted this bot! wait for 12 hours to vote again.")
+            break;
+        }
+        function discordLogOutAPI() {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+        };
+        function discordLoginAPI() {
+            if (logined == true) {
+                window.location.href = window.location.origin + "/user/" + client.id
+            } else {
+                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            }
+        };
+          
+      </script>
     </body>
 </html>
