@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-    
+
+<html lang="en" data-theme="dark">  
   <head>
     <title>{{ botData["name"] }} - Bot</title>
     <meta charset="UTF-8">
@@ -76,7 +76,8 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
         const url = new URL(window.location.href);
-        var errRES = url.searchParams.get("err");
+        const logined = (client && client.message != "401: Unauthorized")
+        const errRES = url.searchParams.get("err");
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote bots")
@@ -84,9 +85,11 @@
             break;
           case "invalidcaptcha":
             alert("Invalid captcha provided")
+            window.location.search = ""
             break;
           case "alreadyvoted":
             alert("You already voted this bot! wait for 12 hours to vote again.")
+            window.location.search = ""
             break;
         }
         function discordLogOutAPI() {
