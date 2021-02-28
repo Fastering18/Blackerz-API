@@ -31,14 +31,14 @@ def identifyVoter(clientID, code):
 
 def verifyHCaptcha(response=None, remote_ip=None, client=None):
     if client == None or not "username" in client:
-        return False
+        return {success: False, reason: "You have to login to vote!"}
     data = {
             "secret": "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6",
             "response": response or request.form.get('h-captcha-response'),
             "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
             }
     r = requests.post("https://hcaptcha.com/siteverify", data=data)
-    return r.json()["success"] if r.status_code == 200 else False
+    return {success: r.json()["success"] if r.status_code == 200 else False, reason: "success identifying" if r.status_code == 200 else "invalid captcha provided"}
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -85,9 +85,9 @@ class voteBot(Resource):
     def post(self, id):
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        print(user)
-        if verifyHCaptcha(client=user) == False:
-            return make_response(jsonify(unauthorizedAcess3), 401)   
+        isVerified = verifyHCaptcha(client=user)
+        if isVerified.success == False:
+            return make_response(jsonify(isVerified.reason), 401)   
         #clientID = request.headers.get('clientId')
         #clientCode = request.headers.get('code')
         #if (not clientID) and (not clientCode):
@@ -99,16 +99,15 @@ class voteBot(Resource):
             
         #voter = identifyVoter(clientID, clientCode)
         #if voter == None:
-            #return make_response(jsonify(unauthorizedAcess3), 401)    
-            
+            #return make_response(jsonify(unauthorizedAcess3), 401)          
         #voter["id"] = clientID    
-        #vote = addVote(id, voter)
-        #if vote.result == None:
-            #warnVote = forbiddenAcess1
-            #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
-            #return make_response(jsonify(warnVote), 401)   
-        #else: 
-        return make_response(jsonify("what a yes"), 201) #vote.result
+        vote = addVote(id, user)
+        if vote.result == None:
+            warnVote = forbiddenAcess1
+            warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
+            return make_response(jsonify(warnVote), 401)   
+        else: 
+            return make_response(jsonify({success: True}), 201) #vote.result
     def put(self, id):
         clientID = request.headers.get('clientId')
         clientCode = request.headers.get('code')
