@@ -189,14 +189,14 @@
         <div id='background'></div>
     <div style="overflow:auto">
         <div class="topnav">
-            <a id="profiletab" href="/">Home</a>
-            <a href="/servers">Servers</a>
+            <a id="profiletab" href="/" data-text="Home"></a>
+            <a href="/servers" data-text="Servers"></a>
             {%- if user and "username" in user -%}
-               <a id="discordLogin" onclick="discordLoginAPI()">{{ user["username"] }}</a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{ user["username"] }}"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
             {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
             {%- endif -%}
         </div>
     </div>
@@ -208,7 +208,7 @@
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
         <button id="editServerData" class="button"><span>Edit</span></button>
     {%- endif -%}
-    <button id="voteServer" class="button" onclick="voteServer()"><span>Vote </span></button>
+    <button id="voteServer" class="button" onclick="voteServer(this)"><span>{{ server["upvotes"] }} Votes </span></button>
     <br>
     <p id="shortDescription">{{ server["ShortDescription"] }}</p>
     {%- if "memberCount" in server -%}
@@ -224,7 +224,11 @@
     </label>
     {%- endif -%}
     <hr>
-    <p id="longDescription">{{server["LongDescription"]}}</p>
+    {%- if "LongDescription" in server -%}
+        <div id="longDescription">
+            {{ server["LongDescription"] | safe }}
+        </div>
+    {%- endif -%}
     {%- if "owner" in server and "name" in server["owner"] -%}
        <p id="ownerInfo">Owner: {{server["owner"]["name"]}}</p>
     {%- endif -%}
@@ -243,6 +247,9 @@
         }
         function joinServer(element) {
             window.location.href = joinLink
+        }
+        function voteServer(element) {
+            window.location.href = "https://blackerz.herokuapp.com/servers/{{serverID}}/vote"
         }
         function discordLoginAPI() {
             if (logined == true) {
