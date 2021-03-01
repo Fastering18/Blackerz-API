@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="dark">  
+  <head>
+    <title>{{ serverData["name"] }} - Server</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <meta property="og:title" content="{{ serverData["name"] }} - Server" />
+    <meta property="og:description" content="{{ serverData["ShortDescription"] }}" />
+    <meta property="og:url" content="https://blackerz.herokuapp.com/servers/{{ serverId }}" />
+    <meta name="og:site_name" content="Blackerz Server List">
+    {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+    {%- if "icon" in serverData -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/icons/" + serverId + "/" + serverData["icon"] + ".webp?size=128" -%}
+    {%- endif -%}
+    <meta property="og:image" content="{{ avatarUser }}" />
+    <meta itemprop="name" content="{{ serverData["name"] }} - Discord server">
+    <meta itemprop="image" content="{{ avatarUser }}">
+    <meta itemprop="description" content="Add {{ serverData["name"] }} Discord server!">
+    <meta name="description" content="{{ serverData["ShortDescription"] or 'Discord server' }}">
+    <meta name="keywords" content="{{ serverData["name"] }} Discord server">
+    <meta name="theme-color" content="#7289DA">
+    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+    <style media="screen">
+      p, h1 {
+            color: rgba(255, 255, 255, 0.9)
+      }  
+    </style>
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:title" content="{{ serverData["name"] }}">
+    <meta name="twitter:description" content="{{ serverData["ShortDescription"] }}">
+    <meta name="twitter:image" content="{{ avatarUser }}">
+    
+    <script type="application/ld+json">
+      {"@context":"https://schema.org/","@type":"Product","description":"Add {{ serverData["name"] }} Discord server!","image":"{{ avatarUser }}","name":"{{ serverData["name"] }}","sku":"{{ serverId }}","review":null,"aggregateRating":null,"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX"}}
+    </script>
+  </head>
+    <body>
+      <div id='background'></div>
+      <div style="overflow:auto">
+        <div class="topnav">
+            <a id="profiletab" href="/" data-text="Home"></a>
+            <a href="/servers" data-text="Servers"></a>
+            {%- if clientUser and "username" in clientUser -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
+            {%- endif -%}
+        </div>
+      </div>
+      <div class="serverInfo">
+        <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="serverName">{{ serverData["name"] }}</h1>
+        <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
+      </div>
+      <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/servers/{{ serverId }}/vote">
+       {{ hcaptcha }}
+       <br>
+       <input type="submit" value="Vote" />
+      </form>
+      <script>
+        if (window.location.protocol === "http:") window.location.protocol = "https:";
+        const client = JSON.parse('{{ clientUser | tojson | safe }}')
+        const url = new URL(window.location.href);
+        const logined = (client && client.message != "401: Unauthorized")
+        const errRES = url.searchParams.get("err");
+        switch(errRES) {
+          case "notlogined":
+            alert("You have to login to vote servers")
+            window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login"
+            break;
+          case "invalidcaptcha":
+            alert("Invalid captcha provided")
+            window.location.search = ""
+            break;
+          case "alreadyvoted":
+            alert("You already voted this server! wait for 12 hours to vote again.")
+            window.location.search = ""
+            break;
+        }
+        document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
+           var hcaptchaVal = document.querySelector('[name="h-captcha-response"]').value;
+           if (hcaptchaVal === "") {
+              event.preventDefault();
+              alert("Please complete the hCaptcha");
+           }
+        });
+        function discordLogOutAPI() {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+        };
+        function discordLoginAPI() {
+            if (logined == true) {
+                window.location.href = window.location.origin + "/user/" + client.id
+            } else {
+                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            }
+        };
+          
+      </script>
+    </body>
+</html>
