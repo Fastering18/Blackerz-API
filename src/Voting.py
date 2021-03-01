@@ -120,15 +120,15 @@ class voteServer(Resource):
     def post(self, id):                               
        if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
-        discord = make_session(token=session.get('oauth2_token'))
-        user = discord.get(API_BASE_URL + '/users/@me').json()
-        isVerified = verifyHCaptcha(client=user)
-        if isVerified["success"] == False:
-            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err={isVerified['reason']}")
+       discord = make_session(token=session.get('oauth2_token'))
+       user = discord.get(API_BASE_URL + '/users/@me').json()
+       isVerified = verifyHCaptcha(client=user)
+       if isVerified["success"] == False:
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err={isVerified['reason']}")
         
-        vote = addVote(id, user, "serverVotes")  
-        if vote.result == None:
-            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
-        else: 
-            return redirect(f"https://blackerz.herokuapp.com/servers/{id}") # make_response(jsonify({success: True}), 201) #vote.result                    
+       vote = addVote(id, user, "serverVotes")  
+       if vote.result == None:
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
+       else: 
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}") # make_response(jsonify({success: True}), 201) #vote.result                    
                             
