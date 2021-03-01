@@ -76,7 +76,7 @@ class addVote():
             
             currentVotes = int(botData["upvotes"])
             currentVotes += 1
-            result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes)
+            result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes) if tipe == "botVotes" else firebaseDB.put('/Infrastructure/serverlist/' + str(botID), "upvotes", currentVotes)
             self.result = result
         else:
             self.result = None
