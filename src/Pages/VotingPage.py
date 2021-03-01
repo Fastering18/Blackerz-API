@@ -44,24 +44,26 @@ def generateAuthorizationV1():
   
 class data():
     def __init__(self, dataName, id):
-        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
-        if result != None:       
+        path = '/Infrastructure/' + dataName + '/' + str(id)
+        result = firebaseDB.get(path, None)
+        self.data = result
+        if result != None and dataName == "botlist":       
             url = "https://discord.com/api/v8/users/" + str(id)
             r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
             response = r.json() 
 
-            if result["name"] != response["username"]:
+            if "name" in result and result["name"] != response["username"]:
                 result["name"] = response["username"]
                 result["tag"] = response["username"] + "#" + response["discriminator"]
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
-            if "avatar" in result and "avatar" in response:
+                firebaseDB.put(path, "name", response["username"])
+                firebaseDB.put(path, "tag", result["tag"])
+            if "avatar" in result and "avatar" in result and "avatar" in response:
                 if result["avatar"] != response["avatar"]:
                     result["avatar"] = response["avatar"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+                    firebaseDB.put(path, "avatar", response["avatar"])       
             elif "avatar" in response and not "avatar" in result:
                 result["avatar"] = response["avatar"]
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+                firebaseDB.put(path, "avatar", response["avatar"])
             self.data = result
             self.timeStamp = time.time()
         else:
@@ -73,7 +75,7 @@ class BotVotePage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botum = data("getbot", id)
+    botum = data("botlist", id)
     bot = botum.data
     
     if bot != None:
@@ -81,5 +83,22 @@ class BotVotePage(Resource):
     else:
         notFound = {
             'description': "Bot not found"
+        }
+        return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
+
+class ServerVotePage(Resource):
+  def get(self, id):
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
+    discord = make_session(token=session.get('oauth2_token'))
+    user = discord.get(API_BASE_URL + '/users/@me').json()
+    serverum = data("botlist", id)
+    server = serverum.data
+    
+    if server != None:
+        return make_response(render_template('botvote.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=jsonify(bot)), 200, headers)
+    else:
+        notFound = {
+            'description': "Server not found"
         }
         return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
