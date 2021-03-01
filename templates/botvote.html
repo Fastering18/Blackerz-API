@@ -68,11 +68,12 @@
         <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="botName">{{ botData["name"] }}</h1>
         <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
       </div>
-      <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">
+      <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="https://blackerz.herokuapp.com/api/v1/bots/{{ botId }}/vote">
        {{ hcaptcha }}
        <br>
        <input type="submit" value="Vote" />
       </form>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
@@ -95,10 +96,17 @@
         }
         document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
            var hcaptchaVal = document.querySelector('[name="h-captcha-response"]').value;
-           if (hcaptchaVal === "") {
-              event.preventDefault();
-              alert("Please complete the hCaptcha");
-           }
+           event.preventDefault();
+           if (hcaptchaVal === "") return alert("Please complete the hCaptcha");
+           $.ajax({
+             url: "https://blackerz.herokuapp.com/api/v1/bots/{{ botId }}/vote",
+             type: 'post',
+             data: $('#CaptchaForm').serialize(),
+             success:function(test){
+               console.log(test)
+               console.log("berhasil vote")
+             }
+           });
         });
         function discordLogOutAPI() {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
