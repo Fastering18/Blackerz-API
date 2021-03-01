@@ -66,12 +66,13 @@ def generateAuthorizationV1():
     return result_str
         
 class addVote():
-    def __init__(self, botID, client):
-        clientVote = firebaseDB.get('/Infrastructure/Votes/botVotes/' + str(botID) + "/" + client["id"], None)
+    def __init__(self, botID, client, tipe):
+        path = '/Infrastructure/Votes/'+ tipe +'/' + str(botID) + "/" + client["id"]
+        clientVote = firebaseDB.get(path, None)
         currentTime = time.time() * 1000    #to JavaScript timestamps
         if (clientVote == None) or (int(currentTime) - int(clientVote) >= 0):
-            botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None)
-            firebaseDB.put('/Infrastructure/Votes/botVotes/' + str(botID), client["id"], currentTime + 4.32e+7)
+            botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None) if tipe == "botVotes" else firebaseDB.get('/Infrastructure/serverlist/' + str(botID), None)
+            firebaseDB.put(path, currentTime + 4.32e+7)
             
             currentVotes = int(botData["upvotes"])
             currentVotes += 1
@@ -91,7 +92,7 @@ class voteBot(Resource):
         if isVerified["success"] == False:
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err={isVerified['reason']}")
         
-        vote = addVote(id, user)
+        vote = addVote(id, user, "botVotes")
         if vote.result == None:
             #warnVote = forbiddenAcess1
             #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
@@ -101,24 +102,33 @@ class voteBot(Resource):
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
         
     def put(self, id):
-        clientID = request.headers.get('clientId')
-        clientCode = request.headers.get('code')
-        if (not clientID) and (not clientCode):
-            return make_response(jsonify(unauthorizedAcess), 401)
-        if not clientID:
-            return make_response(jsonify(unauthorizedAcess1), 401)
-        if not clientCode:
-            return make_response(jsonify(unauthorizedAcess2), 401)
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        discord = make_session(token=session.get('oauth2_token'))
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        isVerified = verifyHCaptcha(client=user)
+        if isVerified["success"] == False:
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err={isVerified['reason']}")
         
-        voter = identifyVoter(clientID, clientCode)
-        if voter == None:
-            return make_response(jsonify(unauthorizedAcess3), 401)    
-            
-        voter["id"] = clientID    
-        vote = addVote(id, voter)
-        if vote.result == None:
-            warnVote = forbiddenAcess1
-            warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
-            return make_response(jsonify(warnVote), 403)   
+        vote = addVote(id, user, "botVotes")
+        if vote.result == None: 
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
         else: 
-            return make_response(jsonify(vote.result), 201)
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
+                            
+class voteServer(Resource):
+    def post(self, id):                               
+       if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        discord = make_session(token=session.get('oauth2_token'))
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        isVerified = verifyHCaptcha(client=user)
+        if isVerified["success"] == False:
+            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err={isVerified['reason']}")
+        
+        vote = addVote(id, user, "serverVotes")  
+        if vote.result == None:
+            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
+        else: 
+            return redirect(f"https://blackerz.herokuapp.com/servers/{id}") # make_response(jsonify({success: True}), 201) #vote.result                    
+                            
