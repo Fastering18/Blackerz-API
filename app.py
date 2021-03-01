@@ -37,7 +37,6 @@ api = Api(app)
 # Static pages resource
 api.add_resource(Home.homePage, "/")
 api.add_resource(Servers.allServersPage, "/servers")
-api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
 
@@ -61,10 +60,13 @@ api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 
 # Votes bots and servers resource
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
+api.add_resource(VotingManager.voteServer, "/api/v1/servers/<int:id>/vote")
 
 # Render pages
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
 api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
+api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
+api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
 
 if __name__ == "__main__":
   app.run()
