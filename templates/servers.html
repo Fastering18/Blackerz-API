@@ -79,7 +79,6 @@
              <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 0.75%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
                <p id="namaServer" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{dictServers[dataChild]["name"]}}</p>
-               <img src="https://discordapp.com/api/guilds/{{dataChild}}/widget.png">
              </div>
           {%- endfor -%}
     </div>
