@@ -72,7 +72,7 @@ class addVote():
         currentTime = time.time() * 1000    #to JavaScript timestamps
         if (clientVote == None) or (int(currentTime) - int(clientVote) >= 0):
             botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None) if tipe == "botVotes" else firebaseDB.get('/Infrastructure/serverlist/' + str(botID), None)
-            firebaseDB.put(path, client["id"], currentTime + 4.32e+7)
+            firebaseDB.put('/Infrastructure/Votes/'+ tipe +'/' + str(botID), client["id"], currentTime + 4.32e+7)
             
             currentVotes = int(botData["upvotes"])
             currentVotes += 1
