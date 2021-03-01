@@ -69,6 +69,7 @@ class addVote():
     def __init__(self, botID, client, tipe):
         path = '/Infrastructure/Votes/'+ tipe +'/' + str(botID) + "/" + client["id"]
         clientVote = firebaseDB.get(path, None)
+        print(clientVote)
         currentTime = time.time() * 1000    #to JavaScript timestamps
         if (clientVote == None) or (int(currentTime) - int(clientVote) >= 0):
             botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None) if tipe == "botVotes" else firebaseDB.get('/Infrastructure/serverlist/' + str(botID), None)
