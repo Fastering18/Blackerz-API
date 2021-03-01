@@ -66,7 +66,7 @@ class data():
                 firebaseDB.put(path, "avatar", response["avatar"])
             self.data = result
             self.timeStamp = time.time()
-        else:
+        elif result == None:
             self.data = None
 
 class BotVotePage(Resource):
