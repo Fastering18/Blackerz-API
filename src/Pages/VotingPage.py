@@ -92,11 +92,11 @@ class ServerVotePage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverum = data("botlist", id)
+    serverum = data("serverlist", id)
     server = serverum.data
     
     if server != None:
-        return make_response(render_template('botvote.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=jsonify(bot)), 200, headers)
+        return make_response(render_template('servervote.html', serverData=server, serverId=str(id), clientUser=user), 200, headers)
     else:
         notFound = {
             'description': "Server not found"
