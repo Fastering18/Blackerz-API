@@ -249,7 +249,11 @@
             window.location.href = inviteLink
         }
         function voteBot() {
-            window.location.href = window.location.href + "/vote"
+            {%- if clientUser and "username" in clientUser -%}
+               window.location.href = "https://blackerz.herokuapp.com/bots/{{botId}}/vote"
+            {%- else -%} 
+               return discordLoginAPI()
+            {%- endif -%}
         }
         function discordLoginAPI() {
             if (logined == true) {
