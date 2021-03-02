@@ -153,7 +153,7 @@ class publicVoteApiBot(Resource):
         if code == None:
             return make_response(jsonify(nouserquery), 400)
         clientAuthV1 = request.headers.get('Authorization')
-        isOwner = verifyOwner(clientAuthV1, id)
+        isOwner = verifyOwner(clientAuthV1, str(id))
                             
         if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
@@ -198,7 +198,7 @@ class publicVoteApiServer(Resource):
        if code == None:
             return make_response(jsonify(nouserquery), 400)
        clientAuthV1 = request.headers.get('Authorization')
-       isOwner = verifyOwner(clientAuthV1, id, "serverlist")
+       isOwner = verifyOwner(clientAuthV1, str(id), "serverlist")
                             
        if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
