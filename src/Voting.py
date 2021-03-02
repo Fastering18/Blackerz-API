@@ -43,19 +43,25 @@ def verifyHCaptcha(response=None, remote_ip=None, client=None):
 
 def verifyOwner(authV1, botId, tipe="botlist"):
     if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
-    user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
-    isUserExist = len(list(user.keys())) > 0
-    if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
-    user = list(user.keys())[0]
-    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
-    isBotOwned = botId in list(item.keys())
-    if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
-    return {"success": True, "id": user}
+    try:
+        user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"').json()
+        isUserExist = len(list(user.keys())) > 0
+        if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+        user = list(user.keys())[0]
+        item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"').json()
+        isBotOwned = botId in list(item.keys())
+        if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
+        return {"success": True, "id": user}
+    except:
+        {"success": False, "reason": "Unauthorized"}
 
 def checkVote(userId, itemId, tipe="botVotes"):
-    result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json')
-    currentTime = time.time() * 1000    #to JavaScript timestamps
-    return {"voted": int(result != None and (int(currentTime) - int(result) <= 0))}
+    try:
+        result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json').json()
+        currentTime = time.time() * 1000    #to JavaScript timestamps
+        return {"voted": int(result != None and (int(currentTime) - int(result) <= 0))}
+    except:
+        return {"voted": 0}
                        
 def token_updater(token):
     session['oauth2_token'] = token
