@@ -1,8 +1,7 @@
 from flask_restful import Resource
 from flask import jsonify, make_response, request, abort
-import time
+import time, math, requests
 from threading import Timer
-import math
 import pymongo as mongopy
 
 from firebase import firebase
@@ -16,6 +15,19 @@ error3 = {'error': "shortDescription too long, must lower than 50 characters len
 error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
+
+def verifyOwner(authV1, botId, tipe="botlist"):
+    if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
+    user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+    user = user.json()
+    isUserExist = len(list(user.keys())) > 0
+    if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+    user = list(user.keys())[0]
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
+    item = item.json()
+    isBotOwned = item.get(botId)
+    if isBotOwned == None: return {"success": False, "reason": "Unauthorized"}
+    return {"success": True, "id": user}
 
 class edit():
     def __init__(self, data, id):
@@ -89,3 +101,21 @@ class editData(Resource):
         return make_response(jsonify(sucess), 201)
     else: 
         return make_response(jsonify(botum.result), 400)
+
+class ServerCountManager(Resource):
+    def post(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        clientAuthV1 = request.headers.get('Authorization')
+        isOwner = verifyOwner(clientAuthV1, str(id))
+        jsonData = request.get_json()
+        if isOwner["success"] != True:
+           return make_response(jsonify(isOwner["reason"]), 401) 
+        if not jsonData or not "servercount" in jsonData:
+           return make_response(jsonify(error1), 400)
+        botum = edit({"serverCount": jsonData.get("servercount")}, str(id))
+        
+        if botum.result == True:
+            return make_response(jsonify(sucess), 201)
+        else: 
+            return make_response(jsonify(botum.result), 400)
