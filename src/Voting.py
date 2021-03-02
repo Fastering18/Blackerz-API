@@ -43,20 +43,19 @@ def verifyHCaptcha(response=None, remote_ip=None, client=None):
 
 def verifyOwner(authV1, botId, tipe="botlist"):
     if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
-    try:
-        user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
-        user = user.json()
-        isUserExist = len(list(user.keys())) > 0
-        if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
-        user = list(user.keys())[0]
-        item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
-        item.json()
-        isBotOwned = botId in list(item.keys())
-        print(item.keys())
-        if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
-        return {"success": True, "id": user}
-    except:
-        {"success": False, "reason": "Unauthorized, failed to identify"}
+    user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+    user = user.json()
+    isUserExist = len(list(user.keys())) > 0
+    if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+    user = list(user.keys())[0]
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
+    item = item.json()
+    isBotOwned = botId in list(item.keys())
+    print(item.keys())
+    if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
+    return {"success": True, "id": user}
+    #except:
+        #return {"success": False, "reason": "Unauthorized, failed to identify"}
 
 def checkVote(userId, itemId, tipe="botVotes"):
     try:
