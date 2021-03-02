@@ -109,8 +109,10 @@ class ServerCountManager(Resource):
         clientAuthV1 = request.headers.get('Authorization')
         isOwner = verifyOwner(clientAuthV1, str(id))
         jsonData = request.get_json()
-        if isOwner["success"] != True:
+        
+        if isOwner["success"] == False:
            return make_response(jsonify(isOwner["reason"]), 401) 
+    
         if not jsonData or not "servercount" in jsonData:
            return make_response(jsonify(error1), 400)
         botum = edit({"serverCount": jsonData.get("servercount")}, str(id))
