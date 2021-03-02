@@ -52,6 +52,7 @@ def verifyOwner(authV1, botId, tipe="botlist"):
     item = item.json()
     isBotOwned = botId in list(item.keys())
     print(item.keys())
+    print(botId)
     if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
     return {"success": True, "id": user}
     #except:
