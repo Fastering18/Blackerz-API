@@ -21,6 +21,7 @@ unauthorizedAcess1 = {'error': "Unauthorized Acess, clientId not found in header
 unauthorizedAcess2 = {'error': "Unauthorized Acess, code not found in headers.", 'status': "Not success"}
 unauthorizedAcess3 = {'error': "Unauthorized Acess, client not found, please input correct clientId and code in headers.", 'status': "Not success"}
 forbiddenAcess1 = {'status': "Not success"}
+nouserquery = {'error': 'Please insert "?user=[USER_ID]" parameter to check user', 'status': "Not success"}
 
 def identifyVoter(clientID, code):
     result = firebaseDB.get('/Infrastructure/WebUsers/' + clientID, None)
@@ -40,6 +41,22 @@ def verifyHCaptcha(response=None, remote_ip=None, client=None):
     r = requests.post("https://hcaptcha.com/siteverify", data=data)
     return {"success": r.json()["success"] if r.status_code == 200 else False, "reason": "invalidcaptcha"}
 
+def verifyOwner(authV1, botId, tipe="botlist"):
+    if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
+    user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+    isUserExist = len(list(user.keys())) > 0
+    if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+    user = list(user.keys())[0]
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}")
+    isBotOwned = botId in list(item.keys())
+    if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
+    return {"success": True, "id": user}
+
+def checkVote(userId, itemId, tipe="botVotes"):
+    result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json')
+    currentTime = time.time() * 1000    #to JavaScript timestamps
+    return {"voted": int(result != None and (int(currentTime) - int(result) <= 0))}
+                       
 def token_updater(token):
     session['oauth2_token'] = token
 def make_session(token=None, state=None, scope=None):
@@ -116,6 +133,20 @@ class voteBot(Resource):
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
         else: 
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
+                
+    def get(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))      
+        code = request.values.get("user")
+        if code == None:
+            return make_response(jsonify(nouserquery), 400)
+        clientAuthV1 = request.headers.get('Authorization')
+        isOwner = verifyOwner(clientAuthV1, id)
+                            
+        if isOwner["success"] != True:
+           return make_response(jsonify(isOwner["reason"]), 401) 
+        
+        return make_response(jsonify(checkVote(isOwner["id"], id)), 200)
                             
 class voteServer(Resource):
     def post(self, id):                               
@@ -132,4 +163,17 @@ class voteServer(Resource):
            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
        else: 
            return redirect(f"https://blackerz.herokuapp.com/servers/{id}") # make_response(jsonify({success: True}), 201) #vote.result                    
+    
+    def get(self, id):
+       if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))      
+       code = request.values.get("user")
+       if code == None:
+            return make_response(jsonify(nouserquery), 400)
+       clientAuthV1 = request.headers.get('Authorization')
+       isOwner = verifyOwner(clientAuthV1, id, "serverlist")
                             
+       if isOwner["success"] != True:
+           return make_response(jsonify(isOwner["reason"]), 401) 
+        
+       return make_response(jsonify(checkVote(isOwner["id"], id, "serverVotes")), 200)
