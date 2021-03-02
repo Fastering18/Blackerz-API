@@ -60,7 +60,9 @@ api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 
 # Votes bots and servers resource
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
+api.add_resource(VotingManager.publicVoteApiBot, "/api/v1/bots/<int:id>/votes")
 api.add_resource(VotingManager.voteServer, "/api/v1/servers/<int:id>/vote")
+api.add_resource(VotingManager.publicVoteApiServer, "/api/v1/servers/<int:id>/votes")
 
 # Render pages
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
