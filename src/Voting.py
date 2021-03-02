@@ -132,8 +132,9 @@ class voteBot(Resource):
         if vote.result == None: 
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
         else: 
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
-                
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result 
+                            
+class publicVoteApiBot(Resource):
     def get(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))      
@@ -162,7 +163,7 @@ class voteServer(Resource):
        if vote.result == None:
            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
        else: 
-           return redirect(f"https://blackerz.herokuapp.com/servers/{id}") # make_response(jsonify({success: True}), 201) #vote.result                    
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}")                
     
     def get(self, id):
        if "http://" in request.url:
@@ -177,3 +178,18 @@ class voteServer(Resource):
            return make_response(jsonify(isOwner["reason"]), 401) 
         
        return make_response(jsonify(checkVote(isOwner["id"], id, "serverVotes")), 200)
+
+class publicVoteApiServer(Resource):
+    def get(self, id):
+       if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))      
+       code = request.values.get("user")
+       if code == None:
+            return make_response(jsonify(nouserquery), 400)
+       clientAuthV1 = request.headers.get('Authorization')
+       isOwner = verifyOwner(clientAuthV1, id, "serverlist")
+                            
+       if isOwner["success"] != True:
+           return make_response(jsonify(isOwner["reason"]), 401) 
+        
+       return make_response(jsonify(checkVote(isOwner["id"], id, "serverVotes")), 200)                           
