@@ -16,7 +16,7 @@ error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
-def verifyOwner(authV1, botId, tipe="botlist"):
+def verifyItemOwner(authV1, botId, tipe="botlist"):
     if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
     user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
     user = user.json()
@@ -107,7 +107,7 @@ class ServerCountManager(Resource):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
         clientAuthV1 = request.headers.get('Authorization')
-        isOwner = verifyOwner(clientAuthV1, str(id))
+        isOwner = verifyItemOwner(clientAuthV1, str(id))
         jsonData = request.get_json()
         
         if isOwner["success"] == False:
