@@ -12,7 +12,7 @@ import src.Pages.VotingPage as votingPage
 from src.searchbot import resouce
 from src.allbot import resource2
 from src.submitbot import resource3
-from src.editBotData import editData
+import src.editBotData as editBotData
 
 import src.Discord.login as discordLoginSource
 
@@ -44,7 +44,8 @@ api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
 api.add_resource(resouce, "/api/v1/bots/<int:id>")
 api.add_resource(resource2, "/api/v1/bots/all")
 api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
-api.add_resource(editData, "/api/v1/bots/<int:id>/edit")
+api.add_resource(editBotData.editData, "/api/v1/bots/<int:id>/edit")
+api.add_resource(editBotData.ServerCountManager, "/api/v1/bots/<int:id>/edit/servercount")
 
 # Discord login resource
 api.add_resource(discordLoginSource.login, "/api/v1/discord/login")
