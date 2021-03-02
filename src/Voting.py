@@ -47,7 +47,7 @@ def verifyOwner(authV1, botId, tipe="botlist"):
     isUserExist = len(list(user.keys())) > 0
     if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
     user = list(user.keys())[0]
-    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}")
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
     isBotOwned = botId in list(item.keys())
     if not isBotOwned: return {"success": False, "reason": "Unauthorized"}
     return {"success": True, "id": user}
