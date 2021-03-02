@@ -146,8 +146,8 @@ class publicVoteApiBot(Resource):
     def get(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))      
-        code = request.values.get("user")
-        if code == None:
+        userToCheck = request.values.get("user")
+        if userToCheck == None:
             return make_response(jsonify(nouserquery), 400)
         clientAuthV1 = request.headers.get('Authorization')
         isOwner = verifyOwner(clientAuthV1, str(id))
@@ -155,7 +155,7 @@ class publicVoteApiBot(Resource):
         if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
         
-        return make_response(jsonify(checkVote(isOwner["id"], str(id))), 200)
+        return make_response(jsonify(checkVote(userToCheck, str(id))), 200)
                             
 class voteServer(Resource):
     def post(self, id):                               
@@ -191,8 +191,8 @@ class publicVoteApiServer(Resource):
     def get(self, id):
        if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))      
-       code = request.values.get("user")
-       if code == None:
+       userToCheck = request.values.get("user")
+       if userToCheck == None:
             return make_response(jsonify(nouserquery), 400)
        clientAuthV1 = request.headers.get('Authorization')
        isOwner = verifyOwner(clientAuthV1, str(id), "serverlist")
@@ -200,4 +200,4 @@ class publicVoteApiServer(Resource):
        if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
         
-       return make_response(jsonify(checkVote(isOwner["id"], str(id), "serverVotes")), 200)                           
+       return make_response(jsonify(checkVote(userToCheck, str(id), "serverVotes")), 200)                           
