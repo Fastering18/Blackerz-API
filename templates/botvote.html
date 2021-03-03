@@ -70,10 +70,10 @@
       </div>
       <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">   
        <script src="https://hcaptcha.com/1/api.js" async="" defer=""></script>
-       <div id="hcaptcha" class="h-captcha" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccess" data-expired-callback="onExpire">
+       <div id="hcaptcha" class="h-captcha" data-theme="dark" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccesshcaptcha" data-expired-callback="onExpirehcaptcha" data-error-callback="onErrorhcaptcha">
           <script>
                var submitted = false
-               var onSuccess = function(response) {
+               var onSuccesshcaptcha = function(response) {
                   var errorDivs = document.getElementsByClassName("hcaptcha-error");
                   if (errorDivs.length) {
                       errorDivs[0].className = "";
@@ -85,9 +85,14 @@
                   submitted = true
                   document.getElementById("CaptchaForm").submit();
               };
-              var onExpire = function(response) {
+              var onExpirehcaptcha = function(response) {
                   submitted = false
                   alert("hcaptcha validation expired, please refresh your page")
+                  window.location.href = window.location.href
+              };
+              var onErrorhcaptcha = function(response) {
+                  submitted = false
+                  alert("hcaptcha validation failed, please refresh your page")
                   window.location.href = window.location.href
               };
           </script>
