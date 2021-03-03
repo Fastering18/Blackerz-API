@@ -120,9 +120,6 @@ class voteBot(Resource):
         
         vote = addVote(id, user, "botVotes")
         if vote.result == None:
-            #warnVote = forbiddenAcess1
-            #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
-            #return make_response(jsonify(warnVote), 401)   
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted", code=301)
         else: 
             return redirect(f"https://blackerz.herokuapp.com/bots/{id}", code=301) # make_response(jsonify({success: True}), 201) #vote.result
@@ -134,7 +131,7 @@ class voteBot(Resource):
         user = discord.get(API_BASE_URL + '/users/@me').json()
         isVerified = verifyHCaptcha(client=user)
         if isVerified["success"] == False:
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err={isVerified['reason']}")
+            return make_response(jsonify({"success": False, "error": isVerified['reason']}), 401)
         
         vote = addVote(id, user, "botVotes")
         if vote.result == None: 
