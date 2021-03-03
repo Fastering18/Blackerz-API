@@ -205,22 +205,13 @@
       style="display:inline-block; position: relative;" width="10%" height="10%" alt="bot avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <button id="addBotBTN" class="button" onclick="inviteBot(this)"><span>Add Bot</span></button>
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] -%}
-        <button id="editBotData" class="button"><span>Edit</span></button>
+        <button id="editBotData" class="button" onclick="window.location.href = 'https://blackerz.herokuapp.com/bots/{{botId}}/edit'"><span>Edit</span></button>
     {%- endif -%}
     <button id="voteBot" class="button" onclick="voteBot()"><span id="voteBotSpan">{{ botData["upvotes"] }} Votes </span></button>
     <br>
     <p id="shortDescription">{{ botData["ShortDescription"] | safe }}</p>
     {%- if "serverCount" in botData -%}
         <p id="serverCount">In {{ botData["serverCount"] }} servers</p>
-    {%- endif -%}
-    {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] -%}
-    <label id="editBotForm" style="display: none">
-      <span for="botDescriptionForm">Deskripsi baru:</span>
-      <textarea id="botDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
-        name="botDescriptionForm" oninput="this.parentNode.dataset.value = this.value" rows="1"
-        placeholder="Deskripsi baru"></textarea>
-      </form>
-    </label>
     {%- endif -%}
     <hr>
     {%- if "LongDescription" in botData -%}
