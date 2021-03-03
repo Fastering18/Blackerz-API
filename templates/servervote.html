@@ -69,7 +69,29 @@
         <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
       </div>
       <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/servers/{{ serverId }}/vote">
-       {{ hcaptcha }}
+       <script src="https://hcaptcha.com/1/api.js" async="" defer=""></script>
+       <div id="hcaptcha" class="h-captcha" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccess" data-expired-callback="onExpire">
+          <script>
+               var submitted = false
+               var onSuccess = function(response) {
+                  var errorDivs = document.getElementsByClassName("hcaptcha-error");
+                  if (errorDivs.length) {
+                      errorDivs[0].className = "";
+                  }
+                  var errorMsgs = document.getElementsByClassName("hcaptcha-error-message");
+                  if (errorMsgs.length) {
+                     errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+                  }
+                  submitted = true
+                  document.getElementById("CaptchaForm").submit();
+              };
+              var onExpire = function(response) {
+                  submitted = false
+                  alert("hcaptcha validation expired, please refresh your page")
+                  window.location.href = window.location.href
+              };
+          </script>
+        </div>
        <br>
        <input type="submit" value="Vote" />
       </form>
@@ -94,11 +116,15 @@
             break;
         }
         document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
+           if (submitted == true) return event.preventDefault();
            var hcaptchaVal = document.querySelector('[name="h-captcha-response"]').value;
            if (hcaptchaVal === "") {
               event.preventDefault();
               alert("Please complete the hCaptcha");
+           } else {
+             submitted = true
            }
+           event.preventDefault();
         });
         function discordLogOutAPI() {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
