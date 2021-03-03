@@ -72,6 +72,7 @@
        <script src="https://hcaptcha.com/1/api.js" async="" defer=""></script>
        <div id="hcaptcha" class="h-captcha" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccess" data-expired-callback="onExpire">
           <script>
+               var submitted = false
                var onSuccess = function(response) {
                   var errorDivs = document.getElementsByClassName("hcaptcha-error");
                   if (errorDivs.length) {
@@ -81,9 +82,11 @@
                   if (errorMsgs.length) {
                      errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
                   }
-                    document.getElementById("CaptchaForm").submit();
+                  submitted = true
+                  document.getElementById("CaptchaForm").submit();
               };
               var onExpire = function(response) {
+                  submitted = false
                   alert("hcaptcha validation expired, please refresh your page")
                   window.location.href = window.location.href
               };
@@ -98,7 +101,6 @@
         const url = new URL(window.location.href);
         const logined = (client && client.message != "401: Unauthorized")
         const errRES = url.searchParams.get("err");
-        var submitted = false
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote bots")
@@ -121,8 +123,8 @@
               alert("Please complete the hCaptcha");
            } else {
              submitted = true
-             event.preventDefault();
            }
+           event.preventDefault();
         });
         function discordLogOutAPI() {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
