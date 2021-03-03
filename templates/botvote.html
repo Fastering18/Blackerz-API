@@ -70,25 +70,24 @@
       </div>
       <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">   
        <script src="https://hcaptcha.com/1/api.js" async="" defer=""></script>
-       <div id="hcaptcha-demo" class="h-captcha" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccess" data-expired-callback="onExpire">
+       <div id="hcaptcha" class="h-captcha" data-sitekey="552252c3-1e0d-4fa8-837f-045a91f369ec" data-callback="onSuccess" data-expired-callback="onExpire">
           <script>
-                      var onSuccess = function(response) {
-                        var errorDivs = document.getElementsByClassName("hcaptcha-error");
-                        if (errorDivs.length) {
-                          errorDivs[0].className = "";
-                        }
-                        var errorMsgs = document.getElementsByClassName("hcaptcha-error-message");
-                        if (errorMsgs.length) {
-                          errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
-                        }
-
-                        console.log("berhasil")
-                      };
-
-                      var onExpire = function(response) {
-                       console.log("kadaluarsa")
-                      };
-                </script>
+               var onSuccess = function(response) {
+                  var errorDivs = document.getElementsByClassName("hcaptcha-error");
+                  if (errorDivs.length) {
+                      errorDivs[0].className = "";
+                  }
+                  var errorMsgs = document.getElementsByClassName("hcaptcha-error-message");
+                  if (errorMsgs.length) {
+                     errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+                  }
+                    document.getElementById("CaptchaForm").submit();
+              };
+              var onExpire = function(response) {
+                  alert("hcaptcha validation expired, please refresh your page")
+                  window.location.href = window.location.href
+              };
+          </script>
         </div>
        <br>
        <input type="submit" value="Vote" />
