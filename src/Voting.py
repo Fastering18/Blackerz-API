@@ -123,9 +123,9 @@ class voteBot(Resource):
             #warnVote = forbiddenAcess1
             #warnVote['error'] = "Already voted, you can vote again in: " + str(int(vote.canVoteTime)) + " seconds later."
             #return make_response(jsonify(warnVote), 401)   
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted", code=301)
         else: 
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result
+            return redirect(f"https://blackerz.herokuapp.com/bots/{id}", code=301) # make_response(jsonify({success: True}), 201) #vote.result
         
     def put(self, id):
         if "http://" in request.url:
@@ -138,9 +138,9 @@ class voteBot(Resource):
         
         vote = addVote(id, user, "botVotes")
         if vote.result == None: 
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted")
+            return make_response(jsonify({"success": False, "error": "already voted, wait 12 hours later"}), 401)
         else: 
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}") # make_response(jsonify({success: True}), 201) #vote.result 
+            return make_response(jsonify({"success": True, "error": "none"}), 201)
                             
 class publicVoteApiBot(Resource):
     def get(self, id):
@@ -169,9 +169,9 @@ class voteServer(Resource):
         
        vote = addVote(id, user, "serverVotes")  
        if vote.result == None:
-           return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted")
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted", code=301)
        else: 
-           return redirect(f"https://blackerz.herokuapp.com/servers/{id}")                
+           return redirect(f"https://blackerz.herokuapp.com/servers/{id}", code=301)                
     
     def get(self, id):
        if "http://" in request.url:
