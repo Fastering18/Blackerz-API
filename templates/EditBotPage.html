@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  
+  <head>
+    <meta charset=UTF-8>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{bot["name"]}} Dashboard</title>
+</head>
+  <body>
+    <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a class="active" data-text="Home" id="profiletab" href="/"></a>
+            <a href="/servers" data-text="Servers"></a>
+            {%- if clientUser and "username" in clientUser -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
+            {%- endif -%}
+        </div>
+    </div>
+    <h1 style="color: rgba(255,255,255, 0.85);">Unauthorized</h1>
+    <script>
+       if (window.location.protocol === "http:") window.location.protocol = "https:";
+       const client = JSON.parse('{{ clientUser | tojson | safe }}')
+       function discordLogOutAPI(force) {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+       }
+       function discordLoginAPI() {
+           {%- if clientUser and "username" in clientUser -%}
+               window.location.href = window.location.origin + "/user/" + client.id
+           {%- else -%}
+               window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+           {%- endif -%}
+       }
+    </script>
+ <body>
