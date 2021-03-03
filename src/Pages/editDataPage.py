@@ -24,7 +24,7 @@ def verifyOwner(user, botId, tipe="botlist"):
     if isBotOwned == None: return {"success": False, "reason": "Unauthorized"}
     return {"success": True, "id": user}
   
-  def token_updater(token):
+def token_updater(token):
     session['oauth2_token'] = token
 def make_session(token=None, state=None, scope=None):
     return OAuth2Session(
