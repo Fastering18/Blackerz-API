@@ -121,6 +121,7 @@
               alert("Please complete the hCaptcha");
            } else {
              submitted = true
+             event.preventDefault();
            }
         });
         function discordLogOutAPI() {
