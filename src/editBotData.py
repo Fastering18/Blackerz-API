@@ -61,14 +61,11 @@ def verifyOwner(clientId, code):
 class editData(Resource):
   def put(self, id):
     jsonData = request.get_json()
-    clientId = request.headers.get('clientId')
-    clientCode = request.headers.get('code')
     clientAuthV1 = request.headers.get('Authorization')
-    authentication = clientCode
-
-    if clientCode == None : authentication = clientAuthV1
-    if verifyOwner(clientId, authentication) == False: 
-       return make_response(jsonify(unauthorizedAcess), 401)
+    isOwner = verifyItemOwner(clientAuthV1, str(id))
+    
+    if isOwner["success"] == False:
+       return make_response(jsonify(isOwner["reason"]), 401) 
     if not jsonData:
        return make_response(jsonify(error1), 400)
     if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
@@ -80,6 +77,7 @@ class editData(Resource):
         return make_response(jsonify(sucess), 201)
     else: 
         return make_response(jsonify(botum.result), 400)
+    
   def post(self, id):
     jsonData = request.get_json()
     clientId = request.headers.get('clientId')
