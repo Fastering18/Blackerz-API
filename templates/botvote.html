@@ -98,6 +98,7 @@
         const url = new URL(window.location.href);
         const logined = (client && client.message != "401: Unauthorized")
         const errRES = url.searchParams.get("err");
+        var submitted = false
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote bots")
@@ -113,10 +114,13 @@
             break;
         }
         document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
+           if (submitted == true) return event.preventDefault();
            var hcaptchaVal = document.querySelector('[name="h-captcha-response"]').value;
            if (hcaptchaVal === "") {
               event.preventDefault();
               alert("Please complete the hCaptcha");
+           } else {
+             submitted = true
            }
         });
         function discordLogOutAPI() {
