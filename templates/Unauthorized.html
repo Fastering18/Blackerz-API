@@ -33,7 +33,7 @@
             {%- endif -%}
         </div>
     </div>
-    <h1>Unauthorized</h1>
+    <h1 style="color: rgba(255,255,255, 0.85);">Unauthorized</h1>
     <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ user | tojson | safe }}')
