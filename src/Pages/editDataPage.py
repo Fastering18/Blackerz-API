@@ -48,20 +48,50 @@ def generateAuthorizationV1():
     letters = string.ascii_letters
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
     return result_str
-  
+
+class data():
+    def __init__(self, dataName, id):
+        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
+        if result != None:
+            try:
+                url = "https://discord.com/api/v8/users/" + str(id)
+                r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+                response = r.json() 
+                if result["name"] != response["username"]:
+                    result["name"] = response["username"]
+                    result["tag"] = response["username"] + "#" + response["discriminator"]
+                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
+                if "avatar" in result and "avatar" in response:
+                    if result["avatar"] != response["avatar"]:
+                        result["avatar"] = response["avatar"]
+                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+                elif "avatar" in response and not "avatar" in result:
+                    result["avatar"] = response["avatar"]
+                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+                self.data = result
+                self.timeStamp = time.time()
+            except:
+                self.data = result
+                self.timeStamp = time.time()
+        else:
+            self.data = None
+
 class EditBotPage(Resource):
     def get(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        
-        print(user)
+        botum = data("botlist", id).data
+    
+        if botum == None:
+            return make_response(render_template('404.html', user=user), 404, headers)
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
         isOwner = verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
           
-        return make_response(jsonify({"success": True}))
+        return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum), 200, headers)
         
