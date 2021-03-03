@@ -8,6 +8,7 @@ import src.Pages.Server as Servers
 import src.Pages.UserProfile as Profile
 import src.Pages.renderUserPage as renderUserPage
 import src.Pages.VotingPage as votingPage
+import src.Pages.editDataPage as editPage
 
 from src.searchbot import resouce
 from src.allbot import resource2
@@ -68,6 +69,7 @@ api.add_resource(VotingManager.publicVoteApiServer, "/api/v1/servers/<int:id>/vo
 # Render pages
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
 api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
+api.add_resource(editPage.EditBotPage, "/bots/<int:id>/edit")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
 
