@@ -56,9 +56,10 @@ class EditBotPage(Resource):
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
         
+        print(user)
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        isOwner = verifyOwner(user.id, str(id))
+        isOwner = verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
           
