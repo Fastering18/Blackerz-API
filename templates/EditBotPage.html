@@ -43,7 +43,7 @@
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
       <form method="PUT" id="editform" onsubmit="disableButton(this); return true">
         <input class="input-text description" id="ShortDescription" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
-        <input name="Authorization" hidden="" type="text" value="{{ client['AuthorizationV1'] }}">
+        <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
           function disableButton(el) {            
