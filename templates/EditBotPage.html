@@ -50,6 +50,15 @@
             el.querySelector('button[type="submit"]').disabled = true;
             console.log("submit")
           }
+          document.querySelector("#editform").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) alert(this.responseText);
+            };
+            xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
+            xhttp.send();
+          })
         </script>
       </form>
     </section>
