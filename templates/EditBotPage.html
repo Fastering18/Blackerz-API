@@ -33,7 +33,21 @@
             {%- endif -%}
         </div>
     </div>
-    <h1 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
+    <section class="root-page" id="main-page">
+      <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
+      
+    </section>
+    <footer>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a href="https://blackerz.herokuapp.com/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
     <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ clientUser | tojson | safe }}')
