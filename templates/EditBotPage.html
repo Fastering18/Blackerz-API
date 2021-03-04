@@ -43,8 +43,8 @@
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
       <form method="PUT" id="editform" onsubmit="disableButton(this); return true">
         <div id="ShortDescription">
-            <label class="input-title" for="prefix-input">Short description <span class="required-input">*</span></label>
-            <p class="input-description">Short description of your bot, max 50 characters.</p>
+            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%;">Short description <span class="required-input">*</span></label>
+            <p class="input-description" style="font-size: 90%;">Short description of your bot, max 50 characters.</p>
             <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
         </div>  
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
