@@ -41,7 +41,14 @@
     </div>
     <section class="root-page" id="main-page">
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
-      
+      <form method="POST" id="editform" onsubmit="disableButton(this); return true">
+        <input class="override extra-short-input dashboard__input" id="prefix-input" type="text" name="prefix" value="" placeholder="!">
+        <script>
+          function disableButton(el) {            
+            el.querySelector('button[type="submit"]').disabled = true;
+          }
+        </script>
+      </form>
     </section>
     <footer>
       <div class="footer-nav">
