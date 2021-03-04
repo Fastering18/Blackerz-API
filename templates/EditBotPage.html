@@ -64,8 +64,8 @@
               if (this.readyState == 4 && this.status == 200) alert(this.responseText);
               console.log(this)
             };
-            xhttp.setRequestHeader("Authorization", "{{ clientData['AuthorizationV1'] }}");
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
+            xhttp.setRequestHeader("Authorization", "{{clientData['AuthorizationV1']}}");
             xhttp.send(JSON.stringify(editedData));
           })
         </script>
