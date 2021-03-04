@@ -42,7 +42,11 @@
     <section class="root-page" id="main-page">
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
       <form method="PUT" id="editform" onsubmit="disableButton(this); return true">
-        <input class="input-text description" id="ShortDescription" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
+        <div id="ShortDescription">
+            <label class="input-title" for="prefix-input">Short description <span class="required-input">*</span></label>
+            <p class="input-description">Short description of your bot, max 50 characters.</p>
+            <input class="input-text description" id="ShortDescription" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
+        </div>  
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
@@ -55,6 +59,7 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) alert(this.responseText);
+              console.log(this)
             };
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
             xhttp.send();
