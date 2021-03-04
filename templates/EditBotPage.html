@@ -43,8 +43,8 @@
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
       <form method="PUT" id="editform" onsubmit="disableButton(this); return true">
         <div id="ShortDescription">
-            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%;">Short description <span class="required-input">*</span></label>
-            <p class="input-description" style="font-size: 90%;">Short description of your bot, max 50 characters.</p>
+            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
+            <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your bot, max 50 characters.</p>
             <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
         </div>  
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
@@ -76,7 +76,7 @@
     <footer>
       <div class="footer-nav">
         <div class="footer-links-holder">
-                <h3 class="footer-header">Contact us</h3>
+                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
                 <ul class="footer-links">
                     <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
                     <li><a href="https://blackerz.herokuapp.com/servers/816619389809590322">Discord</a></li>
