@@ -57,7 +57,7 @@
           document.querySelector("#editform").addEventListener("submit", function(event) {
             event.preventDefault();
             var editedData = {
-              "Shortdescription": document.getElementById("ShortDescriptionInput").value
+              "shortdescription": document.getElementById("ShortDescriptionInput").value
             }
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -66,6 +66,7 @@
             };
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
             xhttp.setRequestHeader("Authorization", "{{clientData['AuthorizationV1']}}");
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhttp.send(JSON.stringify(editedData));
           })
         </script>
