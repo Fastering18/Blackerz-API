@@ -62,7 +62,7 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 201) {
-                 window.location.href = "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}"
+                 window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
               }
             };
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
