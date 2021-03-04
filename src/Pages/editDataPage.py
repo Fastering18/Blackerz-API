@@ -84,6 +84,7 @@ class data():
         result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
         if client != None : self.client = firebaseDB.get('/Infrastructure/WebUsers/' + client, None)
         if result != None:
+            result["id"] = id
             try:
                 url = "https://discord.com/api/v8/users/" + str(id)
                 r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
@@ -142,6 +143,6 @@ class EditBotPage(Resource):
         isOwner = verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
-          
+        
         return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
         
