@@ -22,7 +22,7 @@
     <div id='background'></div>
     <div style="overflow:auto">
         <div class="topnav">
-            <a class="active" data-text="Home" id="profiletab" href="/"></a>
+            <a href="/" data-text="Home" id="profiletab"></a>
             <a href="/servers" data-text="Servers"></a>
             {%- if clientUser and "username" in clientUser -%}
                <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
