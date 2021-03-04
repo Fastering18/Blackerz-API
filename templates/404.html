@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7289DA">
-  <meta name="description" content="{{ notFound["description"] }}">
+  {%- if notFound and "description" in notFound -%}
+      <meta name="description" content="{{ notFound["description"] }}">
+  {%- endif -%}
   <meta name="og:site_name" content="Blackerz Bot List">
-  <meta property="og:url" content="https://blackerz-id.web.app/404" />
   <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
-  <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <title>Page Not Found</title>
   
   <style media="screen">
@@ -80,11 +80,41 @@
   </style>
 </head>
 <body>
-  <div id="message">
-    <h2 id="404">404</h2>
-    <h1 id="404_title">Page not Found</h1>
-    <p id="404_desc">Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.</p>
-  </div>
+  <section class="page" id="root-page">
+    <div id='background'></div>
+    <div style="overflow:auto">
+        <div class="topnav">
+            <a href="/" data-text="Home" id="profiletab"></a>
+            <a href="/servers" data-text="Servers"></a>
+            {%- if user and "username" in user -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+            {%- else -%}
+               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
+            {%- endif -%}
+        </div>
+    </div>
+    <div id="message">
+      <h2 id="404">404</h2>
+      <h1 id="404_title">Page not Found</h1>
+      <p id="404_desc">Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.</p>
+    </div>
+  </section>
+  <script>
+       if (window.location.protocol === "http:") window.location.protocol = "https:";
+       const client = JSON.parse('{{ user | tojson | safe }}')
+       function discordLogOutAPI(force) {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+       }
+       function discordLoginAPI() {
+           {%- if user and "username" in user -%}
+               window.location.href = window.location.origin + "/user/" + client.id
+           {%- else -%}
+               window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+           {%- endif -%}
+       }
+    </script>
 </body>
 
 </html>  
