@@ -54,7 +54,7 @@
         <div id="LongDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Long description of your bot, max 1500 characters.</p>
-            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description"></textarea>
+            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
@@ -75,6 +75,7 @@
                  window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
               } else if (this.readyState == 4 && this.status != 201) {
                  console.log(this.responseText)
+                 try { alert(JSON.parse(this.responseText).error) } catch(er) { alert(this.responseText) }
                  disableButton(document.getElementById("editform"), false)
               }
             };
