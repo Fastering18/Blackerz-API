@@ -1,7 +1,6 @@
 from flask_restful import Resource
-from flask import jsonify, make_response
-import time
-import requests
+from flask import jsonify, make_response, render_template, g, session, request, redirect
+import time, json, requests, os, random, string
 from threading import Timer
 
 from firebase import firebase
@@ -38,7 +37,24 @@ class data():
 
 timeStamp = 0
 error1 = {'error': "Bot not found", 'status': "Not success"}
-        
+
+class querySearch:
+    def __init__(self, query, dataName):
+        self.warns = None
+        self.error = False
+        self.keyword = query.get("q") or query.get("query") or query.get("kueri")
+        self.filter = query.get("sort") or query.get("filter") or query.get("urut")
+        if self.keyword and self.keyword.strip().length <= 0: 
+            self.warns = {"error": True, "message": 'Invalid \'q\' query, cannot empty', "code": 400}
+            return
+        if self.filter and self.filter != "upvotes": 
+            self.warns = {"error": True, "message": 'Invalid \'filter\' query', "code": 400}
+            return
+        try:
+            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+        except:
+            self.error = True
+            
 class resouce(Resource):
   def get(self, id):
     botum = data("getbot", id)
@@ -48,3 +64,10 @@ class resouce(Resource):
         return make_response(jsonify(bot), 200)
     else: 
         return make_response(jsonify(error1), 404)
+    
+ 
+# SEARCH BASED QUERY
+class resouce(Resource):
+  def get(self, id):
+    querySearch(request.values)
+    
