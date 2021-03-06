@@ -49,8 +49,11 @@
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your bot, max 50 characters.</p>
             <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description">
+        </div>
+        <div id="LongDescription">
+            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
             <input class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description">
-        </div>  
+        </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
@@ -61,7 +64,7 @@
             event.preventDefault();
             var editedData = {
               "shortDescription": document.getElementById("ShortDescriptionInput").value,
-              "longDescription": document.getElementById("LongDescription").value,
+              "longDescription": document.getElementById("LongDescriptionInput").value,
             }
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
