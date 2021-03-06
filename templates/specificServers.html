@@ -176,7 +176,7 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ user | tojson | safe }}'))
         const logined = (client != null) && (client.message != "401: Unauthorized")
-        const joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/'}}"
+        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
         joinLink = joinLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
