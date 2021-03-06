@@ -71,8 +71,8 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        const client = JSON.parse(('{{ client | tojson | safe }}').replace(/&#39;/gi, '"').replace(/False/gi, "false"))
-        let logined = client.error == undefined
+        const client = JSON.parse(('{{ client | tojson | safe }}').replace(/"/gi, '\\"').replace(/'/gi, "\\'"))
+        const logined = client.error == undefined
         const proxyurl = "";
         function generateRandomString() {
             const rand = Math.floor(Math.random() * 10);
