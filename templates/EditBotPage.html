@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.0/components/icon.min.css">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="stylesheet" href="/static/CSS/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
@@ -47,24 +48,28 @@
         <div id="ShortDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your bot, max 50 characters.</p>
-            <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Your short description > 50 characters">
+            <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description">
+            <input class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description">
         </div>  
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
-          function disableButton(el) {            
-            el.querySelector('button[type="submit"]').disabled = true;
-            console.log("submit")
+          function disableButton(el, bool) {            
+            el.querySelector('button[type="submit"]').disabled = bool || true;
           }
           document.querySelector("#editform").addEventListener("submit", function(event) {
             event.preventDefault();
             var editedData = {
-              "shortDescription": document.getElementById("ShortDescriptionInput").value
+              "shortDescription": document.getElementById("ShortDescriptionInput").value,
+              "longDescription": document.getElementById("LongDescription").value,
             }
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 201) {
                  window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
+              } else if (this.readyState == 4 && this.status != 201) {
+                 console.log(Object.keys(this))
+                 disableButton(document.querySelector("#editform"), false)
               }
             };
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
