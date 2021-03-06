@@ -55,7 +55,7 @@
             <input class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description">
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
-        <button class="input-button submit" type="submit" value="Submit">Submit</button>
+        <button class="input-button submit" id="submitEditButton" type="submit" value="Submit">Submit</button>
         <script>
           function disableButton(el, bool) {            
             el.querySelector('button[type="submit"]').disabled = bool || true;
@@ -71,8 +71,8 @@
               if (this.readyState == 4 && this.status == 201) {
                  window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
               } else if (this.readyState == 4 && this.status != 201) {
-                 console.log(Object.keys(this))
-                 disableButton(document.querySelector("#editform"), false)
+                 console.log(JSON.stringify(this))
+                 disableButton(document.getElementById("editform"), false)
               }
             };
             xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
