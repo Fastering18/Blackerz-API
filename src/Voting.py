@@ -61,9 +61,9 @@ def checkVote(userId, itemId, tipe="botVotes"):
         result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json').json()
         currentTime = time.time() * 1000    #to JavaScript timestamps
         voted = result != None and ((int(currentTime) - int(result)) <= 0)
-        return {"voted": int(voted), "votedAt": int(result)} if voted else {"voted": 0, "votedAt": result}
+        return {"voted": int(voted), "lastVote": int(result)} if voted else {"voted": 0, "lastVote": result}
     except:
-        return {"voted": 0, "votedAt": "null"}
+        return {"voted": 0, "lastVote": "null"}
                        
 def token_updater(token):
     session['oauth2_token'] = token
