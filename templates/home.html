@@ -96,7 +96,7 @@
         let botIdlist = []
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
         // if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
-        const logined = client != "null"
+        const logined = client && client.username != undefined && client.id != undefined
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
       
         function updateData(jsonData, query) {
@@ -139,16 +139,15 @@
             updateData(jsonBotData, nameQuery)
         }
         function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
-            //if (force === true) window.location.href = window.location.origin;
+            window.location.href = "/api/v1/discord/logout"
         }
         function discordLoginAPI() {
-            if (logined == true) {
-                window.location.href = window.location.origin + "/user/" + loginedUser.id
-            } else {
-                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
-            }
-        }
+            {%- if user and "username" in user -%}
+                window.location.href = "/user/" + loginedUser.id
+            {%- else -%}
+                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            {%- endif -%}
+        };
         function generateRandomString() {
             const rand = Math.floor(Math.random() * 10);
             let randStr = '';
@@ -187,12 +186,7 @@
             if (!results || !results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
-        async function autentikasi(data) {
-            console.log(data)
-            //if (data["username"] !== undefined) $("#discordLogin").text(data["username"]);
-            return true
-        }
-        if (loginedUser !== null) autentikasi(loginedUser);
+      
         window.onload = function () {
             const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
             //Authorization
