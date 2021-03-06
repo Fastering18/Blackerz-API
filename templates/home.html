@@ -89,14 +89,14 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js').then(function() { console.log("Service Worker Registered"); });
-        const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
+        const client = ('{{ user | tojson | safe }}')
         const loginedUser = JSON.parse(client)
         let currentBot = 0
         let botIdlist = []
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
         // if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
-        let logined = client != "null"
+        const logined = client != "null"
         const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
       
         function updateData(jsonData, query) {
