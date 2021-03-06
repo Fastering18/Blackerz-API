@@ -61,8 +61,7 @@
             <br>
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
-        <!-- button class="input-button submit" type="submit" value="Submit">Submit</button -->
-        <button class="dashboard__input-button submit" type="submit" value="Submit">Submit</button>
+        <button class="input-button submit" onclick="editSubmitHandler(document.getElementById('FormEdit'))" value="Submit">Submit</button>
         <script>
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
@@ -77,7 +76,7 @@
           editor.setSize(null, '100%');
         </script>
         <script>
-          document.querySelector("#FormEdit").addEventListener("submit", function(event) {
+          function editSubmitHandler(event) {
             console.log(event)
             event.preventDefault();
             var editedData = {
@@ -98,7 +97,8 @@
             xhttp.setRequestHeader("Authorization", "{{clientData['AuthorizationV1']}}");
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhttp.send(JSON.stringify(editedData));
-          })
+          }
+          document.querySelector("#FormEdit").addEventListener("submit", editSubmitHandler)
         </script>
       </form>
     </section>
