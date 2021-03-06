@@ -102,7 +102,7 @@ class botPage(Resource):
         
         if "LongDescription" in bot:
             bot["LongDescription"] = markdown.markdown(bot["LongDescription"])
-        return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=json.dumps(bot).replace("'", "\\'")), 200, headers)
+        return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=json.dumps(bot).replace("'", "\\'").replace('"', '\\"')), 200, headers)
     else:
         notFound = {
             'description': "Bot not found"
