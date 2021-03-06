@@ -47,14 +47,14 @@
     <div id='background'></div>
     <div style="overflow:auto">
         <div class="topnav">
-            <a id="profiletab" href="/">Home</a>
-            <a href="/servers">Servers</a>
+            <a id="profiletab" data-text="Home" href="/"></a>
+            <a href="/servers" data-text="Servers"></a>
             {%- if client and "username" in client -%}
-               <a class="{{ "active" if client["username"] == user["username"] else "" }}"  id="discordLogin" onclick="discordLoginAPI()">{{ client["username"] }}</a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)">Log out</a>
+               <a class="{{ "active" if client["username"] == user["username"] else "" }}" data-text="{{ client["username"] }}" id="discordLogin" onclick="discordLoginAPI()"></a>
+               <a id="discordLogOut" data-text="Log out" onclick="discordLogOutAPI(true)"></a>
             {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()">Login</a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none">Log out</a>
+               <a id="discordLogin" data-text="Login" onclick="discordLoginAPI()"></a>
+               <a id="discordLogOut" data-text="Log out" onclick="discordLogOutAPI(true)" style="display: none"></a>
             {%- endif -%}
         </div>
     </div>
