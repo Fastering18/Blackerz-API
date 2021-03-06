@@ -99,5 +99,7 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    # print(user)
-    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers).set_cookie('same-site-cookie', 'samasite', samesite='Lax').set_cookie('cross-site-cookie', 'crosssite', samesite='Lax', secure=True);
+    respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers)
+    respen.set_cookie('same-site-cookie', 'samasite', samesite='Lax');
+    respen.set_cookie('cross-site-cookie', 'crosssite', samesite='Lax', secure=True);
+    return respen
