@@ -67,7 +67,7 @@ class resouce(Resource):
     
  
 # SEARCH BASED QUERY
-class resouce(Resource):
+class searchBotQuery(Resource):
   def get(self, id):
     querySearch(request.values)
     
