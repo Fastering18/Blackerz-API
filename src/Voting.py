@@ -58,12 +58,12 @@ def verifyOwner(authV1, botId, tipe="botlist"):
 
 def checkVote(userId, itemId, tipe="botVotes"):
     try:
-        result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json')
-        result = result.json()
+        result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/Votes/{tipe}/{itemId}/{userId}.json').json()
         currentTime = time.time() * 1000    #to JavaScript timestamps
-        return {"voted": int(result != None and (int(currentTime) - int(result) <= 0))}
+        voted = result != None and ((int(currentTime) - int(result)) <= 0)
+        return {"voted": int(voted), "votedAt": int(result)} if voted else {"voted": 0, "votedAt": result}
     except:
-        return {"voted": 0}
+        return {"voted": 0, "votedAt": "null"}
                        
 def token_updater(token):
     session['oauth2_token'] = token
@@ -109,6 +109,8 @@ class addVote():
             self.canVoteTime = 4.32e+7 - (int(currentTime) - int(clientVote))
              
 class voteBot(Resource):
+    # PRIVATE BOT VOTE, with hcaptcha
+    
     def post(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
@@ -140,6 +142,7 @@ class voteBot(Resource):
             return make_response(jsonify({"success": True, "error": "none"}), 201)
                             
 class publicVoteApiBot(Resource):
+    # PUBLIC CHECK VOTE BOT 
     def get(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))      
@@ -155,6 +158,7 @@ class publicVoteApiBot(Resource):
         return make_response(jsonify(checkVote(userToCheck, str(id))), 200)
                             
 class voteServer(Resource):
+    # PRIVATE SERVER VOTE, with hcaptcha
     def post(self, id):                               
        if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
@@ -185,6 +189,7 @@ class voteServer(Resource):
        return make_response(jsonify(checkVote(isOwner["id"], id, "serverVotes")), 200)
 
 class publicVoteApiServer(Resource):
+    # PUBLIC CHECK VOTE SERVER                        
     def get(self, id):
        if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))      
