@@ -73,7 +73,7 @@ class editData(Resource):
        return make_response(jsonify(error1), 400)
     if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
        return make_response(jsonify(error3), 400)
-    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 1500:
+    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 2500:
        return make_response(jsonify(error5), 400)
     jsonData["id"] = str(id)
     botum = edit(jsonData, str(id))
