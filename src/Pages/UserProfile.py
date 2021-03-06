@@ -97,7 +97,7 @@ class ProfileUsers(Resource):
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     if not user:
         notFound = {
-            'description': "Bot not found"
+            'description': "User not found"
         }
         return make_response(render_template('404.html', notFound=notFound, clientUser=userProfile), 404, headers)
     userData = user
@@ -109,4 +109,4 @@ class ProfileUsers(Resource):
     else:
         del userData["AuthorizationV1"]
 
-    return make_response(render_template('profile.html', user=userData, json=json, client=userProfile), 200, headers)
+    return make_response(render_template('profile.html', user=userData, client=userProfile), 200, headers)
