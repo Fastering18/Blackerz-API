@@ -52,13 +52,14 @@
         </div>
         <div id="LongDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
-            <input class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description">
+            <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Long description of your bot, max 1500 characters.</p>
+            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" value="{{bot['LongDescription']}}" placeholder="Bot long description">
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" id="submitEditButton" type="submit" value="Submit">Submit</button>
         <script>
-          function disableButton(el, bool) {            
-            el.querySelector('button[type="submit"]').disabled = bool || true;
+          function disableButton(elmnt, disabl) {            
+            elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
           document.querySelector("#editform").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -67,11 +68,11 @@
               "longDescription": document.getElementById("LongDescriptionInput").value,
             }
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function(result) {
               if (this.readyState == 4 && this.status == 201) {
                  window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
               } else if (this.readyState == 4 && this.status != 201) {
-                 console.log(JSON.stringify(this))
+                 console.log(this.responseText)
                  disableButton(document.getElementById("editform"), false)
               }
             };
