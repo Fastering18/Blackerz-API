@@ -100,4 +100,4 @@ class homePage(Resource):
     else:
         user = "null"
     # print(user)
-    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers);
+    return make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers).set_cookie('same-site-cookie', 'samasite', samesite='Lax').set_cookie('cross-site-cookie', 'crosssite', samesite='Lax', secure=True);
