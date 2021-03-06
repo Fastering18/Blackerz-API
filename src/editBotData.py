@@ -13,7 +13,7 @@ error1 = {'error': "Invalid body data request, read our documentation for detail
 error2 = {'error': "Failed to update bot data", 'status': "Not success"}
 error3 = {'error': "shortDescription too long, must lower than 50 characters length!", 'status': "Not success"}
 error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status': "Not success"}
-error5 = {'error': "longDescription too long, must lower than 3000 characters length!", 'status': "Not success"}
+error5 = {'error': "longDescription too long, must lower than 4000 characters length!", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
@@ -73,7 +73,7 @@ class editData(Resource):
        return make_response(jsonify(error1), 400)
     if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
        return make_response(jsonify(error3), 400)
-    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 3000:
+    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
        return make_response(jsonify(error5), 400)
     jsonData["id"] = str(id)
     botum = edit(jsonData, str(id))
@@ -95,8 +95,10 @@ class editData(Resource):
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData:
        return make_response(jsonify(error1), 400)
-    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 50:
+   if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
        return make_response(jsonify(error3), 400)
+    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
+       return make_response(jsonify(error5), 400)
     jsonData["id"] = str(id)
     botum = edit(jsonData, str(id))
     
