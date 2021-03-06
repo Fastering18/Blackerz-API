@@ -42,6 +42,8 @@ class edit():
             firebaseDB.put('/Infrastructure/botlist/' + id, "avatar", data['avatar'])
         if 'shortDescription' in data and self.result == None:
             firebaseDB.put('/Infrastructure/botlist/' + id, "ShortDescription", data['shortDescription'])
+        if 'longDescription' in data and self.result == None:
+            firebaseDB.put('/Infrastructure/botlist/' + id, "LongDescription:", data['longDescription'])
         if ('serverCount' in data) and (math.isnan(int(data["serverCount"])) == False) and self.result == None:
             firebaseDB.put('/Infrastructure/botlist/' + id, "serverCount", data['serverCount'])
         if self.result == None:
