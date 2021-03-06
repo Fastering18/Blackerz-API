@@ -127,7 +127,7 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
         const botData = JSON.parse(('{{ jsonBotData | safe }}').replace(/\n/gi, "<br>").replace(/'/gi, "\'"))
-        let logined = client.message != "401: Unauthorized"
+        const logined = client.message != "401: Unauthorized"
         setupganalytics(client);
     </script>
 </head>
