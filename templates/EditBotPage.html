@@ -47,7 +47,7 @@
       <h2 style="color: rgba(255,255,255, 0.85);">{{bot["name"]}} Dashboard</h1>
       <hr>
       <br>
-      <form method="PUT" id="FormEdit" onsubmit="disableButton(this); return true">
+      <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
         <div id="ShortDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your bot, max 120 characters.</p>
