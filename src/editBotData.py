@@ -95,7 +95,7 @@ class editData(Resource):
        return make_response(jsonify(unauthorizedAcess), 401)
     if not jsonData:
        return make_response(jsonify(error1), 400)
-   if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
+    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
        return make_response(jsonify(error3), 400)
     if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
        return make_response(jsonify(error5), 400)
