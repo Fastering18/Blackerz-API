@@ -22,6 +22,7 @@ import src.Servers.allservers as allServers
 import src.Servers.submitserver as submitServer
 
 import src.Voting as VotingManager
+import src.svgGenerator as svggenerator
 
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 hcaptcha = hCaptcha()
@@ -72,6 +73,10 @@ api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
 api.add_resource(editPage.EditBotPage, "/bots/<int:id>/edit")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
+
+# Widgets
+api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers")
+
 
 if __name__ == "__main__":
   app.run()
