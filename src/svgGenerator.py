@@ -6,7 +6,7 @@ from cairosvg import svg2png
 
 from firebase import firebase
 
-pngheaders = {'Content-Type': 'image/svg+xml'}
+svgheaders = {'Content-Type': 'image/svg+xml'}
 pngheaders = {'Content-Type': 'image/png'}
 htmlheaders = {'Content-Type': 'text/html'}
 imagecaches = {
