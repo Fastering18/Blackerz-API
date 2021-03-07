@@ -12,12 +12,11 @@ svgcaches = {
 }
 
 def getServerCountBotFromID(botID):
-  #try:
-  servercount = requests.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
-  print(servercount)
-  return servercount
-  #except:
-    #return None
+  try:
+    servercount = requests.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
+    return servercount
+  except:
+    return None
 
 def deleteCache(itemID, dataName, type="bots"):
   del svgcaches[type][itemID][dataName]
@@ -35,6 +34,7 @@ def putCache(itemID, dataName, value, type="bots"):
   
 class getServerCountBot(Resource):
   def get(self, id):
+    id = str(id)
     if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
       return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200)
     
