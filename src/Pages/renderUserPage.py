@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect
+from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup
 from requests_oauthlib import OAuth2Session
 import time
 import json
@@ -101,7 +101,7 @@ class botPage(Resource):
     if bot != None:
         
         if "LongDescription" in bot:
-            bot["LongDescription"] = markdown.markdown(bot["LongDescription"])
+            bot["LongDescription"] = Markup(markdown.markdown(bot["LongDescription"]))
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=json.dumps(bot).replace("'", "\\'").replace('"', '\\"')), 200, headers)
     else:
         notFound = {
