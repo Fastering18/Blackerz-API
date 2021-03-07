@@ -23,13 +23,16 @@ def deleteCache(itemID, dataName, type="bots"):
   return True
   
 def putCache(itemID, dataName, value, type="bots"):
+   itemID = str(itemID)
   if not itemID in svgcaches[type]: 
-    svgcaches[type][itemID] = {[dataName]: value}
+    svgcaches[type][itemID] = {} # [dataName]: value
+    return putCache(itemID, dataName, value, type="bots") # recursion cause idk
   elif not dataName in svgcaches[type][itemID]:
     svgcaches[type][itemID][dataName] = value
   elif value != svgcaches[type][itemID][dataName]:
     return False
   Timer(60.0, deleteCache, (itemID, dataName, type)).start()
+  print(svgcaches)
   return True
   
 class getServerCountBot(Resource):
