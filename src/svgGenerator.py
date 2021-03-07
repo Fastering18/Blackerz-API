@@ -11,9 +11,9 @@ svgcaches = {
    }
 }
 
-def getServerCountBot(botID):
+def getServerCountBotFromID(botID):
   try:
-    servercount = request.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json")
+    servercount = request.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
     print(servercount)
     return servercount
   except:
@@ -38,7 +38,7 @@ class getServerCountBot(Resource):
     if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
       return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200)
     
-    servercount = getServerCountBot(id)
+    servercount = getServerCountBotFromID(id)
     if servercount == None: return make_response(jsonify({"error": True, "message": "Bot not found"}), 404)
     
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
