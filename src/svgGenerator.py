@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, request, redirect, Markup
+from flask import jsonify, make_response, request, redirect, render_template, Markup
 import time, json, requests, string
 from threading import Timer
 
@@ -39,13 +39,13 @@ def putCache(itemID, dataName, value, type="bots"):
   
 class getServerCountBot(Resource):
   def get(self, id, mime):
-    if not mime in [".svg", ".png"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
+    if not mime in [".svg", ".png", ".jpg"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
     id = str(id)
     if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
       return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200, headers)
     
     servercount = getServerCountBotFromID(id)
-    if servercount == None: return make_response(jsonify({"error": True, "message": "Bot not found"}), 404)
+    if servercount == None: return make_response(jsonify({"error": True, "message": "No data found"}), 404)
     
     svg = f'''<?xml version="1.0" encoding="UTF-8"?>
     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
