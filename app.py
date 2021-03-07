@@ -76,6 +76,7 @@ api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
 
 # Widgets
 api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers")
+api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers.svg")
 
 
 if __name__ == "__main__":
