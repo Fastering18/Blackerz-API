@@ -13,7 +13,7 @@ svgcaches = {
 
 def getServerCountBotFromID(botID):
   #try:
-  servercount = request.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
+  servercount = requests.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
   print(servercount)
   return servercount
   #except:
