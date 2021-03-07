@@ -2,12 +2,14 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request, redirect, render_template, Markup
 import time, json, requests, string
 from threading import Timer
+from cairosvg import svg2png
 
 from firebase import firebase
 
-headers = {'Content-Type': 'image/svg+xml'}
+pngheaders = {'Content-Type': 'image/svg+xml'}
+pngheaders = {'Content-Type': 'image/png'}
 htmlheaders = {'Content-Type': 'text/html'}
-svgcaches = {
+imagecaches = {
    "bots": {
       "717660707650273280": {}
    }
@@ -21,33 +23,35 @@ def getServerCountBotFromID(botID):
     return None
 
 def deleteCache(itemID, dataName, type="bots"):
-  del svgcaches[type][itemID]
+  del imagecaches[type][itemID]
   return True
   
 def putCache(itemID, dataName, value, type="bots"):
   itemID = str(itemID)
-  if not itemID in svgcaches[type]: 
-    svgcaches[type][itemID] = {} # [dataName]: value
+  if not itemID in imagecaches[type]: 
+    imagecaches[type][itemID] = {} # [dataName]: value
     return putCache(itemID, dataName, value, type="bots") # recursion cause idk
-  elif not dataName in svgcaches[type][itemID]:
-    svgcaches[type][itemID][dataName] = value
-  elif value != svgcaches[type][itemID][dataName]:
+  elif not dataName in imagecaches[type][itemID]:
+    imagecaches[type][itemID][dataName] = value
+  elif value != imagecaches[type][itemID][dataName]:
     return False
   Timer(60.0, deleteCache, (itemID, dataName, type)).start()
-  print(svgcaches)
+  print(imagecaches)
   return True
   
 class getServerCountBot(Resource):
   def get(self, id, mime):
-    if not mime in [".svg", ".png", ".jpg"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
+    if not mime in [".svg", ".png"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
     id = str(id)
-    if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
-      return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200, headers)
-    
+    if id in imagecaches["bots"] and mime == ".svg" and "servercount" in imagecaches["bots"][id]:
+      return make_response(Markup(imagecaches["bots"][id]["servercount"]), 200, svgheaders)
+    if id in imagecaches["bots"] and mime == ".png" and "servercountPNG" in imagecaches["bots"][id]:
+      return make_response(imagecaches["bots"][id]["servercountPNG"], 200, pngheaders)
+   
     servercount = getServerCountBotFromID(id)
     if servercount == None: return make_response(jsonify({"error": True, "message": "No data found"}), 404)
     
-    svg = f'''<?xml version="1.0" encoding="UTF-8"?>
+    gambarJadi = f'''<?xml version="1.0" encoding="UTF-8"?>
     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
     <linearGradient id="a" x2="0" y2="100%">
         <stop offset="0" stop-color="#bbb" stop-opacity=".1"></stop>
@@ -62,6 +66,10 @@ class getServerCountBot(Resource):
         <text x="85" y="14">{servercount}</text>
     </g>
     </svg>'''
-    putCache(id, "servercount", svg, type="bots")
-    return make_response(Markup(svg), 200, headers)
-    
+    if mime == ".svg":
+      putCache(id, "servercount", gambarJadi, type="bots")
+      return make_response(Markup(gambarJadi), 200, svgheaders)
+    elif mime == ".png":
+      gambarJadi = svg2png(bytestring=gambarJadi)
+      putCache(id, "servercountPNG", gambarJadi, type="bots")
+      return make_response(gambarJadi, 200, pngheaders) 
