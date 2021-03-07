@@ -21,7 +21,7 @@ def getServerCountBotFromID(botID):
     return None
 
 def deleteCache(itemID, dataName, type="bots"):
-  del svgcaches[type][itemID][dataName]
+  del svgcaches[type][itemID]
   return True
   
 def putCache(itemID, dataName, value, type="bots"):
