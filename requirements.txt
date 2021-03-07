@@ -18,3 +18,4 @@ requests-oauthlib==0.5.0
 Flask-Compress==1.8.0
 pymongo==3.11.2
 Markdown==3.3.3
+CairoSVG==2.5.2
