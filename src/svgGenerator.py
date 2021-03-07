@@ -39,7 +39,7 @@ def putCache(itemID, dataName, value, type="bots"):
   return True
   
 class getServerCountBot(Resource):
-  def get(self, id):
+  def get(self, id, mime):
     id = str(id)
     if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
       return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200, headers)
