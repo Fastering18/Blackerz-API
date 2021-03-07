@@ -5,9 +5,8 @@ from threading import Timer
 
 from firebase import firebase
 
-headers = {
-    'Content-Type': 'image/svg+xml'
-}
+headers = {'Content-Type': 'image/svg+xml'}
+htmlheaders = {'Content-Type': 'text/html'}
 svgcaches = {
    "bots": {
       "717660707650273280": {}
@@ -40,6 +39,7 @@ def putCache(itemID, dataName, value, type="bots"):
   
 class getServerCountBot(Resource):
   def get(self, id, mime):
+    if not mime in [".svg", ".png"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
     id = str(id)
     if id in svgcaches["bots"] and "servercount" in svgcaches["bots"][id]:
       return make_response(Markup(svgcaches["bots"][id]["servercount"]), 200, headers)
