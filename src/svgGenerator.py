@@ -23,7 +23,7 @@ def deleteCache(itemID, dataName, type="bots"):
   return True
   
 def putCache(itemID, dataName, value, type="bots"):
-   itemID = str(itemID)
+  itemID = str(itemID)
   if not itemID in svgcaches[type]: 
     svgcaches[type][itemID] = {} # [dataName]: value
     return putCache(itemID, dataName, value, type="bots") # recursion cause idk
