@@ -96,7 +96,9 @@
   </section>
   <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
-       const client = JSON.parse('{{ user | tojson | safe }}')
+       {%- if user and "username" in user -%}
+           const client = JSON.parse('{{ user | tojson | safe }}')
+       {%- endif -%}
        function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
        }
@@ -104,7 +106,7 @@
            {%- if user and "username" in user -%}
                window.location.href = window.location.origin + "/user/" + client.id
            {%- else -%}
-               window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
            {%- endif -%}
        }
     </script>
