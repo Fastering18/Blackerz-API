@@ -56,7 +56,7 @@ class querySearch:
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
-            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}')
+            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
         except:
             self.error = True
             
