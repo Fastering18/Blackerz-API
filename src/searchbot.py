@@ -39,7 +39,7 @@ timeStamp = 0
 error1 = {'error': "Bot not found", 'status': "Not success"}
 
 class querySearch:
-    def __init__(self, query, dataName):
+    def __init__(self, query, dataName="botlist"):
         self.warns = None
         self.error = False
         self.keyword = query.get("q") or query.get("query") or query.get("kueri")
