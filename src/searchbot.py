@@ -52,7 +52,7 @@ class querySearch:
         if self.filter and self.filter != "upvotes": 
             self.warns = {"error": True, "message": 'Invalid \'filter\' query', "code": 400}
             return
-        if isinstance(self.limit, str) not self.limit.isdigit():
+        if isinstance(self.limit, str) and not self.limit.isdigit():
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
