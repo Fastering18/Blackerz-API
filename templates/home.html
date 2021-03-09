@@ -73,12 +73,12 @@
           {%- for dataChild in dictBots -%}
              {%- set currentBot = currentBot + 1 -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
-             {%- if dataChild and "avatar" in dictBots[dataChild] -%}
-                 {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + dictBots[dataChild].avatar + ".webp?size=64" -%}
+             {%- if dataChild and "avatar" in dataChild -%}
+                 {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 0.75%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
+             <div id="{{dataChild.id}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 0.75%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
-               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{ dictBots[dataChild]["name"] }}</p>
+               <p id="namaBot" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{ dataChild["name"] }}</p>
              </div>
           {%- endfor -%}
     </div>
@@ -95,18 +95,16 @@
         let currentBot = 0
         let botIdlist = []
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
-        // if (jsonBotData) $("#botlist").text("Search any Discord bots here.");
         const logined = client && client.username != undefined && client.id != undefined
-        const proxyurl = "";  // https://cors-proxy.htmldriven.com/?url= 
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
             for (dataChild in jsonData) {
-                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
+                if (query !== undefined && dataChild.name.toLowerCase().includes(query.toLowerCase()) === false) continue;
 
                 currentBot++
-                botIdlist.push(dataChild)
+                botIdlist.push(dataChild.id)
                 var para = document.createElement("DIV");
                 var gambar = document.createElement("img");
                 var teks = document.createElement("P");
@@ -115,11 +113,11 @@
                 gambar.style = "display:inline-block; position: relative;"
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 140%"
 
-                para.id = dataChild
+                para.id = dataChild.id
                 para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; margin-bottom: 0.75%; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild + "/" + jsonData[dataChild].avatar + ".webp?size=64";
-                teks.innerText = jsonData[dataChild].name;
+                if (dataChild.avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64";
+                teks.innerText = dataChild.name;
                 para.appendChild(gambar)
                 para.appendChild(teks)
                 //document.body
@@ -128,11 +126,6 @@
                 para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
                 para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
                 para.onclick = function(){window.location.pathname = `/bots/${this.id}`}
-                /*(function (index) {
-                    $(`#${index}`).click(function() {
-                        window.location.pathname = `/bots/${index}`
-                    })
-                })(dataChild);*/
             }
         };
         function searchBotQuery(nameQuery) {
