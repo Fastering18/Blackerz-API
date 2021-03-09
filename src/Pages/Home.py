@@ -1,13 +1,7 @@
-import os
-import random
-import string
 from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
-import time
-import datetime
-import json
-import requests
+import time, os, random, string, datetime, json, requests
 from threading import Timer, Thread
 
 from firebase import firebase
@@ -25,9 +19,11 @@ headers = {
     'Content-Type': 'text/html'
 }
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
+botCaches = {}
 
 def token_updater(token):
     session['oauth2_token'] = token
+    
 def make_session(token=None, state=None, scope=None):
     return OAuth2Session(
         client_id=OAUTH2_CLIENT_ID,
@@ -41,15 +37,27 @@ def make_session(token=None, state=None, scope=None):
         },
         auto_refresh_url=TOKEN_URL,
         token_updater=token_updater)
+
 def generateRandomKey(length):
     letters_and_digits = string.ascii_letters + string.digits
     result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
     return result_str
+
 def generateAuthorizationV1():
     # Random string with the combination of lower and upper case
     letters = string.ascii_letters
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
     return result_str
+
+def deleteCache(tipe="botsverified"):
+  del botCaches[tipe]
+  return True
+
+def putCache(tipe, isi):
+    botCaches[tipe] = isi
+    Timer(300.0, deleteCache, (tipe)).start()
+    return True
+
 class data():
     def __init__(self, tipe, **Data):
         if tipe == "postUserStats":
@@ -63,9 +71,19 @@ class data():
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
             if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-        elif tipe == "allBot":
-            result = firebaseDB.get('/Infrastructure/botlist', None)
-            self.data = result
+        elif tipe == "allBot":          
+            try:
+                result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
+                self.data = result
+                putCache("botsverified", self.data)
+            except Exception as kesalahan:
+                print(kesalahan)
+                try:
+                    result = firebaseDB.get('/Infrastructure/botlist', None)
+                    self.data = result
+                except Exception as kesalahan2:
+                    print(kesalahan2)
+                    self.data = "Internal error, this is not your error, please report this issues to github."               
             
 def updateUserData(id, tag, username, avatar, code):
     UserData = {
@@ -75,7 +93,8 @@ def updateUserData(id, tag, username, avatar, code):
        'avatar': avatar,
        'code': code
     }
-    data("postUserStats", user=UserData)                
+    data("postUserStats", user=UserData)     
+    
 class homePage(Resource):
   def get(self):
     if request.url.startswith('http://'):
@@ -100,6 +119,6 @@ class homePage(Resource):
     else:
         user = "null"
     respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers)
-    respen.set_cookie('same-site-cookie', 'samasite', samesite='Lax');
-    respen.set_cookie('cross-site-cookie', 'crosssite', samesite='Lax', secure=True);
+    respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
+    respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
