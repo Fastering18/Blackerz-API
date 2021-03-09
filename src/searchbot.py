@@ -59,10 +59,10 @@ class querySearch:
             self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
             if self.keyword:
                 listres = [] #list(self.result.values())
-                for isi in self.result:
-                    print(isi)
-                    if self.keyword[isi]["name"].lower().startswith(self.keyword.lower()):
-                        self.keyword[isi]
+                for kunci in self.result:
+                    print(kunci)
+                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()):
+                        listres.append(self.result[kunci])
                 self.result = listres
         except Exception as kesalahan:
             print(kesalahan)
