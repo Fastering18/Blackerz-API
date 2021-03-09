@@ -59,7 +59,11 @@ def putCache(tipe, isi):
     return True
 
 def sortBy(dic, tipe="upvotes"):
-    daftr = list(dic.values())
+    daftr = [] #list(dic.values())
+    for keyy in dic:
+        vInside = dic[keyy]
+        vInside["id"] = keyy
+        daftr.append(vInside)
     daftr.sort(key=lambda ddata: ddata.get(tipe), reverse=True)
     return daftr
 
@@ -80,6 +84,7 @@ class data():
             try:
                 result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
                 self.data = sortBy(result)
+                print(self.data)
                 putCache("botsverified", self.data)
             except Exception as kesalahan:
                 print(kesalahan)
