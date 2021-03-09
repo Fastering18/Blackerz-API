@@ -61,10 +61,12 @@ class querySearch:
                 listres = [] #list(self.result.values())
                 for isi in self.result:
                     print(isi)
-                    if isi.name.lower().startswith(self.keyword.lower()):
-                        listres.append(isi)
+                    if self.keyword[isi]["name"].lower().startswith(self.keyword.lower()):
+                        self.keyword[isi]
                 self.result = listres
-        except:
+        except Exception as kesalahan:
+            print(kesalahan)
+            self.warns = {"error": True, "message": 'Internal error, this is not your error, please report this issues to github.', "code": 500}
             self.error = True
             
 class getBotFromID(Resource):
