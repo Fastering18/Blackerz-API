@@ -100,9 +100,9 @@
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
-            for (dataChild in jsonData) {
+            for (dataChild in jsonData) {console.log(dataChild)
                 if (query !== undefined && dataChild.name.toLowerCase().includes(query.toLowerCase()) === false) continue;
-
+             
                 currentBot++
                 botIdlist.push(dataChild.id)
                 var para = document.createElement("DIV");
