@@ -46,13 +46,13 @@ class querySearch:
         self.filter = query.get("sort") or query.get("filter") or query.get("urut") or "upvotes"
         self.limit = query.get("limit") or 100
         self.result = {}
-        if self.keyword and self.keyword.strip().length <= 0: 
+        if self.keyword and len(self.keyword.strip()) <= 0: 
             self.warns = {"error": True, "message": 'Invalid \'q\' query, cannot empty', "code": 400}
             return
         if self.filter and self.filter != "upvotes": 
             self.warns = {"error": True, "message": 'Invalid \'filter\' query', "code": 400}
             return
-        if not self.limit.isdigit():
+        if isinstance(self.limit, str) not self.limit.isdigit():
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
