@@ -11,7 +11,7 @@ import src.Pages.renderUserPage as renderUserPage
 import src.Pages.VotingPage as votingPage
 import src.Pages.editDataPage as editPage
 
-from src.searchbot import resouce
+import src.searchbot as searchBots
 from src.allbot import resource2
 from src.submitbot import resource3
 import src.editBotData as editBotData
@@ -47,7 +47,8 @@ api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
 
 # Discord bots resource
-api.add_resource(resouce, "/api/v1/bots/<int:id>")
+api.add_resource(searchBots.getBotFromID, "/api/v1/bots/<int:id>")
+api.add_resource(searchBots.searchBotQuery, "/api/v1/bots/search")
 api.add_resource(resource2, "/api/v1/bots/all")
 api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
 api.add_resource(editBotData.editData, "/api/v1/bots/<int:id>/edit")
