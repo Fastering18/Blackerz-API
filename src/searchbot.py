@@ -60,8 +60,7 @@ class querySearch:
             if self.keyword:
                 listres = [] #list(self.result.values())
                 for kunci in self.result:
-                    print(kunci)
-                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()):
+                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or self.keyword.lower() in self.result[kunci]["name"].lower():
                         listres.append(self.result[kunci])
                 self.result = listres
         except Exception as kesalahan:
