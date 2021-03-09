@@ -100,11 +100,11 @@
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             $("#botListParent").empty();
-            for (dataChild in jsonData) {console.log(dataChild)
-                if (query !== undefined && dataChild.name.toLowerCase().includes(query.toLowerCase()) === false) continue;
+            for (dataChild in jsonData) {
+                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
              
                 currentBot++
-                botIdlist.push(dataChild.id)
+                botIdlist.push(jsonData[dataChild])
                 var para = document.createElement("DIV");
                 var gambar = document.createElement("img");
                 var teks = document.createElement("P");
@@ -113,11 +113,11 @@
                 gambar.style = "display:inline-block; position: relative;"
                 teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 140%"
 
-                para.id = dataChild.id
+                para.id = jsonData[dataChild].id
                 para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; margin-bottom: 0.75%; display: none"
                 gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (dataChild.avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64";
-                teks.innerText = dataChild.name;
+                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + jsonData[dataChild].id + "/" + jsonData[dataChild].avatar + ".webp?size=64";
+                teks.innerText = jsonData[dataChild].name;
                 para.appendChild(gambar)
                 para.appendChild(teks)
                 //document.body
