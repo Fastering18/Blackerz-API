@@ -6,11 +6,21 @@ from threading import Timer
 from firebase import firebase
 
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
+queryBotCaches = {}
+firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+
+def deleteCache(link):
+  if not link in queryBotCaches: return False
+  del queryBotCaches[link]
+  return True
+
+def putCache(link, isi):
+    queryBotCaches[link] = isi
+    Timer(800.0, deleteCache, (link)).start()
+    return True
 
 class data():
-    def __init__(self, dataName, id):
-        firebaseDB = firebase.FirebaseApplication(
-            'https://blackerz-default-rtdb.firebaseio.com/', None)
+    def __init__(self, dataName, id):      
         result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
         if result != None:       
             url = "https://discord.com/api/v8/users/" + str(id)
@@ -63,6 +73,7 @@ class querySearch:
                     if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or (self.harusSama == True and self.keyword.lower() in self.result[kunci]["name"].lower()):
                         listres.append(self.result[kunci])
                 self.result = listres
+            putCache(str(query), self.result)
         except Exception as kesalahan:
             print(kesalahan)
             self.warns = {"error": True, "message": 'Internal error, this is not your error, please report this issues to github.', "code": 500}
@@ -82,6 +93,7 @@ class getBotFromID(Resource):
 # SEARCH BASED QUERY
 class searchBotQuery(Resource):
   def get(self):
+    if str(request.values) in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
     sresult = querySearch(request.values)
     if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"])
     return make_response(jsonify(sresult.result), 200)
