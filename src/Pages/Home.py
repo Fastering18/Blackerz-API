@@ -59,7 +59,7 @@ def putCache(tipe, isi):
     return True
 
 def sortBy(dic, tipe="upvotes"):
-    return list(dic.values()).sort(lambda ddata: ddata.get(tipe))
+    return list(dic.values()).sort(key=lambda ddata: ddata.get(tipe))
 
 class data():
     def __init__(self, tipe, **Data):
