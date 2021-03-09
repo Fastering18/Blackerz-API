@@ -57,6 +57,13 @@ class querySearch:
             return
         try:
             self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
+            if self.keyword:
+                listres = [] #list(self.result.values())
+                for isi in self.result:
+                    print(isi)
+                    if isi.name.lower().startswith(self.keyword.lower()):
+                        listres.append(isi)
+                self.result = listres
         except:
             self.error = True
             
