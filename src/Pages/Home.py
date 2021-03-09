@@ -50,12 +50,13 @@ def generateAuthorizationV1():
     return result_str
 
 def deleteCache(tipe="botsverified"):
+  if not tipe in botCaches: return False
   del botCaches[tipe]
   return True
 
 def putCache(tipe, isi):
     botCaches[tipe] = isi
-    Timer(300.0, deleteCache, (tipe)).start()
+    Timer(6000.0, deleteCache, (tipe)).start()
     return True
 
 def sortBy(dic, tipe="upvotes"):
@@ -65,6 +66,7 @@ def sortBy(dic, tipe="upvotes"):
         vInside["id"] = keyy
         daftr.append(vInside)
     daftr.sort(key=lambda ddata: ddata.get(tipe), reverse=True)
+    daftr.sort(key=lambda ddata: ddata.get("id"))
     return daftr
 
 class data():
@@ -80,11 +82,13 @@ class data():
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
             if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-        elif tipe == "allBot":          
+        elif tipe == "allBot":
+            if "botsverified" in botCaches:
+                self.data = botCaches["botsverified"]
+                return 
             try:
                 result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
                 self.data = sortBy(result)
-                print(self.data)
                 putCache("botsverified", self.data)
             except Exception as kesalahan:
                 print(kesalahan)
