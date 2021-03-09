@@ -60,7 +60,7 @@ class querySearch:
         except:
             self.error = True
             
-class resouce(Resource):
+class getBotFromID(Resource):
   def get(self, id):
     botum = data("getbot", id)
     bot = botum.data
