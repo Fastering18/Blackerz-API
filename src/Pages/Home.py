@@ -58,6 +58,9 @@ def putCache(tipe, isi):
     Timer(300.0, deleteCache, (tipe)).start()
     return True
 
+def sortBy(dic, tipe="upvotes"):
+    return list(dic.values()).sort(lambda ddata: ddata.get(tipe))
+
 class data():
     def __init__(self, tipe, **Data):
         if tipe == "postUserStats":
@@ -74,7 +77,8 @@ class data():
         elif tipe == "allBot":          
             try:
                 result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
-                self.data = result
+                self.data = sortBy(result)
+                print(self.data)
                 putCache("botsverified", self.data)
             except Exception as kesalahan:
                 print(kesalahan)
