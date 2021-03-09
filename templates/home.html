@@ -63,6 +63,7 @@
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
+    {% cache 60*4 %}
     <div id="botListParent">
           {%- set currentBot = 0 -%}
           {%- set dictBots = json.loads(bots) -%}
@@ -79,6 +80,7 @@
           {%- endfor -%}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    {% endcache %}
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
