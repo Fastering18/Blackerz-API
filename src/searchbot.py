@@ -52,7 +52,7 @@ class querySearch:
         if self.filter and self.filter != "upvotes": 
             self.warns = {"error": True, "message": 'Invalid \'filter\' query', "code": 400}
             return
-        if not isinstance(self.limit, int):
+        if not self.limit.isdigit():
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
@@ -75,5 +75,5 @@ class getBotFromID(Resource):
 class searchBotQuery(Resource):
   def get(self):
     sresult = querySearch(request.values)
-    if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns.code)
+    if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"])
     return make_response(jsonify(sresult.result), 200)
