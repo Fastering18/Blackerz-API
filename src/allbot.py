@@ -22,7 +22,7 @@ class data():
     def __init__(self, dataName):
         if dataName == "verifiedbots":
             try:
-                result = requests.get(FirebaseBaseURL + 'Infrastructure/botlist?orderBy="verified"&equalTo=true').json()
+                result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() # FirebaseBaseURL + 'Infrastructure/botlist?orderBy="verified"&equalTo=true'
                 self.data = result
                 putCache("botsverified", self.data)
             except Exception as kesalahan:
