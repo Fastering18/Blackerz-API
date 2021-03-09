@@ -43,15 +43,20 @@ class querySearch:
         self.warns = None
         self.error = False
         self.keyword = query.get("q") or query.get("query") or query.get("kueri")
-        self.filter = query.get("sort") or query.get("filter") or query.get("urut")
+        self.filter = query.get("sort") or query.get("filter") or query.get("urut") or "upvotes"
+        self.limit = query.get("limit") or 100
+        self.result = {}
         if self.keyword and self.keyword.strip().length <= 0: 
             self.warns = {"error": True, "message": 'Invalid \'q\' query, cannot empty', "code": 400}
             return
         if self.filter and self.filter != "upvotes": 
             self.warns = {"error": True, "message": 'Invalid \'filter\' query', "code": 400}
             return
+        if not isinstance(self.limit, int):
+            self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
+            return
         try:
-            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}')
         except:
             self.error = True
             
@@ -69,5 +74,6 @@ class resouce(Resource):
 # SEARCH BASED QUERY
 class searchBotQuery(Resource):
   def get(self, id):
-    querySearch(request.values)
-    
+    data = querySearch(request.values)
+    if data.warns != None: return make_response(jsonify(data.warns), data.warns.code)
+    return make_response(jsonify(data.result), 200)
