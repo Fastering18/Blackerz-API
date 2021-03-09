@@ -2,6 +2,7 @@ from flask import Flask, make_response, render_template, request, redirect
 from flask_restful import Api
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
+from flask_caching import Cache
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -32,8 +33,11 @@ app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['UPLOAD_FOLDER'] = "Images"
 app.config['HCAPTCHA_SITE_KEY'] = "552252c3-1e0d-4fa8-837f-045a91f369ec"
 app.config['RECAPTCHA_SECRET_KEY'] = "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6"
+app.config['CACHE_TYPE'] = "SimpleCache"
+app.config['CACHE_DEFAULT_TIMEOUT'] = 300
 Compress(app)
 hcaptcha.init_app(app)
+cache = Cache(app)
 api = Api(app)
 
 # Static pages resource
