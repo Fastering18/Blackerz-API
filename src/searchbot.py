@@ -74,6 +74,6 @@ class getBotFromID(Resource):
 # SEARCH BASED QUERY
 class searchBotQuery(Resource):
   def get(self):
-    data = querySearch(request.values)
-    if data.warns != None: return make_response(jsonify(data.warns), data.warns.code)
-    return make_response(jsonify(data.result), 200)
+    sresult = querySearch(request.values)
+    if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns.code)
+    return make_response(jsonify(sresult.result), 200)
