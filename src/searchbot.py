@@ -73,7 +73,7 @@ class resouce(Resource):
  
 # SEARCH BASED QUERY
 class searchBotQuery(Resource):
-  def get(self, id):
+  def get(self):
     data = querySearch(request.values)
     if data.warns != None: return make_response(jsonify(data.warns), data.warns.code)
     return make_response(jsonify(data.result), 200)
