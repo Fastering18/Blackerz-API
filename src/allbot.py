@@ -25,7 +25,7 @@ class data():
                 result = requests.get(FirebaseBaseURL + 'Infrastructure/botlist?orderBy="verified"&equalTo=true').json()
                 self.data = result
                 putCache("botsverified", self.data)
-            except as kesalahan:
+            except Exception as kesalahan:
                 self.data = "Internal error, this is not your error, please report this issues to github."
                 print(kesalahan)
           
