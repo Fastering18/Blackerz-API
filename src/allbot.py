@@ -9,7 +9,7 @@ class data():
     def __init__(self, dataName):
         firebaseDB = firebase.FirebaseApplication(
             'https://blackerz-default-rtdb.firebaseio.com/', None)
-        result = firebaseDB.get('/Infrastructure/botlist', None)
+        result = firebaseDB.get('/Infrastructure/botlist?orderBy="verified"&equalTo=true', None)
         self.data = result
         botlistGlobal = result
         timeStamp = time.time()
