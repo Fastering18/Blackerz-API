@@ -16,7 +16,6 @@ class data():
             url = "https://discord.com/api/v8/users/" + str(id)
             r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
             response = r.json() 
-            print(response)
             if "code" in response and response["code"] == 0 : self.data = None; return;
             if "name" in result and "username"in response and result["name"] != response["username"]:
                 result["name"] = response["username"]
@@ -45,6 +44,7 @@ class querySearch:
         self.keyword = query.get("q") or query.get("query") or query.get("kueri")
         self.filter = query.get("sort") or query.get("filter") or query.get("urut") or "upvotes"
         self.limit = query.get("limit") or 100
+        self.harusSama = query.get("mirip") == "ya" or query.get("mirip") == "iya"
         self.result = {}
         if self.keyword and len(self.keyword.strip()) <= 0: 
             self.warns = {"error": True, "message": 'Invalid \'q\' query, cannot empty', "code": 400}
@@ -60,7 +60,7 @@ class querySearch:
             if self.keyword:
                 listres = [] #list(self.result.values())
                 for kunci in self.result:
-                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or self.keyword.lower() in self.result[kunci]["name"].lower():
+                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or (self.harusSama == True and self.keyword.lower() in self.result[kunci]["name"].lower()):
                         listres.append(self.result[kunci])
                 self.result = listres
         except Exception as kesalahan:
