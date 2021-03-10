@@ -110,6 +110,7 @@ class data():
                     listres = [] 
                     for kunci in self.result:
                         if self.result[kunci]["name"].lower().startswith(kueri.lower()) or (kueri.lower() in self.result[kunci]["name"].lower()):
+                            self.result[kunci]["id"] = kunci
                             listres.append(self.result[kunci])
                     self.result = listres
                 putCache(str(kueri + "_querysearch"), self.result)
