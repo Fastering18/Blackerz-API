@@ -12,6 +12,7 @@
     <meta name="og:site_name" content="Blackerz Bot List">
     <meta name="description" content="Search any Discord bots and servers here.">
     <link rel="canonical" href="https://blackerz.herokuapp.com/">
+    {% cache 60*5, "fstatic1" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
     <script>
@@ -39,6 +40,7 @@
    ]
    
 }
+    {% endcache %}
 </script>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="/static/json/home.webmanifest">
@@ -63,7 +65,6 @@
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
-    {% cache 60*4 %}
     <div id="botListParent">
           {%- set currentBot = 0 -%}
           {%- set dictBots = json.loads(bots) -%}
@@ -79,6 +80,7 @@
              </div>
           {%- endfor -%}
     </div>
+    {% cache 60*10, "jquery" %}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     {% endcache %}
     <script>
