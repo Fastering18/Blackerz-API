@@ -61,7 +61,7 @@
         </div>
     </div>
     <div id="headerPage">
-        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)" value="{{kueri}}">
+        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
@@ -87,7 +87,9 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
         {%- if kueri -%}
-          $("#searchBar").focus();
+          var botSearchInput = $("#searchBar")
+          botSearchInput.focus();
+          botSearchInput.val("{{kueri}}");
         {%- endif -%}
         const client = ('{{ user | tojson | safe }}')
         const loginedUser = JSON.parse(client)
