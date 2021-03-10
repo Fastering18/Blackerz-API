@@ -100,12 +100,12 @@ class data():
                     self.data = "Internal error, this is not your error, please report this issues to github."
         elif tipe == "querySearch":
             kueri = Data.get('kueri', "bot")
-            self.filter = "upvotes"
+            self.filter = "verified"
             if str(kueri + "_querysearch") in botCaches:
                 self.result = botCaches[str(kueri + "_querysearch")]
                 return 
             try:
-                self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"').json()
+                self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&equalTo=true').json()
                 if kueri:
                     listres = [] 
                     for kunci in self.result:
