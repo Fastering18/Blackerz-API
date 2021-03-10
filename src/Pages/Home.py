@@ -94,15 +94,15 @@ class data():
                 print(kesalahan)
                 try:
                     result = firebaseDB.get('/Infrastructure/botlist', None)
-                    self.data = result
+                    self.data = sortBy(result)
                 except Exception as kesalahan2:
                     print(kesalahan2)
                     self.data = "Internal error, this is not your error, please report this issues to github."
         elif tipe == "querySearch":
             kueri = Data.get('kueri', "bot")
             self.filter = "verified"
-            if str(kueri + "_querysearch") in botCaches:
-                self.result = botCaches[str(kueri + "_querysearch")]
+            if kueri + "_querysearch" in botCaches:
+                self.result = botCaches[kueri + "_querysearch"]
                 return 
             try:
                 self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&equalTo=true').json()
@@ -113,7 +113,7 @@ class data():
                             self.result[kunci]["id"] = kunci
                             listres.append(self.result[kunci])
                     self.result = listres
-                putCache(str(kueri + "_querysearch"), self.result)
+                putCache(kueri + "_querysearch", self.result)
             except Exception as kesalahan:
                 print(kesalahan)
                 self.result = data("allBot").data
