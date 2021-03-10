@@ -106,7 +106,7 @@ class data():
                 return 
             try:
                 self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"').json()
-                if self.keyword:
+                if kueri:
                     listres = [] 
                     for kunci in self.result:
                         if self.result[kunci]["name"].lower().startswith(kueri.lower()) or (kueri.lower() in self.result[kunci]["name"].lower()):
