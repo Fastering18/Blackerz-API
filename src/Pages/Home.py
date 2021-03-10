@@ -97,7 +97,25 @@ class data():
                     self.data = result
                 except Exception as kesalahan2:
                     print(kesalahan2)
-                    self.data = "Internal error, this is not your error, please report this issues to github."               
+                    self.data = "Internal error, this is not your error, please report this issues to github."
+        elif tipe == "querySearch":
+            kueri = Data.get('kueri', "bot")
+            self.filter = "upvotes"
+            if str(kueri + "_querysearch") in botCaches:
+                self.result = botCaches[str(kueri + "_querysearch")]
+                return 
+            try:
+                self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"').json()
+                if self.keyword:
+                    listres = [] 
+                    for kunci in self.result:
+                        if self.result[kunci]["name"].lower().startswith(kueri.lower()) or (kueri.lower() in self.result[kunci]["name"].lower()):
+                            listres.append(self.result[kunci])
+                    self.result = listres
+                putCache(str(kueri + "_querysearch"), self.result)
+            except Exception as kesalahan:
+                print(kesalahan)
+                self.result = data("allBot").data
             
 def updateUserData(id, tag, username, avatar, code):
     UserData = {
@@ -115,7 +133,7 @@ class homePage(Resource):
         return redirect(request.url.replace('http:', 'https:', 1), code=301)
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botDataList = data("allBot")
+    botDataList = data("allBot") 
     useragent = request.headers.get('User-Agent')
     
     if user and "id" in user and "username" in user:      
@@ -136,3 +154,30 @@ class homePage(Resource):
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
+
+class BotSearchPage(Resource):
+    def get(self, kueri):
+        if request.url.startswith('http://'):
+            return redirect(request.url.replace('http:', 'https:', 1), code=301)
+        discord = make_session(token=session.get('oauth2_token'))
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        botsdata = data("querySearch", kueri=kueri)
+        
+        if user and "id" in user and "username" in user:      
+            oneTimeCode = generateRandomKey(8)
+            userID = user["id"]
+            userData = [
+               str(userID),
+               user["username"] + "#" + user["discriminator"],
+               user["username"],
+               user["avatar"],
+               oneTimeCode
+            ]
+            Thread(target=updateUserData, args=userData).start() 
+        else:
+            user = "null"
+        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.result), json=json), 200, headers)
+        respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
+        respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
+        return respen  
+        
