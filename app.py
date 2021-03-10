@@ -1,4 +1,4 @@
-from flask import Flask, make_response, render_template, request, redirect, url_for
+from flask import Flask, make_response, render_template, request, redirect
 from flask_restful import Api
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
