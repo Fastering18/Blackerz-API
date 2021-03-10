@@ -86,6 +86,9 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
+        {%- if kueri -%}
+          $("#searchBar").focus();
+        {%- endif -%}
         const client = ('{{ user | tojson | safe }}')
         const loginedUser = JSON.parse(client)
         let currentBot = 0
