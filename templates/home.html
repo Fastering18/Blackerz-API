@@ -95,10 +95,11 @@
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
-            $("#botListParent").empty();
+            window.location.href = `/search?q=${query}`
+            /*$("#botListParent").empty();
             for (dataChild in jsonData) {
                 if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
-             
+                
                 currentBot++
                 botIdlist.push(jsonData[dataChild])
                 var para = document.createElement("DIV");
@@ -122,7 +123,7 @@
                 para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
                 para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
                 para.onclick = function(){window.location.pathname = `/bots/${this.id}`}
-            }
+            }*/
         };
         function searchBotQuery(nameQuery) {
             updateData(jsonBotData, nameQuery)
@@ -137,6 +138,7 @@
                 window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             {%- endif -%}
         };
+        {% cache 60*10, "basicfunchome" %}
         function generateRandomString() {
             const rand = Math.floor(Math.random() * 10);
             let randStr = '';
@@ -175,6 +177,7 @@
             if (!results || !results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
+        {% endcache %}
       
         window.onload = function () {
             const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
