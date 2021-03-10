@@ -94,7 +94,7 @@
         const logined = client && client.username != undefined && client.id != undefined
       
         function updateData(jsonData, query) {
-            if (query === "" || typeof (query) !== "string") query = undefined;
+            if (query === "" || typeof (query) !== "string") query = "";
             window.location.href = `/search?q=${query}`
         };
         function searchBotQuery(nameQuery) {
