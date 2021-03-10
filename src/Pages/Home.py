@@ -162,7 +162,7 @@ class BotSearchPage(Resource):
             return redirect(request.url.replace('http:', 'https:', 1), code=301)
         kueri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
         if kueri == None:
-            return redirect(url_for('.homePage'), code=301)
+            return redirect(url_for('.homepage'), code=301)
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
         botsdata = data("querySearch", kueri=kueri)
