@@ -61,7 +61,7 @@
         </div>
     </div>
     <div id="headerPage">
-        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
+        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)" value="{{kueri}}">
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
@@ -96,34 +96,6 @@
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
             window.location.href = `/search?q=${query}`
-            /*$("#botListParent").empty();
-            for (dataChild in jsonData) {
-                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
-                
-                currentBot++
-                botIdlist.push(jsonData[dataChild])
-                var para = document.createElement("DIV");
-                var gambar = document.createElement("img");
-                var teks = document.createElement("P");
-                gambar.setAttribute("width", "6%")
-                gambar.setAttribute("height", "6%")
-                gambar.style = "display:inline-block; position: relative;"
-                teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 140%"
-
-                para.id = jsonData[dataChild].id
-                para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; margin-bottom: 0.75%; display: none"
-                gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (jsonData[dataChild].avatar !== undefined) gambar.src = "https://cdn.discordapp.com/avatars/" + jsonData[dataChild].id + "/" + jsonData[dataChild].avatar + ".webp?size=64";
-                teks.innerText = jsonData[dataChild].name;
-                para.appendChild(gambar)
-                para.appendChild(teks)
-                //document.body
-                document.getElementById("botListParent").appendChild(para)
-                $(para).slideDown(280);
-                para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
-                para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
-                para.onclick = function(){window.location.pathname = `/bots/${this.id}`}
-            }*/
         };
         function searchBotQuery(nameQuery) {
             updateData(jsonBotData, nameQuery)
