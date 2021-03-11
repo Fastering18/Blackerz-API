@@ -33,6 +33,7 @@
       {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}","review":null,"aggregateRating":null,"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX"}}
     </script>
     
+    {% cache 60*8, "cssandmetaspecificserver" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
     <script>
@@ -122,6 +123,7 @@
       right: 0;
     }
     </style>
+    {% endcache %}
 </head>
     <body>
         <div id='background'></div>
