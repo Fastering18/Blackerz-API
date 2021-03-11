@@ -56,7 +56,7 @@ def deleteCache(tipe="botsverified"):
 
 def putCache(tipe, isi):
     botCaches[tipe] = isi
-    Timer(6000.0, deleteCache, tipe).start()
+    Timer(6000.0, deleteCache, [tipe]).start()
     return True
 
 def sortBy(dic, tipe="upvotes"):
