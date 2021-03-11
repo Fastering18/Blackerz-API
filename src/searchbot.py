@@ -16,7 +16,7 @@ def deleteCache(link):
 
 def putCache(link, isi):
     queryBotCaches[link] = isi
-    Timer(800.0, deleteCache, (link)).start()
+    Timer(800.0, deleteCache, [link]).start()
     return True
 
 class data():
