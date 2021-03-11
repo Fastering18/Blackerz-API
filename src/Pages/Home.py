@@ -65,7 +65,7 @@ def sortBy(dic, tipe="upvotes"):
         vInside = dic[keyy]
         vInside["id"] = keyy
         daftr.append(vInside)
-    daftr.sort(key=lambda ddata: ddata.get(tipe), reverse=True)
+    daftr.sort(key=lambda ddata: ddata.get(tipe, 0), reverse=True)
     daftr.sort(key=lambda ddata: ddata.get("id"))
     print(daftr)
     return daftr
