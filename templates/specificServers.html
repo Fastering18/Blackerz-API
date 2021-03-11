@@ -140,8 +140,7 @@
     </div>
     <div class="serverInfo">
     <h1 id="serverName">{{ server["name"] }}</h1>
-    <img id="serverAvatar" src={{ serverIcon }}
-      style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="server avatar">
+    <img id="serverAvatar" src="{{ serverIcon }}" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="server avatar">
     <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
         <button id="editServerData" class="button"><span>Edit</span></button>
@@ -175,7 +174,7 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ user | tojson | safe }}'))
-        const logined = (client != null) && (client.message != "401: Unauthorized")
+        const logined = {{ user and "id" in user }}  //(client != null) && (client.message != "401: Unauthorized")
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
         joinLink = joinLink.replace(/amp;/gi, "")
         
