@@ -76,7 +76,7 @@ def updateBotData(id, data, tipe="botlist"):
             firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "name", response["username"])
             firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "tag", result["tag"])
             if "avatar" in result and "avatar" in response:
-            if result["avatar"] != response["avatar"]:
+                if result["avatar"] != response["avatar"]:
                     result["avatar"] = response["avatar"]
                     firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])       
                 elif "avatar" in response and not "avatar" in result:
