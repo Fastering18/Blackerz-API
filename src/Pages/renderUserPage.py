@@ -65,7 +65,7 @@ def putCache(link, isi):
     Timer(600.0, deleteCache, [link]).start()
     return True 
 
-def updateBotData(id, data, tipe="botlist"):
+def updateBotData(id, result, tipe="botlist"):
     try:
         url = "https://discord.com/api/v8/users/" + str(id)
         r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
