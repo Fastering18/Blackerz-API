@@ -1,13 +1,8 @@
 from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup
 from requests_oauthlib import OAuth2Session
-import time
-import json
-import requests
-import os
-import random
-import string
-import markdown
+import time, json, requests, os, random, string, markdown
+from threading import Timer, Thread
 
 from firebase import firebase
 import pyrebase
@@ -33,6 +28,7 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 headers = {'Content-Type': 'text/html'}
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
 storage = Fyrebase.storage()
+botCaches = {}
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -58,34 +54,50 @@ def generateAuthorizationV1():
     letters = string.ascii_letters
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
     return result_str
-            
-class data():
-    def __init__(self, dataName, id):
-        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
-        if result != None:
-            try:
-                url = "https://discord.com/api/v8/users/" + str(id)
-                r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
-                response = r.json() 
-                if result["name"] != response["username"]:
-                    result["name"] = response["username"]
-                    result["tag"] = response["username"] + "#" + response["discriminator"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
-                if "avatar" in result and "avatar" in response:
-                    if result["avatar"] != response["avatar"]:
-                        result["avatar"] = response["avatar"]
-                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+
+def deleteCache(link):
+    if not link in queryBotCaches: return False
+    del botCaches[link]
+    return True
+
+def putCache(link, isi):
+    botCaches[link] = isi
+    Timer(600.0, deleteCache, [link]).start()
+    return True 
+
+def updateBotData(id, data, tipe="botlist"):
+    try:
+        url = "https://discord.com/api/v8/users/" + str(id)
+        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+        response = r.json() 
+        if result["name"] != response["username"]:
+            result["name"] = response["username"]
+            result["tag"] = response["username"] + "#" + response["discriminator"]
+            firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "name", response["username"])
+            firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "tag", result["tag"])
+            if "avatar" in result and "avatar" in response:
+            if result["avatar"] != response["avatar"]:
+                    result["avatar"] = response["avatar"]
+                    firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])       
                 elif "avatar" in response and not "avatar" in result:
                     result["avatar"] = response["avatar"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
-                self.data = result
-                self.timeStamp = time.time()
-            except:
-                self.data = result
-                self.timeStamp = time.time()
+                    firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])
+            return response
+    except Exception as kesalahan:
+        print(kesalahan)         
+  
+class data():
+    def __init__(self, dataName, id):
+        if (dataName + str(id)) in botCaches:
+            self.data = botCaches[dataName + str(id)]  
+            return
+          
+        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
+        if result != None:
+            self.data = result
         else:
             self.data = None
+        putCache(dataName + str(id), result)
             
 error1 = {'error': "Bot not found", 'status': "Not success"}
         
@@ -99,7 +111,7 @@ class botPage(Resource):
     bot = botum.data
     
     if bot != None:
-        
+        Thread(target=updateBotData, args=[id, bot]).start() 
         if "LongDescription" in bot:
             bot["LongDescription"] = Markup(markdown.markdown(bot["LongDescription"]))
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=json.dumps(bot).replace("'", "\\'").replace('"', '\\"')), 200, headers)
