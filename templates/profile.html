@@ -64,9 +64,9 @@
         <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <div id="botsowned">
-            <h2 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8);">Bots owned:</h2>
+            <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8);">Bots owned:</h2>
             {%- for botownedId in user["botsowned"] -%}
-                <p><a href="/bots/{{ botownedId }}"><p id="{{ botownedId }}" style="color: rgba(255,255,255, 0.8);">{{ user["botsowned"][botownedId].tag | safe }}</p></a></p>
+                <a href="/bots/{{ botownedId }}"><p id="{{ botownedId }}" style="color: rgba(255,255,255, 0.8);">{{ user["botsowned"][botownedId].tag | safe }}</p></a>
             {%- endfor -%}
         </div>
         <br>
