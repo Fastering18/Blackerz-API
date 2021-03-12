@@ -4,10 +4,7 @@ import string
 from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
-import time
-import json
-import requests
-import datetime
+import time, json, requests, datetime
 from threading import Timer, Thread
 
 from firebase import firebase
@@ -23,6 +20,11 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 headers = {'Content-Type': 'text/html'}
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
+
+def getUserBots(userid, tipe="botlist"):
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{userid}"').json()
+    print(item)
+    return item
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -81,6 +83,26 @@ class ProfileUsers(Resource):
         return redirect(request.url.replace('http:', 'https:', 1), code=301)
     discord = make_session(token=session.get('oauth2_token'))
     userProfile = discord.get(API_BASE_URL + '/users/@me').json()
+    
+    useragent = request.headers.get('User-Agent')
+    user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
+    
+    if user and "username" in user and "tag" in user:
+        url = "https://discord.com/api/v8/users/" + str(id)
+        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+        responsenew = r.json() 
+        if not responsenew or not "username" in responsenew: return
+        oneTimeCode = generateRandomKey(8)
+        userDataTarget = [
+           str(id),
+           responsenew["username"] + "#" + responsenew["discriminator"],
+           responsenew["username"],
+           responsenew["avatar"],
+           oneTimeCode
+        ]
+        t1 = Thread(target=updateUserData, args=userDataTarget)
+        t1.start()   
+    
     if userProfile and "username" in userProfile and "discriminator" in userProfile:      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
@@ -91,17 +113,19 @@ class ProfileUsers(Resource):
            userProfile["avatar"],
            oneTimeCode
         ]
-        t1 = Thread(target=updateUserData, args=userData)
-        t1.start()   
-    useragent = request.headers.get('User-Agent')
-    user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
+        
+        t2 = Thread(target=updateUserData, args=userData)      
+        t2.start()   
+        
     if not user:
         notFound = {
             'description': "User not found"
         }
         return make_response(render_template('404.html', notFound=notFound, clientUser=userProfile), 404, headers)
+    
     userData = user
     userData["userId"] = str(id)
+    getUserBots(str(id))
     
     if userProfile and "id" in userProfile:  
         if str(id) != userProfile["id"]:
