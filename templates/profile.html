@@ -27,10 +27,10 @@
        "@context":"http://schema.org","@type":"ProfilePage","url":"https://blackerz.herokuapp.com/user/{{ user['userId'] }}","dateCreated":"{{ user['CreatedAt'] }}","creator":{"@type":"Person","alternateName":"{{ client['username'] }}"}
      }
     </script>
-    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/static/CSS/home.css">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="manifest" href="../../static/json/profile.webmanifest">
+    <link rel="manifest" href="/static/json/profile.webmanifest">
     <meta name="google-site-verification" content="b10OoWMdH8oSIGjd-Lp06ajgSmTFtml140QikmrK_qk" />
     <style media="screen">
         mark {
@@ -63,16 +63,23 @@
         <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
         <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
+        <div id="botsowned">
+        {%- for botownedId in botsowned -%}
+            <p id="{{ botownedId }}" style="color: rgba(255,255,255, 0.8);">{{ botsowned[botownedId].tag | safe }}</p>    
+        {%- endfor -%}
+        </div>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark>{{ user["AuthorizationV1"] }}</mark></p>
+            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark>{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif -%}
     </div>
+    {% cache 60*10, "jquery" %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% endcache %}
     <script>
         const client = JSON.parse('{{ client | tojson | safe }}')
-        const logined = client.error == undefined
+        const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
         const proxyurl = "";
         function generateRandomString() {
             const rand = Math.floor(Math.random() * 10);
