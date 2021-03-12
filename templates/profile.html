@@ -61,7 +61,7 @@
     <div id="userInfo">
         <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
         <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
-        <img id="serverAvatar" src="{{avatarUser}}" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
+        <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
