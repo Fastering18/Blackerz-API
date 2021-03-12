@@ -62,7 +62,7 @@ def deleteCache(link):
 
 def putCache(link, isi):
     botCaches[link] = isi
-    Timer(600.0, deleteCache, [link]).start()
+    Timer(8.0, deleteCache, [link]).start()
     return True 
 
 def updateBotData(id, result, tipe="botlist"):
