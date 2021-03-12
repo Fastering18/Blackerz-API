@@ -22,9 +22,12 @@ headers = {'Content-Type': 'text/html'}
 ksoftHeaders = {'Authorization': 'Bearer de6bec5e78a2edf5990bd10f8876d7ecfc829a69'}
 
 def getUserBots(userid, tipe="botlist"):
-    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{userid}"').json()
-    print(item)
-    return item
+    try:
+        item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{userid}"').json()
+        return item
+    except Exception as kesalahan:
+        print(kesalahan)
+        return {}
 
 def token_updater(token):
     session['oauth2_token'] = token
@@ -88,20 +91,23 @@ class ProfileUsers(Resource):
     user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
     
     if user and "username" in user and "tag" in user:
-        url = "https://discord.com/api/v8/users/" + str(id)
-        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
-        responsenew = r.json() 
-        if not responsenew or not "username" in responsenew: return
-        oneTimeCode = generateRandomKey(8)
-        userDataTarget = [
-           str(id),
-           responsenew["username"] + "#" + responsenew["discriminator"],
-           responsenew["username"],
-           responsenew["avatar"],
-           oneTimeCode
-        ]
-        t1 = Thread(target=updateUserData, args=userDataTarget)
-        t1.start()   
+        try:
+            url = "https://discord.com/api/v8/users/" + str(id)
+            r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+            responsenew = r.json() 
+            if not responsenew or not "username" in responsenew: return
+            oneTimeCode = generateRandomKey(8)
+            userDataTarget = [
+               str(id),
+               responsenew["username"] + "#" + responsenew["discriminator"],
+               responsenew["username"],
+               responsenew["avatar"],
+               oneTimeCode
+            ]
+            t1 = Thread(target=updateUserData, args=userDataTarget)
+            t1.start()
+        except Exception as kesalahan:
+            print(kesalahan)
     
     if userProfile and "username" in userProfile and "discriminator" in userProfile:      
         oneTimeCode = generateRandomKey(8)
@@ -125,7 +131,7 @@ class ProfileUsers(Resource):
     
     userData = user
     userData["userId"] = str(id)
-    getUserBots(str(id))
+    userData["botsowned"] = getUserBots(str(id))
     
     if userProfile and "id" in userProfile:  
         if str(id) != userProfile["id"]:
