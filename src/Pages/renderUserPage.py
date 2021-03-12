@@ -56,7 +56,7 @@ def generateAuthorizationV1():
     return result_str
 
 def deleteCache(link):
-    if not link in queryBotCaches: return False
+    if not link in botCaches: return False
     del botCaches[link]
     return True
 
