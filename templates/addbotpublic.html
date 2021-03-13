@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  
+  <head>
+    <meta charset=UTF-8>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta property="og:title" content="Blackerz" />
+    <meta property="og:description" content="Search any Discord bots and servers here." />
+    <meta property="og:url" content="https://blackerz.herokuapp.com/" />
+    <meta property="og:image" content="/static/Images/Blackerz.jpg" />
+    <meta name="og:site_name" content="Blackerz Bot List">
+    <meta name="description" content="Search any Discord bots and servers here.">
+    <link rel="canonical" href="https://blackerz.herokuapp.com/">
+    {% cache 60*5, "fstatic1" %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add bot</title>
+    {% endcache %}
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="/static/json/home.webmanifest">
+  </head>
+  <body>
+    <div id='background'></div>
+        <div class="topnav">
+            <div class="topnav-pc">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a class="active" id="add bot" onclick="" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a class="active" id="add bot" onclick="" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
+        </div>
+    <p>on working</p>     
+  <body>
+</html>  
