@@ -52,9 +52,6 @@
   .topnav-mobile .buttonssnavmobile {
     display: none;
   }
-  .topnav-mobile #buttonss {
-    display: none;
-  }
 
   .topnav-mobile a {
     color: rgb(255, 255, 255, 0.95);
