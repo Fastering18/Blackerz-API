@@ -53,7 +53,7 @@ class resource3(Resource):
         if identifyAPiKey(apiKey) == None: 
             return make_response(jsonify(unauthorizedAcess2), 401)
         
-        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner']:
+        if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner'] or not 'prefix' in jsonData:
             return make_response(jsonify(error1), 400)
         
         result = postBot(jsonData)
