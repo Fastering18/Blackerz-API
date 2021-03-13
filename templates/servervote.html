@@ -4,9 +4,9 @@
   <head>
     <title>{{ serverData["name"] }} - Server</title>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="{{ serverData["name"] }} - Server" />
     <meta property="og:description" content="{{ serverData["ShortDescription"] }}" />
     <meta property="og:url" content="https://blackerz.herokuapp.com/servers/{{ serverId }}" />
@@ -51,19 +51,35 @@
   </head>
     <body>
       <div id='background'></div>
-      <div style="overflow:auto">
-        <div class="topnav">
-            <a id="profiletab" href="/" data-text="Home"></a>
-            <a href="/servers" data-text="Servers"></a>
-            {%- if clientUser and "username" in clientUser -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-            {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
-            {%- endif -%}
+      <div class="topnav">
+            <div class="topnav-pc">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
         </div>
-      </div>
       <div class="serverInfo">
         <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="serverName">{{ serverData["name"] }}</h1>
         <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
