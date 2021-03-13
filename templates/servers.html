@@ -53,8 +53,8 @@
     <div id='background'></div>
     <div class="topnav">
             <div class="topnav-pc">
-                <a class="active" data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a class="active" href="/servers" data-text="Servers"></a>
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
