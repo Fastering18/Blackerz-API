@@ -58,7 +58,7 @@
                 {%- if clientUser and "username" in clientUser -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -70,7 +70,7 @@
                 {%- if clientUser and "username" in clientUser -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -133,7 +133,7 @@
             break;
           case "alreadyvoted":
             alert("You already voted this bot! wait for 12 hours to vote again.")
-            window.location.search = ""
+            window.location.href = "/bots/{{ botId }}"
             break;
         }
         document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
@@ -157,7 +157,9 @@
                 window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             {%- endif -%}
         };
-          
+        function redirectKe(link) {
+           window.location.href = link
+        }  
       </script>
     </body>
 </html>
