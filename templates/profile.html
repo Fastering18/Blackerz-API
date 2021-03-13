@@ -53,7 +53,7 @@
                 {%- if client and "username" in client -%}
                    <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -65,7 +65,7 @@
                 {%- if client and "username" in client -%}
                    <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -82,9 +82,14 @@
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <div id="botsowned">
             <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned: |</h2>
+            {%- set ownAnyBot = False -%}
             {%- for botownedId in user["botsowned"] -%}
                 <a href="/bots/{{ botownedId }}" style="display: inline;"><p id="{{ botownedId }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ user["botsowned"][botownedId].tag | safe }} | </p></a>
+                {%- set ownAnyBot = True -%}
             {%- endfor -%}
+            {%- if ownAnyBot == False -%}
+                <p id="no bot" style="color: rgba(255,255,255, 0.8); display: inline;">no bot :v</p>
+            {%- endif -%}
         </div>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
@@ -98,16 +103,7 @@
     <script>
         const client = JSON.parse('{{ client | tojson | safe }}')
         const logined = {{ (client and "id" in client) and "true" or "false" | safe }}
-        function generateRandomString() {
-            const rand = Math.floor(Math.random() * 10);
-            let randStr = '';
 
-            for (let i = 0; i < 20 + rand; i++) {
-                randStr += String.fromCharCode(33 + Math.floor(Math.random() * 94));
-            }
-
-            return randStr;
-        }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -137,6 +133,9 @@
                 }
             }
             return "";
+        }
+        function redirectKe(link) {
+           window.location.href = link
         }
         window.onload = function () {
             console.log("loaded")
