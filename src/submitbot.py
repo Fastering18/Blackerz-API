@@ -36,7 +36,7 @@ class postBot():
                 })
         firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
         firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "upvotes", 0)
-        
+        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "prefix", dataREQ['prefix'])
         if "avatar" in dataREQ:
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
         if "inviteLink" in dataREQ:
