@@ -61,14 +61,6 @@
     display: block;
   }
 
-  .topnav-mobile a.navicon {
-    background: black;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
   .topnav-mobile a:hover {
     transition: all .6s;
     color: rgb(255, 255, 255, 0.7);
