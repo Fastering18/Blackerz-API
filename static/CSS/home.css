@@ -19,7 +19,7 @@
   [data-text]::after {
      content: attr(data-text);
   }
-  /*.topnav {
+  .topnav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -39,8 +39,8 @@
     transition: all .6s;
     color: rgb(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 65);
-  }*/
-  .topnav {
+  }
+  .topnav-mobile {
     position: relative;
     list-style-type: none;
     margin: 0;
@@ -56,7 +56,7 @@
     display: none;
   }
 
-  .topnav a {
+  .topnav-mobile a {
     color: rgb(255, 255, 255, 0.95);
     padding: 1% 1%;
     text-decoration: none;
@@ -64,7 +64,7 @@
     display: block;
   }
 
-  .topnav a.icon {
+  .topnav-mobile a.icon {
     background: black;
     display: block;
     position: absolute;
@@ -72,12 +72,12 @@
     top: 0;
   }
 
-  .topnav a:hover {
+  .topnav-mobile a:hover {
     transition: all .6s;
     color: rgb(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 65);
   }
-  .topnav a.active {
+  .topnav-mobile a.active {
     background-color: rgba(0, 0, 0, 85);
     color: rgb(255, 255, 255, 0.7);
   }
