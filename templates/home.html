@@ -59,11 +59,10 @@
                    <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
                 {%- endif -%}
             </div>
         <div class="topnav-mobile">
-            <div class="buttonssnavmobile" id="buttonssnavmobile">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
                 {%- if user and "username" in user -%}
@@ -72,13 +71,11 @@
                    <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
                 {%- endif -%}
-             </div>
-             <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
                 <i class="fa fa-bars"></i>
-             </a>
-           </div>
+            </a>
         </div>
     </div>
     <div id="headerPage">
