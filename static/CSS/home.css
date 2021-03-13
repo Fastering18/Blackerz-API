@@ -19,14 +19,14 @@
   [data-text]::after {
      content: attr(data-text);
   }
-  .topnav {
+  .topnav-pc {
     list-style-type: none;
     margin: 0;
     padding: 0;
     background: rgb(49, 48, 48, 0.9);
     overflow: hidden;
   }
-  .topnav a {
+  .topnav-pc a {
     float: left;
     color: rgb(255, 255, 255, 0.95);
     text-align: center;
@@ -35,7 +35,7 @@
     border-radius: 5%;
     font-size: 90%;
   }
-  .topnav a:hover {
+  .topnav-pc a:hover {
     transition: all .6s;
     color: rgb(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 65);
@@ -97,7 +97,7 @@
 
 @media only screen and (max-device-width : 640px) {
   .topnav-pc {
-   display: block;    
+   display: none;    
   }
   .topnav-mobile {
     display: block;
