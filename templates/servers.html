@@ -58,7 +58,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -70,7 +70,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -84,7 +84,7 @@
         <input id="searchBar" type="text" placeholder="Search server by name" onchange="searchServerQuery(this.value)">
     </div>
     <br>
-    <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Loading servers...</p>
+    <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord servers here.</p>
     <div id="serverListParent">
           {%- set currentServer = 0 -%}
           {%- set dictServers = json.loads(servers) -%}
@@ -109,13 +109,11 @@
     {% endcache %}
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        const client = ('{{ user }}').replace(/&#39;/gi, '"').replace(/False/gi, "false")
-        const loginedUser = JSON.parse(client)
+        const client = JSON.parse('{{ user | tojson | safe }}')
         let currentServer = 0
         let serverIdlist = []
         let jsonServerData = JSON.parse(({{ servers | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
-        if (jsonServerData) $("#serverlist").text("Search any Discord servers here.");
-        let logined = client != "null"
+        let logined = {{ (user and "username" in user) and 'true' or 'false' }}
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
@@ -147,26 +145,21 @@
                 para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
                 para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
                 para.onclick = function(){window.location.pathname = `/servers/${this.id}`}
-                /*(function (index) {
-                    $(`#${index}`).click(function() {
-                        window.location.pathname = `/server/${index}`
-                    })
-                })(dataChild);*/
             }
         };
         function searchServerQuery(nameQuery) {
             updateData(jsonServerData, nameQuery)
+        }     
+        function discordLoginAPI() {
+            {%- if user and "username" in user -%}
+               window.location.href = "/user/{{user['id']}}"
+            {%- else -%}
+               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            {%- endif -%}
         }
+        {% cache 60*5, None %}
         function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
-            //if (force === true) window.location.href = window.location.origin;
-        }
-        function discordLoginAPI() {
-            if (logined == true) {
-                window.location.href = window.location.origin + "/user/" + loginedUser.id
-            } else {
-                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
-            }
         }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
@@ -189,11 +182,13 @@
             }
             return "";
         }
+        function redirectKe(link) {
+           window.location.href = link
+        }
         window.onload = function () {
-            //const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
-            //Authorization
             setCookie("dariLink", window.location.host, 1)
         };
+        {% endcache %}
     </script>
 </body>
 
