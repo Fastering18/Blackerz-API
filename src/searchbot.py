@@ -1,7 +1,7 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect
-import time, json, requests, os, random, string
-from threading import Timer
+from flask import jsonify, make_response, render_template, session, request, redirect
+import time, json, requests
+from threading import Timer, Thread
 
 from firebase import firebase
 
