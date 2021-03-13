@@ -64,12 +64,10 @@
   .topnav-mobile a.navicon {
     background: black;
     display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
+    
   }
   .topnav-mobile a:hover {
-    transition: all .6s;
+    transition: all .45s;
     color: rgb(255, 255, 255, 0.7);
     background-color: rgba(0, 0, 0, 65);
   }
