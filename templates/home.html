@@ -54,6 +54,7 @@
             {%- if user and "username" in user -%}
                <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+               <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
             {%- else -%}
                <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
