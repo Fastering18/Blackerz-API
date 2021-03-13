@@ -5,6 +5,7 @@
     <meta charset=UTF-8>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
     <meta property="og:url" content="https://blackerz.herokuapp.com/" />
@@ -47,18 +48,49 @@
   </head>
   <body>
     <div id='background'></div>
+    <!-- Top Navigation Menu -->
+<div class="topnav">
+  <a href="#home" class="active">Logo</a>
+  <div id="myLinks">
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
     <div style="overflow:auto">
         <div class="topnav">
-            <a class="active" data-text="Home" id="profiletab" href="/"></a>
-            <a href="/servers" data-text="Servers"></a>
-            {%- if user and "username" in user -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-               <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
-            {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
-            {%- endif -%}
+            <div class="topnav-pc">
+                <a class="active" data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
+                {%- endif -%}
+            </div>
+            <div class="topnav-mobile" style="display: none">
+            <div class="buttonss">
+                <a class="active" data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
+                {%- endif -%}
+           </div>
+           <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonss').style.display = document.getElementById('buttonss').style.display == 'block' ? 'none' : 'block'">
+              <i class="fa fa-bars"></i>
+           </a>
+           </div>
         </div>
     </div>
     <div id="headerPage">
