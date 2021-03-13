@@ -40,7 +40,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a class="active" id="add bot" onclick="" data-text="Add bot"></a>
+                   <a class="active" id="addBot" onclick="window.href='/add/bot'" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -52,7 +52,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a class="active" id="add bot" onclick="" data-text="Add bot"></a>
+                   <a class="active" id="addBot" onclick="window.href='/add/bot'" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -62,6 +62,6 @@
             </a>
           </div>
         </div>
-    <p>on working</p>     
+    <h1>on working</h1>     
   <body>
 </html>  
