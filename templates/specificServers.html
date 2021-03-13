@@ -134,7 +134,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -146,7 +146,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -194,7 +194,6 @@
         const client = JSON.parse(('{{ user | tojson | safe }}'))
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }} 
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
-        joinLink = joinLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
@@ -207,12 +206,14 @@
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
-                window.location.href = "/user/" + loginedUser.id
+                window.location.href = "/user/{{user['id']}}"
             {%- else -%}
                 window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
             {%- endif -%}
         }
-        
+        function redirectKe(link) {
+           window.location.href = link
+        }
     </script>
   </body>
 </html>
