@@ -14,6 +14,7 @@ error2 = {'error': "Failed to update bot data", 'status': "Not success"}
 error3 = {'error': "shortDescription too long, must lower than 50 characters length!", 'status': "Not success"}
 error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status': "Not success"}
 error5 = {'error': "longDescription too long, must lower than 4000 characters length!", 'status': "Not success"}
+error6 = {'error': "prefix too long! must lower than 6 characters length", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
@@ -41,6 +42,11 @@ class edit():
             firebaseDB.put('/Infrastructure/botlist/' + id, "name", data['name'])
         if 'avatar' in data and self.result == None:
             firebaseDB.put('/Infrastructure/botlist/' + id, "avatar", data['avatar'])
+        if 'prefix' in data and self.result == None:
+            if len(data['prefix']) > 3:
+                self.result = error6
+                return 
+            firebaseDB.put('/Infrastructure/botlist/' + id, "prefix", data['prefix'])
         if 'shortDescription' in data and self.result == None:
             firebaseDB.put('/Infrastructure/botlist/' + id, "ShortDescription", data['shortDescription'])
         if 'longDescription' in data and self.result == None:
