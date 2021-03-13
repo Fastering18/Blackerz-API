@@ -43,7 +43,7 @@ class edit():
         if 'avatar' in data and self.result == None:
             firebaseDB.put('/Infrastructure/botlist/' + id, "avatar", data['avatar'])
         if 'prefix' in data and self.result == None:
-            if len(data['prefix']) > 3:
+            if len(data['prefix']) > 3 or data['prefix'] == "":
                 self.result = error6
                 return 
             firebaseDB.put('/Infrastructure/botlist/' + id, "prefix", data['prefix'])
