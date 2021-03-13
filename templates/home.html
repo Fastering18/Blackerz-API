@@ -48,8 +48,7 @@
   </head>
   <body>
     <div id='background'></div>
-    <div style="overflow:auto">
-        <div class="topnav">
+        <div class="topnav" style="position: relative;">
             <div class="topnav-pc">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
@@ -76,8 +75,8 @@
             <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
                 <i class="fa fa-bars"></i>
             </a>
+          </div>
         </div>
-    </div>
     <div id="headerPage">
         <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
     </div>
