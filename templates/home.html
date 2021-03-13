@@ -48,7 +48,7 @@
   </head>
   <body>
     <div id='background'></div>
-        <div class="topnav" style="position: relative;">
+        <div class="topnav">
             <div class="topnav-pc">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
@@ -60,7 +60,7 @@
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
             </div>
-        <div class="topnav-mobile">
+        <div class="topnav-mobile" style="min-height: 32px;">
             <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
