@@ -10,6 +10,7 @@ import src.Pages.UserProfile as Profile
 import src.Pages.renderUserPage as renderUserPage
 import src.Pages.VotingPage as votingPage
 import src.Pages.editDataPage as editPage
+import src.Pages.management as mainManagement
 
 import src.searchbot as searchBots
 from src.allbot import resource2
@@ -79,6 +80,9 @@ api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
 api.add_resource(editPage.EditBotPage, "/bots/<int:id>/edit")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
+
+# Utility & Management
+api.add_resource(mainManagement.AddBotPagePublic, "/add/bot")
 
 # Widgets
 api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers<string:mime>")
