@@ -51,7 +51,7 @@
                 <a data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
                 {%- if client and "username" in client -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
+                   <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
                    <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
                 {%- else -%}
@@ -63,7 +63,7 @@
                 <a data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
                 {%- if client and "username" in client -%}
-                   <a class="{{ client['id'] == user['id'] and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
+                   <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
                    <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
                 {%- else -%}
