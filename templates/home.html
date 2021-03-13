@@ -55,7 +55,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -67,7 +67,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -110,10 +110,8 @@
         {%- endif -%}
         const client = ('{{ user | tojson | safe }}')
         const loginedUser = JSON.parse(client)
-        let currentBot = 0
-        let botIdlist = []
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
-        const logined = client && client.username != undefined && client.id != undefined
+        const logined = {{ (client and "id" in client) and "true" or "false" | safe }}
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = "";
@@ -170,6 +168,9 @@
                 results = regex.exec(url);
             if (!results || !results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        function redirectKe(link) {
+           window.location.href = link
         }
         {% endcache %}
       
