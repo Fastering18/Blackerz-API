@@ -84,7 +84,7 @@ class querySearch:
             
 class getBotFromID(Resource):
   def get(self, id):
-    if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
+    if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[(str(id) + "_bot")]), 200)
     botum = data("getbot", id)
     bot = botum.data
     
