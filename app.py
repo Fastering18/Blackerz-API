@@ -91,8 +91,8 @@ api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/
 class dptFile(Resource):
   def get(self):
     return make_response(
-      """user-agent: *
-         allow: /""", 200, {'Content-Type': 'text/plain'})
+"""user-agent: *
+allow: /""", 200, {'Content-Type': 'text/plain'})
 
 api.add_resource(dptFile, "/robots.txt")
 
