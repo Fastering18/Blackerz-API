@@ -111,7 +111,7 @@
         const client = ('{{ user | tojson | safe }}')
         const loginedUser = JSON.parse(client)
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
-        const logined = {{ (client and "id" in client) and "true" or "false" | safe }}
+        const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = "";
