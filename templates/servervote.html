@@ -58,7 +58,7 @@
                 {%- if clientUser and "username" in clientUser -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -70,7 +70,7 @@
                 {%- if clientUser and "username" in clientUser -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -120,7 +120,7 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
         const url = new URL(window.location.href);
-        const logined = (client && client.message != "401: Unauthorized")
+        const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
         const errRES = url.searchParams.get("err");
         switch(errRES) {
           case "notlogined":
@@ -151,13 +151,15 @@
             window.location.href = window.location.origin + "/api/v1/discord/logout"
         };
         function discordLoginAPI() {
-            if (logined == true) {
-                window.location.href = window.location.origin + "/user/" + client.id
-            } else {
-                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
-            }
+            {%- if user and "username" in user -%}
+                window.location.href = "/user/{{ user['id'] }}"
+            {%- else -%}
+                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            {%- endif -%}
         };
-          
+        function redirectKe(link) {
+           window.location.href = link
+        }  
       </script>
     </body>
 </html>
