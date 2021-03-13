@@ -19,28 +19,31 @@ def putCache(link, isi):
     Timer(800.0, deleteCache, [link]).start()
     return True
 
+def updateBotData(id, result):
+    url = "https://discord.com/api/v8/users/" + str(id)
+    r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+    response = r.json() 
+    if "code" in response and response["code"] == 0 : self.data = None; return;
+    if "name" in result and "username"in response and result["name"] != response["username"]:
+        result["name"] = response["username"]
+        result["tag"] = response["username"] + "#" + response["discriminator"]
+        firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+        firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
+    if "avatar" in result and "avatar" in response:
+        if result["avatar"] != response["avatar"]:
+            result["avatar"] = response["avatar"]
+            firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+        elif "avatar" in response and not "avatar" in result:
+            result["avatar"] = response["avatar"]
+            firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])  
+  
 class data():
     def __init__(self, dataName, id):      
         result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
-        if result != None:       
-            url = "https://discord.com/api/v8/users/" + str(id)
-            r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
-            response = r.json() 
-            if "code" in response and response["code"] == 0 : self.data = None; return;
-            if "name" in result and "username"in response and result["name"] != response["username"]:
-                result["name"] = response["username"]
-                result["tag"] = response["username"] + "#" + response["discriminator"]
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
-            if "avatar" in result and "avatar" in response:
-                if result["avatar"] != response["avatar"]:
-                    result["avatar"] = response["avatar"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
-            elif "avatar" in response and not "avatar" in result:
-                result["avatar"] = response["avatar"]
-                firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+        if result != None:
+            Thread(target=updateBotData, args=[id, result]).start() 
             self.data = result
-            self.timeStamp = time.time()
+            putCache(str(id) + "_bot", self.data)
         else:
             self.data = None
 
@@ -81,6 +84,7 @@ class querySearch:
             
 class getBotFromID(Resource):
   def get(self, id):
+    if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
     botum = data("getbot", id)
     bot = botum.data
     
