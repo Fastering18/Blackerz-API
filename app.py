@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from flask_restful import Api
+from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
@@ -88,7 +88,7 @@ api.add_resource(mainManagement.AddBotPagePublic, "/add/bot")
 api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers<string:mime>")
 
 # FILE
-class dptFile:
+class dptFile(Resource):
   def get(self):
     return make_response(
       """user-agent: *
