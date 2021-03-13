@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response, request
 from flask_restful import Api
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
@@ -87,7 +87,14 @@ api.add_resource(mainManagement.AddBotPagePublic, "/add/bot")
 # Widgets
 api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers<string:mime>")
 
+# FILE
+class dptFile:
+  def get(self):
+    return make_response(
+      """user-agent: *
+         allow: /""", 200, {'Content-Type': 'text/plain'})
 
+api.add_resource(dptFile, "/robots.txt")
 
 if __name__ == "__main__":
   app.run()
