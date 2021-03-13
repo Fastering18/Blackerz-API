@@ -15,7 +15,7 @@ def deleteCache(tipe="botsverified"):
 
 def putCache(tipe, isi):
     botCaches[tipe] = isi
-    Timer(300.0, deleteCache, (tipe)).start()
+    Timer(300.0, deleteCache, [tipe]).start()
     return True
 
 class data():
