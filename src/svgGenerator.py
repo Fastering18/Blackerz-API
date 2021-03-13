@@ -35,7 +35,7 @@ def putCache(itemID, dataName, value, type="bots"):
     imagecaches[type][itemID][dataName] = value
   elif value != imagecaches[type][itemID][dataName]:
     return False
-  Timer(60.0, deleteCache, (itemID, dataName, type)).start()
+  Timer(60.0, deleteCache, [itemID, dataName, type]).start()
   print(imagecaches)
   return True
   
