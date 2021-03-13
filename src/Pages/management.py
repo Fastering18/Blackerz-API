@@ -1,7 +1,7 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect, url_for
+from flask import jsonify, make_response, render_template, session, request, redirect, url_for
 from requests_oauthlib import OAuth2Session
-import time, random, string, datetime, json, requests
+import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
 
