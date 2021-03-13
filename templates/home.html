@@ -63,7 +63,7 @@
                 {%- endif -%}
             </div>
         <div class="topnav-mobile">
-            <div class="buttonss">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
                 {%- if user and "username" in user -%}
@@ -75,7 +75,7 @@
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
                 {%- endif -%}
              </div>
-             <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonss').style.display = document.getElementById('buttonss').style.display == 'block' ? 'none' : 'block'">
+             <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
                 <i class="fa fa-bars"></i>
              </a>
            </div>
