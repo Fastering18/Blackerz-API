@@ -40,7 +40,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a class="active" id="addBot" onclick="window.href='/add/bot'" data-text="Add bot"></a>
+                   <a class="active" id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -52,7 +52,7 @@
                 {%- if user and "username" in user -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a class="active" id="addBot" onclick="window.href='/add/bot'" data-text="Add bot"></a>
+                   <a class="active" id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
@@ -62,6 +62,21 @@
             </a>
           </div>
         </div>
-    <h1>on working</h1>     
-  <body>
+    <h1>on working</h1>
+    <script>
+      function discordLogOutAPI() {
+            window.location.href = window.location.origin + "/api/v1/discord/logout"
+       }
+      function discordLoginAPI() {
+           {%- if user and "username" in user -%}
+               window.location.href = "/user/{{user['id']}}"
+           {%- else -%}
+               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+           {%- endif -%}
+       }
+       function redirectKe(link) {
+           window.location.href = link
+       }
+    </script>
+  </body>
 </html>  
