@@ -48,7 +48,7 @@
     <div id='background'></div>
     <div class="topnav">
             <div class="topnav-pc">
-                <a class="active" data-text="Home" id="profiletab" href="/"></a>
+                <a data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
                 {%- if client and "username" in client -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
@@ -98,7 +98,6 @@
     <script>
         const client = JSON.parse('{{ client | tojson | safe }}')
         const logined = {{ (client and "id" in client) and "true" or "false" | safe }}
-        const proxyurl = "";
         function generateRandomString() {
             const rand = Math.floor(Math.random() * 10);
             let randStr = '';
