@@ -48,18 +48,6 @@
   </head>
   <body>
     <div id='background'></div>
-    <!-- Top Navigation Menu -->
-<div class="topnav">
-  <a href="#home" class="active">Logo</a>
-  <div id="myLinks">
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a>
-  </div>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div>
     <div style="overflow:auto">
         <div class="topnav">
             <div class="topnav-pc">
@@ -74,7 +62,7 @@
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
                 {%- endif -%}
             </div>
-            <div class="topnav-mobile" style="display: none">
+        <div class="topnav-mobile" style="display: none">
             <div class="buttonss">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
                 <a href="/servers" data-text="Servers"></a>
@@ -86,10 +74,10 @@
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
                 {%- endif -%}
-           </div>
-           <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonss').style.display = document.getElementById('buttonss').style.display == 'block' ? 'none' : 'block'">
-              <i class="fa fa-bars"></i>
-           </a>
+             </div>
+             <a href="javascript:void(0);" class="icon" onclick="document.getElementById('buttonss').style.display = document.getElementById('buttonss').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+             </a>
            </div>
         </div>
     </div>
