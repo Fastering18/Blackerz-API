@@ -4,7 +4,6 @@
 <head>
     <title>{{ server["name"] }} - Server</title>
     <meta charset="utf-8">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -193,13 +192,12 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ user | tojson | safe }}'))
-        const logined = {{ (user and "id" in user) and "true" or "false" | safe }}  //(client != null) && (client.message != "401: Unauthorized")
+        const logined = {{ (user and "id" in user) and "true" or "false" | safe }} 
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
         joinLink = joinLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
             window.location.href = window.location.origin + "/api/v1/discord/logout"
-            //if (force === true) window.location.href = window.location.origin;
         }
         function joinServer(element) {
             window.location.href = joinLink
@@ -208,11 +206,11 @@
             window.location.href = "https://blackerz.herokuapp.com/servers/{{serverID}}/vote"
         }
         function discordLoginAPI() {
-            if (logined == true) {
-                window.location.href = window.location.origin + "/user/" + client.id
-            } else {
-                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
-            }
+            {%- if user and "username" in user -%}
+                window.location.href = "/user/" + loginedUser.id
+            {%- else -%}
+                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+            {%- endif -%}
         }
         
     </script>
