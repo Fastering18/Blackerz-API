@@ -128,19 +128,35 @@
 </head>
     <body>
         <div id='background'></div>
-    <div style="overflow:auto">
-        <div class="topnav">
-            <a id="profiletab" href="/" data-text="Home"></a>
-            <a href="/servers" data-text="Servers"></a>
-            {%- if user and "username" in user -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{ user["username"] }}"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-            {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
-            {%- endif -%}
+    <div class="topnav">
+            <div class="topnav-pc">
+                <a class="active" data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a class="active" data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if user and "username" in user -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="add bot" onclick="console.log('coming soon')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
         </div>
-    </div>
     <div class="serverInfo">
     <h1 id="serverName">{{ server["name"] }}</h1>
     <img id="serverAvatar" src="{{ serverIcon }}" style="display:inline-block; position: relative;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" width="14.9%" height="15%" alt="server avatar">
