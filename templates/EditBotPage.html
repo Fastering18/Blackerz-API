@@ -37,7 +37,7 @@
                 {%- if clientUser and "username" in clientUser -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
                    <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="window.href='/add/bot'" data-text="Add bot"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
                 {%- else -%}
                    <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
                 {%- endif -%}
