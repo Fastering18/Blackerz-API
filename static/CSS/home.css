@@ -5,7 +5,7 @@
   html, body {
     height: 100%;
     margin: 0;
-    background: rgba(0, 0, 0, 0.75) no-repeat center center fixed;
+    background: rgba(0, 0, 0, 0.75); /*no-repeat center center fixed;*/
   }
   .background {
     width: 100%;
@@ -19,7 +19,7 @@
   [data-text]::after {
      content: attr(data-text);
   }
-  .topnav {
+  /*.topnav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -35,6 +35,43 @@
     border-radius: 5%;
     font-size: 90%;
   }
+  .topnav a:hover {
+    transition: all .6s;
+    color: rgb(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 65);
+  }*/
+  .topnav {
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: rgb(49, 48, 48, 0.9);
+    overflow: hidden;
+  }
+   
+  .topnav-mobile {
+    display: none;
+  }
+  .topnav-mobile #buttonss {
+    display: none;
+  }
+
+  .topnav a {
+    color: rgb(255, 255, 255, 0.95);
+    padding: 1% 1%;
+    text-decoration: none;
+    font-size: 90%;
+    display: block;
+  }
+
+  .topnav a.icon {
+    background: black;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
   .topnav a:hover {
     transition: all .6s;
     color: rgb(255, 255, 255, 0.7);
@@ -57,6 +94,12 @@
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
   }
+
+@media only screen and (hover: none) and (pointer: coarse){
+  .topnav-mobile {
+    display: block;
+  }
+}
 
 /* Switch button, https://www.w3schools.com/howto/howto_css_switch.asp */
 .switch {
