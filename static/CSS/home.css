@@ -4,7 +4,6 @@
   }
   
   html, body {
-    /*height: 100%;*/
     margin: 0;
     background-color: rgba(0, 0, 0, 0.75);
   }
@@ -21,6 +20,11 @@
   }
   [data-text]::after {
      content: attr(data-text);
+  }
+  .text-link {
+     text-decoration: none;
+     padding-bottom: 3px;
+     border-bottom: 1px solid blue;
   }
   .topnav-pc {
     list-style-type: none;
