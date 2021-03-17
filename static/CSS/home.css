@@ -1,10 +1,12 @@
 * {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
   }
   
   body {
-    /*margin: 0;*/
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
     background-color: rgba(0, 0, 0, 0.75);
   }
   h1,h2,h3,h4,h5,h6,p {
