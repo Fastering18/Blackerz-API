@@ -3,14 +3,14 @@
     box-sizing: border-box;
   }
   
-  html, body {
+  body {
     /*margin: 0;*/
     background-color: rgba(0, 0, 0, 0.75);
   }
   h1,h2,h3,h4,h5,h6,p {
     color: white;
   }
-  html, body[dark-mode="light"] {
+  body[dark-mode="light"] {
     background-color: rgba(0, 0, 0, 0.15);
     transition: background-color .6s;
   }
