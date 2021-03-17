@@ -7,6 +7,11 @@
     margin: 0;
     background: rgba(0, 0, 0, 0.75); /*no-repeat center center fixed;*/
   }
+  body[dark-mode="light"] {
+    background-color: #000;
+    color: #eee;
+    transition: background-color .6s;
+  }
   .background {
     width: 100%;
     height: 100%;
