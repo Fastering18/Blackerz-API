@@ -51,6 +51,7 @@
   <body>
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-9419528436883042"></amp-auto-ads>
     <div id='background'></div>
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
     <div class="topnav">
             <div class="topnav-pc">
                 <a data-text="Home" id="profiletab" href="/"></a>
@@ -80,6 +81,7 @@
             </a>
           </div>
         </div>
+    <section class="root-page" id="main-page">
     <div id="headerPage">
         <input id="searchBar" type="text" placeholder="Search server by name" onchange="searchServerQuery(this.value)">
     </div>
@@ -95,8 +97,8 @@
                  {% set imgsrc = "https://cdn.discordapp.com/icons/" + dataChild + "/" + dictServers[dataChild].icon + "?size=64" -%}
              {%- endif -%}
              <div id="{{dataChild}}" style="background:rgba(255, 255, 255, 0.6); margin-bottom: 0.75%; border-color: black" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
-               <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
-               <p id="namaServer" style="display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); font-size: 140%">{{dictServers[dataChild]["name"]}}</p>
+               <img width="6%" height="6%" alt="{{dictServers[dataChild]['ShortDescription']}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
+               <p id="namaServer" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{dictServers[dataChild]["name"]}}</p>
              </div>
           {%- endfor -%}
     </div>
@@ -104,6 +106,24 @@
         data-auto-format="rspv" data-full-width="">
         <div overflow=""></div>
     </amp-ad>
+    </section>
+    <footer>
+      <br>
+      <label class="switch">
+        <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
+        <span class="slider round"></span>
+      </label>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a href="/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
+    </footer>
     {% cache 60*10, "jquery" %}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     {% endcache %}
