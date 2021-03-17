@@ -33,6 +33,7 @@
   </head>
   <body>
     <div id='background'></div>
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.lightMode == "light" ? "light" : "dark");</script>
         <div class="topnav">
             <div class="topnav-pc">
                 <a data-text="Home" id="profiletab" href="/"></a>
@@ -62,10 +63,24 @@
             </a>
           </div>
         </div>
-    <h1>on working</h1>
+    <section class="root-page" id="main-page">
+      <div id="main-content">
+        <h1>Submit your bot!</h1>
+        <h2>Enter your bot id</h2>
+        <input></input>
+      </div>
+    </section>
+    <footer>
+      <br>
+      <label class="switch">
+        <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
+        <span class="slider round"></span>
+      </label>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.lightMode == "light" ? false : true; function toggleDarkMode(elm) {localStorage.lightMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.lightMode == "light" ? "light" : "dark"}</script>
+    </footer>
     <script>
       function discordLogOutAPI() {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
        }
       function discordLoginAPI() {
            {%- if user and "username" in user -%}
