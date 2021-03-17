@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response
 from flask_restful import Resource
 from firebase import firebase
 import requests, os
