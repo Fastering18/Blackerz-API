@@ -59,7 +59,13 @@ def updateUser(data):
         data["avatar"],
         oneTimeCode
     ]
-    data("postUserStats", user=UserData)
+    data("postUserStats", user=userData)
+    
+def buatrespon(file, status, **data):
+    respen = make_response(render_template(file, data), 200, headers)
+    respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
+    respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
+    return respen
     
 class data():
     def __init__(self, tipe, **Data):
@@ -73,15 +79,17 @@ class data():
             authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
-            if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-    
+            if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())                
+                
 class AddBotPagePublic(Resource):
     def get(self):
         user = getDiscordUser(session)
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start() 
-        respen = make_response(render_template('addbotpublic.html', user=user), 200, headers)
-        respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
-        respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
-        return respen 
+        else:
+            return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.host}")
+        #respen = make_response(render_template('addbotpublic.html', user=user), 200, headers)
+        #respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
+        #respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
+        return buatrespon('addbotpublic.html', 200, user=user) 
     
