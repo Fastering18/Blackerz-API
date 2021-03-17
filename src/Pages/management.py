@@ -52,17 +52,16 @@ def getDiscordUser(sesi):
 
 def updateUser(datauser):
     oneTimeCode = generateRandomKey(8)
-    userData = [
-        str(datauser["id"]),
-        datauser["username"] + "#" + datauser["discriminator"],
-        datauser["username"],
-        datauser["avatar"],
-        oneTimeCode
-    ]
+    userData = {
+        'client_id': str(datauser["id"]),
+        'tag': datauser["username"] + "#" + datauser["discriminator"],
+        'username': datauser["username"],
+        'avatar': datauser["avatar"],
+        'code': oneTimeCode
+    }
     data("postUserStats", user=userData)
     
-def buatrespon(file, status, **data):
-    respen = make_response(render_template(file, (data)), 200, headers)
+def kuki(respen):
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
@@ -88,8 +87,7 @@ class AddBotPagePublic(Resource):
             Thread(target=updateUser, args=[user]).start() 
         else:
             return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.host}")
-        #respen = make_response(render_template('addbotpublic.html', user=user), 200, headers)
-        #respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
-        #respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
-        return buatrespon('addbotpublic.html', 200, user=user) 
+        respen = kuki(make_response(render_template('addbotpublic.html', user=user), 200, headers))
+
+        return respen
     
