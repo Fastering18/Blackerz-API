@@ -9,14 +9,14 @@
     margin-right: 0;
     background-color: rgba(0, 0, 0, 0.75);
   }
-  h1,h2,h3,h4,h5,h6,p {
+  h1, h2, h3, h4, h5, h6, p {
     color: white;
   }
   body[dark-mode="light"] {
     background-color: rgba(0, 0, 0, 0.15);
     transition: background-color .6s;
   }
-  body[dark-mode="light"] h1,h2,h3,h4,h5,h6,p {
+  body[dark-mode="light"] h1, h2, h3, h4, h5, h6, p {
     color:  black;
     transition: color .55s;
   }
