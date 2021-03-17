@@ -1,7 +1,7 @@
 from flask import Flask, redirect, request, jsonify, make_response
 from flask_restful import Resource
 from firebase import firebase
-import requests
+import requests, os
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
