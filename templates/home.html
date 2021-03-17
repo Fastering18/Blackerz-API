@@ -49,6 +49,7 @@
   </head>
   <body>
     <div id='background'></div>
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
         <div class="topnav">
             <div class="topnav-pc">
                 <a class="active" data-text="Home" id="profiletab" href="/"></a>
@@ -94,7 +95,7 @@
              {%- endif -%}
              <div id="{{dataChild.id}}" style="background: rgba(255, 255, 255, 0.6); display: flex; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
-               <p id="namaBot" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%;">{{ dataChild["name"] }}</p>
+               <p id="namaBot" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{ dataChild["name"] }}</p>
              </div>
           {%- endfor -%}
     </div>
@@ -184,9 +185,6 @@
             } else {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
-                //localStorage.setItem('stateParameter', randStr);
-                //$("#discordLogOut").hide()
-                //document.getElementById('discordLogin').href += `&state=${btoa(randStr)}`
             }
             setCookie("dariLink", window.location.host, 1)
         };
