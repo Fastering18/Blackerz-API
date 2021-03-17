@@ -18,6 +18,7 @@ from src.submitbot import resource3
 import src.editBotData as editBotData
 
 import src.Discord.login as discordLoginSource
+import src.Discord.accounts as discordAccountSource
 
 import src.Servers.searchserver as searchServer
 import src.Servers.allservers as allServers
@@ -62,6 +63,7 @@ api.add_resource(discordLoginSource.callback, "/api/v1/discord/callback")
 api.add_resource(discordLoginSource.me, "/api/v1/discord/me")
 api.add_resource(discordLoginSource.checkUser, "/api/v1/discord/check")
 api.add_resource(discordLoginSource.logOut, "/api/v1/discord/logout")
+api.add_resource(discordAccountSource.getAccountData, "/api/v1/discord/account/<int:id>")
 
 # Discord servers resource
 api.add_resource(allServers.findAllServer, "/api/v1/servers/all")
