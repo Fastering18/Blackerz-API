@@ -16,7 +16,7 @@
     background-color: rgba(0, 0, 0, 0.15);
     transition: background-color .6s;
   }
-  body[dark-mode="light"] h1,h2,h3,h4,h5,h6,p[dark-mode="light"] {
+  body[dark-mode="light"] h1,h2,h3,h4,h5,h6,p {
     color:  black;
     transition: color .55s;
   }
