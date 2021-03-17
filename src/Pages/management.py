@@ -50,19 +50,19 @@ def getDiscordUser(sesi):
     discord = make_session(token=sesi.get('oauth2_token'))
     return discord.get(API_BASE_URL + '/users/@me').json()
 
-def updateUser(data):
+def updateUser(datauser):
     oneTimeCode = generateRandomKey(8)
     userData = [
-        str(data["id"]),
-        data["username"] + "#" + data["discriminator"],
-        data["username"],
-        data["avatar"],
+        str(datauser["id"]),
+        datauser["username"] + "#" + datauser["discriminator"],
+        datauser["username"],
+        datauser["avatar"],
         oneTimeCode
     ]
     data("postUserStats", user=userData)
     
 def buatrespon(file, status, **data):
-    respen = make_response(render_template(file, data), 200, headers)
+    respen = make_response(render_template(file, (data)), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
