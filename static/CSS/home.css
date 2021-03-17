@@ -7,9 +7,8 @@
     margin: 0;
     background: rgba(0, 0, 0, 0.75); /*no-repeat center center fixed;*/
   }
-  body[dark-mode="light"] {
-    background-color: #000;
-    color: #eee;
+  html, body[dark-mode="light"] {
+    background-color: gray;
     transition: background-color .6s;
   }
   .background {
