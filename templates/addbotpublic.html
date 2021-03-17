@@ -87,6 +87,9 @@
            xmlhttp.setRequestHeader("Authorization", "{{user['AuthorizationV1']}}");
            xmlhttp.send();
            }
+           function disableButton(elmnt, disabl) {            
+             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
+           }
           </script>
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
@@ -94,7 +97,7 @@
                var botID = document.getElementById("bot-id").innerHTML
                console.log(botID)
                var dataAkun = await getDataAkun(botID)
-               alert(JSON.stringify(dataAkun))
+               if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
         </form>
