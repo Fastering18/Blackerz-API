@@ -33,7 +33,7 @@
   </head>
   <body>
     <div id='background'></div>
-    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.lightMode == "light" ? "light" : "dark");</script>
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
         <div class="topnav">
             <div class="topnav-pc">
                 <a data-text="Home" id="profiletab" href="/"></a>
@@ -76,7 +76,16 @@
         <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
         <span class="slider round"></span>
       </label>
-      <script>document.getElementById("toggle-dark-mode").checked = localStorage.lightMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.lightMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.lightMode == "light" ? "light" : "dark")}</script>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a href="/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
     </footer>
     <script>
       function discordLogOutAPI() {
