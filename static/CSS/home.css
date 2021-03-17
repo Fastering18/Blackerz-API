@@ -23,8 +23,8 @@
   }
   .text-link {
      text-decoration: none;
-     padding-bottom: 3px;
-     border-bottom: 1px solid blue;
+	 padding-bottom: 3px;
+	 border-bottom: 1px solid blue;
   }
   .topnav-pc {
     list-style-type: none;
