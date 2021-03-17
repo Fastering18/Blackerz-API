@@ -94,7 +94,7 @@
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
                event.preventDefault();
-               var botID = document.getElementById("bot-id").innerHTML
+               var botID = document.getElementById("bot-id").value
                console.log(botID)
                var dataAkun = await getDataAkun(botID)
                if (dataAkun) alert(JSON.stringify(dataAkun));
