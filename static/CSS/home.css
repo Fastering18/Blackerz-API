@@ -23,8 +23,9 @@
   }
   .text-link {
      text-decoration: none;
-	 padding-bottom: 3px;
-	 border-bottom: 1px solid blue;
+     padding-bottom: 3px;
+     border-bottom: 1px solid blue;
+     color: rgba(46, 178, 255, 1);
   }
   .topnav-pc {
     list-style-type: none;
