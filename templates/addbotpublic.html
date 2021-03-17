@@ -65,10 +65,39 @@
         </div>
     <section class="root-page" id="main-page">
       <div id="main-content">
-        <h1>Submit your bot!</h1>
-        <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
-          <input type="number" autocorrect="off" autocomplete="off">
-        </label>
+        <form method="GET" id="FormAddBot" onsubmit="disableButton(this, true); return true">
+          <h1>Submit your bot!</h1>
+          <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
+            <input id="bot-id" type="number" autocorrect="off" autocomplete="off">
+          </label>
+          <button type="submit" value="check">Check Bot</button>
+          <script>
+            async function getDataAkun(id) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                return this.responseText
+              } else if (this.readyState == 4) {
+                console.log(this);
+                return alert("Failed to get bot data");
+              }
+           };
+           xmlhttp.open("GET", `/api/v1/discord/account/${id}`, true);
+           xmlhttp.setRequestHeader("Authorization", "{{user['AuthorizationV1']}}");
+           xmlhttp.send();
+           }
+          </script>
+          <script>
+            document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
+               event.preventDefault();
+               var botID = document.getElementById("bot-id").innerHTML
+               console.log(botID)
+               var dataAkun = await getDataAkun(botID)
+               alert(JSON.stringify(dataAkun))
+            })
+          </script>
+        </form>
       </div>
     </section>
     <footer>
