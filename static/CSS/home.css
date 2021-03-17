@@ -1,6 +1,6 @@
 * {
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
   }
   
   html, body {
@@ -12,7 +12,7 @@
   }
   html, body[dark-mode="light"] {
     background-color: rgba(0, 0, 0, 0.15);
-    transition: color .6s;
+    transition: background-color .6s;
   }
   h1,h2,h3,h4,h5,h6,p[dark-mode="light"] {
     color:  black;
