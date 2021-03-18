@@ -20,6 +20,10 @@
     color:  black;
     transition: color .55s;
   }
+  [dark-mode="light"]::after {
+     color:  black;
+     transition: color .55s;
+  }
   [data-text]::after {
      content: attr(data-text);
   }
