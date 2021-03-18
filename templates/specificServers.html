@@ -30,9 +30,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script type="application/ld+json">
-      {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}","review":null,"aggregateRating":null,"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX"}}
+      {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}", "brand":{"@type": "Thing","name": "Discord server"},"aggregateRating":{"@type": "AggregateRating","ratingValue": "5","ratingCount": "1"},"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX", "url": "https://blackerz.herokuapp.com/bots/{{ serverID }}"}}
     </script>
-    
     {% cache 60*8, "cssandmetaspecificserver" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
