@@ -201,13 +201,13 @@
             window.location.href = joinLink
         }
         function voteServer(element) {
-            window.location.href = "https://blackerz.herokuapp.com/servers/{{serverID}}/vote"
+            window.location.href = "/servers/{{serverID}}/vote"
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
                 window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + `&host=${window.location.origin}`
             {%- endif -%}
         }
         function redirectKe(link) {
