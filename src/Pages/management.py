@@ -95,7 +95,7 @@ class AddBotPagePublic(Resource):
     
     def post(self):
         user = getDiscordUser(session)
-        jsonData = request.get_json()
+        jsonData = request.form
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start()
         
