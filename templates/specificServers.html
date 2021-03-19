@@ -193,7 +193,11 @@
             window.location.href = joinLink
         }
         function voteServer(element) {
-            window.location.href = "/servers/{{serverID}}/vote"
+            {%- if user and "username" in user -%}
+               window.location.href = "/servers/{{serverID}}/vote"
+            {%- else -%} 
+               return discordLoginAPI()
+            {%- endif -%}
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
