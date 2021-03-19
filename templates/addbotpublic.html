@@ -65,7 +65,7 @@
         </div>
     <section class="root-page" id="main-page">
       <div id="main-content">
-        <form method="GET" id="FormAddBot" onsubmit="disableButton(this, true); return true">
+        <form method="POST" id="FormAddBot" onsubmit="disableButton(this, true); return true">
           <h1>Submit your bot!</h1>
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
             <input id="bot-id" type="number" autocorrect="off" autocomplete="off">
@@ -97,7 +97,7 @@
              document.getElementById(id).style.display = isShown == true ? "block" : "none"
            }
           </script>
-          <script>
+          <!--script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
               event.preventDefault();
               setVisibility("user-result", false)
@@ -117,12 +117,8 @@
               setVisibility("user-result", true)
               if (dataAkun) alert(JSON.stringify(dataAkun));
             })
-          </script>
+          </script-->
         </form>
-        <div id="user-result" style="display: none;">
-          <h2 id="title_of_result">Result</h2>
-          <p id="username_result"><p>
-        </div>
       </div>
     </section>
     <footer>
