@@ -92,7 +92,7 @@
               })                
             }
            function disableButton(elmnt, disabl) {            
-             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
+             elmnt.querySelector('input[type="submit"]').disabled = disabl != undefined ? disabl : true;
            }
            function setVisibility(id, isShown) {
              document.getElementById(id).style.display = isShown == true ? "block" : "none"
