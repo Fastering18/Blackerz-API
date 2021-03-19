@@ -133,8 +133,8 @@
         const client = JSON.parse('{{ user | tojson | safe }}')
         let currentServer = 0
         let serverIdlist = []
-        let jsonServerData = JSON.parse(({{ servers | tojson }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
-        let logined = {{ (user and "username" in user) and 'true' or 'false' }}
+        let jsonServerData = JSON.parse(({{ servers | tojson | safe }}).replace(/\;/gi, '"').replace(/False/gi, "false").replace(/True/gi, "true"))
+        let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
       
         function updateData(jsonData, query) {
             if (query === "" || typeof (query) !== "string") query = undefined;
@@ -175,12 +175,12 @@
             {%- if user and "username" in user -%}
                window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
             {%- endif -%}
         }
         {% cache 60*5, None %}
         function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
         }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
