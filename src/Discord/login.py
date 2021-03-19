@@ -116,12 +116,11 @@ class me(Resource):
      if request.values.get('fromOrigin'):
         return make_response(jsonify(user), 200)
         
-     # Response = make_response(jsonify(user=user), 200)
      host = "https://blackerz.web.app/" 
      params = "?code=" + oneTimeCode + "&client_id=" + userID
      if request.cookies.get('dariLink'):
         host = request.cookies['dariLink']
-        if (host == "blackerz.herokuapp.com"): 
+        if (host == "blackerz.herokuapp.com" or host == "blackerz.tk"): 
             params = ""
             host = "https://" + host
      print(host)  
