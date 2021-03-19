@@ -124,7 +124,7 @@ class me(Resource):
         #if (host == "blackerz.herokuapp.com"): 
             #params = ""
             #host = "https://" + host
-     print(host)  
+     #print(host)  
      #return redirect(host + params)
      return make_response(jsonify(user), 200)
 
