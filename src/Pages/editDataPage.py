@@ -27,13 +27,13 @@ def verifyOwner(user, botId, tipe="botlist"):
 def token_updater(token):
     session['oauth2_token'] = token
     
-def make_session(token=None, state=None, scope=None):
+def make_session(token=None, state=None, scope=None, redirectURL="https://blackerz.herokuapp.com/api/v1/discord/callback"):
     return OAuth2Session(
         client_id=OAUTH2_CLIENT_ID,
         token=token,
         state=state,
         scope=scope,
-        redirect_uri=OAUTH2_REDIRECT_URI,
+        redirect_uri=redirectURL,
         auto_refresh_kwargs={
             'client_id': OAUTH2_CLIENT_ID,
             'client_secret': OAUTH2_CLIENT_SECRET,
@@ -118,7 +118,7 @@ class EditBotPage(Resource):
     def get(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
-        discord = make_session(token=session.get('oauth2_token'))
+        discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
         botum = data("botlist", id)
         client = None
