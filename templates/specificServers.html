@@ -169,15 +169,6 @@
     {%- if "memberCount" in server -%}
         <p id="serverCount">With {{ server["memberCount"] }} members</p>
     {%- endif -%}
-    {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
-    <label id="editServerForm" style="display: none">
-      <span for="serverDescriptionForm">Deskripsi baru:</span>
-      <textarea id="serverDescriptionForm" class="input" onkeypress="keyClicked(event, this)" role="textbox"
-        name="serverDescriptionForm" oninput="this.parentNode.dataset.value = this.value" rows="1"
-        placeholder="Deskripsi baru"></textarea>
-      </form>
-    </label>
-    {%- endif -%}
     <hr>
     {%- if "LongDescription" in server -%}
         <div id="longDescription">
@@ -196,7 +187,7 @@
         let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
         
         function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
         }
         function joinServer(element) {
             window.location.href = joinLink
