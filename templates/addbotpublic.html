@@ -98,7 +98,7 @@
                event.preventDefault();
                var botID = document.getElementById("bot-id").value
                console.log(botID)
-               var dataAkun = getDataAkun(botID)
+               var dataAkun = await getDataAkun(botID)
                console.log(dataAkun)
                if (dataAkun) alert(JSON.stringify(dataAkun));
             })
