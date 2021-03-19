@@ -5,7 +5,7 @@ import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
 from flask_wtf import FlaskForm
-from wtforms import NumberField, SubmitField
+from wtforms import IntegerField, SubmitField
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -69,7 +69,7 @@ def kuki(respen):
     return respen
 
 class AddBotForm(FlaskForm):
-    botId = NumberField(label=('Enter your bot id:'))
+    botId = IntegerField(label=('Enter your bot id:'))
     submit = SubmitField(label=('Submit'))
 
 class data():
