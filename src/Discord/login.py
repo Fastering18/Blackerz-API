@@ -117,16 +117,16 @@ class me(Resource):
         return make_response(jsonify(user), 200)
         
      # Response = make_response(jsonify(user=user), 200)
-     #host = "https://blackerz.web.app/" 
-     #params = "?code=" + oneTimeCode + "&client_id=" + userID
-     #if request.cookies.get('dariLink'):
-        #host = request.cookies['dariLink']
-        #if (host == "blackerz.herokuapp.com"): 
-            #params = ""
-            #host = "https://" + host
-     #print(host)  
-     #return redirect(host + params)
-     return make_response(jsonify(user), 200)
+     host = "https://blackerz.web.app/" 
+     params = "?code=" + oneTimeCode + "&client_id=" + userID
+     if request.cookies.get('dariLink'):
+        host = request.cookies['dariLink']
+        if (host == "blackerz.herokuapp.com"): 
+            params = ""
+            host = "https://" + host
+     print(host)  
+     return redirect(host + params)
+     #return make_response(jsonify(user), 200)
 
 class logOut(Resource):
   def get(self):
