@@ -95,15 +95,26 @@
           </script>
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
-               event.preventDefault();
-               var botID = document.getElementById("bot-id").value
-               console.log(botID)
-               var dataAkun = await getDataAkun(botID)
-               console.log(dataAkun)
-               if (dataAkun) alert(JSON.stringify(dataAkun));
+              event.preventDefault();
+              var botID = document.getElementById("bot-id").value
+              console.log(botID)
+              var dataAkun = await getDataAkun(botID)
+              console.log(dataAkun)
+              try {
+                dataAkun = JSON.parse(dataAkun)
+              } catch(er) {
+                console.log(er)
+                alert("Failed to get bot data")
+              }
+              document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
+              if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
         </form>
+        <div id="user-result" style="display=none;">
+          <h2 id="title_of_result">Result</h2>
+          <p id="username_result"><p>
+        </div>
       </div>
     </section>
     <footer>
