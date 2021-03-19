@@ -125,7 +125,7 @@
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote bots")
-            window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login"
+            window.location.href = "/api/v1/discord/login"
             break;
           case "invalidcaptcha":
             alert("Invalid captcha provided")
@@ -148,13 +148,13 @@
            event.preventDefault();
         });
         function discordLogOutAPI() {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
         };
         function discordLoginAPI() {
             {%- if clientUser and "username" in clientUser -%}
-                window.location.href = window.location.origin + "/user/" + client.id
+                window.location.href = "/user/{{clientUser['id']}}"
             {%- else -%}
-                window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
             {%- endif -%}
         };
         function redirectKe(link) {
