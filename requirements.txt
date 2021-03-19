@@ -10,8 +10,6 @@ Jinja2==2.11.2
 MarkupSafe==1.1.0
 Flask-hCaptcha==0.5.4
 Flask-Caching==1.10.0
-Flask-WTF==0.14.3
-WTForms==2.3.3
 pytz==2018.9
 six==1.12.0
 Werkzeug==1.0.1
