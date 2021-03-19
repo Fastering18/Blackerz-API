@@ -130,7 +130,7 @@ class me(Resource):
 
 class logOut(Resource):
   def get(self):
-      print(session)
+      print(session.keys())
       session.clear()
       host = "https://blackerz.herokuapp.com" 
       if request.values.get('callback'):
