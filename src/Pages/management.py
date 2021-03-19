@@ -153,7 +153,7 @@ class AddBotPagePublic(Resource):
         result = None
         
         if isCsrfEqual:
-            result = data("postBotUser", (bot=formData,owner=user))
+            result = data("postBotUser", bot=formData, owner=user)
             if result.result['error'] != None:
                 return make_response(jsonify(formData), 200, headers)
             else:
