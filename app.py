@@ -94,7 +94,7 @@ class dptFile(Resource):
   def get(self):
     return make_response(
 """user-agent: *
-allow: /""", 200, {'Content-Type': 'text/plain'})
+disallow: /user/""", 200, {'Content-Type': 'text/plain'})
 
 api.add_resource(dptFile, "/robots.txt")
 
