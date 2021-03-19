@@ -32,6 +32,13 @@
     <script type="application/ld+json">
       {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}", "brand":{"@type": "Thing","name": "Discord server"},"aggregateRating":{"@type": "AggregateRating","ratingValue": "5","ratingCount": "1"},"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX", "url": "https://blackerz.herokuapp.com/bots/{{ serverID }}"}}
     </script>
+    
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:title" content="{{ server["name"] }}">
+    <meta name="twitter:url" content="https://blackerz.herokuapp.com/servers/{{ serverID }}">
+    <meta name="twitter:description" content="{{ server["ShortDescription"] }}">
+    <meta name="twitter:image" content="{{ avatarUser }}">
+    
     {% cache 60*8, "cssandmetaspecificserver" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
@@ -41,12 +48,6 @@
        gtag('js', new Date());
        gtag('config', 'G-HJFCLE2FTR');
     </script>
-    
-    <meta name="twitter:card" value="summary">
-    <meta name="twitter:title" content="{{ server["name"] }}">
-    <meta name="twitter:url" content="https://blackerz.herokuapp.com/servers/{{ serverID }}">
-    <meta name="twitter:description" content="{{ server["ShortDescription"] }}">
-    <meta name="twitter:image" content="{{ avatarUser }}">
     
     <style media="screen">
         mark {
