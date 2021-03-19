@@ -4,8 +4,6 @@ from requests_oauthlib import OAuth2Session
 import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
-from flask_wtf import FlaskForm
-from wtforms import IntegerField, SubmitField
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -37,8 +35,8 @@ def make_session(token=None, state=None, scope=None):
         auto_refresh_url=TOKEN_URL,
         token_updater=token_updater)
 
-def generateRandomKey(length):
-    letters_and_digits = string.ascii_letters + string.digits
+def generateRandomKey(length, anotherletter=""):
+    letters_and_digits = string.ascii_letters + string.digits + anotherletter
     result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
     return result_str
 
@@ -68,10 +66,6 @@ def kuki(respen):
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
 
-class AddBotForm(FlaskForm):
-    botId = IntegerField(label=('Enter your bot id:'))
-    submit = SubmitField(label=('Submit'))
-
 class data():
     def __init__(self, tipe, **Data):
         if tipe == "postUserStats":
@@ -88,17 +82,18 @@ class data():
                 
 class AddBotPagePublic(Resource):
     def get(self):
-        user = getDiscordUser(session)      
+        user = getDiscordUser(session) 
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start() 
         else:
             return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.host}")
         
-        form = AddBotForm()
-        if form.validate_on_submit():
-            print(form)
-            return "yo"
-        respen = kuki(make_response(render_template('addbotpublic.html', user=user, form=form), 200, headers))
+        session["X_CSRF_TOKEN"] = generateRandomKey(17, "._")
+        respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"]), 200, headers))
 
         return respen
     
+class AddBotPagePrivateAPI(Resource):
+    def post(self):
+        print("ae")
+        
