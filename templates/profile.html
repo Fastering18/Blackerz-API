@@ -92,7 +92,7 @@
         <br>
         {%- if user and "AuthorizationV1" in user -%}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="this.select(); this.setSelectionRange(0, 99999); document.execCommand('copy');">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="this.setSelectionRange(0, 99999); document.execCommand('copy');">{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif -%}
     </div>
     {% cache 60*10, "jquery" %}
@@ -109,13 +109,13 @@
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
         function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
         }
         function discordLoginAPI() {
             {%- if client and "username" in client -%}
-                window.location.href = "/user/" + client.id
+                window.location.href = "/user/{{client['id']}}"
             {%- else -%}
-                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
             {%- endif -%}
         }
         function getCookie(cname) {
