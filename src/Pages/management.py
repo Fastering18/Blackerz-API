@@ -155,7 +155,7 @@ class AddBotPagePublic(Resource):
         if isCsrfEqual:
             result = data("postBotUser", bot=formData, owner=user)
             if result.result['error'] != None:
-                return redirect("/bots/" + formData['botId']})
+                return redirect("/bots/" + formData['botId'])
             else:
                 return make_response(jsonify(result.result), 400, headers)
         else:
