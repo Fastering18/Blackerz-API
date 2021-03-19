@@ -146,9 +146,9 @@
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
-                window.location.href = "/user/" + loginedUser.id
+                window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
             {%- endif -%}
         };
         {% cache 60*10, "basicfunchome" %}
@@ -196,9 +196,6 @@
         {% endcache %}
       
         window.onload = function () {
-            const url = 'https://blackerz.herokuapp.com/api/v1/bots/all'; // site that doesn’t send Access-Control-*
-            //Authorization
-
             if (getCookie("session") !== "") {
                 //updateBotData()
             } else {
