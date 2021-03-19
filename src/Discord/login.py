@@ -71,7 +71,7 @@ class login(Resource):
     scope = request.args.get(
         'scope',
         'identify')
-    discord = make_session(scope=scope.split(' '), redirectURL=url_for('.callback'))
+    discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + url_for('.callback'))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
     host = ""
@@ -90,7 +90,7 @@ class callback(Resource):
              if (host == "blackerz.herokuapp.com"): 
                  host = "https://" + host
          return redirect(host)
-     discord = make_session(state=session.get('oauth2_state'), redirectURL=url_for('.callback'))
+     discord = make_session(state=session.get('oauth2_state'), redirectURL=request.url_root + url_for('.callback'))
      token = discord.fetch_token(
          TOKEN_URL,
          client_secret=OAUTH2_CLIENT_SECRET,
@@ -101,7 +101,7 @@ class callback(Resource):
   
 class me(Resource):
   def get(self):
-     discord = make_session(token=session.get('oauth2_token'), redirectURL=url_for('.callback'))
+     discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + url_for('.callback'))
      user = discord.get(API_BASE_URL + '/users/@me').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
      oneTimeCode = generateRandomKey(8)
