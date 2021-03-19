@@ -1,8 +1,4 @@
-import os
-import random
-import string
-import requests
-import datetime
+import os, random, string, requests, datetime
 from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
@@ -16,8 +12,6 @@ API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 LOGOUT_BASE_URL = API_BASE_URL + '/oauth2/revoke'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
-
-origins = []
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
@@ -55,13 +49,13 @@ class data():
         
         #timeStamp = time.time()
 
-def make_session(token=None, state=None, scope=None):
+def make_session(token=None, state=None, scope=None, redirectURL="https://blackerz.herokuapp.com/api/v1/discord/callback"):
     return OAuth2Session(
         client_id=OAUTH2_CLIENT_ID,
         token=token,
         state=state,
         scope=scope,
-        redirect_uri=OAUTH2_REDIRECT_URI,
+        redirect_uri=redirectURL,
         auto_refresh_kwargs={
             'client_id': OAUTH2_CLIENT_ID,
             'client_secret': OAUTH2_CLIENT_SECRET,
@@ -77,7 +71,7 @@ class login(Resource):
     scope = request.args.get(
         'scope',
         'identify')
-    discord = make_session(scope=scope.split(' '))
+    discord = make_session(scope=scope.split(' '), redirectURL=url_for('.callback'))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
     host = ""
@@ -96,21 +90,18 @@ class callback(Resource):
              if (host == "blackerz.herokuapp.com"): 
                  host = "https://" + host
          return redirect(host)
-     discord = make_session(state=session.get('oauth2_state'))
+     discord = make_session(state=session.get('oauth2_state'), redirectURL=url_for('.callback'))
      token = discord.fetch_token(
          TOKEN_URL,
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-     host = ""
-     if request.values.get('host'):
-         host = "?host=" + request.values['host']  
         
      return redirect(url_for('.me')) 
   
 class me(Resource):
   def get(self):
-     discord = make_session(token=session.get('oauth2_token'))
+     discord = make_session(token=session.get('oauth2_token'), redirectURL=url_for('.callback'))
      user = discord.get(API_BASE_URL + '/users/@me').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
      oneTimeCode = generateRandomKey(8)
