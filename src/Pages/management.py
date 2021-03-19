@@ -98,6 +98,10 @@ class data():
             if not "prefix" in dataREQ:
                 self.result = {'error': "prefix data was not set", 'status': "not sucess"}
                 return
+            
+            if len(dataREQ["prefix"]) > 5:
+                self.result = {'error': "prefix must below 5 length of characters", 'status': "not sucess"}
+                return
                 
             dataFinal = {
                 'name': botData['username'],
@@ -155,7 +159,7 @@ class AddBotPagePublic(Resource):
         if isCsrfEqual:
             result = data("postBotUser", bot=formData, owner=user)
             if result.result['error'] == None:
-                return redirect("/bots/" + formData['botId'])
+                return redirect("/bots/" + formData['botId'], code=301)
             else:
                 return make_response(jsonify(result.result), 400, headers)
         else:
