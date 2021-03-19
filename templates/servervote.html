@@ -125,7 +125,7 @@
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote servers")
-            window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login"
+            window.location.href = "/api/v1/discord/login"
             break;
           case "invalidcaptcha":
             alert("Invalid captcha provided")
@@ -154,7 +154,7 @@
             {%- if user and "username" in user -%}
                 window.location.href = "/user/{{ user['id'] }}"
             {%- else -%}
-                window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
             {%- endif -%}
         };
         function redirectKe(link) {
