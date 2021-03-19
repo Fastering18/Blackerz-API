@@ -108,9 +108,10 @@
                 dataAkun = JSON.parse(dataAkun)
               } catch(er) {
                 console.log(er)
+                disableButton(document.getElementById("FormAddBot"), false)
                 return alert("Failed to get bot data")
               }
-              if (dataAkun.message && dataAkun.message == "Unknown User") return alert("Bot not found")
+              if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
               document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               setVisibility("user-result", true)
               if (dataAkun) alert(JSON.stringify(dataAkun));
