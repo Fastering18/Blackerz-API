@@ -118,7 +118,7 @@ class data():
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "upvotes", 0)
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "prefix", dataREQ['prefix'])
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "verified", False)
-            if "avatar" in dataREQ:
+            if "avatar" in botData:
                 firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", botData['avatar'])
             if "inviteLink" in dataREQ:
                 firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "inviteLink", dataREQ['inviteLink'])
@@ -155,7 +155,7 @@ class AddBotPagePublic(Resource):
         if isCsrfEqual:
             result = data("postBotUser", bot=formData, owner=user)
             if result.result['error'] != None:
-                return make_response(jsonify(formData), 200, headers)
+                return redirect("/bots/" + formData['botId']})
             else:
                 return make_response(jsonify(result.result), 400, headers)
         else:
