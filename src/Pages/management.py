@@ -88,7 +88,7 @@ class data():
                     'name': dataREQ['owner']['name']
                 },
                 'tag': dataREQ['tag'],
-                'verified': False
+                'verified': False,
                 'upvotes': 0
                 }
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", dataREQ['name'])
