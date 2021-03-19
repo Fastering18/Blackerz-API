@@ -72,11 +72,10 @@
           </label>
           <button type="submit" value="check">Check Bot</button>
           <script>
-            async function getDataAkun(id) {
+            function getDataAkun(id) {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText)
                 return this.responseText
               } else if (this.readyState == 4) {
                 console.log(this);
@@ -96,7 +95,8 @@
                event.preventDefault();
                var botID = document.getElementById("bot-id").value
                console.log(botID)
-               var dataAkun = await getDataAkun(botID)
+               var dataAkun = getDataAkun(botID)
+               console.log(dataAkun)
                if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
