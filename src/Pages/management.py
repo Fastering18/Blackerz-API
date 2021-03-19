@@ -88,12 +88,14 @@ class AddBotPagePublic(Resource):
         else:
             return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.host}")
         
-        session["X_CSRF_TOKEN"] = generateRandomKey(17, "._")
+        session["X_CSRF_TOKEN"] = generateRandomKey(58, "._")
         respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"]), 200, headers))
 
         return respen
     
-class AddBotPagePrivateAPI(Resource):
     def post(self):
-        print("ae")
+        user = getDiscordUser(session)
+        if user and "id" in user and "username" in user:
+            Thread(target=updateUser, args=[user]).start()
+            
         
