@@ -78,7 +78,34 @@ class data():
             authV1 = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/AuthorizationV1", None)
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
-            if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())                
+            if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
+        elif tipe == "postBotUser":
+            dataREQ = Data.get('bot', None)
+            dataFinal = {
+                'name': dataREQ['name'],
+                'owner': {
+                    'id': dataREQ['owner']['id'],
+                    'name': dataREQ['owner']['name']
+                },
+                'tag': dataREQ['tag'],
+                'verified': False
+                'upvotes': 0
+                }
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", dataREQ['name'])
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
+                    'id': dataREQ['owner']['id'],
+                    'name': dataREQ['owner']['name']
+                })
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "tag", dataREQ['tag'])
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "upvotes", 0)
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "prefix", dataREQ['prefix'])
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "verified", False)
+            if "avatar" in dataREQ:
+                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", dataREQ['avatar'])
+            if "inviteLink" in dataREQ:
+                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "inviteLink", dataREQ['inviteLink'])
+        
+            self.result = {'error': None, 'status': "sucess"}
                 
 class AddBotPagePublic(Resource):
     def get(self):
@@ -95,10 +122,13 @@ class AddBotPagePublic(Resource):
     
     def post(self):
         user = getDiscordUser(session)
-        jsonData = request.form
+        formData = request.form
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start()
         
-        print(jsonData)
-        return make_response(jsonify(jsonData["cEeSeReF"] == session["X_CSRF_TOKEN"]), 200, headers)
+        print(formData)
+        isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
+        session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
+        
+        return make_response(jsonify(formData), 200, headers)
         
