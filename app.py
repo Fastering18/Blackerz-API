@@ -3,7 +3,6 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
-from flask_wtf.csrf import CSRFProtect
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -42,7 +41,6 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-csrf = CSRFProtect(app)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
