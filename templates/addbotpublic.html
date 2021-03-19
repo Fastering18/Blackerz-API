@@ -107,6 +107,7 @@
                 alert("Failed to get bot data")
               }
               document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
+              document.getElementById("user-result").style.display = "block"
               if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
