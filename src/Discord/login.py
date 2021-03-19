@@ -131,7 +131,7 @@ class logOut(Resource):
   def get(self):
       print(session.keys())
       session.clear()
-      host = url_for('.homePage')
+      host = url_for('.homepage')
       if request.values.get('callback'):
           host = request.values.get('callback')
       return redirect(host)
