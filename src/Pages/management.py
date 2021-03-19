@@ -100,5 +100,6 @@ class AddBotPagePublic(Resource):
             Thread(target=updateUser, args=[user]).start()
         
         print(jsonData)
+        print(request.get_json())
         return make_response(jsonify(user), 200, headers)
         
