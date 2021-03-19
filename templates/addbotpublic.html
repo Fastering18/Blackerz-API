@@ -70,7 +70,9 @@
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
             <input id="bot-id" type="number" autocorrect="off" autocomplete="off">
           </label>
-          <button type="submit" value="check">Submit Bot</button>
+          {{ form.csrf_token() }}
+          <!-- button type="submit" value="check">Submit Bot</button -->
+          {{ form.submit(class="btn btn-primary")}}
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
