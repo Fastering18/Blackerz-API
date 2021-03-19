@@ -103,9 +103,9 @@ class data():
                 'name': botData['username'],
                 'owner': {
                     'id': ownerData['id'],
-                    'name': ownerData['name']
+                    'name': ownerData['username']
                 },
-                'tag': dataREQ['tag'],
+                'tag': botData['username'] + "#" + botData['discriminator'],
                 'verified': False,
                 'upvotes': 0
                 }
