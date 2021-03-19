@@ -7,7 +7,7 @@ from firebase import firebase
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
-botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
+BOTTOKEN = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
 OAUTH2_REDIRECT_URI = 'https://blackerz.herokuapp.com/api/v1/discord/callback'
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
@@ -81,27 +81,45 @@ class data():
             if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
         elif tipe == "postBotUser":
             dataREQ = Data.get('bot', None)
+            ownerData = Data.get('owner', None)
+            botData = None
+            botID = dataREQ['botId']
+            try: 
+                botData = requests.get(url = f"{API_BASE_URL}/v8/users/{botID}", headers={'Authorization': f"Bot {BOTTOKEN}"}).json()
+            except Exception:
+                print(Exception)
+                self.result = {'error': "Failed to get bot data", 'status': "not sucess"}
+                return
+            
+            if not "id" in botData:
+                self.result = {'error': "Bot not found", 'status': "not sucess"}
+                return
+            
+            if not "prefix" in dataREQ:
+                self.result = {'error': "prefix data was not set", 'status': "not sucess"}
+                return
+                
             dataFinal = {
-                'name': dataREQ['name'],
+                'name': botData['username'],
                 'owner': {
-                    'id': dataREQ['owner']['id'],
-                    'name': dataREQ['owner']['name']
+                    'id': ownerData['id'],
+                    'name': ownerData['name']
                 },
                 'tag': dataREQ['tag'],
                 'verified': False,
                 'upvotes': 0
                 }
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", dataREQ['name'])
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", botData['username'])
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
-                    'id': dataREQ['owner']['id'],
-                    'name': dataREQ['owner']['name']
+                    'id': ownerData['id'],
+                    'name': ownerData['username']
                 })
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "tag", dataREQ['tag'])
+            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "tag", botData['username'] + "#" + botData['discriminator'])
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "upvotes", 0)
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "prefix", dataREQ['prefix'])
             firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "verified", False)
             if "avatar" in dataREQ:
-                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", dataREQ['avatar'])
+                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", botData['avatar'])
             if "inviteLink" in dataREQ:
                 firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "inviteLink", dataREQ['inviteLink'])
         
@@ -113,7 +131,7 @@ class AddBotPagePublic(Resource):
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start() 
         else:
-            return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.host}")
+            return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.url_root}")
         
         session["X_CSRF_TOKEN"] = generateRandomKey(58, "._")
         respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"]), 200, headers))
@@ -125,10 +143,23 @@ class AddBotPagePublic(Resource):
         formData = request.form
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start()
+        else:
+            return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.url_root}")
         
         print(formData)
         isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
         session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
         
-        return make_response(jsonify(formData), 200, headers)
+        result = None
+        
+        if isCsrfEqual:
+            result = data("postBotUser", (bot=formData,owner=user))
+            if result.result['error'] != None:
+                return make_response(jsonify(formData), 200, headers)
+            else:
+                return make_response(jsonify(result.result), 400, headers)
+        else:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers)
+        
+        #return make_response(jsonify(formData), 200, headers)
         
