@@ -70,7 +70,7 @@
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
             <input id="bot-id" type="number" autocorrect="off" autocomplete="off">
           </label>
-          <button type="submit" value="check">Check Bot</button>
+          <button type="submit" value="check">Submit Bot</button>
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
@@ -92,10 +92,14 @@
            function disableButton(elmnt, disabl) {            
              elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
            }
+           function setVisibility(id, isShown) {
+             document.getElementById(id).style.display = isShown == true ? "block" : "none"
+           }
           </script>
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
               event.preventDefault();
+              setVisibility("user-result", false)
               var botID = document.getElementById("bot-id").value
               console.log(botID)
               var dataAkun = await getDataAkun(botID)
@@ -104,10 +108,11 @@
                 dataAkun = JSON.parse(dataAkun)
               } catch(er) {
                 console.log(er)
-                alert("Failed to get bot data")
+                return alert("Failed to get bot data")
               }
+              if (dataAkun.message && dataAkun.message == "Unknown User") return alert("Bot not found")
               document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
-              document.getElementById("user-result").style.display = "block"
+              setVisibility("user-result", true)
               if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
