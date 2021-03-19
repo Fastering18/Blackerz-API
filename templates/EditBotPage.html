@@ -108,14 +108,14 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(result) {
               if (this.readyState == 4 && this.status == 201) {
-                 window.location.href = "https://blackerz.herokuapp.com/bots/{{bot['id']}}"
+                 window.location.href = `${window.location.origin}/bots/{{bot['id']}}`
               } else if (this.readyState == 4 && this.status != 201) {
                  console.log(this.responseText)
                  try { alert(JSON.parse(this.responseText).error) } catch(er) { alert(this.responseText) }
                  disableButton(document.getElementById("FormEdit"), false)
               }
             };
-            xhttp.open("PUT", "https://blackerz.herokuapp.com/api/v1/bots/{{bot['id']}}/edit", true);
+            xhttp.open("PUT", `${window.location.origin}/api/v1/bots/{{bot['id']}}/edit`, true);
             xhttp.setRequestHeader("Authorization", "{{clientData['AuthorizationV1']}}");
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhttp.send(JSON.stringify(editedData));
@@ -139,13 +139,13 @@
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ clientUser | tojson | safe }}')
        function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
        }
        function discordLoginAPI() {
            {%- if clientUser and "username" in clientUser -%}
-               window.location.href = "/user/" + client.id
+               window.location.href = "/user/{{clientUser['id']}}"
            {%- else -%}
-               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
            {%- endif -%}
        }
        function redirectKe(link) {
