@@ -73,19 +73,22 @@
           <button type="submit" value="check">Check Bot</button>
           <script>
             function getDataAkun(id) {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 200) {
-                return this.responseText
-              } else if (this.readyState == 4) {
-                console.log(this);
-                return alert("Failed to get bot data");
-              }
-           };
-           xmlhttp.open("GET", `/api/v1/discord/account/${id}`, true);
-           xmlhttp.setRequestHeader("Authorization", "{{user['AuthorizationV1']}}");
-           xmlhttp.send();
-           }
+              return new Promise((resolve, reject) => {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                    return resolve(this.responseText)
+                  } else if (this.readyState == 4) {
+                    console.log(this);
+                    alert("Failed to get bot data");
+                    return reject("Failed to get bot data")
+                  }
+               };
+               xmlhttp.open("GET", `/api/v1/discord/account/${id}`, true);
+               xmlhttp.setRequestHeader("Authorization", "{{user['AuthorizationV1']}}");
+               xmlhttp.send();
+              })                
+            }
            function disableButton(elmnt, disabl) {            
              elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
            }
