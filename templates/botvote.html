@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="{{ botData["name"] }} - Bot" />
-    <meta property="og:description" content="{{ botData["ShortDescription"] }}" />
+    <meta property="og:description" content="Vote {{ botData["name"] }} Discord bot" />
     <meta property="og:url" content="https://blackerz.herokuapp.com/bots/{{ botId }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
@@ -18,8 +18,8 @@
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta itemprop="name" content="{{ botData["name"] }} - Discord bot">
     <meta itemprop="image" content="{{ avatarUser }}">
-    <meta itemprop="description" content="Add {{ botData["name"] }} Discord bot!">
-    <meta name="description" content="{{ botData["ShortDescription"] or 'Discord bot' }}">
+    <meta itemprop="description" content="Vote {{ botData["name"] }} Discord bot!">
+    <meta name="description" content="Vote {{ botData["ShortDescription"] or 'Discord bot' }}">
     <meta name="keywords" content="{{ botData["name"] }} Discord bot">
     <meta name="theme-color" content="#7289DA">
     <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
