@@ -1,4 +1,4 @@
-from flask import Flask, make_response, request
+from flask import Flask, make_response, request, send_file
 from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
@@ -96,7 +96,12 @@ class dptFile(Resource):
 """user-agent: *
 allow: /""", 200, {'Content-Type': 'text/plain'})
 
+class dptFile2(Resource):
+  def get(self):
+    return make_response(send_file("./static/sitemap.xml"), 200, {'Content-Type': 'text/plain'})
+  
 api.add_resource(dptFile, "/robots.txt")
+api.add_resource(dptFile2, "/sitemap.xml")
 
 if __name__ == "__main__":
   app.run()
