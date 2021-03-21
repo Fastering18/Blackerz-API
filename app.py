@@ -98,7 +98,7 @@ allow: /""", 200, {'Content-Type': 'text/plain'})
 
 class dptFile2(Resource):
   def get(self):
-    return make_response(send_file("./static/sitemap.xml"), 200, {'Content-Type': 'text/plain'})
+    return make_response(send_file("./static/sitemap.xml"), 200)
   
 api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
