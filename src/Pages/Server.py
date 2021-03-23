@@ -97,7 +97,7 @@ class allServersPage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json, request=request), 200, headers)
 
 class specificServerPage(Resource):
   def get(self, id):
@@ -112,6 +112,6 @@ class specificServerPage(Resource):
         user = "null"        
         
     if serverData.data != None:
-        return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id)), 200, headers)
+        return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id), request=request), 200, headers)
     else:
         return make_response(render_template('404.html', user=user), 404, headers)
