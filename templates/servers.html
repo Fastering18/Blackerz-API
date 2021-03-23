@@ -6,13 +6,13 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta property="og:title" content="Blackerz" />
+    <meta property="og:title" content="Servers" />
     <meta property="og:description" content="Search any Discord servers here." />
-    <meta property="og:url" content="https://blackerz.herokuapp.com/servers" />
-    <meta property="og:image" content="../../static/Images/Blackerz.jpg" />
+    <meta property="og:url" content="{{ request.url_root }}servers" />
+    <meta property="og:image" content="/static/Images/Blackerz.jpg" />
     <meta name="og:site_name" content="Blackerz Bot List">
-    <meta name="description" content="Search any Discord bots servers here.">
-    <link rel="canonical" href="https://blackerz.herokuapp.com/servers">
+    <meta name="description" content="Search any Discord servers here.">
+    <link rel="canonical" href="{{ request.url_root }}servers">
     {% cache 60*5, "fstaticserver" %}
      <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
@@ -22,9 +22,9 @@
        gtag('js', new Date());
        gtag('config', 'G-HJFCLE2FTR');
     </script>
-    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="manifest" href="../../static/json/servers.webmanifest">
+    <link rel="manifest" href="/static/json/servers.webmanifest">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="stylesheet" href="/static/CSS/home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,8 +35,8 @@
   "@type" : "Organization",
   "name" : "Blackerz",
   "description": "Search any servers here.",
-  "url" : "https://blackerz.herokuapp.com/",
-  "logo": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
+  "url" : "{{ request.url_root }}",
+  "logo": "{{ request.url_root }}static/Images/Blackerz.jpg",
   "sameAs" : [
     "https://discord.gg/WaAVUVDVTA",
     "https://youtube.com/channel/UCMqJa15Sfr2a7JhyTb_mmvg"
