@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="{{ server["name"] }} - Server" />
     <meta property="og:description" content="{{ server["ShortDescription"] }}" />
-    <meta property="og:url" content="https://blackerz.herokuapp.com/servers/{{ serverID }}" />
+    <meta property="og:url" content="{{ request.url_root }}servers/{{ serverID }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set serverIcon = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "icon" in server -%}
@@ -22,20 +22,20 @@
     <meta name="description" content="{{ server["ShortDescription"] or 'Discord server' }}">
     <meta name="keywords" content="{{ server["name"] }} Discord server">
     <meta name="theme-color" content="#7289DA">
-    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link rel="canonical" href="https://blackerz.herokuapp.com/servers/{{ serverID }}">
+    <link rel="canonical" href="{{ request.url_root }}servers/{{ serverID }}">
     <link rel="stylesheet" href="/static/CSS/home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script type="application/ld+json">
-      {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}", "brand":{"@type": "Thing","name": "Discord server"},"aggregateRating":{"@type": "AggregateRating","ratingValue": "5","ratingCount": "1"},"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX", "url": "https://blackerz.herokuapp.com/bots/{{ serverID }}"}}
+      {"@context":"https://schema.org/","@type":"Product","description":"Join {{ server["name"] }} Discord server!","image":"{{ serverIcon }}","name":"{{ server["name"] }}","sku":"{{ serverID }}", "brand":{"@type": "Thing","name": "Discord server"},"aggregateRating":{"@type": "AggregateRating","ratingValue": "5","ratingCount": "1"},"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX", "url": "{{ request.url_root }}servers/{{ serverID }}"}}
     </script>
     
     <meta name="twitter:card" value="summary">
     <meta name="twitter:title" content="{{ server["name"] }}">
-    <meta name="twitter:url" content="https://blackerz.herokuapp.com/servers/{{ serverID }}">
+    <meta name="twitter:url" content="{{ request.url_root }}servers/{{ serverID }}">
     <meta name="twitter:description" content="{{ server["ShortDescription"] }}">
     <meta name="twitter:image" content="{{ avatarUser }}">
     
