@@ -119,7 +119,7 @@ class botPage(Resource):
         notFound = {
             'description': "Bot not found"
         }
-        return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
+        return make_response(render_template('404.html', notFound=notFound, clientUser=user, request=request), 404, headers)
 
 class blackerzProfile(Resource):
   def get(self, filename):
