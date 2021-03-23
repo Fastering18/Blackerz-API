@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="{{ botData["name"] }} - Bot" />
     <meta property="og:description" content="{{ botData["ShortDescription"] }}" />
-    <meta property="og:url" content="https://blackerz.herokuapp.com/bots/{{ botId }}" />
+    <meta property="og:url" content="https://{{ request.url_root }}bots/{{ botId }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "avatar" in botData -%}
@@ -22,7 +22,7 @@
     <meta name="description" content="{{ botData["ShortDescription"] or 'Discord bot' }}">
     <meta name="keywords" content="{{ botData["name"] }} Discord bot">
     <meta name="theme-color" content="#7289DA">
-    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <link rel="canonical" href="https://blackerz.herokuapp.com/bots/{{ botId }}">
