@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
-    <meta property="og:url" content="https://blackerz.herokuapp.com/" />
+    <meta property="og:url" content="{{ request.url_root }}" />
     <meta property="og:image" content="/static/Images/Blackerz.jpg" />
     <meta name="og:site_name" content="Blackerz Bot List">
     <meta name="description" content="Search any Discord bots and servers here.">
-    <link rel="canonical" href="https://blackerz.herokuapp.com/">
+    <link rel="canonical" href="{{ request.url_root }}">
     <link rel="search" type="application/opensearchdescription+xml" title="Blackerz" href="/static/opensearch.xml">
     <script async data-ad-client="ca-pub-9419528436883042" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     {% cache 60*5, "fstatic1" %}
@@ -42,8 +42,8 @@
   "@type" : "Organization",
   "name" : "Blackerz",
   "description": "Search any Discord bots and servers here.",
-  "url" : "https://blackerz.herokuapp.com/",
-  "logo": "https://blackerz.herokuapp.com/static/Images/Blackerz.jpg",
+  "url" : "{{ request.url_root }}",
+  "logo": "{{ request.url_root }}static/Images/Blackerz.jpg",
   "sameAs" : [
     "https://discord.gg/WaAVUVDVTA",
     "https://youtube.com/channel/UCMqJa15Sfr2a7JhyTb_mmvg"
