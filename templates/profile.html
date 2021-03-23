@@ -16,10 +16,10 @@
     {% endif %}
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:title" content="Blackerz - {{ user["username"] }}">
+    <meta property="twitter:title" content="{{ user['username'] }} - User">
     <meta property="twitter:description" content="{{ user.description }}">
-    <meta name="description" content="{{ user.description or 'Discord user'}}">
-    <meta name="keywords" content="{{ user.username }} Blackerz">
+    <meta name="description" content="{{ user['description'] or 'Discord user'}}">
+    <meta name="keywords" content="{{ user['username'] }} Blackerz">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://blackerz.herokuapp.com/user/{{ user["userId"] }}">
     <script type="application/ld+json">
@@ -41,7 +41,7 @@
             font-family: verdana;
         }
     </style>
-    <title>Blackerz - {{ user["username"] }}</title>
+    <title>{{ user["username"] }} - User</title>
 </head>
 
 <body>
