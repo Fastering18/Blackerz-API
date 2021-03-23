@@ -181,7 +181,7 @@ class BotSearchPage(Resource):
             Thread(target=updateUserData, args=userData).start() 
         else:
             user = "null"
-        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botsdata.result), json=json, kueri=kueri), 200, headers)
+        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botsdata.result), json=json, kueri=kueri, request=request), 200, headers)
         respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
         respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
         return respen  
