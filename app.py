@@ -82,6 +82,7 @@ api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
 api.add_resource(editPage.EditBotPage, "/bots/<int:id>/edit")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
+api.add_resource(votingPage.EditServerPage, "/servers/<int:id>/edit")
 
 # Utility & Management
 api.add_resource(mainManagement.AddBotPagePublic, "/add/bot")
