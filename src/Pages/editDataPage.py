@@ -146,3 +146,13 @@ class EditBotPage(Resource):
         
         return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
         
+class EditServerPage(Resource):
+    def get(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        botum = data("botlist", id)
+        client = None
+        
+        return "on working bruh", 200
