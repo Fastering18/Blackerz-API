@@ -67,19 +67,19 @@
         <div id="BotPrefix">
             <label class="input-title" for="PrefixInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Prefix <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Prefix of your bot.</p>
-            <input class="input-text prefix" id="PrefixInput" type="text" name="prefix" value="{{bot['prefix']}}" placeholder="!">
+            <input class="input-text prefix" id="PrefixInput" type="text" name="prefix" value="{{bot['prefix']}}" placeholder="!" autocomplete="off" maxlength="5" required>
             <br><br>
         </div>
         <div id="ShortDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your bot, max 120 characters.</p>
-            <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description">
+            <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description" autocomplete="off" maxlength="120" required>
             <br><br>
         </div>
         <div id="LongDescription">
             <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Long description of your bot, max 4000 characters.</p>
-            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description">{{bot['LongDescription']}}</textarea>
+            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000" required>{{bot['LongDescription']}}</textarea>
             <br>
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
