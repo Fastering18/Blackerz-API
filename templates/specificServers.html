@@ -161,7 +161,7 @@
     <img id="serverAvatar" src="{{ serverIcon }}" style="display:inline-block; position: relative;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" width="14.9%" height="15%" alt="server avatar">
     <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
-        <button id="editServerData" class="button"><span>Edit</span></button>
+        <button id="editServerData" class="button" onclick="window.location.href='/servers/{{ serverID }}/edit'"><span>Edit</span></button>
     {%- endif -%}
     <button id="voteServer" class="button" onclick="voteServer(this)"><span>{{ server["upvotes"] }} Votes </span></button>
     <br>
