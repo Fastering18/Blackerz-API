@@ -20,7 +20,20 @@ def identifyAPiKey(apiKey):
     return result
 def isLinkExist(link):
     exist = requests.get(link)
-    return exist.status_code != 404 
+    return exist.status_code != 404
+def verifyItemOwner(authV1, botId, tipe="botlist"):
+    if authV1 == None: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
+    user = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/WebUsers.json?orderBy="AuthorizationV1"&equalTo="{authV1}"')
+    user = user.json()
+    isUserExist = len(list(user.keys())) > 0
+    if not isUserExist: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+    user = list(user.keys())[0]
+    item = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/{tipe}.json?orderBy="owner/id"&equalTo="{user}"')
+    item = item.json()
+    isBotOwned = item.get(botId)
+    if isBotOwned == None: return {"success": False, "reason": "Unauthorized"}
+    return {"success": True, "id": user}
+
 class postBot():
     def __init__(self, dataREQ):
         firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "name", dataREQ['name'])
@@ -66,3 +79,21 @@ class postServer(Resource):
             return make_response(jsonify(data.result), 400)
         
         return make_response(jsonify(data.result), 201)
+
+class editServer(Resource):
+    def put(self, id):
+        jsonData = request.get_json()
+        clientAuthV1 = request.headers.get('Authorization')
+        isOwner = verifyItemOwner(clientAuthV1, str(id), tipe="serverlist")
+        if isOwner["success"] == False:
+            return make_response(jsonify(isOwner["reason"]), 401) 
+        if not jsonData:
+           return make_response(jsonify(error1), 400)
+        if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
+           return make_response(jsonify(error3), 400)
+        if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
+           return make_response(jsonify(error5), 400)
+        
+        return "hi"
+        
+    
