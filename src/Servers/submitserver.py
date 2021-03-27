@@ -34,8 +34,11 @@ def verifyItemOwner(authV1, botId, tipe="botlist"):
     if isBotOwned == None: return {"success": False, "reason": "Unauthorized"}
     return {"success": True, "id": user}
 
-class postBot():
-    def __init__(self, dataREQ):
+class serverManager():
+    def __init__(self):
+        self.result = {'error': None, 'status': "sucess"}
+        
+    def submitServer(self, dataREQ):
         firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "name", dataREQ['name'])
         firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "owner", {
                     'id': dataREQ['owner']['id'],
@@ -54,9 +57,14 @@ class postBot():
         if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != ""):
             firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "joinLink", dataREQ['joinLink'])
         
-        self.result = {'error': None, 'status': "sucess"}
+        
         if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == False) : self.result = {'error': "icon url 404 not found", 'status': "failed"};
         if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) > 60) : self.result = {'error': "ShortDescription must lower than 60 characters length!", 'status': "failed"};
+        return self
+            
+    def editServer(self, dataREQ):
+        return self
+        
 
 class postServer(Resource):
     def post(self, id):
@@ -74,7 +82,7 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        data = postBot(jsonData)
+        data = serverManager().submitServer(jsonData)
         if data.result["error"] != None:
             return make_response(jsonify(data.result), 400)
         
