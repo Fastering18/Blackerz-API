@@ -158,7 +158,7 @@ class EditServerPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        servere = data("serverinfo", id)
+        servere = data("serverinfo", str(id))
         client = None
         
         if servere == None:
