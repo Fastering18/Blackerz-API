@@ -81,33 +81,38 @@ def updateUserData(id, tag, username, avatar, code):
 
 class data():
     def __init__(self, dataName, id, client=None):
-        result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
-        if client != None : self.client = firebaseDB.get('/Infrastructure/WebUsers/' + client, None)
-        if result != None:
-            result["id"] = id
-            try:
-                url = "https://discord.com/api/v8/users/" + str(id)
-                r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
-                response = r.json() 
-                if result["name"] != response["username"]:
-                    result["name"] = response["username"]
-                    result["tag"] = response["username"] + "#" + response["discriminator"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
-                if "avatar" in result and "avatar" in response:
-                    if result["avatar"] != response["avatar"]:
+        if dataName == "botinfo":
+            result = firebaseDB.get('/Infrastructure/botlist/' + str(id), None)
+            if client != None : self.client = firebaseDB.get('/Infrastructure/WebUsers/' + client, None)
+            if result != None:
+                result["id"] = id
+                try:
+                    url = "https://discord.com/api/v8/users/" + str(id)
+                    r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+                    response = r.json() 
+                    if result["name"] != response["username"]:
+                        result["name"] = response["username"]
+                        result["tag"] = response["username"] + "#" + response["discriminator"]
+                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "name", response["username"])
+                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "tag", result["tag"])
+                    if "avatar" in result and "avatar" in response:
+                        if result["avatar"] != response["avatar"]:
+                            result["avatar"] = response["avatar"]
+                            firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
+                    elif "avatar" in response and not "avatar" in result:
                         result["avatar"] = response["avatar"]
-                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])       
-                elif "avatar" in response and not "avatar" in result:
-                    result["avatar"] = response["avatar"]
-                    firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
-                self.data = result              
-                self.timeStamp = time.time()
-            except:
-                self.data = result
-                self.timeStamp = time.time()
-        else:
-            self.data = None
+                        firebaseDB.put('/Infrastructure/botlist/' + str(id), "avatar", response["avatar"])
+                    self.data = result              
+                    self.timeStamp = time.time()
+                except:
+                    self.data = result
+                    self.timeStamp = time.time()
+            else:
+                self.data = None
+        if dataName == "serverinfo":
+            result = firebaseDB.get('/Infrastructure/serverlist/' + id, None)
+            self.data = result
+            
     def getOwner(self, client=None):
         if client != None: 
             self.client = firebaseDB.get('/Infrastructure/WebUsers/' + client, None)
@@ -120,8 +125,11 @@ class EditBotPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botum = data("botlist", id)
+        botum = data("botinfo", id)
         client = None
+        
+        if botum == None:
+            return make_response(render_template('404.html', user=user), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -135,9 +143,7 @@ class EditBotPage(Resource):
             ]
             Thread(target=updateUserData, args=userData).start()
             client = botum.getOwner(user["id"])
-    
-        if botum == None:
-            return make_response(render_template('404.html', user=user), 404, headers)
+          
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
         isOwner = verifyOwner(user["id"], str(id))
@@ -152,7 +158,30 @@ class EditServerPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botum = data("botlist", id)
+        servere = data("serverinfo", id)
         client = None
         
-        return "on working bruh", 200
+        if servere == None:
+            return make_response(render_template('404.html', user=user), 404, headers)
+        
+        if user and "id" in user and "username" in user:      
+            oneTimeCode = generateRandomKey(8)
+            userID = user["id"]
+            userData = [
+               str(userID),
+               user["username"] + "#" + user["discriminator"],
+               user["username"],
+               user["avatar"],
+               oneTimeCode
+            ]
+            Thread(target=updateUserData, args=userData).start()
+            client = servere.getOwner(user["id"])
+        
+        if not "id" in user:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers)
+        isOwner = verifyOwner(user["id"], str(id), tipe="serverlist")
+        if isOwner["success"] == False:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
+        
+        servere.data["id"] = id
+        return make_response(render_template('EditServerPage.html', clientUser=user, server=servere.data, clientData=client), 200, headers)
