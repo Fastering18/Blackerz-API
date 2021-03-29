@@ -118,13 +118,13 @@ class voteBot(Resource):
         user = discord.get(API_BASE_URL + '/users/@me').json()
         isVerified = verifyHCaptcha(client=user)
         if isVerified["success"] == False:
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err={isVerified['reason']}")
+            return redirect(f"{request.url_root}bots/{id}/vote?err={isVerified['reason']}")
         
         vote = addVote(id, user, "botVotes")
         if vote.result == None:
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}/vote?err=alreadyvoted", code=301)
+            return redirect(f"{request.url_root}bots/{id}/vote?err=alreadyvoted", code=301)
         else: 
-            return redirect(f"https://blackerz.herokuapp.com/bots/{id}", code=301) # make_response(jsonify({success: True}), 201) #vote.result
+            return redirect(f"{request.url_root}bots/{id}", code=301) # make_response(jsonify({success: True}), 201) #vote.result
         
     def put(self, id):
         if "http://" in request.url:
@@ -170,9 +170,9 @@ class voteServer(Resource):
         
        vote = addVote(id, user, "serverVotes")  
        if vote.result == None:
-           return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err=alreadyvoted", code=301)
+           return redirect(f"{request.url_root}servers/{id}/vote?err=alreadyvoted", code=301)
        else: 
-           return redirect(f"https://blackerz.herokuapp.com/servers/{id}", code=301)                
+           return redirect(f"{request.url_root}servers/{id}", code=301)                
     
     def get(self, id):
        if "http://" in request.url:
