@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
-    <meta property="og:url" content="{{ request.url_root }}" />
+    <meta property="og:url" content="https://blackerz.herokuapp.com/" />
     <meta property="og:image" content="/static/Images/Blackerz.jpg" />
     <meta name="og:site_name" content="Blackerz Bot List">
     <meta name="description" content="Search any Discord bots and servers here.">
-    <link rel="canonical" href="{{ request.url_root }}">
+    <link rel="canonical" href="https://blackerz.herokuapp.com/">
     {% cache 60*5, "fstatic2" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
@@ -68,15 +68,15 @@
         <form method="POST" id="FormAddBot" onsubmit="disableButton(this, true); return true">
           <h1>Submit your bot! <strong>[BETA]<strong></h1>
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
-            <input id="botId" name="botId" type="number" autocorrect="off" autocomplete="off" maxlength="23" required>
+            <input id="botId" name="botId" type="number" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" style="outline: none; "required>
           </label>
           <br>
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot prefix
-            <input id="prefix" name="prefix" type="text" autocorrect="off" autocomplete="off" maxlength="5" required>
+            <input id="prefix" name="prefix" type="text" autocorrect="off" autocomplete="off" maxlength="5" placeholder="Your bot prefix" style="outline: none; required>
           </label>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
           <br>
-          <input name="submit" type="submit" value="Submit Bot" style="display: block; min-width: 7%; width: 10%; height: 6%; background-color: rgba(49, 48, 48, 0.9); color: rgba(255, 255, 255, 0.95);">
+          <input name="submit" type="submit" value="Submit Bot" style="display: block; width: 12%; height: 12%; background-color: blue; color: white; cursor: pointer; outline: none;">
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
@@ -153,7 +153,7 @@
            {%- if user and "username" in user -%}
                window.location.href = "/user/{{user['id']}}"
            {%- else -%}
-               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host={{ request.url_root }}`
+               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
            {%- endif -%}
        }
        function redirectKe(link) {
