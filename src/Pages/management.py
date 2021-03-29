@@ -138,12 +138,13 @@ class AddBotPagePublic(Resource):
             return redirect(f"/api/v1/discord/login?code={generateRandomKey(8)}&host={request.url_root}")
         
         session["X_CSRF_TOKEN"] = generateRandomKey(58, "._")
-        respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"]), 200, headers))
+        respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"], ), 200, headers))
 
         return respen
     
     def post(self):
         if request.remote_addr != "36.74.176.174":
+            print(request.remote_addr)
             return "This feature currently on maintenance", 404
         
         user = getDiscordUser(session)
