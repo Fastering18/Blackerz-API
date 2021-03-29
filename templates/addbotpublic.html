@@ -66,7 +66,7 @@
     <section class="root-page" id="main-page">
       <div id="main-content">
         <form method="POST" id="FormAddBot" onsubmit="disableButton(this, true); return true">
-          <h1>Submit your bot! <strong>[BETA]<strong></h1>
+          <h1>Submit your bot! <strong>[BETA]</strong></h1>
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
             <input id="botId" name="botId" type="number" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" style="outline: none; "required>
           </label>
@@ -76,7 +76,7 @@
           </label>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
           <br>
-          <input name="submit" type="submit" value="Submit Bot" style="display: block; width: 12%; height: 12%; background-color: blue; color: white; cursor: pointer; outline: none;">
+          <input name="submit" type="submit" value="Submit Bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; background-color: #17bd1f; color: #FFFFFF; cursor: pointer; outline: none; border: none;">
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
