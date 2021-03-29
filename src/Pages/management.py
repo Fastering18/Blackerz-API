@@ -145,7 +145,7 @@ class AddBotPagePublic(Resource):
     def post(self):
         if request.remote_addr != "36.74.176.174":
             print(request.remote_addr)
-            return "This feature currently on maintenance\n\nCLIENT: " + str(request.remote_addr) + "\nSESSION: " + str(session["X_CSRF_TOKEN"]), 404
+            return "This feature currently on maintenance,     CLIENT: " + str(request.remote_addr) + "      SESSION: " + str(session["X_CSRF_TOKEN"]), 404
         
         user = getDiscordUser(session)
         formData = request.form
