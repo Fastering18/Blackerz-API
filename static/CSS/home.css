@@ -104,6 +104,7 @@
     font-size: 130%;
     position: absolute;
     left: 50%;
+    outline: none;
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
