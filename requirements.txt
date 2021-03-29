@@ -6,7 +6,7 @@ Pyrebase==3.0.27
 dnspython==2.1.0
 gunicorn==19.9.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2>=2.11.3
 MarkupSafe==1.1.0
 Flask-hCaptcha==0.5.4
 Flask-Caching==1.10.0
