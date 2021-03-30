@@ -93,7 +93,7 @@ class serverManager():
             
         if ("shortDescription" in dataREQ and isinstance(dataREQ['shortDescription'], str) and len(dataREQ['ShortDescription']) < 60):
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "ShortDescription", dataREQ['ShortDescription'])
-         if ("longDescription" in dataREQ and isinstance(dataREQ['longDescription'], str) and len(dataREQ['longDescription']) < 4000):
+        if ("longDescription" in dataREQ and isinstance(dataREQ['longDescription'], str) and len(dataREQ['longDescription']) < 4000):
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "LongDescription", dataREQ['longDescription'])
         if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == True):
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "icon", dataREQ['icon'])
