@@ -35,34 +35,71 @@ def verifyItemOwner(authV1, botId, tipe="botlist"):
     return {"success": True, "id": user}
 
 class serverManager():
-    def __init__(self):
-        self.result = {'error': None, 'status': "sucess"}
+    def __init__(self, id):
+        self.result = {'error': None, 'status': "sucess", 'code': 201}
+        self.id = id
         
     def submitServer(self, dataREQ):
-        firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "name", dataREQ['name'])
-        firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "owner", {
+        if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + dataREQ['icon']) == False): 
+            self.result = {'error': "icon url returned 404 (not found)", 'status': "failed", 'code': 400};
+            return self
+        if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) > 120): 
+            self.result = {'error': "ShortDescription must lower than 120 characters length!", 'status': "failed", 'code': 400};
+            return self
+        
+        firebaseDB.put('/Infrastructure/serverlist/' + self.id, "name", dataREQ['name'])
+        firebaseDB.put('/Infrastructure/serverlist/' + self.id, "owner", {
                     'id': dataREQ['owner']['id'],
                     'name': dataREQ['owner']['name']
                 })
         if ("memberCount" in dataREQ):
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "memberCount", dataREQ['memberCount'])
-        serverinfo = firebaseDB.get('/Infrastructure/serverlist/' + dataREQ['id'], None)
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "memberCount", dataREQ['memberCount'])
+        serverinfo = firebaseDB.get('/Infrastructure/serverlist/' + self.id, None)
         
         if not "upvotes" in serverinfo:
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "upvotes", 0)    
-        if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) < 60):
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "ShortDescription", dataREQ['ShortDescription'])
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "upvotes", 0)    
+        if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) < 120):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "ShortDescription", dataREQ['ShortDescription'])
         if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == True):
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "icon", dataREQ['icon'])
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "icon", dataREQ['icon'])
         if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != ""):
-            firebaseDB.put('/Infrastructure/serverlist/' + dataREQ['id'], "joinLink", dataREQ['joinLink'])
-        
-        
-        if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == False) : self.result = {'error': "icon url 404 not found", 'status': "failed"};
-        if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) > 60) : self.result = {'error': "ShortDescription must lower than 60 characters length!", 'status': "failed"};
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "joinLink", dataREQ['joinLink'])
+              
         return self
             
     def editServer(self, dataREQ):
+        if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + dataREQ['icon']) == False): 
+            self.result = {'error': "icon url returned 404 (not found)", 'status': "failed", 'code': 400};
+            return self
+        if ("ShortDescription" in dataREQ and isinstance(dataREQ['ShortDescription'], str) and len(dataREQ['ShortDescription']) > 120): 
+            self.result = {'error': "ShortDescription must lower than 120 characters length!", 'status': "failed", 'code': 400};
+            return self
+        
+        serverinfo = firebaseDB.get('/Infrastructure/serverlist/' + self.id, None)
+        if serverinfo == None:
+            self.result = {'error': "Server doesn't exist", 'status': "failed", 'code': 404}
+            return self
+        if ("name" in dataREQ):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "name", dataREQ['name'])
+        if ("owner" in dataREQ and "id" in dataREQ['owner'] and "name" in dataREQ['owner']):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "owner", {
+                'id': dataREQ['owner']['id'],
+                'name': dataREQ['owner']['name']
+            })
+        if ("memberCount" in dataREQ):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "memberCount", dataREQ['memberCount'])
+        if not "upvotes" in serverinfo:
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "upvotes", 0)
+            
+        if ("shortDescription" in dataREQ and isinstance(dataREQ['shortDescription'], str) and len(dataREQ['ShortDescription']) < 60):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "ShortDescription", dataREQ['ShortDescription'])
+         if ("longDescription" in dataREQ and isinstance(dataREQ['longDescription'], str) and len(dataREQ['longDescription']) < 4000):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "LongDescription", dataREQ['longDescription'])
+        if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == True):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "icon", dataREQ['icon'])
+        if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != ""):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "joinLink", dataREQ['joinLink'])
+        
         return self
         
 
@@ -82,7 +119,7 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        data = serverManager().submitServer(jsonData)
+        data = serverManager(str(jsonData["id"])).submitServer(jsonData)
         if data.result["error"] != None:
             return make_response(jsonify(data.result), 400)
         
@@ -101,7 +138,11 @@ class editServer(Resource):
            return make_response(jsonify(error3), 400)
         if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
            return make_response(jsonify(error5), 400)
+    
+        server_edit = serverManager(str(id)).editServer(jsonData)
+        #if server_edit.result['error'] != None:
+            #return make_response(jsonify(server_edit.result), server_edit.result['code'])
         
-        return "hi"
+        return make_response(jsonify(server_edit.result), server_edit.result['code'])
         
     
