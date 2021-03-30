@@ -11,7 +11,7 @@
   <meta name="og:site_name" content="Blackerz Bot List">
   <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
   <link rel="stylesheet" href="/static/CSS/home.css">
-  <title>Page Not Found</title>
+  <title>{{ subject or 'Page' }} Not Found</title>
 </head>
 <body>
     <div id='background'></div>
@@ -46,9 +46,9 @@
         </div>
     <section class="page" id="root-page">
     <div id="message">
-      <h2 id="404">404</h2>
-      <h1 id="404_title">Page not Found</h1>
-      <p id="404_desc">{{ notFound["description"] if notFound and "description" in notFound else 'Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.'}}</p>
+      <h1 style="font-size:10vw" id="404">404</h1>
+      <h1 style="font-size:9vw" id="404_title">Page not Found</h1>
+      <p style="font-size:7.5vw" id="404_desc">{{ notFound["description"] if notFound and "description" in notFound else 'Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.'}}</p>
     </div>
   </section>
   <footer>
