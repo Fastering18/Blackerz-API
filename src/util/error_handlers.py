@@ -38,5 +38,5 @@ def page_not_found(e):
   notFound = {
      "description": "The requested resource is not found, check your URL again or report to Discord Ghosteez#5936"
   }
-  print(request.headers.get('CF-IPCountry HTTP'))
+  print(request.headers)
   return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
