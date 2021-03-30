@@ -12,6 +12,8 @@ import src.Pages.VotingPage as votingPage
 import src.Pages.editDataPage as editPage
 import src.Pages.management as mainManagement
 
+import src.util.error_handlers as error_handlers
+
 import src.searchbot as searchBots
 from src.allbot import resource2
 from src.submitbot import resource3
@@ -41,6 +43,7 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
+app.register_error_handler(404, error_handlers.page_not_found)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
