@@ -108,4 +108,4 @@ class specificServerPage(Resource):
             serverData.data["LongDescription"] = Markup(markdown.markdown(serverData.data["LongDescription"]))
         return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id)), 200, headers)
     else:
-        return make_response(render_template('404.html', user=user, notFound={'description': "Server not found"}), 404, headers)
+        return make_response(render_template('404.html', clientUser=user, notFound={'description': "Server not found"}), 404, headers)
