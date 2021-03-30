@@ -102,10 +102,26 @@ class specificServerPage(Resource):
     user = discord.get(API_BASE_URL + '/users/@me').json()
     serverData = data("specificServer", serverId=str(id))
     useragent = request.headers.get('User-Agent')      
-        
+    
+    if user and "id" in user and "username" in user:      
+        # return jsonify(user=user, guilds=guilds, connections=connections)
+        oneTimeCode = generateRandomKey(8)
+        userID = user["id"]
+        userData = [
+           str(userID),
+           user["username"] + "#" + user["discriminator"],
+           user["username"],
+           user["avatar"],
+           oneTimeCode
+        ]
+        Thread(target=updateUserData, args=userData).start() 
+    else:
+        user = "null"
+    
     if serverData.data != None:
         if "LongDescription" in serverData.data:
             serverData.data["LongDescription"] = Markup(markdown.markdown(serverData.data["LongDescription"]))
         return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id)), 200, headers)
     else:
-        return make_response(render_template('404.html', clientUser=user, notFound={'description': "Server not found"}), 404, headers)
+        notfound = {'description': "Server not found"}
+        return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
