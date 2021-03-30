@@ -91,8 +91,8 @@ class serverManager():
         if not "upvotes" in serverinfo:
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "upvotes", 0)
             
-        if ("shortDescription" in dataREQ and isinstance(dataREQ['shortDescription'], str) and len(dataREQ['ShortDescription']) < 60):
-            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "ShortDescription", dataREQ['ShortDescription'])
+        if ("shortDescription" in dataREQ and isinstance(dataREQ['shortDescription'], str) and len(dataREQ['shortDescription']) < 60):
+            firebaseDB.put('/Infrastructure/serverlist/' + self.id, "ShortDescription", dataREQ['shortDescription'])
         if ("longDescription" in dataREQ and isinstance(dataREQ['longDescription'], str) and len(dataREQ['longDescription']) < 4000):
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "LongDescription", dataREQ['longDescription'])
         if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + dataREQ['id'] + '/' + dataREQ['icon']) == True):
