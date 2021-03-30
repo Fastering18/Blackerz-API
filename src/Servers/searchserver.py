@@ -1,7 +1,6 @@
 from flask_restful import Resource
-from flask import jsonify, make_response
-import time
-import requests
+from flask import jsonify, make_response, Markup
+import time, requests, markdown
 from threading import Timer
 
 from firebase import firebase
@@ -28,6 +27,8 @@ class findServer(Resource):
     server = servers.data
     
     if server != None:
+        if "LongDescription" in server:
+            server["LongDescription"] = Markup(markdown.markdown(server["LongDescription"]))
         return make_response(jsonify(server), 200)
     else: 
         return make_response(jsonify(error1), 404)
