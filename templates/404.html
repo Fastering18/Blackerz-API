@@ -45,23 +45,30 @@
           </div>
         </div>
     <section class="page" id="root-page">
-    <div id="message">
-      <h1 style="font-size:9vw; margin-top: 0%; margin-bottom: 1%;" id="404">404</h1>
-      <h2 style="font-size:5.5vw; margin-top: 0%; margin-bottom: 1%;" id="404_title">Page not Found</h2>
-      <p style="font-size:4.5vw; margin-top: 5%; margin-bottom: 1%;" id="404_desc">{{ notFound["description"] if notFound and "description" in notFound else 'Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.'}}</p>
-    </div>
+      <div id="message">
+        <h1 style="font-size:7.8vw; margin-top: 0%; margin-bottom: 1%;" id="404">404</h1>
+        <h2 style="font-size:5vw; margin-top: 0%; margin-bottom: 1%;" id="404_title">Page not Found</h2>
+        <p style="font-size:110%; margin-top: 2.5%; margin-bottom: 1%;" id="404_desc">{{ notFound["description"] if notFound and "description" in notFound else 'Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.'}}</p>
+      </div>
+      <img src="https://media.tenor.com/images/8c409e6f39acc1bd796e8031747f19ad/tenor.gif" width="30%" height="30%">
   </section>
   <footer>
       <br>
+      <p for="toggle-dark-mode" style="font-size: 120%; margin-bottom: 1%;">Light Mode</p>
+      <label class="switch">
+        <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
+        <span class="slider round"></span>
+      </label>
       <div class="footer-nav">
         <div class="footer-links-holder">
-                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
+                <h3 class="footer-header">Contact us</h3>
                 <ul class="footer-links">
-                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
-                    <li><a href="/servers/816619389809590322">Discord</a></li>
+                    <li><a class="text-link" href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a class="text-link" href="/servers/816619389809590322">Discord</a></li>
                 </ul>
             </div>
         </div>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
     </footer>
   <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
