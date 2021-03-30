@@ -1,12 +1,7 @@
-import os
-import random
-import string
+import os, random, string, time, json, requests, markdown
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect
+from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup
 from requests_oauthlib import OAuth2Session
-import time
-import json
-import requests
 from threading import Timer, Thread
 
 from firebase import firebase
@@ -97,7 +92,7 @@ class allServersPage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json, request=request), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
 
 class specificServerPage(Resource):
   def get(self, id):
@@ -106,12 +101,11 @@ class specificServerPage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     serverData = data("specificServer", serverId=str(id))
-    useragent = request.headers.get('User-Agent')
-    
-    if not "id" in user and not "username" in user:      
-        user = "null"        
+    useragent = request.headers.get('User-Agent')      
         
     if serverData.data != None:
-        return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id), request=request), 200, headers)
+        if "LongDescription" in serverData.data:
+            serverData.data["LongDescription"] = Markup(markdown.markdown(serverData.data["LongDescription"]))
+        return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id)), 200, headers)
     else:
-        return make_response(render_template('404.html', user=user), 404, headers)
+        return make_response(render_template('404.html', user=user, notFound={'description': "Server not found"}), 404, headers)
