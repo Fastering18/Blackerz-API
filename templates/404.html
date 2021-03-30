@@ -9,104 +9,73 @@
       <meta name="description" content="{{ notFound["description"] }}">
   {%- endif -%}
   <meta name="og:site_name" content="Blackerz Bot List">
-  <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+  <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
   <link rel="stylesheet" href="/static/CSS/home.css">
   <title>Page Not Found</title>
-  
-  <style media="screen">
-    body {
-      font-family: Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    #message {
-      background: white;
-      max-width: 360px;
-      margin: 100px auto 16px;
-      padding: 32px 24px 16px;
-      border-radius: 3px;
-    }
-
-    #message h3 {
-      color: #888;
-      font-weight: normal;
-      font-size: 16px;
-      margin: 16px 0 12px;
-    }
-
-    #message h2 {
-      color: #ffa100;
-      font-weight: bold;
-      font-size: 16px;
-      margin: 0 0 8px;
-    }
-
-    #message h1 {
-      font-size: 22px;
-      font-weight: 300;
-      color: rgba(0, 0, 0, 0.6);
-      margin: 0 0 16px;
-    }
-
-    #message p {
-      line-height: 140%;
-      margin: 16px 0 24px;
-      font-size: 14px;
-    }
-
-    #message a {
-      display: block;
-      text-align: center;
-      background: #039be5;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: white;
-      padding: 16px;
-      border-radius: 4px;
-    }
-
-    #message,
-    #message a {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
-  </style>
 </head>
 <body>
-  <section class="page" id="root-page">
     <div id='background'></div>
-    <div style="overflow:auto">
-        <div class="topnav">
-            <a href="/" data-text="Home" id="profiletab"></a>
-            <a href="/servers" data-text="Servers"></a>
-            {%- if user and "username" in user -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-            {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
-            {%- endif -%}
+    <div class="topnav">
+            <div class="topnav-pc">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
         </div>
-    </div>
+    <section class="page" id="root-page">
     <div id="message">
       <h2 id="404">404</h2>
       <h1 id="404_title">Page not Found</h1>
-      <p id="404_desc"><font color="#ccc">Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.</font></p>
+      <p id="404_desc">{{ notFound["description"] if notFound and "description" in notFound else 'Most likely you found a missing bot/user,<br>You can contact  Ghosteez#5936  to report this.'}}</p>
     </div>
   </section>
+  <footer>
+      <br>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a href="/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
   <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        {%- if user and "username" in user -%}
            const client = JSON.parse('{{ user | tojson | safe }}')
        {%- endif -%}
        function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            window.location.href = "/api/v1/discord/logout"
        }
        function discordLoginAPI() {
            {%- if user and "username" in user -%}
-               window.location.href = window.location.origin + "/user/" + client.id
+               window.location.href = "/user/{{ user['id'] }}"
            {%- else -%}
-               window.location.href = "/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.host}`
            {%- endif -%}
        }
     </script>
