@@ -3,6 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
 from threading import Timer
+import util.database
 
 from firebase import firebase
 
@@ -64,6 +65,11 @@ def checkVote(userId, itemId, tipe="botVotes"):
         return {"voted": int(voted), "lastVote": int(result)} if voted else {"voted": 0, "lastVote": result}
     except:
         return {"voted": 0, "lastVote": "null"}
+    
+def notifyWebhook(botId):
+    url = firebaseDB.get('/PrivateData/bots/' + str(botId) + "/webhooks/url", None)
+    if url == None: return
+    
                        
 def token_updater(token):
     session['oauth2_token'] = token
