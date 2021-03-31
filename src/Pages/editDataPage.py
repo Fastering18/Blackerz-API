@@ -152,7 +152,11 @@ class EditBotPage(Resource):
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
         return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
-        
+
+class WebhookBotPage(Resource):
+    def get(self, id):
+        return "hi"
+    
 class EditServerPage(Resource):
     def get(self, id):
         if "http://" in request.url:
