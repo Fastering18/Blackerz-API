@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request
 import time, requests, os
 from threading import Timer
+from src.util.database import *
 
 from firebase import firebase
 
@@ -33,13 +34,13 @@ class data():
 class resource2(Resource):
   def get(self):
     if "botsverified" in botCaches:
-        return make_response(jsonify(botCaches["botsverified"]), 200)
-    botum = data("verifiedbots")
-    botlist = botum.data
+        #return make_response(jsonify(botCaches["botsverified"]), 200)
+    botlist = dataManager().getAllBots() #botum = data("verifiedbots") 
+    #botlist = botum.data
     
-    if botlist:
-        return make_response(jsonify(botlist), 200)
-    elif isinstance(botlist, str): 
+    if isinstance(botlist, str):
         return make_response(botlist, 500)
+    elif botlist: 
+        return make_response(jsonify(botlist), 200)
     else:
         return make_response("404 Bot tidak ditemukan.", 404)
