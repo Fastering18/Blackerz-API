@@ -3,6 +3,8 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -44,6 +46,15 @@ hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
 app.register_error_handler(404, error_handlers.page_not_found)
+
+sentry_sdk.init(
+    dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
+    integrations=[FlaskIntegration()],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0
+)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
