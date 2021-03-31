@@ -3,7 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
 from threading import Timer
-import util.database
+import .util.database
 
 from firebase import firebase
 
