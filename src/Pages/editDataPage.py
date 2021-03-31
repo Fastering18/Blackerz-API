@@ -155,7 +155,37 @@ class EditBotPage(Resource):
 
 class WebhookBotPage(Resource):
     def get(self, id):
-        return "hi"
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        botum = data("botinfo", id)
+        client = None
+        
+        if botum.data == None:
+            notfound = {"description": "Bot not found, check your URL and try again."}
+            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
+        
+        if user and "id" in user and "username" in user:      
+            oneTimeCode = generateRandomKey(8)
+            userID = user["id"]
+            userData = [
+               str(userID),
+               user["username"] + "#" + user["discriminator"],
+               user["username"],
+               user["avatar"],
+               oneTimeCode
+            ]
+            Thread(target=updateUserData, args=userData).start()
+            client = botum.getOwner(user["id"])
+          
+        if not "id" in user:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers)
+        isOwner = verifyOwner(user["id"], str(id))
+        if isOwner["success"] == False:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
+        
+        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
     
 class EditServerPage(Resource):
     def get(self, id):
