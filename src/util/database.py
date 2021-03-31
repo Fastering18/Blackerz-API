@@ -15,6 +15,7 @@ def notifyWebhook(botId, voter):
         url = firebaseDB.get('/PrivateData/bots/' + str(botId) + "/webhooks/url", None)
         if url == None: return False
         requests.post(url, data = {"vote": {"userid": str(voter), "date": time.time() * 1000}}, headers={"user-agent": "Blackerz/1.0"},timeout=20)
+        print("berhasil")
         return True
     except Exception as kesalahan:
         print(kesalahan)
