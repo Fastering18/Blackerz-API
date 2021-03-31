@@ -128,8 +128,9 @@ class EditBotPage(Resource):
         botum = data("botinfo", id)
         client = None
         
-        if botum == None:
-            return make_response(render_template('404.html', user=user), 404, headers)
+        if botum.data == None:
+            notfound = {"description": "Bot not found, check your URL and try again."}
+            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -161,8 +162,9 @@ class EditServerPage(Resource):
         servere = data("serverinfo", str(id))
         client = None
         
-        if servere == None:
-            return make_response(render_template('404.html', user=user), 404, headers)
+        if servere.data == None:
+            notfound = {"description": "Server not found, check your URL and try again."}
+            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
