@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  
+  <head>
+    <meta charset=UTF-8>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
+    <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="/static/CSS/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
+    <script src="/static/lib/codemirror.js"></script>
+    <script src="/static/lib/markdown.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
+    <title>{{bot["name"]}} Dashboard</title>
+</head>
+  <body>
+    <link rel="stylesheet" href="/static/lib/codemirror.css">
+    <div id='background'></div>
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
+    <div class="topnav">
+            <div class="topnav-pc">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
+        </div>
+    <section class="root-page" id="main-page">
+      <h2 style="color: rgba(255,255,255, 0.85); font-size: 120%">{{bot["name"]}} Dashboard</h2>
+      <hr style="color: rgba(255,255,255, 0.85);">
+      <div style="background-color: black" width="100%" height="10%">
+        <button>Manage Webhooks</button>
+      </div>
+      <br>
+      <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
+        <div id="WebhookURL">
+            <label class="input-url" for="URLInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">URL <span class="required-input">*</span></label>
+            <p class="input-url" style="font-size: 90%; color: rgba(255,255,255, 0.85);">URL of your webhook.</p>
+            <input class="input-text url" id="URLInput" type="text" name="URL" value="" placeholder="https://yourwebhook/blackerzvote" autocomplete="off" maxlength="2048" required>
+            <br><br>
+        </div>
+        <div id="WebhookKEY">
+            <label class="input-authorization" for="AuthorizationInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Authorization <span class="optional-input">(Optional)</span></label>
+            <p class="input-authorization" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Authorization used to be header to authenticate request.</p>
+            <input class="input-text key" id="AuthorizationInput" type="text" name="Key" value="" placeholder="Key" autocomplete="off" maxlength="500">
+            <br><br>
+        </div>
+        <input name="Authorization" hidden type="text" value="{{ clientData['AuthorizationV1'] }}">
+      </form>
+    </section>
+    <footer>
+      <br>
+      <p for="toggle-dark-mode" style="font-size: 120%; margin-bottom: 1%;">Light Mode</p>
+      <label class="switch">
+        <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
+        <span class="slider round"></span>
+      </label>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a class="text-link" href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a class="text-link" href="/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
+    </footer>
+    <script>
+       if (window.location.protocol === "http:") window.location.protocol = "https:";
+       const client = JSON.parse('{{ clientUser | tojson | safe }}')
+       function discordLogOutAPI(force) {
+            window.location.href = "/api/v1/discord/logout"
+       }
+       function discordLoginAPI() {
+           {%- if clientUser and "username" in clientUser -%}
+               window.location.href = "/user/{{clientUser['id']}}"
+           {%- else -%}
+               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+           {%- endif -%}
+       }
+       function redirectKe(link) {
+           window.location.href = link
+       }
+    </script>
+ <body>
