@@ -84,6 +84,7 @@ api.add_resource(VotingManager.publicVoteApiServer, "/api/v1/servers/<int:id>/vo
 api.add_resource(renderUserPage.botPage, "/bots/<int:id>")
 api.add_resource(votingPage.BotVotePage, "/bots/<int:id>/vote")
 api.add_resource(editPage.EditBotPage, "/bots/<int:id>/edit")
+api.add_resource(editPage.WebhookBotPage, "/bots/<int:id>/webhooks")
 api.add_resource(Servers.specificServerPage, "/servers/<int:id>")
 api.add_resource(votingPage.ServerVotePage, "/servers/<int:id>/vote")
 api.add_resource(editPage.EditServerPage, "/servers/<int:id>/edit")
