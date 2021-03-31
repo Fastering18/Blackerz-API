@@ -71,9 +71,9 @@ class dataManager():
                         listres.append(self.data[kunci])
                 self.data = listres
                 putCache(kueri + "_querysearch", self.data)
-            except Exception as kesalahan:
-                print(kesalahan)
-                self.data = self.getAllBots()
+        except Exception as kesalahan:
+            print(kesalahan)
+            self.data = self.getAllBots()
         return self.data
     
     def postUserStats(self, **anydata):
