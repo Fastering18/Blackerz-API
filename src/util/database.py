@@ -93,7 +93,7 @@ class dataManager():
 def notifyWebhook(botId, voter):
     try:
         datahook = firebaseDB.get('/PrivateData/bots/' + str(botId) + "/webhooks", None)
-        if url == None: return False
+        if datahook == None: return False
         requests.post(datahook.get("url"), data = {"vote": {"userid": str(voter), "date": time.time() * 1000}}, headers={"user-agent": "Blackerz/1.0", "Authorization": datahook.get("key")},timeout=20)
         return True
     except Exception as kesalahan:
