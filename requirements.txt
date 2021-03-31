@@ -20,3 +20,4 @@ pymongo==3.11.2
 Markdown==3.3.3
 CairoSVG==2.5.2
 git+https://github.com/ozgur/python-firebase
+sentry-sdk>=1.0.0
