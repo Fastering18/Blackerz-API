@@ -61,7 +61,7 @@
       <h2 style="color: rgba(255,255,255, 0.85); font-size: 120%">{{bot["name"]}} Dashboard</h2>
       <hr style="color: rgba(255,255,255, 0.85);">
       <div style="background-color: black" width="100%" height="10%">
-        <button>Manage Webhooks</button>
+        <button onclick="window.location.href='/bots/{{bot['id']}}'">Edit Bot Page</button>
       </div>
       <br>
       <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
