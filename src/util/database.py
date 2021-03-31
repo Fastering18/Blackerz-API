@@ -1,6 +1,7 @@
 from firebase import firebase
 import requests, time
 
+firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
 class data():
     def __init__(self, dataName):
