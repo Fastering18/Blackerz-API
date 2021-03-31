@@ -33,14 +33,14 @@ class data():
 
 class resource2(Resource):
   def get(self):
-    if "botsverified" in botCaches:
-        #return make_response(jsonify(botCaches["botsverified"]), 200)
+    #if "botsverified" in botCaches:
+      #return make_response(jsonify(botCaches["botsverified"]), 200)
     botlist = dataManager().getAllBots() #botum = data("verifiedbots") 
     #botlist = botum.data
     
     if isinstance(botlist, str):
-        return make_response(botlist, 500)
+      return make_response(botlist, 500)
     elif botlist: 
-        return make_response(jsonify(botlist), 200)
+      return make_response(jsonify(botlist), 200)
     else:
-        return make_response("404 Bot tidak ditemukan.", 404)
+      return make_response("404 Bot tidak ditemukan.", 404)
