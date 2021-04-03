@@ -65,7 +65,7 @@
         <button onclick="window.location.href='/bots/{{bot['id']}}/edit'" style="cursor: pointer; border-radius: 3%; outline: none;">Edit Bot Page</button>
       </div>
       <br>
-      <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
+      <form method="POST" id="FormEdit" onsubmit="disableButton(this, true); return true">
         <div id="WebhookURL">
             <label class="input-url" for="URLInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">URL <span class="required-input">*</span></label>
             <p class="input-url" style="font-size: 90%; color: rgba(255,255,255, 0.85);">URL of your webhook.</p>
