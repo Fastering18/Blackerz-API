@@ -61,8 +61,8 @@
       <h2 style="color: rgba(255,255,255, 0.85); font-size: 120%">{{bot["name"]}} Dashboard</h2>
       <hr style="color: rgba(255,255,255, 0.85);">
       <div style="background-color: black" width="100%" height="10%">
-        <button onclick="window.location.href='/bots/{{bot['id']}}'" style="cursor: pointer; border-radius: 3%; background-color: #17bd1f; color: #FFFFFF; outline: none;">Bot Page</button>
-        <button onclick="window.location.href='/bots/{{bot['id']}}/edit'" style="cursor: pointer; border-radius: 3%; background-color: #17bd1f; color: #FFFFFF; outline: none;">Edit Bot Page</button>
+        <button onclick="window.location.href='/bots/{{bot['id']}}'" style="cursor: pointer; border-radius: 3%; outline: none;">Bot Page</button>
+        <button onclick="window.location.href='/bots/{{bot['id']}}/edit'" style="cursor: pointer; border-radius: 3%; outline: none;">Edit Bot Page</button>
       </div>
       <br>
       <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
