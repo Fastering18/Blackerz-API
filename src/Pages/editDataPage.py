@@ -52,6 +52,17 @@ def generateAuthorizationV1():
     result_str = ''.join(random.choice(letters) for i in range(random.randint(21, 24)))
     return result_str
 
+def saveWebhook(botid, urlwebhook=None, keywebhook=None):
+    try:
+        if isinstance(urlwebhook, str):
+            firebaseDB.put('/PrivateData/bots/' + str(botid) + "/webhooks", "url", urlwebhook)
+        if isinstance(keywebhook, str):
+            firebaseDB.put('/PrivateData/bots/' + str(botid) + "/webhooks", "key", keywebhook)
+        return True
+    except Exception as keslhn:
+        print(keslhn)
+        return False
+
 class updateData():
     def __init__(self, tipe, **Data):
         if tipe == "postUserStats":
@@ -196,7 +207,14 @@ class WebhookBotPage(Resource):
         formData = request.form
         isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
         
-        return make_response(str(isCsrfEqual), 201, headers)
+        if not isCsrfEqual:
+            return make_response("CSRF not equal", 401)
+        
+        resulto = saveWebhook(id, urlwebhook=formData.get("URL"), keywebhook=formData.get("Key"))
+        if resulto:
+            return make_response("updated", 201, headers)
+        else:
+            return make_response("failed to update", 400, headers)
     
 class EditServerPage(Resource):
     def get(self, id):
