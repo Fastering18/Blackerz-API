@@ -69,13 +69,13 @@
         <div id="WebhookURL">
             <label class="input-url" for="URLInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">URL <span class="required-input">*</span></label>
             <p class="input-url" style="font-size: 90%; color: rgba(255,255,255, 0.85);">URL of your webhook.</p>
-            <input class="input-text url" id="URLInput" type="text" name="URL" value="" placeholder="https://yourwebhook/blackerzvote" autocomplete="off" maxlength="2048" style="border: none; outline: none; border-radius: 3%;" required>
+            <input class="input-text url" id="URLInput" type="text" name="URL" value="{{ hookData['url'] }}" placeholder="https://yourwebhook/blackerzvote" autocomplete="off" maxlength="2048" style="border: none; outline: none; border-radius: 3%;" required>
             <br><br>
         </div>
         <div id="WebhookKEY">
             <label class="input-authorization" for="AuthorizationInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Authorization <span class="optional-input">(Optional)</span></label>
             <p class="input-authorization" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Authorization used to be header to authenticate request.</p>
-            <input class="input-text key" id="AuthorizationInput" type="text" name="Key" value="" placeholder="Key" autocomplete="off" maxlength="500" style="border: none; outline: none; border-radius: 3%;">
+            <input class="input-text key" id="AuthorizationInput" type="text" name="Key" value="{{ hookData['key'] }}" placeholder="Key" autocomplete="off" maxlength="500" style="border: none; outline: none; border-radius: 3%;">
             <br><br>
         </div>
         <input name="Authorization" type="hidden" value="{{ clientData['AuthorizationV1'] }}">
