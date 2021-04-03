@@ -197,7 +197,7 @@ class WebhookBotPage(Resource):
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
         session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
-        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).result), 200, headers)
+        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).data), 200, headers)
     
     def post(self, id):
         if "http://" in request.url:
@@ -238,7 +238,7 @@ class WebhookBotPage(Resource):
         
         resulto = saveWebhook(id, urlwebhook=formData.get("URL"), keywebhook=formData.get("Key"))
         if resulto:
-            return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).result), 201, headers)
+            return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).data), 201, headers)
         else:
             return make_response("failed to update", 400, headers)
     
