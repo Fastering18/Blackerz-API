@@ -81,9 +81,9 @@
             <br><br>
         </div>
         <div id="LongDescription">
-            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
+            <label class="input-title" for="LongDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
             <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Long description of your bot, max 4000 characters.</p>
-            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000" required>{{bot['LongDescription']}}</textarea>
+            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
