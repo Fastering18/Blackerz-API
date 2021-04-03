@@ -210,6 +210,12 @@ class WebhookBotPage(Resource):
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
+        botum = data("botinfo", id)     
+        client = None
+        
+        if botum.data == None:
+            return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
+        
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
             userID = user["id"]
@@ -222,13 +228,7 @@ class WebhookBotPage(Resource):
             ]
             Thread(target=updateUserData, args=userData).start()
             client = botum.getOwner(user["id"])
-            
-        botum = data("botinfo", id)     
-        client = None
-        
-        if botum.data == None:
-            return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
-        
+                      
         formData = request.form
         isCsrfEqual = formData.get("cEeSeReF") == session.get("X_CSRF_TOKEN")   
         if not isCsrfEqual:
