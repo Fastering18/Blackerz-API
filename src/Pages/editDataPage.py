@@ -41,8 +41,8 @@ def make_session(token=None, state=None, scope=None, redirectURL="https://blacke
         auto_refresh_url=TOKEN_URL,
         token_updater=token_updater)
 
-def generateRandomKey(length):
-    letters_and_digits = string.ascii_letters + string.digits
+def generateRandomKey(length, anotherletter=""):
+    letters_and_digits = string.ascii_letters + string.digits + anotherletter
     result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
     return result_str
 
@@ -163,8 +163,7 @@ class WebhookBotPage(Resource):
         client = None
         
         if botum.data == None:
-            notfound = {"description": "Bot not found, check your URL and try again."}
-            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
+            return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -185,7 +184,19 @@ class WebhookBotPage(Resource):
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
-        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
+        session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
+        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"]), 200, headers)
+    
+    def put(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
+        user = discord.get(API_BASE_URL + '/users/@me').json()
+        
+        formData = request.form
+        isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
+        
+        return isCsrfEqual
     
 class EditServerPage(Resource):
     def get(self, id):
