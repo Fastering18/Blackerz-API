@@ -187,7 +187,7 @@ class WebhookBotPage(Resource):
         session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
         return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"]), 200, headers)
     
-    def put(self, id):
+    def post(self, id):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
@@ -196,7 +196,7 @@ class WebhookBotPage(Resource):
         formData = request.form
         isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
         
-        return isCsrfEqual
+        return make_response(str(isCsrfEqual), 201, headers)
     
 class EditServerPage(Resource):
     def get(self, id):
