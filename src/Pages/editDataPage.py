@@ -54,9 +54,9 @@ def generateAuthorizationV1():
 
 def saveWebhook(botid, urlwebhook=None, keywebhook=None):
     try:
-        if isinstance(urlwebhook, str):
+        if isinstance(urlwebhook, str) and len(urlwebhook) >= 9:
             firebaseDB.put('/PrivateData/bots/' + str(botid) + "/webhooks", "url", urlwebhook)
-        if isinstance(keywebhook, str):
+        if isinstance(keywebhook, str) and len(keywebhook) >= 1:
             firebaseDB.put('/PrivateData/bots/' + str(botid) + "/webhooks", "key", keywebhook)
         return True
     except Exception as keslhn:
@@ -204,15 +204,40 @@ class WebhookBotPage(Resource):
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
         
-        formData = request.form
-        isCsrfEqual = formData["cEeSeReF"] == session["X_CSRF_TOKEN"]
+        if not "id" in user:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers)
+        isOwner = verifyOwner(user["id"], str(id))
+        if isOwner["success"] == False:
+            return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
+        if user and "id" in user and "username" in user:      
+            oneTimeCode = generateRandomKey(8)
+            userID = user["id"]
+            userData = [
+               str(userID),
+               user["username"] + "#" + user["discriminator"],
+               user["username"],
+               user["avatar"],
+               oneTimeCode
+            ]
+            Thread(target=updateUserData, args=userData).start()
+            client = botum.getOwner(user["id"])
+            
+        botum = data("botinfo", id)     
+        client = None
+        
+        if botum.data == None:
+            return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
+        
+        formData = request.form
+        isCsrfEqual = formData.get("cEeSeReF") == session.get("X_CSRF_TOKEN")   
         if not isCsrfEqual:
             return make_response("CSRF not equal", 401)
+        session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
         
         resulto = saveWebhook(id, urlwebhook=formData.get("URL"), keywebhook=formData.get("Key"))
         if resulto:
-            return make_response("updated", 201, headers)
+            return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"]), 201, headers)
         else:
             return make_response("failed to update", 400, headers)
     
