@@ -27,6 +27,7 @@
     <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <link rel="canonical" href="{{ request.url_root }}servers/{{ serverID }}">
     <link rel="stylesheet" href="/static/CSS/home.css">
+    <link rel="stylesheet" href="/static/CSS/contentpage.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script type="application/ld+json">
@@ -161,11 +162,11 @@
     <div class="serverInfo">
     <h1 id="serverName">{{ server["name"] }}</h1>
     <img id="serverAvatar" src="{{ serverIcon }}" style="display:inline-block; position: relative;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" width="14.9%" height="15%" alt="server avatar">
-    <button id="addServerBTN" class="button" onclick="joinServer(this)"><span>Join server</span></button>
+    <button id="addOrInvite-btn" class="green-btn" onclick="joinServer(this)"><span>Join server</span></button>
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
-        <button id="editServerData" class="button" onclick="window.location.href='/servers/{{ serverID }}/edit'"><span>Edit</span></button>
+        <button id="edit-btn" class="green-btn" onclick="window.location.href='/servers/{{ serverID }}/edit'"><span>Edit</span></button>
     {%- endif -%}
-    <button id="voteServer" class="button" onclick="voteServer(this)"><span>{{ server["upvotes"] }} Votes </span></button>
+    <button id="vote-btn" class="green-btn" onclick="voteServer(this)"><span>{{ server["upvotes"] }} Votes </span></button>
     <br>
     <p id="shortDescription">{{ server["ShortDescription"] }}</p>
     {%- if "memberCount" in server -%}
@@ -173,7 +174,7 @@
     {%- endif -%}
     <hr>
     {%- if "LongDescription" in server -%}
-        <div id="longDescription">
+        <div id="longdesc">
             {{ server["LongDescription"] | safe }}
         </div>
     {%- endif -%}
