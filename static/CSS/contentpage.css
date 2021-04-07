@@ -1,4 +1,4 @@
-#votebutton {
+.green-btn {
       border-radius: 4px;
       background-color: #1e7bf4;
       border: none;
@@ -13,7 +13,22 @@
       margin: 5px;
       outline: none;
 }
-#addBotBTN {
+#vote-btn {
+      border-radius: 4px;
+      background-color: #1e7bf4;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 100%;
+      min-width: 11%;
+      padding: 1%;
+      height: 8%;
+      transition: all 0.45s;
+      cursor: pointer;
+      margin: 5px;
+      outline: none;
+}
+#addOrInvite-btn {
       border-radius: 4px;
       background-color: #17bd1f;
       border: none;
@@ -28,7 +43,7 @@
       margin: 5px;
       outline: none;
 }
-#editBotData {
+#edit-btn {
       border-radius: 4px;
       background-color: #9daa9e;
       border: none;
