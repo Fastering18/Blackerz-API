@@ -12,12 +12,15 @@ timeStamp = 0
 error1 = {'error': "Invalid body data request, read our documentation for details", 'status': "Not success"}
 unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
 unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
+unauthorizedAcess3 = {'error': "Unauthorized Acess, anda tidak memiliki izin untuk operasi ini.", 'status': "Not success"}
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 
 def identifyAPiKey(apiKey):
     result = firebaseDB.get('/Infrastructure/Users/' + apiKey, None)
-    return result
+    if result == None: return None
+    izin = result["allow"].split(";")
+    return {"perm":izin}
 def isLinkExist(link):
     exist = requests.get(link)
     return exist.status_code != 404
@@ -109,9 +112,11 @@ class postServer(Resource):
         apiKey = request.headers.get('apiKey')
         if not apiKey:
             return make_response(jsonify(unauthorizedAcess1), 401)
-        if identifyAPiKey(apiKey) == None: 
+        author = identifyAPiKey(apiKey)
+        if author == None: 
             return make_response(jsonify(unauthorizedAcess2), 401)
-        
+        elif not "bumpserver" in author["perm"] and not "all" in author["perm"]:
+            return make_response(jsonify(unauthorizedAcess3), 401)
         print(jsonData)
         if (not jsonData) or (not 'name' in jsonData) or (not 'owner' in jsonData) or (not 'memberCount' in jsonData) or (not 'id' in jsonData['owner']) or (not 'name' in jsonData['owner']) or (isinstance(jsonData["memberCount"], int) != True):
             return make_response(jsonify(error1), 400)
