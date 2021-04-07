@@ -131,7 +131,6 @@
           case "invalidcaptcha":
             alert("Invalid captcha provided")
             var baseurl = window.location.href; 
-            if (baseurl.indexOf("?") <= -1) return;
             window.history.pushState({}, document.title, "/" + baseurl .substring(window.location.origin.length + 1, baseurl.indexOf("?")));
             break;
           case "alreadyvoted":
