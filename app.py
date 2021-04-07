@@ -116,9 +116,14 @@ allow: /""", 200, {'Content-Type': 'text/plain'})
 class dptFile2(Resource):
   def get(self):
     return make_response(send_file("./static/sitemap.xml"), 200)
+
+class dptFile3(Resource):
+  def get(self):
+    return make_response(send_file("./static/arc-sw.js"), 200)
   
 api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
+api.add_resource(dptFile3, "/arc-sw.js")
 
 if __name__ == "__main__":
   app.run()
