@@ -124,7 +124,6 @@ class data():
             self.data = firebaseDB.get('/Infrastructure/serverlist/' + str(id), None)
         elif dataName == "hookdata":
             self.data = firebaseDB.get('/PrivateData/bots/' + str(id) + "/webhooks", None)
-            print(self.data)
             
     def getOwner(self, client=None):
         if client != None: 
@@ -198,7 +197,9 @@ class WebhookBotPage(Resource):
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
         session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
-        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).data), 200, headers)
+        hookdata = data("hookdata", id).data
+        print(hookdata)
+        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=hookdata), 200, headers)
     
     def post(self, id):
         if "http://" in request.url:
