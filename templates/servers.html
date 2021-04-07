@@ -207,6 +207,7 @@
            window.location.href = link
         }
         window.onload = function () {
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
             setCookie("dariLink", window.location.host, 1)
         };
         {% endcache %}
