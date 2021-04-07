@@ -123,7 +123,8 @@ class data():
         elif dataName == "serverinfo":
             self.data = firebaseDB.get('/Infrastructure/serverlist/' + str(id), None)
         elif dataName == "hookdata":
-            self.data = firebaseDB.get('/PrivateData/bots/' + str(id) + "/webhooks", {})
+            self.data = firebaseDB.get('/PrivateData/bots/' + str(id) + "/webhooks", None)
+            print(self.data)
             
     def getOwner(self, client=None):
         if client != None: 
