@@ -104,12 +104,12 @@
               var onExpirehcaptcha = function(response) {
                   submitted = false
                   alert("hcaptcha validation expired, please refresh your page")
-                  window.location.href = window.location.href
+                  document.location.reload()
               };
               var onErrorhcaptcha = function(response) {
                   submitted = false
                   alert("hcaptcha validation failed, please refresh your page")
-                  window.location.href = window.location.href
+                  document.location.reload()
               };
           </script>
         </div>
@@ -125,15 +125,17 @@
         switch(errRES) {
           case "notlogined":
             alert("You have to login to vote bots")
-            window.location.href = "/api/v1/discord/login"
+            document.location.replace("/api/v1/discord/login")
             break;
           case "invalidcaptcha":
             alert("Invalid captcha provided")
-            window.location.search = ""
+            var baseurl = window.location.href; 
+            if (baseurl.indexOf("?") <= -1) return;
+            window.history.pushState({}, document.title, "/" + baseurl .substring(window.location.origin.length + 1, baseurl.indexOf("?")));
             break;
           case "alreadyvoted":
             alert("You already voted this bot! wait for 12 hours to vote again.")
-            window.location.href = "/bots/{{ botId }}"
+            document.location.replace("/bots/{{ botId }}")
             break;
         }
         document.querySelector("#CaptchaForm").addEventListener("submit", function(event) {
@@ -148,7 +150,7 @@
            event.preventDefault();
         });
         function discordLogOutAPI() {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
         };
         function discordLoginAPI() {
             {%- if clientUser and "username" in clientUser -%}
