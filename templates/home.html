@@ -131,7 +131,6 @@
     {% endcache %}
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
         {%- if kueri -%}
           var botSearchInput = $("#searchBar")
           botSearchInput.focus();
@@ -210,6 +209,7 @@
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
             }
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
             setCookie("dariLink", window.location.host, 1)
         };
     </script>
