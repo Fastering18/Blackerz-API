@@ -112,13 +112,13 @@
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ clientUser | tojson | safe }}')
        function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
        }
        function discordLoginAPI() {
            {%- if clientUser and "username" in clientUser -%}
                window.location.href = "/user/{{clientUser['id']}}"
            {%- else -%}
-               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+               document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
            {%- endif -%}
        }
        function redirectKe(link) {
