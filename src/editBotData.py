@@ -89,7 +89,7 @@ class editData(Resource):
     botum = edit(jsonData, str(id))
     
     if botum.result == True:
-        Thread(target=notifyChanges, args=[("<@{0}> edited bot <@{1}>\nhttps://{2}bots/{1}".format(isOwner['id'], str(id), request.url_root), id]).start()
+        Thread(target=notifyChanges, args=["<@{0}> edited bot <@{1}>\nhttps://{2}bots/{1}".format(isOwner['id'], str(id), request.url_root), id]).start()
         return make_response(jsonify(sucess), 201)
     else: 
         return make_response(jsonify(botum.result), 400)
