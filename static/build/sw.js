@@ -1,6 +1,6 @@
 importScripts('https://arc.io/arc-sw-core.js');
 
-self.addEventListener('fetch', function(event){
+/*self.addEventListener('fetch', function(event){
    event.respondWith(async function () {
       var cache = await caches.open('cache');
       var cachedResponsePromise = await cache.match(event.request);
@@ -24,4 +24,4 @@ self.addEventListener('install', function(event) {
        ]);
     })
    );
-});
+});*/
