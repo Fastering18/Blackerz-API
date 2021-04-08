@@ -3,6 +3,7 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
+from flask_socketio import SocketIO
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
@@ -45,14 +46,12 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
+socketio = SocketIO(app)
 app.register_error_handler(404, error_handlers.page_not_found)
 
 sentry_sdk.init(
     dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
     integrations=[FlaskIntegration()],
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
     traces_sample_rate=1.0
 )
 
@@ -125,5 +124,12 @@ api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
 api.add_resource(dptFile3, "/arc-sw.js")
 
+
+# WEBSOCKETS
+@socketio.on('json')
+def handle_json(auth):
+    print('auth: ' + str(auth))
+    return auth == "jago"
+
 if __name__ == "__main__":
-  app.run()
+  socketio.run(app)
