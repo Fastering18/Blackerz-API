@@ -3,7 +3,7 @@
   "name": "Blackerz",
   "icons": [
     {
-      "src": "/static/Images/Blackerz.png",
+      "src": "static/Images/Blackerz.png",
       "type": "image/png",
       "sizes": "192x192"
     }
@@ -19,27 +19,27 @@
       "short_name": "Bots",
       "description": "View any discord bot list",
       "url": "/",
-      "icons": [{ "src": "/static/Images/Blackerz.png", "sizes": "192x192" }]
+      "icons": [{ "src": "static/Images/Blackerz.png", "sizes": "192x192" }]
     },
     {
       "name": "Server list",
       "short_name": "Servers",
       "description": "View any discord servers list",
-      "url": "/servers",
-      "icons": [{ "src": "/static/Images/Blackerz.png", "sizes": "192x192" }]
+      "url": "servers",
+      "icons": [{ "src": "static/Images/Blackerz.png", "sizes": "192x192" }]
     }
   ],
   "description": "Discord bots and servers information",
   "screenshots": [
     {
-      "src": "/static/Images/Blackerz.png",
+      "src": "static/Images/Blackerz.png",
       "type": "image/png",
       "sizes": "192x192"
     }
   ],
   "serviceworker": {
-      "src": "/static/build/sw.js",
-      "scope": "/build",
+      "src": "static/build/sw.js",
+      "scope": "build",
       "type": "",
       "update_via_cache": "none"
   }
