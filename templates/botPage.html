@@ -142,23 +142,23 @@
         inviteLink = inviteLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            window.location.href = document.location.replace("/api/v1/discord/logout")
         }
         function inviteBot(element) {
             window.location.href = inviteLink
         }
         function voteBot() {
             {%- if clientUser and "username" in clientUser -%}
-               window.location.href = "/bots/{{botId}}/vote"
+               window.location.href = document.location.replace("/bots/{{botId}}/vote")
             {%- else -%} 
                return discordLoginAPI()
             {%- endif -%}
         }
         function discordLoginAPI() {
             {%- if clientUser and "username" in clientUser -%}
-                window.location.href = window.location.origin + "/user/{{clientUser['id']}}"
+                window.location.href = "/user/{{clientUser['id']}}"
             {%- else -%} 
-                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+                window.location.href = document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
             {%- endif -%}
         }
         function redirectKe(link) {
