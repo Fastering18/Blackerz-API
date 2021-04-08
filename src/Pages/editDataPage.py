@@ -241,7 +241,7 @@ class WebhookBotPage(Resource):
         
         resulto = saveWebhook(id, urlwebhook=formData.get("URL"), keywebhook=formData.get("Key"))
         if resulto:
-            Thread(target=notifyChanges, args=[("<@{0}> edited bot <@{1}>\nhttps://{2}bots/{1}".format(user['id'], str(id), request.url_root), id]).start()
+            Thread(target=notifyChanges, args=["<@{0}> edited bot <@{1}>\nhttps://{2}bots/{1}".format(user['id'], str(id), request.url_root), id]).start()
             return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=data("hookdata", id).data), 201, headers)
         else:
             return make_response("failed to update", 400, headers)
