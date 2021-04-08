@@ -103,7 +103,7 @@ def notifyWebhook(botId, voter):
 
 def notifyChanges(text, itemId):
     try:
-        requests.post(scannerWebhook, json = {"text": text, "date": time.time() * 1000, "itemId": itemId}, headers={"user-agent": "Blackerz/1.0", "Authorization": "menggokileak"},timeout=60)
+        print(requests.post(scannerWebhook, json = {"text": text, "date": time.time() * 1000, "itemId": itemId}, headers={"user-agent": "Blackerz/1.0", "Authorization": "menggokileak"},timeout=60).text)
         return True
     except Exception as kesalahan:
         print(kesalahan)
