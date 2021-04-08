@@ -135,9 +135,8 @@
           botSearchInput.focus();
           botSearchInput.val("{{kueri}}");
         {%- endif -%}
-        const client = ('{{ user | tojson | safe }}')
-        const loginedUser = JSON.parse(client)
-        let jsonBotData = JSON.parse({{ bots | tojson | safe }})
+        const loginedUser = JSON.parse('{{ user | tojson | safe }}')
+        
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
       
         function searchQuery(query) {
