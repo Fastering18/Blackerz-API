@@ -89,7 +89,7 @@
           </div>
         </div>
     <div id="headerPage">
-        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchBotQuery(this.value)">
+        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchQuery(this.value)">
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
@@ -141,21 +141,18 @@
         let jsonBotData = JSON.parse({{ bots | tojson | safe }})
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
       
-        function updateData(jsonData, query) {
+        function searchQuery(query) {
             if (query === "" || typeof (query) !== "string") query = "";
             window.location.href = `/search?q=${query}`
         };
-        function searchBotQuery(nameQuery) {
-            updateData(jsonBotData, nameQuery)
-        }
         function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
                 window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
             {%- endif -%}
         };
         {% cache 60*10, "basicfunchome" %}
@@ -203,14 +200,12 @@
         {% endcache %}
       
         window.onload = function () {
-            if (getCookie("session") !== "") {
-                //updateBotData()
-            } else {
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
+            setCookie("dariLink", window.location.host, 1)
+            if (getCookie("session") == "") {
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
             }
-            if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
-            setCookie("dariLink", window.location.host, 1)
         };
     </script>
 </body>
