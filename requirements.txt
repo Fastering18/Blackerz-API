@@ -2,9 +2,6 @@ aniso8601==4.1.0
 Click==7.0
 Flask==1.0.2
 Flask-RESTful==0.3.7
-Flask-SocketIO==4.3.1
-python-engineio==3.13.2
-python-socketio==4.6.0
 Pyrebase==3.0.27
 dnspython==2.1.0
 gunicorn==19.9.0
