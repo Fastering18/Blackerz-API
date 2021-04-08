@@ -127,8 +127,11 @@
     </footer>
     {% cache 60*10, "jquery" %}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     {% endcache %}
     <script>
+        var socket = io("/ws")
+        socket.emit("json", "jago")
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         {%- if kueri -%}
           var botSearchInput = $("#searchBar")
