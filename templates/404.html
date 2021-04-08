@@ -11,7 +11,9 @@
   <meta name="og:site_name" content="Blackerz Bot List">
   <meta property="og:image" content="https://media.tenor.com/images/8c409e6f39acc1bd796e8031747f19ad/tenor.gif" />
   <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/static/CSS/home.css">
+  <link rel="search" type="application/opensearchdescription+xml" title="Blackerz" href="/static/opensearch.xml">
   <title>{{ subject or 'Page' }} Not Found</title>
 </head>
 <body>
@@ -77,13 +79,13 @@
            const client = JSON.parse('{{ clientUser | tojson | safe }}')
        {%- endif -%}
        function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+             document.location.replace("/api/v1/discord/logout")
        }
        function discordLoginAPI() {
            {%- if clientUser and "username" in clientUser -%}
                window.location.href = "/user/{{ clientUser['id'] }}"
            {%- else -%}
-               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.host}`
+               window.location.href = document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.host}`)
            {%- endif -%}
        }
     </script>
