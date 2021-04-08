@@ -3,6 +3,7 @@ import requests, time
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
 # CACHE'S
 home_botCaches = {}
@@ -99,3 +100,14 @@ def notifyWebhook(botId, voter):
     except Exception as kesalahan:
         print(kesalahan)
         return False
+
+def notifyChanges(text, itemId):
+    try:
+        requests.post(scannerWebhook, json = {"text": text, "date": time.time() * 1000, "itemId": itemId}, headers={"user-agent": "Blackerz/1.0", "Authorization": "menggokileak"},timeout=60)
+        return True
+    except Exception as kesalahan:
+        print(kesalahan)
+        return False
+  
+  
+  
