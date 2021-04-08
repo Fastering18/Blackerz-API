@@ -3,7 +3,6 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
-from flask_socketio import SocketIO
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
@@ -46,7 +45,6 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-socketio = SocketIO(app, async_mode=None)
 app.register_error_handler(404, error_handlers.page_not_found)
 
 sentry_sdk.init(
@@ -124,12 +122,5 @@ api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
 api.add_resource(dptFile3, "/arc-sw.js")
 
-
-# WEBSOCKETS
-@socketio.on('json', namespace="/ws")
-def handle_json(auth):
-    print('auth: ' + str(auth))
-    socket.emit("respon", auth == "jago")
-
 if __name__ == "__main__":
-  socketio.run(app, debug=True)
+  app.run()
