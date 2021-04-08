@@ -46,7 +46,7 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, logger=True)
 app.register_error_handler(404, error_handlers.page_not_found)
 
 sentry_sdk.init(
@@ -129,7 +129,7 @@ api.add_resource(dptFile3, "/arc-sw.js")
 @socketio.on('json')
 def handle_json(auth):
     print('auth: ' + str(auth))
-    return auth == "jago"
+    socket.emit("respon", auth == "jago")
 
 if __name__ == "__main__":
   socketio.run(app)
