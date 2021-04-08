@@ -1,8 +1,8 @@
 from flask_restful import Resource
 from flask import jsonify, make_response, request, abort
 import time, math, requests
-from threading import Timer
-import pymongo as mongopy
+from threading import Timer, Thread
+from src.util.database import notifyChanges
 
 from firebase import firebase
 
@@ -89,6 +89,7 @@ class editData(Resource):
     botum = edit(jsonData, str(id))
     
     if botum.result == True:
+        Thread(target=notifyChanges, args=[("<@{0}> edited bot <@{1}>\nhttps://{2}bots/{1}".format(isOwner['id'], str(id), request.url_root), id]).start()
         return make_response(jsonify(sucess), 201)
     else: 
         return make_response(jsonify(botum.result), 400)
