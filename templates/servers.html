@@ -136,7 +136,7 @@
         let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
       
         function searchServerQuery(query) {
-            if (query === "" || typeof (query) !== "string") query = "";
+            if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
             window.location.href = `/servers/search?q=${query}`
         };    
         function discordLoginAPI() {
