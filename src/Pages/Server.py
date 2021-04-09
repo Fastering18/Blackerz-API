@@ -135,7 +135,7 @@ class searchServerQuery(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = mongoDB().serverQuerySearch(kueri=query)
+    serverDataList = mongoDB().serverQuerySearch(kueri=kueri)
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
