@@ -67,10 +67,24 @@ class mongoDB():
       data = list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, limit=20))
-      pprint.pprint(data)
-      print("itu datanya kueri " + kueri)
+      }, limit=30))
       return data
+   
+   def serverQuerySearch(self, **anydata):
+      kueri = str(anydata.get('kueri', ""))
+      data = list(dbInfrastructure.serverlist.find({
+         "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
+      }, limit=30))
+      pprint.pprint(data)
+      print("itu datanya kueri server " + kueri)
+      return data
+   
+   def uploadServer(self, **anydata):
+      serverid = str(anydata.get('id', None))
+      data = anydata.get('data', {})
+      if serverid == "None": return False
+      data["id"] = serverid
+      return dbInfrastructure.serverlist.update_one({"id": serverid}, { $set: data })
    
 class dataManager():
     def __init__(self, **anydata):
