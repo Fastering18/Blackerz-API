@@ -3,9 +3,8 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
-import sentry_sdk
+import sentry_sdk, pymongo
 from sentry_sdk.integrations.flask import FlaskIntegration
-from flask_mongoengine import MongoEngine
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -49,13 +48,7 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-db = MongoEngine()
-db.init_app(app)
-
-class Server(db.Document):
-    name = db.StringField(required=True)
-    id = db.StringField(required=True)
-    ShortDescription = db.StringField(required=True)
+client = pymongo.MongoClient("mongodb+srv://Fastering:sMSM2Pqd26qpxTWC@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
     
 app.register_error_handler(404, error_handlers.page_not_found)
 
@@ -65,8 +58,7 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-print(Server.objects().to_json())
-#print(mongo.db.serverlist.find_one({"id": "653504540510781454"}))
+print(client.Infrastructure.serverlist.find_one({"id": "653504540510781454"}))
   
 
 # Static pages resource
