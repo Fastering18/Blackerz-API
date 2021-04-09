@@ -115,7 +115,7 @@ class mongoDB():
          if "name" in data["owner"]: 
             if not "owner" in datatopush: datatopush["owner"] = {}
             datatopush["owner"]["name"] = data["owner"]["name"]
-      return dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data }), warns
+      return list(dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data })), warns
    
 class dataManager():
     def __init__(self, **anydata):
