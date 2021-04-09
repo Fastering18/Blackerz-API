@@ -39,6 +39,17 @@ def sortBy(dic, tipe="upvotes"):
 
 
 # DATABASES
+class mongoDB():
+   def __init__(self, **anydata):
+      self.botID = anydata.get('bot_id', None)
+      self.serverID = anydata.get('server_id', None)
+      self.userID = anydata.get('user_id', None)
+      self.tujuan = anydata.get('tujuan', None)
+      
+   def getAllBots(self, **anydata):
+      onlyverified = anydata.get('verified', true)
+      return dbInfrastructure.botlist.find({"verified": onlyverified})
+   
 class dataManager():
     def __init__(self, **anydata):
         self.botID = anydata.get('bot_id', None)
