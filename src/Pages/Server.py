@@ -117,7 +117,6 @@ class specificServerPage(Resource):
     else:
         user = "null"
         
-    print(serverData)
     if serverData != None:
         if "LongDescription" in serverData:
             serverData["LongDescription"] = Markup(markdown.markdown(serverData["LongDescription"]))
