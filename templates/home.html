@@ -137,7 +137,7 @@
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
       
         function searchQuery(query) {
-            if (query === "" || typeof (query) !== "string") query = "";
+            if (query === "" || typeof(query) !== "string") {window.location.href = "/servers"; return};
             window.location.href = `/search?q=${query}`
         };
         function discordLogOutAPI(force) {
