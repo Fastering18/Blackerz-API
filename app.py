@@ -48,7 +48,6 @@ app.config['MONGODB_SETTINGS'] = {
 Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
-mongo = PyMongo(app)
 api = Api(app)
 db = MongoEngine()
 db.init_app(app)
