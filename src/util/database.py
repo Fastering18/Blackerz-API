@@ -47,7 +47,7 @@ class mongoDB():
       self.tujuan = anydata.get('tujuan', None)
       
    def getAllBots(self, **anydata):
-      onlyverified = anydata.get('verified', true)
+      onlyverified = anydata.get('verified', True)
       return dbInfrastructure.botlist.find({"verified": onlyverified})
    
 class dataManager():
