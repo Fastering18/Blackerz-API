@@ -1,9 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, request, abort
-import time
-import json
-import requests
+import time, json, requests
 from threading import Timer
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -124,11 +123,11 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        data = serverManager(str(jsonData["id"])).submitServer(jsonData)
-        if data.result["error"] != None:
-            return make_response(jsonify(data.result), 400)
+        (data, warns) = mongoDB().uploadServer(id=str(id), jsonData)  #serverManager(str(jsonData["id"])).submitServer(jsonData)
+        #if data.result["error"] != None:
+            #return make_response(jsonify(data), 400)
         
-        return make_response(jsonify(data.result), 201)
+        return make_response(jsonify(data) + jsonify(warns), 201)
 
 class editServer(Resource):
     def put(self, id):
