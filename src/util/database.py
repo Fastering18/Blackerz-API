@@ -66,8 +66,7 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       data = list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
-         "verified": vrified, 
-         "$limit": 20
+         "verified": vrified
       }))
       pprint.pprint(data)
       print("itu datanya kueri " + kueri)
