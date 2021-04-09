@@ -5,7 +5,7 @@ from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
-from flask_pymongo import PyMongo
+from flask_mongoengine import MongoEngine
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -42,12 +42,22 @@ app.config['HCAPTCHA_SITE_KEY'] = "552252c3-1e0d-4fa8-837f-045a91f369ec"
 app.config['RECAPTCHA_SECRET_KEY'] = "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6"
 app.config['CACHE_TYPE'] = "SimpleCache"
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300
-app.config["MONGO_URI"] = "mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority"
+app.config['MONGODB_SETTINGS'] = {
+    'host': "mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority"
+}
 Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 mongo = PyMongo(app)
 api = Api(app)
+db = MongoEngine()
+db.init_app(app)
+
+class Server(db.Document):
+    name = db.StringField(required=True)
+    id = db.StringField(required=True)
+    ShortDescription = db.StringField(required=True)
+    
 app.register_error_handler(404, error_handlers.page_not_found)
 
 sentry_sdk.init(
@@ -56,7 +66,8 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-print(mongo.db.serverlist.find_one({"id": "653504540510781454"}))
+print(Server.objects().to_json())
+#print(mongo.db.serverlist.find_one({"id": "653504540510781454"}))
   
 
 # Static pages resource
