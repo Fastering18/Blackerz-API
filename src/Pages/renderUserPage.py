@@ -121,7 +121,7 @@ class botPage(Resource):
         Thread(target=updateBotData, args=[id, bot]).start() 
         if "LongDescription" in bot:
             bot["LongDescription"] = Markup(markdown.markdown(bot["LongDescription"]))
-        return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=json.dumps(bot).replace("'", "\\'").replace('"', '\\"')), 200, headers)
+        return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user), 200, headers)
     else:
         notFound = {
             'description': "Bot not found"
