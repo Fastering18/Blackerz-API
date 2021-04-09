@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request, abort
 import time, math, requests
 from threading import Timer, Thread
-from src.util.database import notifyChanges
+from src.util.database import notifyChanges, mongoDB
 
 from firebase import firebase
 
