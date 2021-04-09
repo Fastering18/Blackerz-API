@@ -101,13 +101,14 @@ class mongoDB():
          del data['joinLink']
          warns.append("Invalid joinLink")
       datatopush = {}
-      if not "upvotes" in oldserverdata: datatopush['upvotes'] = 0
+      if oldserverdata: 
+         if not "upvotes" in oldserverdata: datatopush['upvotes'] = 0
+         if "id" in data and not "id" in oldserverdata: datatopush['id'] = data['id'] 
       if "name" in data: datatopush['name'] = data['name']
       if "icon" in data: datatopush['icon'] = data['icon']
       if "memberCount" in data: datatopush['memberCount'] = data['memberCount']
       if "ShortDescription" in data: datatopush['ShortDescription'] = data['ShortDescription'] 
       if "LongDescription" in data: datatopush['LongDescription'] = data['LongDescription'] 
-      if "id" in data and not "id" in oldserverdata: datatopush['id'] = data['id'] 
       if "owner" in data: 
          if "id" in data["owner"]: 
             if not "owner" in datatopush: datatopush["owner"] = {}
