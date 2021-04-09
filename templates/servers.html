@@ -127,56 +127,28 @@
     {% endcache %}
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
+        {%- if kueri -%}
+          var botSearchInput = $("#searchBar")
+          botSearchInput.focus();
+          botSearchInput.val("{{kueri}}");
+        {%- endif -%}
         const client = JSON.parse('{{ user | tojson | safe }}')
         let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
       
-        function updateData(jsonData, query) {
+        function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") query = "";
             window.location.href = `/servers/search?q=${query}`
-            /*if (query === "" || typeof (query) !== "string") query = undefined;
-            $("#serverListParent").empty();
-            for (dataChild in jsonData) {
-                if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
-
-                currentServer++
-                serverIdlist.push(dataChild)
-                var para = document.createElement("DIV");
-                var gambar = document.createElement("img");
-                var teks = document.createElement("P");
-                gambar.setAttribute("width", "6%")
-                gambar.setAttribute("height", "6%")
-                gambar.onerror= function() {this.src='https://cdn.discordapp.com/embed/avatars/1.png'};
-                gambar.style = "display:inline-block; position: relative;"
-                teks.style = "display:inline-block; position: relative; -ms-transform: translateY(-50%); transform: translateY(-50%); ; font-size: 140%"
-
-                para.id = dataChild
-                para.style = "background:rgba(255, 255, 255, 0.6); border-color: black; margin-bottom: 0.75%; display: none"
-                gambar.src = "https://cdn.discordapp.com/embed/avatars/1.png"
-                if (jsonData[dataChild].icon !== undefined) gambar.src = "https://cdn.discordapp.com/icons/" + dataChild + "/" + jsonData[dataChild].icon + "?size=64";
-                teks.innerText = jsonData[dataChild].name;
-                para.appendChild(gambar)
-                para.appendChild(teks)
-                //document.body
-                document.getElementById("serverListParent").appendChild(para)
-                $(para).slideDown(280);
-                para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
-                para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
-                para.onclick = function(){window.location.pathname = `/servers/${this.id}`}
-            }*/
-        };
-        function searchServerQuery(nameQuery) {
-            updateData(jsonServerData, nameQuery)
-        }     
+        };    
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
                window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+               document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
             {%- endif -%}
         }
         {% cache 60*5, None %}
         function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
         }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
