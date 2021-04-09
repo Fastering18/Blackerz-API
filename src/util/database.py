@@ -54,7 +54,7 @@ class mongoDB():
    def getAllServers(self, **anydata):
       if "_allservers" in home_botCaches:
          return home_botCaches["_allservers"]
-      data = putCache("_allservers", dbInfrastructure.serverlist.find({}, limit=20))
+      data = putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)))
       return data
    
    def botQuerySearch(self, **anydata):
