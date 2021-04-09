@@ -9,7 +9,7 @@ scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
 print(db.command("serverStatus"))
 for server in db.serverlist.find({}):
-  print(server)
+   print(server)
   
 # CACHE'S
 home_botCaches = {}
