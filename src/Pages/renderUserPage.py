@@ -71,19 +71,26 @@ def updateBotData(id, result, tipe="botlist"):
         url = "https://discord.com/api/v8/users/" + str(id)
         r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
         response = r.json() 
-        if result["name"] != response["username"]:
-            result["name"] = response["username"]
-            result["tag"] = response["username"] + "#" + response["discriminator"]
-            firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "name", response["username"])
-            firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "tag", result["tag"])
-            if "avatar" in result and "avatar" in response:
-                if result["avatar"] != response["avatar"]:
-                    result["avatar"] = response["avatar"]
-                    firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])       
-                elif "avatar" in response and not "avatar" in result:
-                    result["avatar"] = response["avatar"]
-                    firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])
-            return response
+        
+        if response and "username" in response and "avatar" in response and "discriminator" in response and response["username"] and response["discriminator"]:
+            mongoDB().uploadBot(id=id, data={
+              "name": response["username"],
+              "avatar": response["avatar"],
+              "tag": response["username"] + "#" + response["discriminator"]
+            })
+        #if result["name"] != response["username"]:
+            #result["name"] = response["username"]
+            #result["tag"] = response["username"] + "#" + response["discriminator"]
+            #firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "name", response["username"])
+            #firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "tag", result["tag"])
+            #if "avatar" in result and "avatar" in response:
+                #if result["avatar"] != response["avatar"]:
+                    #result["avatar"] = response["avatar"]
+                    #firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])       
+                #elif "avatar" in response and not "avatar" in result:
+                    #result["avatar"] = response["avatar"]
+                    #firebaseDB.put(f'/Infrastructure/{tipe}/' + str(id), "avatar", response["avatar"])
+            #return response
     except Exception as kesalahan:
         print(kesalahan)         
   
