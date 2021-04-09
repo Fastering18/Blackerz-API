@@ -53,8 +53,15 @@ botlist = firebaseDB.get("/Infrastructure/botlist", None)
 for bot in botlist:
    if dbInfrastructure.botlist.find_one({"id": bot}) == None:
       botlist[bot]["id"] = bot
-      dbInfrastructure.serverlist.insert_one(botlist[bot])
-      print("inserted" + str(botlist[bot]["name"]))
+      dbInfrastructure.botlist.insert_one(botlist[bot])
+      print("inserted " + str(botlist[bot]["name"]))
+
+serverlist = firebaseDB.get("/Infrastructure/serverlist", None)
+for server in serverlist:
+   if dbInfrastructure.serverlist.find_one({"id": server}) == None:
+      serverlist[server]["id"] = server
+      dbInfrastructure.serverlist.insert_one(serverlist[server])
+      print("inserted " + str(serverlist[server]["name"]))        
         
 sentry_sdk.init(
     dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
