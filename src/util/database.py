@@ -80,7 +80,7 @@ class mongoDB():
       data = anydata.get('data', {})
       if serverid == "None": return False
       data["id"] = serverid
-      return dbInfrastructure.serverlist.update_one({"id": serverid}, { $set: data })
+      return dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data })
    
 class dataManager():
     def __init__(self, **anydata):
