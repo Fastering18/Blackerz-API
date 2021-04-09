@@ -3,6 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string, markdown
 from threading import Timer, Thread
+from src.util.database import mongoDB
 
 from firebase import firebase
 import pyrebase
@@ -107,8 +108,7 @@ class botPage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botum = data("getbot", id)
-    bot = botum.data
+    bot = mongoDB().get_bot(id=str(id))
     
     if bot != None:
         Thread(target=updateBotData, args=[id, bot]).start() 
