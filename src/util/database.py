@@ -50,7 +50,7 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if "botsverified" in home_botCaches and vrified:
          return home_botCaches["botsverified"]
-      data = putCache("botsverified", dbInfrastructure.botlist.find({}))
+      data = putCache("botsverified", list(dbInfrastructure.botlist.find({})))
       pprint.pprint(data)
       print("itu datanya")
       return data
