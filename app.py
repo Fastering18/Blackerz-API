@@ -3,7 +3,7 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
-import sentry_sdk
+import sentry_sdk, pymongo
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 import src.Pages.Home as Home
@@ -30,6 +30,10 @@ import src.Servers.submitserver as submitServer
 
 import src.Voting as VotingManager
 import src.svgGenerator as svggenerator
+
+client = pymongo.MongoClient("mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
+db = client.Infrastructure
+print(db.command("serverStatus"))
 
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 hcaptcha = hCaptcha()
