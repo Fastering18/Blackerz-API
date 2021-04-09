@@ -1,9 +1,9 @@
 from firebase import firebase
-import requests, time, pymongo
+import requests, time, pymongo, urllib
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-client = pymongo.MongoClient("mongodb+srv://Fastering:koliman@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
+client = pymongo.MongoClient(urllib.parse.quote("mongodb+srv://Fastering:koliman@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority"))
 db = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
