@@ -128,7 +128,7 @@ class specificServerPage(Resource):
 
 class searchServerQuery(Resource):
   def get(self):
-    query = request.values.get("q")
+    queri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
     if query == None:
         return redirect(url_for(".allserverspage"), code=301)
     if "http://" in request.url:
