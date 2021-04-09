@@ -88,17 +88,14 @@
     <br>
     <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord servers here.</p>
     <div id="serverListParent">
-          {%- set currentServer = 0 -%}
-          {%- set dictServers = json.loads(servers) -%}
-          {%- for dataChild in dictServers -%}
-             {%- set currentServer = currentServer + 1 -%}
+          {%- for server in servers -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
-             {%- if dataChild and "icon" in dictServers[dataChild] -%}
-                 {% set imgsrc = "https://cdn.discordapp.com/icons/" + dataChild + "/" + dictServers[dataChild].icon + "?size=64" -%}
+             {%- if "icon" in server -%}
+                 {% set imgsrc = "https://cdn.discordapp.com/icons/" + dataChild['id'] + "/" + server.icon + "?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
-               <img width="6%" height="6%" alt="{{dictServers[dataChild]['ShortDescription']}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
-               <p id="namaServer" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{dictServers[dataChild]["name"]}}</p>
+             <div id="{{server['id']}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
+               <img width="6%" height="6%" alt="{{server['ShortDescription']}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
+               <p id="namaServer" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{server["name"]}}</p>
              </div>
           {%- endfor -%}
     </div>
@@ -137,7 +134,9 @@
         let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
       
         function updateData(jsonData, query) {
-            if (query === "" || typeof (query) !== "string") query = undefined;
+            if (query === "" || typeof (query) !== "string") query = "";
+            window.location.href = `/servers/search?q=${query}`
+            /*if (query === "" || typeof (query) !== "string") query = undefined;
             $("#serverListParent").empty();
             for (dataChild in jsonData) {
                 if (query !== undefined && jsonData[dataChild].name.toLowerCase().includes(query.toLowerCase()) === false) continue;
@@ -166,7 +165,7 @@
                 para.onmouseleave = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.6)" };
                 para.onmouseenter = function(){this.style.backgroundColor = "rgba(255, 255, 255, 0.85)" };
                 para.onclick = function(){window.location.pathname = `/servers/${this.id}`}
-            }
+            }*/
         };
         function searchServerQuery(nameQuery) {
             updateData(jsonServerData, nameQuery)
