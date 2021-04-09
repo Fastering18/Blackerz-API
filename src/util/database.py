@@ -57,8 +57,6 @@ class mongoDB():
       if "_allservers" in home_botCaches:
          return home_botCaches["_allservers"]
       data = putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)))
-      pprint.pprint(data)
-      print("itu datanya")
       return data
    
    def botQuerySearch(self, **anydata):
@@ -75,8 +73,6 @@ class mongoDB():
       data = list(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
       }, limit=30))
-      pprint.pprint(data)
-      print("itu datanya kueri server " + kueri)
       return data
    
    def uploadServer(self, **anydata):
@@ -122,6 +118,9 @@ class mongoDB():
       except Exception as keslhn:
          print(keslhn)
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
+        
+   def get_server(self, **find):
+      return dbInfrastructure.serverlist.find_one(find)
    
 class dataManager():
     def __init__(self, **anydata):
