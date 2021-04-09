@@ -126,7 +126,7 @@ class postServer(Resource):
         data, result = mongoDB().uploadServer(id=str(id), data=jsonData)
         #if data.result["error"] != None:
             #return make_response(jsonify(data), 400)
-        
+        print(result)
         return make_response(jsonify(result), 201)
 
 class editServer(Resource):
