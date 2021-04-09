@@ -100,8 +100,7 @@ class specificServerPage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverData = data("specificServer", serverId=str(id))
-    useragent = request.headers.get('User-Agent')      
+    serverData = mongoDB().get_server(id=str(id)) #data("specificServer", serverId=str(id))
     
     if user and "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
@@ -117,11 +116,12 @@ class specificServerPage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    
-    if serverData.data != None:
-        if "LongDescription" in serverData.data:
-            serverData.data["LongDescription"] = Markup(markdown.markdown(serverData.data["LongDescription"]))
-        return make_response(render_template('specificServers.html', user=user, server=serverData.data, json=json, serverID=str(id)), 200, headers)
+        
+    print(serverData)
+    if serverData != None:
+        if "LongDescription" in serverData:
+            serverData["LongDescription"] = Markup(markdown.markdown(serverData["LongDescription"]))
+        return make_response(render_template('specificServers.html', user=user, server=serverData, json=json, serverID=str(id)), 200, headers)
     else:
         notfound = {'description': "Server not found"}
         return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
