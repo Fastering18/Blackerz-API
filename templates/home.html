@@ -93,10 +93,7 @@
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
     <div id="botListParent">
-          {%- set currentBot = 0 -%}
-          {%- set dictBots = json.loads(bots) -%}
-          {%- for dataChild in dictBots -%}
-             {%- set currentBot = currentBot + 1 -%}
+          {%- for dataChild in bots -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if dataChild and "avatar" in dataChild -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
