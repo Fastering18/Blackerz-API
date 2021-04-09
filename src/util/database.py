@@ -121,6 +121,9 @@ class mongoDB():
         
    def get_server(self, **find):
       return dbInfrastructure.serverlist.find_one(find)
+    
+   def get_bot(self, **find):
+      return dbInfrastructure.botlist.find_one(find)
    
 class dataManager():
     def __init__(self, **anydata):
