@@ -97,7 +97,7 @@ class mongoDB():
       if ("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
          del data['memberCount']
          warns.append("Invalid memberCount")
-      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 10 or len(data['joinLink']) < 2)):
+      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 10 or len(data['joinLink']) < 2):
          del data['joinLink']
          warns.append("Invalid joinLink")
       datatopush = {}
