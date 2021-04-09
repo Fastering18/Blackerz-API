@@ -7,9 +7,10 @@ client = pymongo.MongoClient("mongodb+srv://Fastering:sWh8XmnNXcGNkRsh@blackerz.
 db = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
+print(db.command("serverStatus"))
 for server in db.serverlist.find({}):
   print(server)
-
+  
 # CACHE'S
 home_botCaches = {}
 
