@@ -3,7 +3,7 @@ import requests, time, pymongo, pprint
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority", connect=False)
 dbInfrastructure = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
@@ -64,9 +64,10 @@ class mongoDB():
    def botQuerySearch(self, **anydata):
       kueri = "/" + str(anydata.get('kueri', "")) + "/i"
       vrified = anydata.get('verified', True)
+      data = dbInfrastructure.botlist.find({"verified": vrified, "$or": [{"name": kueri}, {"ShortDescription": kueri}]})
       pprint.pprint(data)
       print("itu datanya kueri")
-      return dbInfrastructure.botlist.find({"verified": vrified, "$or": [{"name": kueri}, {"ShortDescription": kueri}]})
+      return data
    
 class dataManager():
     def __init__(self, **anydata):
