@@ -83,22 +83,22 @@ class data():
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
             if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-        elif tipe == "allBot":
-            if "botsverified" in botCaches:
-                self.data = botCaches["botsverified"]
-                return 
-            try:
-                result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
-                self.data = sortBy(result)
-                putCache("botsverified", self.data)
-            except Exception as kesalahan:
-                print(kesalahan)
-                try:
-                    result = firebaseDB.get('/Infrastructure/botlist', None)
-                    self.data = sortBy(result)
-                except Exception as kesalahan2:
-                    print(kesalahan2)
-                    self.data = "Internal error, this is not your error, please report this issues to github."
+        #elif tipe == "allBot":
+            #if "botsverified" in botCaches:
+                #self.data = botCaches["botsverified"]
+                #return 
+            #try:
+                #result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
+                #self.data = sortBy(result)
+                #putCache("botsverified", self.data)
+            #except Exception as kesalahan:
+                #print(kesalahan)
+                #try:
+                    #result = firebaseDB.get('/Infrastructure/botlist', None)
+                    #self.data = sortBy(result)
+                #except Exception as kesalahan2:
+                    #print(kesalahan2)
+                    #self.data = "Internal error, this is not your error, please report this issues to github."
         elif tipe == "querySearch":
             kueri = Data.get('kueri', "bot")
             self.filter = "verified"
@@ -136,10 +136,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = mongoDB().getAllBots() 
-    useragent = request.headers.get('User-Agent')
     
     if user and "id" in user and "username" in user:      
-        # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
         userID = user["id"]
         userData = [
@@ -152,7 +150,7 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    print("udah pake mongodb")
+    
     respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList), json=json), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
@@ -162,13 +160,13 @@ class BotSearchPage(Resource):
     def get(self):
         kueri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
         if kueri == None:
-            return redirect(url_for('.homepage'), code=301)
+            return rerect(url_for('.homepage'), code=301)di
         if request.url.startswith('http://'):
             return redirect(request.url.replace('http:', 'https:', 1), code=301)
         
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botsdata = data("querySearch", kueri=kueri)
+        botsdata = mongoDB().botQuerySearch(kueri=kueri)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -183,7 +181,8 @@ class BotSearchPage(Resource):
             Thread(target=updateUserData, args=userData).start() 
         else:
             user = "null"
-        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botsdata.result), json=json, kueri=kueri, request=request), 200, headers)
+        print("wih udah pake mongodb")
+        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botsdata), json=json, kueri=kueri, request=request), 200, headers)
         respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
         respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
         return respen  
