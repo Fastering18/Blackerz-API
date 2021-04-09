@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup
 from requests_oauthlib import OAuth2Session
 from threading import Timer, Thread
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -76,8 +77,7 @@ class allServersPage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = data("allServers")
-    useragent = request.headers.get('User-Agent')
+    serverDataList = mongoDB().getAllServers()
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -92,7 +92,7 @@ class allServersPage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=json.dumps(serverDataList.data), json=json), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=serverDataList), 200, headers)
 
 class specificServerPage(Resource):
   def get(self, id):
