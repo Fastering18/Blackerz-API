@@ -10,12 +10,7 @@ scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 print(dbInfrastructure.command("serverStatus"))
 #for server in db.serverlist.find({}):
    #print(server)
-serverlist = firebaseDB.get("/Infrastructure/serverlist", None)
-for server in serverlist:
-   if dbInfrastructure.serverlist.find_one({"id": server}) == None:
-      serverlist[server]["id"] = server
-      dbInfrastructure.serverlist.insert_one(serverlist[server])
-      print("inserted" + str(serverlist[server]["name"]))
+
    
 # CACHE'S
 home_botCaches = {}
