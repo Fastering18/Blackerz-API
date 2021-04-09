@@ -50,7 +50,7 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if "botsverified" in home_botCaches and vrified:
          return home_botCaches["botsverified"]
-      data = putCache("botsverified", list(dbInfrastructure.botlist.find({})))
+      data = putCache("botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
       pprint.pprint(data)
       print("itu datanya")
       return data
@@ -62,9 +62,11 @@ class mongoDB():
       return data
    
    def botQuerySearch(self, **anydata):
-      kueri = anydata.get('kueri', "")
+      kueri = "/" + str(anydata.get('kueri', "")) + "/i"
       vrified = anydata.get('verified', True)
-      return dbInfrastructure.botlist.find({"verified": vrified, "$or": [{"name": "/bu/i"}, {"ShortDescription": "/f/i"}]})
+      pprint.pprint(data)
+      print("itu datanya kueri")
+      return dbInfrastructure.botlist.find({"verified": vrified, "$or": [{"name": kueri}, {"ShortDescription": kueri}]})
    
 class dataManager():
     def __init__(self, **anydata):
