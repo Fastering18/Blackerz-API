@@ -150,4 +150,4 @@ class searchServerQuery(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=serverDataList), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=serverDataList, kueri=query), 200, headers)
