@@ -8,7 +8,7 @@ db = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
 
-print(db.my_collection)
+print(db.serverlist.find())
 
 # CACHE'S
 home_botCaches = {}
