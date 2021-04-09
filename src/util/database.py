@@ -88,7 +88,7 @@ class mongoDB():
       oldserverdata = dbInfrastructure.serverlist.find_one({"id": serverid})
       if "upvotes" in data:
          del data['upvotes'] 
-      if ("icon" in data and isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + data['icon']) == False): 
+      if ("icon" in data and (not isinstance(data['icon'], str)) or (isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + data['icon']) == False)): 
          del data['icon']
          warns.append("Icon URL doesn't exist")
       if ("ShortDescription" in data and (not isinstance(data['ShortDescription'], str) or len(data['ShortDescription']) > 120)): 
@@ -97,7 +97,7 @@ class mongoDB():
       if ("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
          del data['memberCount']
          warns.append("Invalid memberCount")
-      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 15 or len(data['joinLink']) < 2):
+      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 16 or len(data['joinLink']) < 2):
          del data['joinLink']
          warns.append("Invalid joinLink")
       datatopush = {}
