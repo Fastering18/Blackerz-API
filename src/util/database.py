@@ -7,7 +7,6 @@ client = pymongo.MongoClient("mongodb+srv://Fastering:koliman12345@blackerz.ayxq
 db = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
-
 for server in db.serverlist.find({}):
   print(server)
 
