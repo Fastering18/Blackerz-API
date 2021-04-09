@@ -3,6 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, os, random, string, datetime, json, requests
 from threading import Timer, Thread
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -134,7 +135,7 @@ class homePage(Resource):
         return redirect(request.url.replace('http:', 'https:', 1), code=301)
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botDataList = data("allBot") 
+    botDataList = mongoDB().getAllBots() 
     useragent = request.headers.get('User-Agent')
     
     if user and "id" in user and "username" in user:      
@@ -151,7 +152,8 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList.data), json=json), 200, headers)
+    print("udah pake mongodb")
+    respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList), json=json), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
