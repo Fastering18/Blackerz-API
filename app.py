@@ -45,7 +45,6 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority")
     
 app.register_error_handler(404, error_handlers.page_not_found)
 
@@ -53,10 +52,7 @@ sentry_sdk.init(
     dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
     integrations=[FlaskIntegration()],
     traces_sample_rate=1.0
-)
-
-print(client.Infrastructure.serverlist.find_one({"id": "653504540510781454"}))
-  
+)  
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
