@@ -1,15 +1,15 @@
 from firebase import firebase
-import requests, time, pymongo
+import requests, time#, pymongo
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-client = pymongo.MongoClient("mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
-db = client.Infrastructure
+#client = pymongo.MongoClient("mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
+#db = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
-print(db.command("serverStatus"))
-for server in db.serverlist.find({}):
-   print(server)
+#print(db.command("serverStatus"))
+#for server in db.serverlist.find({}):
+   #print(server)
   
 # CACHE'S
 home_botCaches = {}
