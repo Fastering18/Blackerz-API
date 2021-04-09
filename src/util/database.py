@@ -52,7 +52,7 @@ class mongoDB():
       return data
    
    def getAllServers(self, **anydata):
-      if "_allservers" in home_botCaches and vrified:
+      if "_allservers" in home_botCaches:
          return home_botCaches["_allservers"]
       data = putCache("_allservers", dbInfrastructure.serverlist.find({}, limit=20))
       return data
