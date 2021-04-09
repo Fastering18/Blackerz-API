@@ -64,7 +64,7 @@ class mongoDB():
    def botQuerySearch(self, **anydata):
       kueri = "/" + str(anydata.get('kueri', "")) + "/i"
       vrified = anydata.get('verified', True)
-      data = list(dbInfrastructure.botlist.find({"$in": [{"name": kueri}, {"ShortDescription": kueri}]}))
+      data = list(dbInfrastructure.botlist.find({"name": kueri, "verified": vrified}))
       pprint.pprint(data)
       print("itu datanya kueri " + kueri)
       return data
