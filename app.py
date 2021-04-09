@@ -56,7 +56,7 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-print(mongo.db.serverlist.find({"id": "653504540510781454"}))
+print(mongo.db.serverlist.find_one({"id": "653504540510781454"}))
   
 
 # Static pages resource
