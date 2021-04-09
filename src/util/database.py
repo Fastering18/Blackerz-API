@@ -13,7 +13,9 @@ print(dbInfrastructure.command("serverStatus"))
 serverlist = firebaseDB.get("/Infrastructure/serverlist", None)
 for server in serverlist:
    if dbInfrastructure.serverlist.find_one({"id": server}) == None:
+      serverlist[server]["id"] = server
       dbInfrastructure.serverlist.insert_one(serverlist[server])
+      print("inserted" + str(serverlist[server]["name"]))
    
 # CACHE'S
 home_botCaches = {}
