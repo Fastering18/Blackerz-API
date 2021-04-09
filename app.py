@@ -58,6 +58,7 @@ sentry_sdk.init(
 # Static pages resource
 api.add_resource(Home.homePage, "/")
 api.add_resource(Home.BotSearchPage, "/search")
+api.add_resource(Servers.searchServerQuery, "/servers/search")
 api.add_resource(Servers.allServersPage, "/servers")
 api.add_resource(Profile.ProfileUsers, "/user/<int:id>")
 api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
