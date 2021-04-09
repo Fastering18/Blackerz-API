@@ -123,11 +123,11 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        data, warns = mongoDB().uploadServer(id=str(id), data=jsonData)
+        data, result = mongoDB().uploadServer(id=str(id), data=jsonData)
         #if data.result["error"] != None:
             #return make_response(jsonify(data), 400)
         
-        return make_response(jsonify(data) + jsonify(warns), 201)
+        return make_response(jsonify(result), 201)
 
 class editServer(Resource):
     def put(self, id):
