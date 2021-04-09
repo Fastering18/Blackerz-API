@@ -22,7 +22,11 @@ def putCache(tipe, isi):
     home_botCaches[tipe] = isi
     Timer(1000.0, deleteCache, [tipe]).start()
     return isi
-
+   
+def isLinkExist(link):
+    exist = requests.get(link)
+    return exist.status_code != 404
+  
 def sortBy(dic, tipe="upvotes"):
     daftr = [] #list(dic.values())
     for keyy in dic:
@@ -80,7 +84,38 @@ class mongoDB():
       data = anydata.get('data', {})
       if serverid == "None": return False
       data["id"] = serverid
-      return dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data })
+      warns = []
+      oldserverdata = dbInfrastructure.serverlist.find_one({"id": serverid})
+      if "upvotes" in data:
+         del data['upvotes'] 
+      if ("icon" in data and isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + data['icon']) == False): 
+         del data['icon']
+         warns.append("Icon URL doesn't exist")
+      if ("ShortDescription" in data and (not isinstance(data['ShortDescription'], str) or len(data['ShortDescription']) > 120)): 
+         del data['ShortDescription']
+         warns.append("ShortDescription must lower than 120 length characters string")
+      if ("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
+         del data['memberCount']
+         warns.append("Invalid memberCount")
+      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 10 or len(data['joinLink']) < 2)):
+         del data['joinLink']
+         warns.append("Invalid joinLink")
+      datatopush = {}
+      if not "upvotes" in oldserverdata: datatopush['upvotes'] = 0
+      if "name" in data: datatopush['name'] = data['name']
+      if "icon" in data: datatopush['icon'] = data['icon']
+      if "memberCount" in data: datatopush['memberCount'] = data['memberCount']
+      if "ShortDescription" in data: datatopush['ShortDescription'] = data['ShortDescription'] 
+      if "LongDescription" in data: datatopush['LongDescription'] = data['LongDescription'] 
+      if "id" in data and not "id" in oldserverdata: datatopush['id'] = data['id'] 
+      if "owner" in data: 
+         if "id" in data["owner"]: 
+            if not "owner" in datatopush: datatopush["owner"] = {}
+            datatopush["owner"]["id"] = data["owner"]["id"]
+         if "name" in data["owner"]: 
+            if not "owner" in datatopush: datatopush["owner"] = {}
+            datatopush["owner"]["name"] = data["owner"]["name"]
+      return dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data }), warns
    
 class dataManager():
     def __init__(self, **anydata):
