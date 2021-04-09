@@ -118,7 +118,17 @@ class mongoDB():
       except Exception as keslhn:
          print(keslhn)
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
-        
+   
+   def uploadBot(self, **anydata):
+      botid = str(anydata.get('id', None))
+      data = anydata.get('data', {})
+      try:
+         result = dbInfrastructure.botlist.update_one({"id": botid}, { "$set": data }, upsert=True)
+         return result, {"sucess": True, "warns": []}
+      except Exception as keslhn:
+         print(keslhn)
+         return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
+   
    def get_server(self, **find):
       return dbInfrastructure.serverlist.find_one(find)
     
