@@ -41,14 +41,11 @@ app.config['HCAPTCHA_SITE_KEY'] = "552252c3-1e0d-4fa8-837f-045a91f369ec"
 app.config['RECAPTCHA_SECRET_KEY'] = "0x1a92Fc4CD3367d965aa5ffb3B5107710f5a7e0D6"
 app.config['CACHE_TYPE'] = "SimpleCache"
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300
-app.config['MONGODB_SETTINGS'] = {
-    'host': "mongodb+srv://Fastering:yjZG0Dut610KGqlp@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority"
-}
 Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
-client = pymongo.MongoClient("mongodb+srv://Fastering:sMSM2Pqd26qpxTWC@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?retryWrites=true&w=majority")
     
 app.register_error_handler(404, error_handlers.page_not_found)
 
