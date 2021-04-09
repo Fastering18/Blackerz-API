@@ -95,7 +95,7 @@
     <div id="botListParent">
           {%- for dataChild in bots -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
-             {%- if dataChild and "avatar" in dataChild -%}
+             {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
              {%- endif -%}
              <div id="{{dataChild.id}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
