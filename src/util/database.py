@@ -65,15 +65,22 @@ class mongoDB():
       kueri = str(anydata.get('kueri', ""))
       vrified = anydata.get('verified', True)
       data = list(dbInfrastructure.botlist.aggregate([{
-      "$group": 
-         {"id" : "$id",  
-         "name" : "$name",
+      "$group": {
+          "id" : "$id",  
+          "name" : "$name",
           "ShortDescription": "$ShortDescription",
           "avatar": "$avatar"
-         }},
-      {"$match": {"$or": {"name": {'$regex': kueri, '$options': 'i'}, "ShortDescription": {'$regex': kueri, '$options': 'i'}}, "verified": vrified}}},
-      {"$limit": 20}
-      }]))
+      }}, {
+      "$match": {
+         "$or": {
+            "name": {'$regex': kueri, '$options': 'i'}, 
+            "ShortDescription": {'$regex': kueri, '$options': 'i'}
+          }, 
+         "verified": vrified
+      }}, {
+      "$limit": 20
+      }
+      ]))
       pprint.pprint(data)
       print("itu datanya kueri " + kueri)
       return data
