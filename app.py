@@ -56,7 +56,8 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )
 
-print(mongo.db.serverlist.find({"$or": [{"name": "/bu/i"}, {"ShortDescription": "/far/i"}]}))
+for xdata in (mongo.db.serverlist.find({"$or": [{"name": "/bu/i"}, {"ShortDescription": "/far/i"}]})):
+  print(xdata)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
