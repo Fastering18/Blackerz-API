@@ -24,8 +24,8 @@ def deleteCache(tipe="botsverified"):
 
 def putCache(tipe, isi):
     home_botCaches[tipe] = isi
-    Timer(6000.0, deleteCache, [tipe]).start()
-    return True
+    Timer(1000.0, deleteCache, [tipe]).start()
+    return isi
 
 def sortBy(dic, tipe="upvotes"):
     daftr = [] #list(dic.values())
@@ -47,8 +47,22 @@ class mongoDB():
       self.tujuan = anydata.get('tujuan', None)
       
    def getAllBots(self, **anydata):
-      onlyverified = anydata.get('verified', True)
-      return dbInfrastructure.botlist.find({"verified": onlyverified})
+      vrified = anydata.get('verified', True)
+      if "botsverified" in home_botCaches and vrified:
+         return home_botCaches["botsverified"]
+      data = putCache("botsverified", dbInfrastructure.botlist.find({"verified": vrified}))
+      return data
+   
+   def getAllServers(self, **anydata):
+      if "_allservers" in home_botCaches and vrified:
+         return home_botCaches["_allservers"]
+      data = putCache("_allservers", dbInfrastructure.serverlist.find())
+      return data
+   
+   def botQuerySearch(self, **anydata):
+      kueri = anydata.get('kueri', "")
+      vrified = anydata.get('verified', True)
+      return dbInfrastructure.botlist.find({"verified": vrified, "$or": [{"name": "/bu/i"}, {"ShortDescription": "/f/i"}]})
    
 class dataManager():
     def __init__(self, **anydata):
