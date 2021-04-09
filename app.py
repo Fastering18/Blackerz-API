@@ -5,6 +5,7 @@ from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
 import sentry_sdk, pymongo
 from sentry_sdk.integrations.flask import FlaskIntegration
+from src.util.database import dbInfrastructure, firebaseDB
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -48,6 +49,13 @@ api = Api(app)
     
 app.register_error_handler(404, error_handlers.page_not_found)
 
+botlist = firebaseDB.get("/Infrastructure/botlist", None)
+for bot in botlist:
+   if dbInfrastructure.botlist.find_one({"id": bot}) == None:
+      botlist[bot]["id"] = bot
+      dbInfrastructure.serverlist.insert_one(botlist[bot])
+      print("inserted" + str(botlist[bot]["name"]))
+        
 sentry_sdk.init(
     dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
     integrations=[FlaskIntegration()],
