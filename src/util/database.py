@@ -7,13 +7,13 @@ client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.
 dbInfrastructure = client.Infrastructure
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
-print(db.command("serverStatus"))
+print(dbInfrastructure.command("serverStatus"))
 #for server in db.serverlist.find({}):
    #print(server)
 serverlist = firebaseDB.get("/Infrastructure/serverlist")
 for server in serverlist:
-   if db.serverlist.find_one({"id": server}) == None:
-      db.serverlist.insert_one(serverlist[server])
+   if dbInfrastructure.serverlist.find_one({"id": server}) == None:
+      dbInfrastructure.serverlist.insert_one(serverlist[server])
    
 # CACHE'S
 home_botCaches = {}
