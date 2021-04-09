@@ -151,7 +151,7 @@ class homePage(Resource):
     else:
         user = "null"
     
-    respen = make_response(render_template('home.html', user=user, bots=json.dumps(botDataList), json=json), 200, headers)
+    respen = make_response(render_template('home.html', user=user, bots=botDataList), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
     return respen
@@ -160,7 +160,7 @@ class BotSearchPage(Resource):
     def get(self):
         kueri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
         if kueri == None:
-            return rerect(url_for('.homepage'), code=301)di
+            return redirect(url_for('.homepage'), code=301)
         if request.url.startswith('http://'):
             return redirect(request.url.replace('http:', 'https:', 1), code=301)
         
@@ -182,7 +182,7 @@ class BotSearchPage(Resource):
         else:
             user = "null"
         print("wih udah pake mongodb")
-        respen = make_response(render_template('home.html', user=user, bots=json.dumps(botsdata), json=json, kueri=kueri, request=request), 200, headers)
+        respen = make_response(render_template('home.html', user=user, bots=botsdata, kueri=kueri), 200, headers)
         respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
         respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
         return respen  
