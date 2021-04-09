@@ -1,6 +1,6 @@
 import os, random, string, time, json, requests, markdown
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup
+from flask import jsonify, make_response, render_template, g, session, request, redirect, Markup, url_for
 from requests_oauthlib import OAuth2Session
 from threading import Timer, Thread
 from src.util.database import mongoDB
@@ -125,3 +125,29 @@ class specificServerPage(Resource):
     else:
         notfound = {'description': "Server not found"}
         return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
+
+class searchServerQuery(Resource):
+  def get(self):
+    query = request.values.get("q")
+    if query == None:
+        return redirect(url_for(".allserverspage"), code=301)
+    if "http://" in request.url:
+        return redirect(request.url.replace("http://", "https://", 1))
+    discord = make_session(token=session.get('oauth2_token'))
+    user = discord.get(API_BASE_URL + '/users/@me').json()
+    serverDataList = mongoDB().serverQuerySearch(kueri=query)
+    
+    if "id" in user and "username" in user:      
+        oneTimeCode = generateRandomKey(8)
+        userID = user["id"]
+        userData = [
+           str(userID),
+           user["username"] + "#" + user["discriminator"],
+           user["username"],
+           user["avatar"],
+           oneTimeCode
+        ]
+        Thread(target=updateUserData, args=userData).start() 
+    else:
+        user = "null"
+    return make_response(render_template('servers.html', user=user, servers=serverDataList), 200, headers)
