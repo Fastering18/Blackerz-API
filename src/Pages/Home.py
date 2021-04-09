@@ -136,6 +136,8 @@ class homePage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     botDataList = mongoDB().getAllBots() 
+    print(botDataList)
+    print("bot nya")
     
     if user and "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
