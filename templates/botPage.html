@@ -54,7 +54,7 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse('{{ clientUser | tojson | safe }}')
-        const botData = ('{{ botData | tojson | safe }}')
+        
         const logined = {{ (clientUser and "id" in clientUser) and "true" or "false" | safe }}
     </script>
 </head>
