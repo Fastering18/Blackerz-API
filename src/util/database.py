@@ -88,7 +88,7 @@ class mongoDB():
       oldserverdata = dbInfrastructure.serverlist.find_one({"id": serverid})
       if "upvotes" in data:
          del data['upvotes'] 
-      if ("icon" in data and (not isinstance(data['icon'], str)) or (isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + data['icon']) == False)): 
+      if "icon" in data and (not isinstance(data['icon'], str) or (isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + serverid + '/' + data['icon']) == False)): 
          del data['icon']
          warns.append("Icon URL doesn't exist")
       if ("ShortDescription" in data and (not isinstance(data['ShortDescription'], str) or len(data['ShortDescription']) > 120)): 
