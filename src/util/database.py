@@ -1,5 +1,5 @@
 from firebase import firebase
-import requests, time, pymongo
+import requests, time, pymongo, pprint
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
@@ -50,13 +50,15 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if "botsverified" in home_botCaches and vrified:
          return home_botCaches["botsverified"]
-      data = putCache("botsverified", dbInfrastructure.botlist.find({"verified": vrified}))
+      data = putCache("botsverified", dbInfrastructure.botlist.find({}))
+      pprint.pprint(data)
+      print("itu datanya")
       return data
    
    def getAllServers(self, **anydata):
       if "_allservers" in home_botCaches and vrified:
          return home_botCaches["_allservers"]
-      data = putCache("_allservers", dbInfrastructure.serverlist.find())
+      data = putCache("_allservers", dbInfrastructure.serverlist.find({}))
       return data
    
    def botQuerySearch(self, **anydata):
