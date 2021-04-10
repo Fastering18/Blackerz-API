@@ -120,11 +120,15 @@ class dptFile2(Resource):
 class dptFile3(Resource):
   def get(self):
     return make_response(send_file("./static/arc-sw.js"), 200)
+
+class dptFile4(Resource):
+  def get(self):
+    return make_response(send_file("./static/Images/favicon.ico"), 200)
   
 api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
 api.add_resource(dptFile3, "/arc-sw.js")
-app.add_url_rule('/favicon.ico', redirect_to="/static/Images/favicon.ico")
+api.add_resource(dptFile4, "/favicon.ico")
 
 if __name__ == "__main__":
   app.run()
