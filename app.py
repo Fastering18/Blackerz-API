@@ -1,4 +1,4 @@
-from flask import Flask, make_response, request, send_file, url_for
+from flask import Flask, make_response, request, send_file
 from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
@@ -124,7 +124,7 @@ class dptFile3(Resource):
 api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
 api.add_resource(dptFile3, "/arc-sw.js")
-app.add_url_rule('/favicon.ico', redirect_to=url_for('static/Images', filename='favicon.ico'))
+app.add_url_rule('/favicon.ico', redirect_to="/static/Images/favicon.ico")
 
 if __name__ == "__main__":
   app.run()
