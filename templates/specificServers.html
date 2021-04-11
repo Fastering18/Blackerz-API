@@ -12,7 +12,7 @@
     <meta property="og:url" content="{{ request.url_root }}servers/{{ serverID }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set serverIcon = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
-    {%- if "icon" in server -%}
+    {%- if "icon" in server and isinstance(server["icon"], str) -%}
         {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["icon"] -%}
     {%- endif -%}
     <meta property="og:image" content="{{ serverIcon }}" />
@@ -134,10 +134,10 @@
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ user | tojson | safe }}'))
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }} 
-        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server else 'https://discord.gg/' | safe }}"
+        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server and isinstance(server['joinLink'], str) else 'https://discord.gg/' | safe }}"
         
         function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
         }
         function joinServer(element) {
             window.location.href = joinLink
@@ -153,7 +153,7 @@
             {%- if user and "username" in user -%}
                 window.location.href = "/user/{{user['id']}}"
             {%- else -%}
-                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
             {%- endif -%}
         }
         function redirectKe(link) {
