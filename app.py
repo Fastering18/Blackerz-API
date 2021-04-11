@@ -55,12 +55,6 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )  
 
-usersData = firebaseDB.get("/Infrastructure/WebUsers", None)
-print(usersData)
-for userid in usersData:
-    usersData[userid]["id"] = userid
-    dbInfrastructure.users.update_one({"id": userid}, { "$set": usersData[userid] }, upsert=True)
-
 # Static pages resource
 api.add_resource(Home.homePage, "/")
 api.add_resource(Home.BotSearchPage, "/search")
