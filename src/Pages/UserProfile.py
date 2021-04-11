@@ -130,8 +130,8 @@ class ProfileUsers(Resource):
     print(userData)
     if userProfile and "id" in userProfile:  
         if str(id) != userProfile["id"]:
-            del userData["AuthorizationV1"]
+            if userData.get("AuthorizationV1"): del userData["AuthorizationV1"]
     else:
-        del userData["AuthorizationV1"]
+        if userData.get("AuthorizationV1"): del userData["AuthorizationV1"]
 
     return make_response(render_template('profile.html', user=userData, client=userProfile), 200, headers)
