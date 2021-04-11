@@ -100,16 +100,16 @@ class mongoDB():
       if oldserverdata: 
          if not "upvotes" in oldserverdata: datatopush['upvotes'] = 0
          if "id" in data and not "id" in oldserverdata: datatopush['id'] = data['id'] 
-      if "name" in data: datatopush['name'] = data['name']
-      if "icon" in data: datatopush['icon'] = data['icon']
-      if "memberCount" in data: datatopush['memberCount'] = data['memberCount']
-      if "ShortDescription" in data: datatopush['ShortDescription'] = data['ShortDescription'] 
-      if "LongDescription" in data: datatopush['LongDescription'] = data['LongDescription'] 
-      if "owner" in data: 
-         if "id" in data["owner"]: 
+      if data.get("name"): datatopush['name'] = data['name']
+      if data.get("icon"): datatopush['icon'] = data['icon']
+      if data.get("memberCount"): datatopush['memberCount'] = data['memberCount']
+      if data.get("ShortDescription"): datatopush['ShortDescription'] = data['ShortDescription'] 
+      if data.get("LongDescription"): datatopush['LongDescription'] = data['LongDescription'] 
+      if data.get("owner"): 
+         if data["owner"].get("id"): 
             if not "owner" in datatopush: datatopush["owner"] = {}
             datatopush["owner"]["id"] = data["owner"]["id"]
-         if "name" in data["owner"]: 
+         if data["owner"].get("name"): 
             if not "owner" in datatopush: datatopush["owner"] = {}
             datatopush["owner"]["name"] = data["owner"]["name"]
       try:
