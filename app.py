@@ -55,7 +55,7 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )  
 
-usersData = firebaseDB.get("/Infrastructure/WebUsers", {})
+usersData = firebaseDB.get("/Infrastructure/WebUsers", None)
 print(usersData)
 for userid in usersData:
     usersData[userid]["id"] = userid
