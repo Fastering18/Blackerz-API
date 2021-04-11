@@ -77,7 +77,7 @@ class allServersPage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = mongoDB().getAllServers()
+    serverDataList = mongoDB().getAllServers() or []
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -100,7 +100,7 @@ class specificServerPage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverData = mongoDB().get_server(id=str(id)) #data("specificServer", serverId=str(id))
+    serverData = mongoDB().get_server(id=str(id)) or {} #data("specificServer", serverId=str(id))
     
     if user and "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
@@ -134,7 +134,7 @@ class searchServerQuery(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = mongoDB().serverQuerySearch(kueri=kueri)
+    serverDataList = mongoDB().serverQuerySearch(kueri=kueri) or []
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
