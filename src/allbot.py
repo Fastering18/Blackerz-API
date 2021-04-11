@@ -1,10 +1,10 @@
 from flask_restful import Resource
 from flask import jsonify, make_response, request
-from src.util.database import *
+from src.util.database import mongoDB
           
 class resource2(Resource):
   def get(self):
-    botlist = dataManager().getAllBots()
+    botlist = mongoDB().getAllBots()
     
     if isinstance(botlist, str):
       return make_response(botlist, 500)
