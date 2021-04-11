@@ -127,7 +127,7 @@ class ProfileUsers(Resource):
     userData = user
     userData["userId"] = str(id)
     userData["botsowned"] = getUserBots(str(id))
-    
+    print(userData)
     if userProfile and "id" in userProfile:  
         if str(id) != userProfile["id"]:
             del userData["AuthorizationV1"]
