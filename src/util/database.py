@@ -133,7 +133,19 @@ class mongoDB():
       except Exception as keslhn:
          print(keslhn)
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
-   
+        
+   def uploadUser(self, **anydata):
+      userid = str(anydata.get('id', None))
+      data = anydata.get('data', {})
+      for kdata in data:
+         if data.get(kdata) == None: del data[kdata]
+      try:
+         result = dbInfrastructure.users.update_one({"id": userid}, { "$set": data }, upsert=True)
+         return result, {"sucess": True, "warns": []}
+      except Exception as keslhn:
+         print(keslhn)
+         return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
+    
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
          return home_botCaches.get("server " + str(find))
