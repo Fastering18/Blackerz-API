@@ -55,10 +55,11 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )  
 
-users = firebaseDB.get("/Infrastructure/WebUsers", {})
-for user in users:
-    users[user]["id"] = user
-    dbInfrastructure.users.update_one({"id": user}, { "$set": users[user] }, upsert=True)
+usersData = firebaseDB.get("/Infrastructure/WebUsers", {})
+print(usersData)
+for userid in usersData:
+    usersData[userid]["id"] = userid
+    dbInfrastructure.users.update_one({"id": userid}, { "$set": usersData[userid] }, upsert=True)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
