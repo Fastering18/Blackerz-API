@@ -68,15 +68,19 @@ class data():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
 
-def updateUserData(id, tag, username, avatar, code):
+def updateUserData(id, tag, username, avatar, code, olduser):
     UserData = {
-       'client_id': id,
+       #'id': id,
        'tag': tag,
        'username': username,
        'avatar': avatar,
        'code': code
     }
-    data("postUserStats", user=UserData)
+    if isinstance(olduser, dict): 
+        if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
+        if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
+    mongoDB().uploadUser(id=id, data=UserData)
+    #data("postUserStats", user=UserData)
     
 class ProfileUsers(Resource):
   def get(self, id):
@@ -100,7 +104,8 @@ class ProfileUsers(Resource):
                responsenew["username"] + "#" + responsenew["discriminator"],
                responsenew["username"],
                responsenew["avatar"],
-               oneTimeCode
+               oneTimeCode,
+               user
             ]
             Thread(target=updateUserData, args=userDataTarget).start()
         except Exception as kesalahan:
@@ -108,13 +113,13 @@ class ProfileUsers(Resource):
     
     if userProfile and "username" in userProfile and "discriminator" in userProfile and (user and "username" in user and user["id"] != userProfile["id"]):      
         oneTimeCode = generateRandomKey(8)
-        userID = userProfile["id"]
         userData = [
-           str(userID),
+           str(userProfile["id"]),
            userProfile["username"] + "#" + userProfile["discriminator"],
            userProfile["username"],
            userProfile["avatar"],
-           oneTimeCode
+           oneTimeCode,
+           userProfile 
         ] 
         Thread(target=updateUserData, args=userData).start()         
         
