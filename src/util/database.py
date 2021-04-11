@@ -50,12 +50,12 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if home_botCaches.get("_botsverified") and vrified:
          return home_botCaches["_botsverified"]
-      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
+      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})), 700)
    
    def getAllServers(self, **anydata):
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)))
+      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)), 600)
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
@@ -65,7 +65,7 @@ class mongoDB():
       data = putCache("_kueribot " + kueri, list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, limit=30)), 30)
+      }, limit=30)), 5)
       return data
    
    def serverQuerySearch(self, **anydata):
@@ -74,7 +74,7 @@ class mongoDB():
          return home_botCaches.get("_kueriserver " + kueri)
       data = putCache("_kueriserver " + kueri, list(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
-      }, limit=30)), 33)
+      }, limit=30)), 5)
       return data
    
    def uploadServer(self, **anydata):
@@ -124,6 +124,9 @@ class mongoDB():
    def uploadBot(self, **anydata):
       botid = str(anydata.get('id', None))
       data = anydata.get('data', {})
+      for kdata in data:
+         if data.get(kdata) == None: 
+            del data[kdata]
       try:
          result = dbInfrastructure.botlist.update_one({"id": botid}, { "$set": data }, upsert=True)
          return result, {"sucess": True, "warns": []}
