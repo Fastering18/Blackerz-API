@@ -135,7 +135,7 @@ class homePage(Resource):
         return redirect(request.url.replace('http:', 'https:', 1), code=301)
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botDataList = mongoDB().getAllBots() 
+    botDataList = mongoDB().getAllBots() or []
     
     if user and "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -166,7 +166,7 @@ class BotSearchPage(Resource):
         
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botsdata = mongoDB().botQuerySearch(kueri=kueri)
+        botsdata = mongoDB().botQuerySearch(kueri=kueri) or []
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -182,7 +182,6 @@ class BotSearchPage(Resource):
         else:
             user = "null"
             
-        print("wih udah pake mongodb")
         respen = make_response(render_template('home.html', user=user, bots=botsdata, kueri=kueri), 200, headers)
         respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
         respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
