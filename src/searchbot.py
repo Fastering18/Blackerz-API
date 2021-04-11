@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, session, request, redirect
 import time, json, requests
 from threading import Timer, Thread
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -69,14 +70,14 @@ class querySearch:
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
-            self.result = requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
-            if self.keyword:
-                listres = [] #list(self.result.values())
-                for kunci in self.result:
-                    if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or (self.harusSama == True and self.keyword.lower() in self.result[kunci]["name"].lower()):
-                        listres.append(self.result[kunci])
-                self.result = listres
-            putCache(str(query), self.result)
+            self.result = mongoDB().botQuerySearch(kueri=self.keyword) #requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
+            #if self.keyword:
+                #listres = [] #list(self.result.values())
+                #for kunci in self.result:
+                    #if self.result[kunci]["name"].lower().startswith(self.keyword.lower()) or (self.harusSama == True and self.keyword.lower() in self.result[kunci]["name"].lower()):
+                        #listres.append(self.result[kunci])
+                #self.result = listres
+            #putCache(str(query), self.result)
         except Exception as kesalahan:
             print(kesalahan)
             self.warns = {"error": True, "message": 'Internal error, this is not your error, please report this issues to github.', "code": 500}
@@ -84,9 +85,8 @@ class querySearch:
             
 class getBotFromID(Resource):
   def get(self, id):
-    if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[(str(id) + "_bot")]), 200)
-    botum = data("getbot", id)
-    bot = botum.data
+    #if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[(str(id) + "_bot")]), 200)
+    bot = mongoDB().get_bot(str(id))
     
     if bot != None:
         return make_response(jsonify(bot), 200)
@@ -97,7 +97,7 @@ class getBotFromID(Resource):
 # SEARCH BASED QUERY
 class searchBotQuery(Resource):
   def get(self):
-    if str(request.values) in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
+    #if str(request.values) in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
     sresult = querySearch(request.values)
     if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"])
     return make_response(jsonify(sresult.result), 200)
