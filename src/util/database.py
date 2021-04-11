@@ -60,7 +60,7 @@ class mongoDB():
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
       if home_botCaches.get("_kueribot " + kueri):
-         return home_botCaches.get("_kueri " + kueri)
+         return home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
       data = putCache("_kueribot " + kueri, list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
