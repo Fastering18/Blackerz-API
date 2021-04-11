@@ -48,9 +48,9 @@ class mongoDB():
       
    def getAllBots(self, **anydata):
       vrified = anydata.get('verified', True)
-      if home_botCaches.get(botsverified) and vrified:
+      if home_botCaches.get("_botsverified") and vrified:
          return home_botCaches["botsverified"]
-      return putCache("botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
+      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
    
    def getAllServers(self, **anydata):
       if home_botCaches.get("_allservers"):
