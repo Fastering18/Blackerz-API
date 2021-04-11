@@ -143,6 +143,11 @@ class mongoDB():
       if home_botCaches.get("bot " + str(find)):
          return home_botCaches.get("bot " + str(find))
       return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find), 63)
+  
+   def get_user(self, **find):
+      if home_botCaches.get("user " + str(find)):
+         return home_botCaches.get("user " + str(find))
+      return putCache("user " + str(find), dbInfrastructure.users.find_one(find), 20)
    
 class dataManager():
     def __init__(self, **anydata):
