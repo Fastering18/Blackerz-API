@@ -12,7 +12,7 @@
     <meta property="og:url" content="{{ request.url_root }}servers/{{ serverID }}" />
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set serverIcon = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
-    {%- if "icon" in server and server["icon"] -%}
+    {%- if server and server.get("icon") -%}
         {%- set serverIcon = "https://cdn.discordapp.com/icons/" + serverID + "/" + server["icon"] -%}
     {%- endif -%}
     <meta property="og:image" content="{{ serverIcon }}" />
@@ -26,8 +26,8 @@
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <link rel="canonical" href="{{ request.url_root }}servers/{{ serverID }}">
-    <link rel="stylesheet" href="/static/CSS/home.css">
-    <link rel="stylesheet" href="/static/CSS/contentpage.css">
+    <link rel="stylesheet" href="https://blackerz.gumlet.net/CSS/home.css">
+    <link rel="stylesheet" href="https://blackerz.gumlet.net/CSS/contentpage.css">
     <script async src="https://arc.io/widget.min.js#prNJMDGs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -133,8 +133,8 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         const client = JSON.parse(('{{ user | tojson | safe }}'))
-        const logined = {{ (user and "id" in user) and "true" or "false" | safe }} 
-        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and 'joinLink' in server and server['joinLink'] else 'https://discord.gg/' | safe }}"
+        const logined = {{ (user and user.get("id")) and "true" or "false" | safe }} 
+        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and server.get('joinLink') else 'https://discord.gg/' | safe }}"
         
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
@@ -143,14 +143,14 @@
             window.location.href = joinLink
         }
         function voteServer(element) {
-            {%- if user and "username" in user -%}
+            {%- if user and user.get("username") -%}
                window.location.href = "/servers/{{serverID}}/vote"
             {%- else -%} 
                return discordLoginAPI()
             {%- endif -%}
         }
         function discordLoginAPI() {
-            {%- if user and "username" in user -%}
+            {%- if user and user.get("username") -%}
                 window.location.href = "/user/{{user['id']}}"
             {%- else -%}
                 document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
