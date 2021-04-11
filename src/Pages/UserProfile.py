@@ -1,11 +1,9 @@
-import os
-import random
-import string
 from flask_restful import Resource
-from flask import jsonify, make_response, render_template, g, session, request, redirect
+from flask import jsonify, make_response, render_template, session, request, redirect
 from requests_oauthlib import OAuth2Session
-import time, json, requests, datetime
+import time, json, requests, datetime, os, random, string
 from threading import Timer, Thread
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -88,7 +86,7 @@ class ProfileUsers(Resource):
     userProfile = discord.get(API_BASE_URL + '/users/@me').json()
     
     useragent = request.headers.get('User-Agent')
-    user = firebaseDB.get('/Infrastructure/WebUsers/' + str(id) , None)
+    user = mongoDB().get_user(id=str(id))
     
     if user and "username" in user and "tag" in user:
         try:
@@ -104,12 +102,11 @@ class ProfileUsers(Resource):
                responsenew["avatar"],
                oneTimeCode
             ]
-            t1 = Thread(target=updateUserData, args=userDataTarget)
-            t1.start()
+            Thread(target=updateUserData, args=userDataTarget).start()
         except Exception as kesalahan:
             print(kesalahan)
     
-    if userProfile and "username" in userProfile and "discriminator" in userProfile:      
+    if userProfile and "username" in userProfile and "discriminator" in userProfile and (user and "username" in user and user["id"] != userProfile["id"]):      
         oneTimeCode = generateRandomKey(8)
         userID = userProfile["id"]
         userData = [
@@ -118,10 +115,8 @@ class ProfileUsers(Resource):
            userProfile["username"],
            userProfile["avatar"],
            oneTimeCode
-        ]
-        
-        t2 = Thread(target=updateUserData, args=userData)      
-        t2.start()   
+        ] 
+        Thread(target=updateUserData, args=userData).start()         
         
     if not user:
         notFound = {
