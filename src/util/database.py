@@ -18,9 +18,9 @@ def deleteCache(tipe="botsverified"):
   del home_botCaches[tipe]
   return True
 
-def putCache(tipe, isi):
+def putCache(tipe, isi, lama=1000.0):
     home_botCaches[tipe] = isi
-    Timer(1000.0, deleteCache, [tipe]).start()
+    Timer(lama, deleteCache, [tipe]).start()
     return isi
    
 def isLinkExist(link):
@@ -48,31 +48,33 @@ class mongoDB():
       
    def getAllBots(self, **anydata):
       vrified = anydata.get('verified', True)
-      if "botsverified" in home_botCaches and vrified:
+      if home_botCaches.get(botsverified) and vrified:
          return home_botCaches["botsverified"]
-      data = putCache("botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
-      return data
+      return putCache("botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})))
    
    def getAllServers(self, **anydata):
-      if "_allservers" in home_botCaches:
+      if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      data = putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)))
-      return data
+      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)))
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
+      if home_botCaches.get("_kueribot " + kueri):
+         return home_botCaches.get("_kueri " + kueri)
       vrified = anydata.get('verified', True)
-      data = list(dbInfrastructure.botlist.find({
+      data = putCache("_kueribot " + kueri, list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, limit=30))
+      }, limit=30)), 30)
       return data
    
    def serverQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
-      data = list(dbInfrastructure.serverlist.find({
+      if home_botCaches.get("_kueriserver " + kueri):
+         return home_botCaches.get("_kueriserver " + kueri)
+      data = putCache("_kueriserver " + kueri, list(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
-      }, limit=30))
+      }, limit=30)), 33)
       return data
    
    def uploadServer(self, **anydata):
@@ -130,10 +132,14 @@ class mongoDB():
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
    
    def get_server(self, **find):
-      return dbInfrastructure.serverlist.find_one(find)
+      if home_botCaches.get("server " + str(find)):
+         return home_botCaches.get("server " + str(find))
+      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find), 60)
     
    def get_bot(self, **find):
-      return dbInfrastructure.botlist.find_one(find)
+      if home_botCaches.get("bot " + str(find)):
+         return home_botCaches.get("bot " + str(find))
+      return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find), 63)
    
 class dataManager():
     def __init__(self, **anydata):
