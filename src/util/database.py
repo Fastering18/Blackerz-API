@@ -52,12 +52,12 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if home_botCaches.get("_botsverified") and vrified:
          return home_botCaches["_botsverified"]
-      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified})), 700)
+      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})), 700)
    
    def getAllServers(self, **anydata):
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, limit=20)), 600)
+      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, {'_id': False}, limit=20)), 600)
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
