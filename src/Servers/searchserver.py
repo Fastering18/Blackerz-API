@@ -2,8 +2,9 @@ from flask_restful import Resource
 from flask import jsonify, make_response, Markup
 import time, requests, markdown
 from threading import Timer
-
 from firebase import firebase
+from src.util.database import mongoDB
+from bson.json_util import dumps
 
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
 
@@ -23,12 +24,12 @@ error1 = {'error': "Server not found", 'status': "Not success"}
         
 class findServer(Resource):
   def get(self, id):
-    servers = data("getserver", id)
-    server = servers.data
+    #servers = data("getserver", id)
+    server = mongoDB().get_server(id=str(id))
     
     if server != None:
         if "LongDescription" in server:
             server["LongDescription"] = Markup(markdown.markdown(server["LongDescription"]))
-        return make_response(jsonify(server), 200)
+        return make_response(dumps(server), 200)
     else: 
         return make_response(jsonify(error1), 404)
