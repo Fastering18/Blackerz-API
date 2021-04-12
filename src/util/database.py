@@ -94,10 +94,10 @@ class mongoDB():
       if ("ShortDescription" in data and (not isinstance(data['ShortDescription'], str) or len(data['ShortDescription']) > 120)): 
          del data['ShortDescription']
          warns.append("ShortDescription must lower than 120 length characters string")
-      if ("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
+      if data.get("memberCount") and (not isinstance(data['memberCount'], int) or data['memberCount'] > 10000000 or data['memberCount'] < 1) #("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
          del data['memberCount']
          warns.append("Invalid memberCount")
-      if "joinLink" in data and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 16 or len(data['joinLink']) < 2):
+      if data.get("joinLink") and (not isinstance(data['joinLink'], str) or len(data['joinLink']) > 16 or len(data['joinLink']) < 2):
          del data['joinLink']
          warns.append("Invalid joinLink")
       datatopush = {}
