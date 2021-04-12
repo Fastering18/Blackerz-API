@@ -3,7 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
 from threading import Timer, Thread
-from src.util.database import notifyChanges
+from src.util.database import notifyChanges, mongoDB
 
 from firebase import firebase
 
@@ -81,15 +81,17 @@ class updateData():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
             
-def updateUserData(id, tag, username, avatar, code):
+def updateUserData(id, tag, username, avatar, code, olduser={}):
     UserData = {
-       'client_id': id,
        'tag': tag,
        'username': username,
        'avatar': avatar,
        'code': code
     }
-    return updateData("postUserStats", user=UserData).data
+    if isinstance(olduser, dict): 
+        if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
+        if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
+    mongoDB().uploadUser(id=id, data=UserData)
 
 class data():
     def __init__(self, dataName, id, client=None):
@@ -138,12 +140,10 @@ class EditBotPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botum = data("botinfo", id)
-        client = None
+        botum = mongoDB().get_bot(id=str(id)) #data("botinfo", id)
+        client = mongoDB().get_user(id=str(id))
         
-        if botum.data == None:
-            notfound = {"description": "Bot not found, check your URL and try again."}
-            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
+        if botum == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -153,14 +153,14 @@ class EditBotPage(Resource):
                user["username"] + "#" + user["discriminator"],
                user["username"],
                user["avatar"],
-               oneTimeCode
+               oneTimeCode,
+               user
             ]
             Thread(target=updateUserData, args=userData).start()
-            client = botum.getOwner(user["id"])
           
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        isOwner = verifyOwner(user["id"], str(id))
+        isOwner = mongoDB().is_ownerof(auth=client["AuthorizationV1"], tipe="botlist", aset=str(id)) #verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
@@ -172,11 +172,10 @@ class WebhookBotPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botum = data("botinfo", id)
-        client = None
+        botum = mongoDB().get_bot(id=str(id))
+        client = mongoDB().get_user(id=str(id))
         
-        if botum.data == None:
-            return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
+        if botum == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -186,21 +185,22 @@ class WebhookBotPage(Resource):
                user["username"] + "#" + user["discriminator"],
                user["username"],
                user["avatar"],
-               oneTimeCode
+               oneTimeCode,
+               user
             ]
-            Thread(target=updateUserData, args=userData).start()
-            client = botum.getOwner(user["id"])
+            Thread(target=updateUserData, args=userData).start() 
+            #client = botum.getOwner(user["id"])
           
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        isOwner = verifyOwner(user["id"], str(id))
+        isOwner = mongoDB().is_ownerof(auth=client["AuthorizationV1"], tipe="botlist", aset=str(id)) #verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
         session["X_CSRF_TOKEN"] = generateRandomKey(59, "._")
         hookdata = data("hookdata", id).data
         print(hookdata)
-        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum.data, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=hookdata), 200, headers)
+        return make_response(render_template('WebhookBotPage.html', clientUser=user, bot=botum, clientData=client, csrf=session["X_CSRF_TOKEN"], hookData=hookdata), 200, headers)
     
     def post(self, id):
         if "http://" in request.url:
@@ -228,7 +228,8 @@ class WebhookBotPage(Resource):
                user["username"] + "#" + user["discriminator"],
                user["username"],
                user["avatar"],
-               oneTimeCode
+               oneTimeCode,
+               user
             ]
             Thread(target=updateUserData, args=userData).start()
             client = botum.getOwner(user["id"])
@@ -252,12 +253,10 @@ class EditServerPage(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        servere = data("serverinfo", str(id))
-        client = None
+        servere = mongoDB().get_server(id=str(id)) #data("serverinfo", str(id))
+        client = mongoDB().get_user(id=str(id))
         
-        if servere.data == None:
-            notfound = {"description": "Server not found, check your URL and try again."}
-            return make_response(render_template('404.html', clientUser=user, notFound=notfound), 404, headers)
+        if servere == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Server not found, check your URL and try again."}), 404, headers)
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
@@ -267,16 +266,17 @@ class EditServerPage(Resource):
                user["username"] + "#" + user["discriminator"],
                user["username"],
                user["avatar"],
-               oneTimeCode
+               oneTimeCode,
+               user
             ]
             Thread(target=updateUserData, args=userData).start()
-            client = servere.getOwner(user["id"])
+            #client = servere.getOwner(user["id"])
         
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        isOwner = verifyOwner(user["id"], str(id), tipe="serverlist")
+        isOwner = mongoDB().is_ownerof(auth=client["AuthorizationV1"], tipe="serverlist", aset=str(id)) #verifyOwner(user["id"], str(id), tipe="serverlist")
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
-        servere.data["id"] = id
-        return make_response(render_template('EditServerPage.html', clientUser=user, server=servere.data, clientData=client), 200, headers)
+        servere["id"] = str(id)
+        return make_response(render_template('EditServerPage.html', clientUser=user, server=servere, clientData=client), 200, headers)
