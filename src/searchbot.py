@@ -3,6 +3,7 @@ from flask import jsonify, make_response, render_template, session, request, red
 import time, json, requests
 from threading import Timer, Thread
 from src.util.database import mongoDB
+from bson.json_util import dumps
 
 from firebase import firebase
 
@@ -70,7 +71,7 @@ class querySearch:
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
-            self.result = mongoDB().botQuerySearch(kueri=self.keyword) #requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
+            self.result = mongoDB().botQuerySearch(kueri=str(self.keyword)) #requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
             #if self.keyword:
                 #listres = [] #list(self.result.values())
                 #for kunci in self.result:
@@ -86,12 +87,12 @@ class querySearch:
 class getBotFromID(Resource):
   def get(self, id):
     #if (str(id) + "_bot") in queryBotCaches: return make_response(jsonify(queryBotCaches[(str(id) + "_bot")]), 200)
-    bot = mongoDB().get_bot(str(id))
+    bot = mongoDB().get_bot(id=str(id))
     
     if bot != None:
-        return make_response(jsonify(bot), 200)
+        return make_response(dumps(bot), 200, {'Content-Type': 'application/json'})
     else: 
-        return make_response(jsonify(error1), 404)
+        return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
     
  
 # SEARCH BASED QUERY
@@ -99,5 +100,5 @@ class searchBotQuery(Resource):
   def get(self):
     #if str(request.values) in queryBotCaches: return make_response(jsonify(queryBotCaches[str(request.values)]), 200)
     sresult = querySearch(request.values)
-    if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"])
-    return make_response(jsonify(sresult.result), 200)
+    if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"], {'Content-Type': 'application/json'})
+    return make_response(dumps(sresult.result), 200, {'Content-Type': 'application/json'})
