@@ -96,7 +96,7 @@ class editData(Resource):
     })  #edit(jsonData, str(id))
     
     if result["sucess"] == True:
-        Thread(target=notifyChanges, args=["<@{0}> edited bot <@{1}>\n  \>> {2}bots/{1}".format(isOwner['id'], str(id), request.url_root), id]).start()
+        Thread(target=notifyChanges, args=["<@{0}> edited bot <@{1}>\n  \>> {2}bots/{1}".format(isOwner.get("user").get('id'), str(id), request.url_root), id]).start()
         return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
     else: 
         return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
