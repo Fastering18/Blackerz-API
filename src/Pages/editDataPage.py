@@ -81,17 +81,18 @@ class updateData():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
             
-def updateUserData(id, tag, username, avatar, code, olduser={}):
+def updateUserData(id, tag, username, avatar, code, olduser=None):
     UserData = {
        'tag': tag,
        'username': username,
        'avatar': avatar,
        'code': code
     }
+    if olduser == None: olduser = mongoDB().get_user(id=str(id))
     if isinstance(olduser, dict): 
         if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
         if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
-    mongoDB().uploadUser(id=id, data=UserData)
+    mongoDB().uploadUser(id=str(id), data=UserData)
 
 class data():
     def __init__(self, dataName, id, client=None):
