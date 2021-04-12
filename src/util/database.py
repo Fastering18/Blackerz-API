@@ -165,12 +165,12 @@ class mongoDB():
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
          return home_botCaches.get("server " + str(find))
-      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find, {'_id': False}), 60)
+      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find, {'_id': False}), 4)
     
    def get_bot(self, **find):
       if home_botCaches.get("bot " + str(find)):
          return home_botCaches.get("bot " + str(find))
-      return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find, {'_id': False}), 63)
+      return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find, {'_id': False}), 2)
   
    def get_user(self, **find):
       if home_botCaches.get("user " + str(find)):
