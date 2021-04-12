@@ -125,10 +125,9 @@ class mongoDB():
    
    def uploadBot(self, **anydata):
       botid = str(anydata.get('id', None))
-      data = dict(anydata.get('data', {}))
-      for kdata in data:
-         if data.get(kdata) == None: 
-            del data[kdata]
+      data = anydata.get('data', {})
+      for kdata in data.keys():
+         if data.get(kdata) == None: del data[kdata]
       data["id"] = botid
       try:
          result = dbInfrastructure.botlist.update_one({"id": botid}, { "$set": data }, upsert=True)
