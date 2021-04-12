@@ -67,7 +67,7 @@ class mongoDB():
       data = putCache("_kueribot " + kueri, list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, limit=30)), 5)
+      }, {'_id': False}, limit=30)), 5)
       return data
    
    def serverQuerySearch(self, **anydata):
@@ -76,7 +76,7 @@ class mongoDB():
          return home_botCaches.get("_kueriserver " + kueri)
       data = putCache("_kueriserver " + kueri, list(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
-      }, limit=30)), 5)
+      }, {'_id': False}, limit=30)), 5)
       return data
    
    def uploadServer(self, **anydata):
@@ -151,17 +151,17 @@ class mongoDB():
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
          return home_botCaches.get("server " + str(find))
-      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find), 60)
+      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find, {'_id': False}), 60)
     
    def get_bot(self, **find):
       if home_botCaches.get("bot " + str(find)):
          return home_botCaches.get("bot " + str(find))
-      return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find), 63)
+      return putCache("bot " + str(find), dbInfrastructure.botlist.find_one(find, {'_id': False}), 63)
   
    def get_user(self, **find):
       if home_botCaches.get("user " + str(find)):
          return home_botCaches.get("user " + str(find))
-      return putCache("user " + str(find), dbInfrastructure.users.find_one(find), 20)
+      return putCache("user " + str(find), dbInfrastructure.users.find_one(find, {'_id': False}), 20)
 
 class IdentifyApiUser():
    def __init__(self, **anydata):
@@ -169,7 +169,7 @@ class IdentifyApiUser():
       self.izin = {"all": False, "bumpserver": False, "editbot": False}
     
    def get_user(self, **anydata):
-      self.data = dbAdmins.users.find_one(apikey=anydata.get('apikey', self.apikey))
+      self.data = dbAdmins.users.find_one(apikey=anydata.get('apikey', self.apikey), {'_id': False})
       if isinstance(self.data, dict) and self.data.get("allow"):
          for izin in (self.data["allow"].split(";")):
             if len(izin) >= 1: self.izin[izin] = True    
