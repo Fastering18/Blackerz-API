@@ -129,6 +129,7 @@ class mongoDB():
       for kdata in data:
          if data.get(kdata) == None: 
             del data[kdata]
+      data["id"] = botid
       try:
          result = dbInfrastructure.botlist.update_one({"id": botid}, { "$set": data }, upsert=True)
          return result, {"sucess": True, "warns": []}
