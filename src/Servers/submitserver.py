@@ -133,9 +133,11 @@ class editServer(Resource):
     def put(self, id):
         jsonData = request.get_json()
         clientAuthV1 = request.headers.get('Authorization')
-        isOwner = verifyItemOwner(clientAuthV1, str(id), tipe="serverlist")
+        if clientAuthV1 == None: return make_response(jsonify(isOwner["reason"]), 401) 
+        isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="serverlist")
+        #isOwner = verifyItemOwner(clientAuthV1, str(id), tipe="serverlist")
         if isOwner["success"] == False:
-            return make_response(jsonify(isOwner["reason"]), 401) 
+           return make_response(jsonify(isOwner["reason"]), 401) 
         if not jsonData:
            return make_response(jsonify(error1), 400)
         if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
@@ -143,10 +145,10 @@ class editServer(Resource):
         if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
            return make_response(jsonify(error5), 400)
     
-        server_edit = serverManager(str(id)).editServer(jsonData)
+        server_edit, result_edit = mongoDB().uploadServer(id=id, data=jsonData)  #serverManager(str(id)).editServer(jsonData)
         #if server_edit.result['error'] != None:
             #return make_response(jsonify(server_edit.result), server_edit.result['code'])
         
-        return make_response(jsonify(server_edit.result), server_edit.result['code'])
+        return make_response(jsonify(result_edit), 201)
         
     
