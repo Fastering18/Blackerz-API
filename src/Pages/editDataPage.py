@@ -154,7 +154,7 @@ class EditBotPage(Resource):
                user["username"],
                user["avatar"],
                oneTimeCode,
-               user
+               client
             ]
             Thread(target=updateUserData, args=userData).start()
           
@@ -187,7 +187,7 @@ class WebhookBotPage(Resource):
                user["username"],
                user["avatar"],
                oneTimeCode,
-               user
+               client
             ]
             Thread(target=updateUserData, args=userData).start() 
             #client = botum.getOwner(user["id"])
@@ -230,7 +230,7 @@ class WebhookBotPage(Resource):
                user["username"],
                user["avatar"],
                oneTimeCode,
-               user
+               client
             ]
             Thread(target=updateUserData, args=userData).start()
             client = botum.getOwner(user["id"])
@@ -268,7 +268,7 @@ class EditServerPage(Resource):
                user["username"],
                user["avatar"],
                oneTimeCode,
-               user
+               client
             ]
             Thread(target=updateUserData, args=userData).start()
             #client = servere.getOwner(user["id"])
