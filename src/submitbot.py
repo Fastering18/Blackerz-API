@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, request, abort
 import time, json
 from threading import Timer
-from src.util.database import mongoDB
+from src.util.database import mongoDB, IdentifyApiUser
 
 from firebase import firebase
 
@@ -21,14 +21,15 @@ def identifyAPiKey(apiKey):
 
 class postBot():
     def __init__(self, dataREQ):
-        dataFinal = {'name': dataREQ['name'],
-                'owner': {
-                    'id': dataREQ['owner']['id'],
-                    'name': dataREQ['owner']['name']
-                },
-                'tag': dataREQ['tag'],
-                'upvotes': 0
-                }
+        dataFinal = {
+            'name': dataREQ['name'],
+             'owner': {
+                 'id': dataREQ['owner']['id'],
+                 'name': dataREQ['owner']['name']
+             },
+             'tag': dataREQ['tag'],
+             #'upvotes': 0
+        }
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
                     #'id': dataREQ['owner']['id'],
@@ -50,7 +51,8 @@ class resource3(Resource):
         apiKey = request.headers.get('apiKey')
         if not apiKey:
             return make_response(jsonify(unauthorizedAcess1), 401)
-        if identifyAPiKey(apiKey) == None: 
+        ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
+        if not ApiUser.izin.get("postbot") and not ApiUser.izin.get("all"): 
             return make_response(jsonify(unauthorizedAcess2), 401)
         
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner'] or not 'prefix' in jsonData:
