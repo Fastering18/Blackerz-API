@@ -23,13 +23,20 @@ class postBot():
     def __init__(self, dataREQ):
         dataFinal = {
             'name': dataREQ['name'],
-             'owner': {
-                 'id': dataREQ['owner']['id'],
-                 'name': dataREQ['owner']['name']
+            'owner': {
+                'id': dataREQ['owner']['id'],
+                'name': dataREQ['owner']['name']
              },
-             'tag': dataREQ['tag'],
-             #'upvotes': 0
+             "prefix": dataREQ["prefix"],
+            'tag': dataREQ['tag'],
+            'verified': True,
+            'id': dataREQ["botId"]
         }
+        olddata = mongoDB().get_bot(id=dataREQ["botId"])
+        if not "upvotes" in olddata: dataFinal["upvotes"] = 0
+        if "verified" in olddata: dataFinal["verified"] = olddata["verified"]
+        if dataREQ.get("avatar"): dataFinal["avatar"] = dataREQ["avatar"]
+        result, hasil = mongoDB().uploadBot(id=dataREQ["botId"], data=dataFinal)
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
                     #'id': dataREQ['owner']['id'],
@@ -43,7 +50,7 @@ class postBot():
         #if "inviteLink" in dataREQ:
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
         
-        self.result = {'error': None, 'status': "sucess"}
+        self.result = hasil
 
 class resource3(Resource):
     def post(self, id):
@@ -58,6 +65,7 @@ class resource3(Resource):
         if not jsonData or not 'name' in jsonData or not 'owner' in jsonData or not 'tag' in jsonData or not 'id' in jsonData['owner'] or not 'name' in jsonData['owner'] or not 'prefix' in jsonData:
             return make_response(jsonify(error1), 400)
         
+        jsonData["botId"] = str(id)
         result = postBot(jsonData)
         
         return make_response(jsonify(result.result), 201)
