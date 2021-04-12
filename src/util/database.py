@@ -126,7 +126,7 @@ class mongoDB():
    def uploadBot(self, **anydata):
       botid = str(anydata.get('id', None))
       data = anydata.get('data', {})
-      for kdata in data.keys():
+      for kdata in list(data):
          if data.get(kdata) == None: del data[kdata]
       data["id"] = botid
       try:
