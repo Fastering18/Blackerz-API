@@ -119,7 +119,7 @@ class data():
                 print(kesalahan)
                 self.result = data("allBot").data
             
-def updateUserData(id, tag, username, avatar, code, olduser):
+def updateUserData(id, tag, username, avatar, code, olduser=None):
     UserData = {
        #'client_id': id,
        'tag': tag,
@@ -127,6 +127,7 @@ def updateUserData(id, tag, username, avatar, code, olduser):
        'avatar': avatar,
        'code': code
     }
+    if olduser == None: olduser = mongoDB().get_user(id=id)
     if isinstance(olduser, dict): 
         if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
         if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
@@ -148,8 +149,7 @@ class homePage(Resource):
            user["username"] + "#" + user["discriminator"],
            user["username"],
            user["avatar"],
-           oneTimeCode,
-           user 
+           oneTimeCode
         ]
         Thread(target=updateUserData, args=userData).start() 
     else:
@@ -180,8 +180,7 @@ class BotSearchPage(Resource):
                user["username"] + "#" + user["discriminator"],
                user["username"],
                user["avatar"],
-               oneTimeCode,
-               user
+               oneTimeCode
             ]
             Thread(target=updateUserData, args=userData).start() 
         else:
