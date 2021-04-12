@@ -160,7 +160,8 @@ class EditBotPage(Resource):
           
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        isOwner = mongoDB().is_ownerof(auth=client["AuthorizationV1"], tipe="botlist", aset=str(id)) #verifyOwner(user["id"], str(id))
+        print(client.get("AuthorizationV1"))
+        isOwner = mongoDB().is_ownerof(auth={"id": user["id"]}, tipe="botlist", aset=str(id)) #verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
