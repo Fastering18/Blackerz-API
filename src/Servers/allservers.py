@@ -26,7 +26,7 @@ class findAllServer(Resource):
   def get(self):
     servers = mongoDB().getAllServers() #data("getserver")
     
-    if server != None:
-        return make_response(dumps(servers), 200)
+    if servers != None:
+        return make_response(dumps(servers), 200, {'Content-Type': 'application/json'})
     else: 
-        return make_response(jsonify(error1), 404)
+        return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
