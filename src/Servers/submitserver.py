@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, request, abort
 import time, json, requests
 from threading import Timer
-from src.util.database import mongoDB
+from src.util.database import mongoDB, IdentifyApiUser
 
 from firebase import firebase
 
@@ -111,10 +111,10 @@ class postServer(Resource):
         apiKey = request.headers.get('apiKey')
         if not apiKey:
             return make_response(jsonify(unauthorizedAcess1), 401)
-        author = identifyAPiKey(apiKey)
-        if author == None: 
+        author = IdentifyApiUser().get_user(apikey=apiKey)
+        if author.data == None: 
             return make_response(jsonify(unauthorizedAcess2), 401)
-        elif not "bumpserver" in author["perm"] and not "all" in author["perm"]:
+        elif not author.izin.get("bumpserver") and not author.izin.get("all"):
             return make_response(jsonify(unauthorizedAcess3), 401)
         print(jsonData)
         if (not jsonData) or (not 'name' in jsonData) or (not 'owner' in jsonData) or (not 'memberCount' in jsonData) or (not 'id' in jsonData['owner']) or (not 'name' in jsonData['owner']) or (isinstance(jsonData["memberCount"], int) != True):
