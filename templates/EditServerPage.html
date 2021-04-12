@@ -95,8 +95,8 @@
           document.querySelector("#FormEdit").addEventListener("submit", function(event) {
             event.preventDefault();
             var editedData = {
-              "shortDescription": document.getElementById("ShortDescriptionInput").value,
-              "longDescription": document.getElementById("LongDescriptionInput").value,
+              "ShortDescription": document.getElementById("ShortDescriptionInput").value,
+              "LongDescription": document.getElementById("LongDescriptionInput").value,
             }
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(result) {
