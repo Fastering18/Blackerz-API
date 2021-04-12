@@ -149,6 +149,6 @@ class editServer(Resource):
         #if server_edit.result['error'] != None:
             #return make_response(jsonify(server_edit.result), server_edit.result['code'])
         
-        return make_response(jsonify(result_edit), 201)
+        return make_response(jsonify(result_edit), 201, {'Content-Type': 'application/json'})
         
     
