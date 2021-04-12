@@ -62,7 +62,7 @@ class data():
             result = firebaseDB.get('/Infrastructure/serverlist/' + serverID, None)
             self.data = result
             
-def updateUserData(id, tag, username, avatar, code, olduser):
+def updateUserData(id, tag, username, avatar, code, olduser=None):
     UserData = {
        #'client_id': id,
        'tag': tag,
