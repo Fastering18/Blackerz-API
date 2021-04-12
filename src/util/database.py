@@ -169,7 +169,7 @@ class IdentifyApiUser():
       self.izin = {"all": False, "bumpserver": False, "editbot": False}
     
    def get_user(self, **anydata):
-      self.data = dbAdmins.users.find_one(apikey=anydata.get('apikey', self.apikey), {'_id': False})
+      self.data = dbAdmins.users.find_one({"apikey": anydata.get('apikey', self.apikey)}, {'_id': False})
       if isinstance(self.data, dict) and self.data.get("allow"):
          for izin in (self.data["allow"].split(";")):
             if len(izin) >= 1: self.izin[izin] = True    
