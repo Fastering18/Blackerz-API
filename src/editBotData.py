@@ -81,9 +81,9 @@ class editData(Resource):
        return make_response(jsonify(isOwner["reason"]), 401) 
     if not jsonData:
        return make_response(jsonify(error1), 400)
-    if 'shortDescription' in jsonData and int(len(jsonData['shortDescription'])) > 120:
+    if isinstance(jsonData.get('ShortDescription'), str) and int(len(jsonData['ShortDescription'])) > 120:
        return make_response(jsonify(error3), 400)
-    if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
+    if isinstance(jsonData.get('LongDescription'), str) and int(len(jsonData['ShortDescription'])) > 4000:
        return make_response(jsonify(error5), 400)
     jsonData["id"] = str(id)
     botum, result = mongoDB().uploadBot(id=id, data={
