@@ -5,6 +5,7 @@ from threading import Timer, Thread
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
 client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority", connect=False)
 dbInfrastructure = client.Infrastructure
+dbAdmins = client.Admins
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
 
  
@@ -167,7 +168,7 @@ class IdentifyApiUser():
       self.izin = {"all": False, "bumpserver": False, "editbot": False}
     
    def get_user(self, **anydata):
-      self.data = dbInfrastructure.admins.find_one(apikey=anydata.get('apikey', self.apikey))
+      self.data = dbAdmins.users.find_one(apikey=anydata.get('apikey', self.apikey))
       if isinstance(self.data, dict) and self.data.get("allow"):
          for izin in (self.data["allow"].split(";")):
             if len(izin) >= 1: self.izin[izin] = True    
