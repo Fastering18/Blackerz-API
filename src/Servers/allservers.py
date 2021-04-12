@@ -1,8 +1,9 @@
 from flask_restful import Resource
 from flask import jsonify, make_response
-import time
-import requests
+import time, requests
 from threading import Timer
+from src.util.database import mongoDB
+from bson.json_util import dumps
 
 from firebase import firebase
 
@@ -19,15 +20,13 @@ class data():
         else:
             self.data = None
 
-timeStamp = 0
 error1 = {'error': "Server not found", 'status': "Not success"}
         
 class findAllServer(Resource):
   def get(self):
-    servers = data("getserver")
-    server = servers.data
+    servers = mongoDB().getAllServers() #data("getserver")
     
     if server != None:
-        return make_response(jsonify(server), 200)
+        return make_response(dumps(servers), 200)
     else: 
         return make_response(jsonify(error1), 404)
