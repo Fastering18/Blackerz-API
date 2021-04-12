@@ -151,11 +151,12 @@ class mongoDB():
    def is_ownerof(self, **anydata):
       authv1 = anydata.get('auth', None)
       tipeasset = anydata.get('tipe', "botlist")
+      assetid = anydata.get('aset', None)
       if not authv1: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
       user = dbInfrastructure.users.find_one({"AuthorizationV1": str(authv1)})
       print(user)
       if not user: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
-      owned = dbInfrastructure[tipeasset].find_one({"owner": {"id": str(user["id"])}})
+      owned = dbInfrastructure[tipeasset].find_one({"owner.id": str(user["id"]), "id": assetid}, {'_id': False})
       print(owned)
       print(user["id"])
       if owned == None: return {"success": False, "reason": "Unauthorized, asset not owned"}
