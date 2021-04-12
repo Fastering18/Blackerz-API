@@ -138,7 +138,7 @@ class mongoDB():
         
    def uploadUser(self, **anydata):
       userid = str(anydata.get('id', None))
-      data = anydata.get('data', {})
+      data = dict(anydata.get('data', {}))
       for kdata in data:
          if data.get(kdata) == None: del data[kdata]
       try:
