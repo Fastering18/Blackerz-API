@@ -147,7 +147,17 @@ class mongoDB():
       except Exception as keslhn:
          print(keslhn)
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
-    
+   
+   def is_ownerof(self, **anydata):
+      authv1 = anydata.get('auth', None)
+      tipeasset = anydata.get('tipe', "botlist")
+      if not authv1: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
+      user = dbInfrastructure.users.find_one({"AuthorizationV1": str(authv1)})
+      if not user: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
+      owned = dbInfrastructure[tipeasset].find_one({"owner": {"id": user["id"]}})
+      if owned == None: return {"success": False, "reason": "Unauthorized, asset not owned"}
+      return {"success": True, "reason": "success", "aset": owned, "user": user}
+     
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
          return home_botCaches.get("server " + str(find))
