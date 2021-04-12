@@ -115,7 +115,7 @@ class ProfileUsers(Resource):
     if userProfile and "username" in userProfile and "discriminator" in userProfile and (user and "username" in user and user["id"] != userProfile["id"]):      
         oneTimeCode = generateRandomKey(8)
         userData = [
-           str(userProfile["id"]),
+           str(userProfile.get("id")),
            userProfile["username"] + "#" + userProfile["discriminator"],
            userProfile["username"],
            userProfile["avatar"],
@@ -130,6 +130,7 @@ class ProfileUsers(Resource):
         }
         return make_response(render_template('404.html', notFound=notFound, clientUser=userProfile), 404, headers)
     
+    user = dict(user)
     user["userId"] = str(id)
     user["botsowned"] = getUserBots(str(id))
     print(user)
