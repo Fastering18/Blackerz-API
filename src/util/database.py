@@ -161,6 +161,14 @@ class mongoDB():
       print(user["id"])
       if owned == None: return {"success": False, "reason": "Unauthorized, asset not owned"}
       return {"success": True, "reason": "success", "aset": owned, "user": user}
+   
+   def get_owned(self, **anydata):
+      if home_botCaches.get("owned " + str(anydata)):
+         return home_botCaches.get("owned " + str(anydata))
+      tipe = anydata.get('tipe', "botlist")
+      userid = anydata.get('id', None)
+      if userid == None: return []
+      return putCache("owned " + str(anydata), list(dbInfrastructure[tipe].find({"owner.id": userid})), 25)
      
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
