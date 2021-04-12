@@ -75,7 +75,7 @@ class editData(Resource):
   def put(self, id):
     jsonData = request.get_json()
     clientAuthV1 = request.headers.get('Authorization')
-    isOwner = verifyItemOwner(clientAuthV1, str(id))
+    isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="botlist", aset=str(id)) #verifyItemOwner(clientAuthV1, str(id))
     
     if isOwner["success"] == False:
        return make_response(jsonify(isOwner["reason"]), 401) 
@@ -86,13 +86,20 @@ class editData(Resource):
     if 'longDescription' in jsonData and int(len(jsonData['longDescription'])) > 4000:
        return make_response(jsonify(error5), 400)
     jsonData["id"] = str(id)
-    botum = edit(jsonData, str(id))
+    botum, result = mongoDB().uploadBot(id=id, data={
+        "name": jsonData.get("name"),
+        "avatar": jsonData.get("avatar"),
+        "prefix": jsonData.get("prefix"),
+        "ShortDescription": jsonData.get("shortDescription"),
+        "LongDescription": jsonData.get("longDescription"),
+        "serverCount": jsonData.get("serverCount")
+    })  #edit(jsonData, str(id))
     
-    if botum.result == True:
+    if result["sucess"] == True:
         Thread(target=notifyChanges, args=["<@{0}> edited bot <@{1}>\n  \>> {2}bots/{1}".format(isOwner['id'], str(id), request.url_root), id]).start()
-        return make_response(jsonify(sucess), 201)
+        return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
     else: 
-        return make_response(jsonify(botum.result), 400)
+        return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
     
   def post(self, id):
     jsonData = request.get_json()
@@ -123,17 +130,17 @@ class ServerCountManager(Resource):
         if "http://" in request.url:
             return redirect(request.url.replace("http://", "https://", 1))
         clientAuthV1 = request.headers.get('Authorization')
-        isOwner = verifyItemOwner(clientAuthV1, str(id))
+        isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="botlist", aset=str(id)) #verifyItemOwner(clientAuthV1, str(id))
         jsonData = request.get_json()
         
         if isOwner["success"] == False:
            return make_response(jsonify(isOwner["reason"]), 401) 
     
-        if not jsonData or not "servercount" in jsonData:
-           return make_response(jsonify(error1), 400)
-        botum = edit({"serverCount": jsonData.get("servercount")}, str(id))
+        if not jsonData or not jsonData.get("servercount"):
+           return make_response(jsonify(error1), 400, {'Content-Type': 'application/json'})
+        botum, result = mongoDB().uploadBot(id=id, data={"serverCount": jsonData.get("servercount")})  #edit({"serverCount": jsonData.get("servercount")}, str(id))
         
-        if botum.result == True:
-            return make_response(jsonify(sucess), 201)
+        if result["sucess"] == True:
+            return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
         else: 
-            return make_response(jsonify(botum.result), 400)
+            return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
