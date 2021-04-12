@@ -10,6 +10,6 @@ class resource2(Resource):
     if isinstance(botlist, str):
       return make_response(botlist, 500)
     elif botlist: 
-      return make_response(botlist, 200)
+      return make_response(dumps(botlist), 200)
     else:
       return make_response("404 Bot tidak ditemukan.", 404)
