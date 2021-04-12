@@ -154,9 +154,10 @@ class mongoDB():
       if not authv1: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
       user = dbInfrastructure.users.find_one({"AuthorizationV1": str(authv1)})
       print(user)
-      print(authv1)
       if not user: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
-      owned = dbInfrastructure[tipeasset].find_one({"owner": {"id": user["id"]}})
+      owned = dbInfrastructure[tipeasset].find_one({"owner": {"id": str(user["id"])}})
+      print(owned)
+      print(user["id"])
       if owned == None: return {"success": False, "reason": "Unauthorized, asset not owned"}
       return {"success": True, "reason": "success", "aset": owned, "user": user}
      
