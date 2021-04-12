@@ -63,13 +63,18 @@ class data():
             self.data = result
 def updateUserData(id, tag, username, avatar, code):
     UserData = {
-       'client_id': id,
+       #'client_id': id,
        'tag': tag,
        'username': username,
        'avatar': avatar,
        'code': code
     }
-    data("postUserStats", user=UserData)  
+    if olduser == None: olduser = mongoDB().get_user(id=id)
+    if isinstance(olduser, dict): 
+        if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
+        if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
+    mongoDB().uploadUser(id=id, data=UserData)
+    #data("postUserStats", user=UserData)  
     
 class allServersPage(Resource):
   def get(self):
@@ -81,9 +86,8 @@ class allServersPage(Resource):
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
-        userID = user["id"]
         userData = [
-           str(userID),
+           str(user.get("id")),
            user["username"] + "#" + user["discriminator"],
            user["username"],
            user["avatar"],
@@ -105,9 +109,8 @@ class specificServerPage(Resource):
     if user and "id" in user and "username" in user:      
         # return jsonify(user=user, guilds=guilds, connections=connections)
         oneTimeCode = generateRandomKey(8)
-        userID = user["id"]
         userData = [
-           str(userID),
+           str(user.get("id")),
            user["username"] + "#" + user["discriminator"],
            user["username"],
            user["avatar"],
@@ -138,9 +141,8 @@ class searchServerQuery(Resource):
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
-        userID = user["id"]
         userData = [
-           str(userID),
+           str(user.get("id")),
            user["username"] + "#" + user["discriminator"],
            user["username"],
            user["avatar"],
