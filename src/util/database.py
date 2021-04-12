@@ -117,7 +117,7 @@ class mongoDB():
             if not "owner" in datatopush: datatopush["owner"] = {}
             datatopush["owner"]["name"] = data["owner"]["name"]
       try:
-         result = dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": data }, upsert=True)
+         result = dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": datatopush }, upsert=True)
          return result, {"sucess": True, "warns": warns}
       except Exception as keslhn:
          print(keslhn)
