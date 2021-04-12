@@ -160,7 +160,21 @@ class mongoDB():
       if home_botCaches.get("user " + str(find)):
          return home_botCaches.get("user " + str(find))
       return putCache("user " + str(find), dbInfrastructure.users.find_one(find), 20)
+
+class IdentifyApiUser():
+   def __init__(self, **anydata):
+      self.apikey = anydata.get('apikey', None)
+      self.izin = {"all": False, "bumpserver": False, "editbot": False}
+    
+   def get_user(self, **anydata):
+      self.data = dbInfrastructure.admins.find_one(apikey=anydata.get('apikey', self.apikey))
+      if isinstance(self.data, dict) and self.data.get("allow"):
+         for izin in (self.data["allow"].split(";")):
+            if len(izin) >= 1: self.izin[izin] = True    
+      
+      return self
    
+     
 class dataManager():
     def __init__(self, **anydata):
         self.botID = anydata.get('bot_id', None)
