@@ -5,7 +5,7 @@ from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
 import sentry_sdk, pymongo
 from sentry_sdk.integrations.flask import FlaskIntegration
-from src.util.database import dbInfrastructure, firebaseDB
+from src.util.database import dbInfrastructure, firebaseDB, dbAdmins 
 
 import src.Pages.Home as Home
 import src.Pages.Server as Servers
@@ -54,6 +54,12 @@ sentry_sdk.init(
     integrations=[FlaskIntegration()],
     traces_sample_rate=1.0
 )  
+
+admins = firebaseDB.get("/Infrastructure/Users", None)
+print(admins)
+for apikey in admins:
+    admins[apikey]["apikey"] = apikey
+    dbAdmins.users.update_one({"apikey": apikey}, { "$set": admins[apikey] }, upsert=True)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
