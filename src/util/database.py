@@ -154,7 +154,7 @@ class mongoDB():
       tipeasset = anydata.get('tipe', "botlist")
       assetid = anydata.get('aset', None)
       if not authv1: return {"success": False, "reason": "Unauthorized, Please put Authoriation headers"}
-      user = dbInfrastructure.users.find_one({"AuthorizationV1": str(authv1)})
+      user = dbInfrastructure.users.find_one({"AuthorizationV1": str(authv1)} if isinstance(authv1, str) else authv1)
       print(user)
       if not user: return {"success": False, "reason": "Unauthorized, User doesnt exist"}
       owned = dbInfrastructure[tipeasset].find_one({"owner.id": str(user["id"]), "id": assetid}, {'_id': False})
