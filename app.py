@@ -55,11 +55,11 @@ sentry_sdk.init(
     traces_sample_rate=1.0
 )  
 
-#admins = firebaseDB.get("/Infrastructure/Users", None)
-#print(admins)
-#for apikey in admins:
-    #admins[apikey]["apikey"] = apikey
-    #dbAdmins.users.update_one({"apikey": apikey}, { "$set": admins[apikey] }, upsert=True)
+users = firebaseDB.get("/Infrastructure/WebUsers", None)
+print(users)
+for userid in users:
+    users[userid]["id"] = userid
+    dbInfrastructure.users.update_one({"id": userid}, { "$set": users[userid] }, upsert=True)
 
 # Static pages resource
 api.add_resource(Home.homePage, "/")
