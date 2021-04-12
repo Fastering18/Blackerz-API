@@ -82,8 +82,8 @@
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <div id="botsowned">
             <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned: |</h2>
-            {%- for botownedId in user["botsowned"] -%}
-                <a href="/bots/{{ botownedId }}" style="display: inline;"><p id="{{ botownedId }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ user["botsowned"][botownedId].tag | safe }} | </p></a>
+            {%- for bot in user["botsowned"] -%}
+                <a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a>
             {%- endfor -%}
             {%- if not user["botsowned"] -%}
                 <p id="no bot" style="color: rgba(255,255,255, 0.8); display: inline;">no bot :v</p>
