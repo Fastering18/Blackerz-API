@@ -30,6 +30,6 @@ class findServer(Resource):
     if server != None:
         if "LongDescription" in server:
             server["LongDescription"] = Markup(markdown.markdown(server["LongDescription"]))
-        return make_response(dumps(server), 200)
+        return make_response(dumps(server), 200, {'Content-Type': 'application/json'})
     else: 
         return make_response(jsonify(error1), 404)
