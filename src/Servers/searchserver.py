@@ -32,4 +32,4 @@ class findServer(Resource):
             server["LongDescription"] = Markup(markdown.markdown(server["LongDescription"]))
         return make_response(dumps(server), 200, {'Content-Type': 'application/json'})
     else: 
-        return make_response(jsonify(error1), 404)
+        return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
