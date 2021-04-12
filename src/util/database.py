@@ -81,7 +81,7 @@ class mongoDB():
    
    def uploadServer(self, **anydata):
       serverid = str(anydata.get('id', None))
-      data = anydata.get('data', {})
+      data = dict(anydata.get('data', {}))
       if serverid == "None": return False
       data["id"] = serverid
       warns = []
@@ -125,7 +125,7 @@ class mongoDB():
    
    def uploadBot(self, **anydata):
       botid = str(anydata.get('id', None))
-      data = anydata.get('data', {})
+      data = dict(anydata.get('data', {}))
       for kdata in data:
          if data.get(kdata) == None: 
             del data[kdata]
