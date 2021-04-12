@@ -1,8 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, request, abort
-import time
-import json
+import time, json
 from threading import Timer
+from src.util.database import mongoDB
 
 from firebase import firebase
 
@@ -29,18 +29,18 @@ class postBot():
                 'tag': dataREQ['tag'],
                 'upvotes': 0
                 }
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
-                    'id': dataREQ['owner']['id'],
-                    'name': dataREQ['owner']['name']
-                })
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "upvotes", 0)
-        firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "prefix", dataREQ['prefix'])
-        if "avatar" in dataREQ:
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
-        if "inviteLink" in dataREQ:
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
+        #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
+        #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
+                    #'id': dataREQ['owner']['id'],
+                    #'name': dataREQ['owner']['name']
+                #})
+        #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "tag", dataREQ['tag'])
+        #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "upvotes", 0)
+        #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "prefix", dataREQ['prefix'])
+        #if "avatar" in dataREQ:
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "avatar", dataREQ['avatar'])
+        #if "inviteLink" in dataREQ:
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
         
         self.result = {'error': None, 'status': "sucess"}
 
