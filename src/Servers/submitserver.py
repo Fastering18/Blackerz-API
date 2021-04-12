@@ -134,7 +134,7 @@ class editServer(Resource):
         jsonData = request.get_json()
         clientAuthV1 = request.headers.get('Authorization')
         if clientAuthV1 == None: return make_response(jsonify(isOwner["reason"]), 401) 
-        isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="serverlist")
+        isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="serverlist", aset=str(id))
         #isOwner = verifyItemOwner(clientAuthV1, str(id), tipe="serverlist")
         if isOwner["success"] == False:
            return make_response(jsonify(isOwner["reason"]), 401) 
