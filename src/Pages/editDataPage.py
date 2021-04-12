@@ -143,8 +143,6 @@ class EditBotPage(Resource):
         botum = mongoDB().get_bot(id=str(id)) #data("botinfo", id)
         client = mongoDB().get_user(id=str(user.get("id")))
         
-        print(user.get("id")))
-        print(client)
         if botum == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
         if user and "id" in user and "username" in user:      
@@ -162,12 +160,12 @@ class EditBotPage(Resource):
           
         if not "id" in user:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
-        print(client.get("AuthorizationV1"))
+        
         isOwner = mongoDB().is_ownerof(auth={"id": user["id"]}, tipe="botlist", aset=str(id)) #verifyOwner(user["id"], str(id))
         if isOwner["success"] == False:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers) 
         
-        return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum.data, clientData=client), 200, headers)
+        return make_response(render_template('EditBotPage.html', clientUser=user, bot=botum, clientData=client), 200, headers)
 
 class WebhookBotPage(Resource):
     def get(self, id):
