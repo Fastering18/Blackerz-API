@@ -68,7 +68,7 @@ class data():
             result = firebaseDB.get('/Infrastructure/botlist', None)
             self.data = result
 
-def updateUserData(id, tag, username, avatar, code, olduser):
+def updateUserData(id, tag, username, avatar, code, olduser=None):
     UserData = {
        #'id': id,
        'tag': tag,
@@ -76,6 +76,7 @@ def updateUserData(id, tag, username, avatar, code, olduser):
        'avatar': avatar,
        'code': code
     }
+    if olduser == None: olduser = mongoDB().get_user(id=str(id))
     if isinstance(olduser, dict): 
         if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
         if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
@@ -129,14 +130,13 @@ class ProfileUsers(Resource):
         }
         return make_response(render_template('404.html', notFound=notFound, clientUser=userProfile), 404, headers)
     
-    userData = user
-    userData["userId"] = str(id)
-    userData["botsowned"] = getUserBots(str(id))
-    print(userData)
+    user["userId"] = str(id)
+    user["botsowned"] = getUserBots(str(id))
+    print(user)
     if userProfile and "id" in userProfile:  
         if str(id) != userProfile["id"]:
-            if userData.get("AuthorizationV1"): del userData["AuthorizationV1"]
+            if user.get("AuthorizationV1"): del user["AuthorizationV1"]
     else:
-        if userData.get("AuthorizationV1"): del userData["AuthorizationV1"]
+        if user.get("AuthorizationV1"): del user["AuthorizationV1"]
 
-    return make_response(render_template('profile.html', user=userData, client=userProfile), 200, headers)
+    return make_response(render_template('profile.html', user=user, client=userProfile), 200, headers)
