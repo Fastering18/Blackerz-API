@@ -141,7 +141,7 @@ class EditBotPage(Resource):
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
         botum = mongoDB().get_bot(id=str(id)) #data("botinfo", id)
-        client = mongoDB().get_user(id=str(user[id]))
+        client = mongoDB().get_user(id=str(user["id"]))
         
         if botum == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
@@ -174,7 +174,7 @@ class WebhookBotPage(Resource):
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
         botum = mongoDB().get_bot(id=str(id))
-        client = mongoDB().get_user(id=str(user[id]))
+        client = mongoDB().get_user(id=str(user["id"]))
         
         if botum == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Bot not found, check your URL and try again."}), 404, headers)
         
@@ -255,7 +255,7 @@ class EditServerPage(Resource):
         discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
         user = discord.get(API_BASE_URL + '/users/@me').json()
         servere = mongoDB().get_server(id=str(id)) #data("serverinfo", str(id))
-        client = mongoDB().get_user(id=str(user[id]))
+        client = mongoDB().get_user(id=str(user["id"]))
         
         if servere == None: return make_response(render_template('404.html', clientUser=user, notFound={"description": "Server not found, check your URL and try again."}), 404, headers)
         
