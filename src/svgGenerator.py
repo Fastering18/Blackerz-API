@@ -3,6 +3,7 @@ from flask import jsonify, make_response, request, redirect, render_template, Ma
 import time, json, requests, string
 from threading import Timer
 from cairosvg import svg2png
+from src.util.database import notifyChanges, mongoDB
 
 from firebase import firebase
 
@@ -17,8 +18,9 @@ imagecaches = {
 
 def getServerCountBotFromID(botID):
   try:
-    servercount = requests.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
-    return servercount
+    servercount = mongoDB().get_bot(id=str(botID)) #requests.get(f"https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist/{botID}/serverCount.json").json()
+    if not servercount or (servercount and not "serverCount" in servercount): return None
+    return servercount["serverCount"]
   except:
     return None
 
@@ -49,7 +51,7 @@ class getServerCountBot(Resource):
       return make_response(imagecaches["bots"][id]["servercountPNG"], 200, pngheaders)
    
     servercount = getServerCountBotFromID(id)
-    if servercount == None: return make_response(jsonify({"error": True, "message": "No data found"}), 404)
+    if servercount == None: return make_response(jsonify({"error": True, "message": "No data found"}), 404, {'Content-Type': 'application/json'})
     
     gambarJadi = f'''<?xml version="1.0" encoding="UTF-8"?>
     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
