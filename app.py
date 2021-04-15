@@ -3,7 +3,7 @@ from flask_restful import Api, Resource
 from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
-import sentry_sdk, pymongo
+import sentry_sdk, requests
 from sentry_sdk.integrations.flask import FlaskIntegration
 from src.util.database import dbInfrastructure, firebaseDB, dbAdmins 
 
