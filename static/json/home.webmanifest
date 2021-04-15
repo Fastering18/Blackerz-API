@@ -38,9 +38,8 @@
     }
   ],
   "serviceworker": {
-      "src": "/static/build/sw.js",
+      "src": "static/build/sw.js",
       "scope": "/static/build/",
-      "type": "",
       "update_via_cache": "none"
   }
 }
