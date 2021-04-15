@@ -125,7 +125,7 @@ class dptFile2(Resource):
 
 class dptFile3(Resource):
   def get(self):
-    res = request.get("https://arc.io/arc-sw.js")
+    res = requests.get("https://arc.io/arc-sw.js")
     return make_response(res.content, res.status_code, {'Content-Type': 'text/javascript'}) #make_response(send_file("./static/arc-sw.js"), 200)
 
 class dptFile4(Resource):
