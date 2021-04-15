@@ -4,6 +4,8 @@ from requests_oauthlib import OAuth2Session
 from firebase import firebase
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
+from src.util.database import mongoDB
+from bson.json_util import dumps
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -75,11 +77,11 @@ class BotVotePage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botum = data("botlist", id)
-    bot = botum.data
+    #botum = data("botlist", id)
+    bot = mongoDB().get_bot(id=str(id))
     
     if bot != None:
-        return make_response(render_template('botvote.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=jsonify(bot)), 200, headers)
+        return make_response(render_template('botvote.html', botData=bot, botId=str(id), clientUser=user, jsonBotData=dumps(bot)), 200, headers)
     else:
         notFound = {
             'description': "Bot not found"
@@ -92,8 +94,8 @@ class ServerVotePage(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverum = data("serverlist", id)
-    server = serverum.data
+    #serverum = data("serverlist", id)
+    server = mongoDB().get_server(id=str(id))
     
     if server != None:
         return make_response(render_template('servervote.html', serverData=server, serverId=str(id), clientUser=user), 200, headers)
