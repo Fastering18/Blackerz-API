@@ -173,7 +173,7 @@ class mongoDB():
    def get_server(self, **find):
       if home_botCaches.get("server " + str(find)):
          return home_botCaches.get("server " + str(find))
-      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find, {'_id': False}), 4)
+      return putCache("server " + str(find), dbInfrastructure.serverlist.find_one(find, {'_id': False}), 2.5)
     
    def get_bot(self, **find):
       if home_botCaches.get("bot " + str(find)):
