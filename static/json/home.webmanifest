@@ -39,7 +39,7 @@
   ],
   "serviceworker": {
       "src": "/static/build/sw.js",
-      "scope": "build",
+      "scope": "/static/build/",
       "type": "",
       "update_via_cache": "none"
   }
