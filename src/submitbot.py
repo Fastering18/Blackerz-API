@@ -33,8 +33,9 @@ class postBot():
             'id': dataREQ["botId"]
         }
         olddata = mongoDB().get_bot(id=dataREQ["botId"])
-        if not "upvotes" in olddata: dataFinal["upvotes"] = 0
-        if "verified" in olddata: dataFinal["verified"] = olddata["verified"]
+        if olddata:
+            if not "upvotes" in olddata: dataFinal["upvotes"] = 0
+            if "verified" in olddata: dataFinal["verified"] = olddata["verified"]
         if dataREQ.get("avatar"): dataFinal["avatar"] = dataREQ["avatar"]
         result, hasil = mongoDB().uploadBot(id=dataREQ["botId"], data=dataFinal)
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
