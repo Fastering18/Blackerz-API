@@ -49,11 +49,11 @@ api = Api(app)
     
 app.register_error_handler(404, error_handlers.page_not_found)  
         
-sentry_sdk.init(
-    dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
-    integrations=[FlaskIntegration()],
-    traces_sample_rate=1.0
-)  
+#sentry_sdk.init(
+    #dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
+    #integrations=[FlaskIntegration()],
+    #traces_sample_rate=1.0
+#)  
 
 #users = firebaseDB.get("/Infrastructure/WebUsers", None)
 #print(users)
