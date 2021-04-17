@@ -27,7 +27,8 @@
   body[dark-mode="light"] h5,
   body[dark-mode="light"] h6,
   body[dark-mode="light"] p,
-  body[dark-mode="light"] input {
+  body[dark-mode="light"] input,
+  body[dark-mode="light"] label {
     color:  black;
     transition: color .55s;
   }
