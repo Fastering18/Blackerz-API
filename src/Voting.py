@@ -92,7 +92,7 @@ def generateAuthorizationV1():
     return result_str
         
 class addVote():
-    def __init__(self, botID, client, tipe):
+    def __init__(self, botID, client, tipe, tipedata="botlist"):
         path = '/Infrastructure/Votes/'+ tipe +'/' + str(botID) + "/" + client["id"]
         clientVote = firebaseDB.get(path, None)
         currentTime = time.time() * 1000    #to JavaScript timestamps
@@ -104,7 +104,7 @@ class addVote():
             #currentVotes += 1
             #result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes) if tipe == "botVotes" else firebaseDB.put('/Infrastructure/serverlist/' + str(botID), "upvotes", currentVotes)
            
-            self.result =  databaseManager.mongoDB().addVote(tipe="botlist", id=botID)
+            self.result =  databaseManager.mongoDB().addVote(tipe=tipedata, id=botID)
         else:
             self.result = None
             self.canVoteTime = 4.32e+7 - (int(currentTime) - int(clientVote))
@@ -121,7 +121,7 @@ class voteBot(Resource):
         if isVerified["success"] == False:
             return redirect(f"{request.url_root}bots/{id}/vote?err={isVerified['reason']}")
         
-        vote = addVote(id, user, "botVotes")
+        vote = addVote(id, user, "botVotes", "botlist")
         if vote.result == None:
             return redirect(f"{request.url_root}bots/{id}/vote?err=alreadyvoted", code=301)
         else: 
@@ -171,7 +171,7 @@ class voteServer(Resource):
        if isVerified["success"] == False:
            return redirect(f"https://blackerz.herokuapp.com/servers/{id}/vote?err={isVerified['reason']}")
         
-       vote = addVote(id, user, "serverVotes")  
+       vote = addVote(id, user, "serverVotes", "serverlist")  
        if vote.result == None:
            return redirect(f"{request.url_root}servers/{id}/vote?err=alreadyvoted", code=301)
        else: 
@@ -184,7 +184,7 @@ class voteServer(Resource):
        if code == None:
             return make_response(jsonify(nouserquery), 400)
        clientAuthV1 = request.headers.get('Authorization')
-       isOwner = verifyOwner(clientAuthV1, id, "serverlist")
+       isOwner = databaseManager.mongoDB().is_ownerof(auth=clientAuthV1, tipe="serverlist", aset=str(id))  #verifyOwner(clientAuthV1, id, "serverlist")
                             
        if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
@@ -200,7 +200,7 @@ class publicVoteApiServer(Resource):
        if userToCheck == None:
             return make_response(jsonify(nouserquery), 400)
        clientAuthV1 = request.headers.get('Authorization')
-       isOwner = verifyOwner(clientAuthV1, str(id), "serverlist")
+       isOwner = databaseManager.mongoDB().is_ownerof(auth=clientAuthV1, tipe="serverlist", aset=str(id))  #verifyOwner(clientAuthV1, str(id), "serverlist")
                             
        if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
