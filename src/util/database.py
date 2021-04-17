@@ -148,6 +148,17 @@ class mongoDB():
          print(keslhn)
          return None, {"sucess": False, "warns": warns, "error": "Internal Server Error, please report the bug."}
    
+   def addVote(self, **anydata):
+      tipe = anydata.get('tipe', "botlist")
+      id = str(anydata.get('id', None))
+      if not id: return False
+      try:
+         result = dbInfrastructure[tipe].update({'id': id}, {'$inc': {'upvotes': 1}})
+         return True, result
+      except Exception as keslhn:
+         print(keslhn)
+         return False, keslhn
+   
    def is_ownerof(self, **anydata):
       authv1 = anydata.get('auth', None)
       tipeasset = anydata.get('tipe', "botlist")
