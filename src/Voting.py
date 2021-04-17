@@ -3,7 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
 from threading import Timer, Thread
-import src.util.database as databaseManager
+import src.util.database as databaseManager, mongoDB
 
 from firebase import firebase
 
@@ -95,16 +95,16 @@ class addVote():
     def __init__(self, botID, client, tipe):
         path = '/Infrastructure/Votes/'+ tipe +'/' + str(botID) + "/" + client["id"]
         clientVote = firebaseDB.get(path, None)
-        print(clientVote)
         currentTime = time.time() * 1000    #to JavaScript timestamps
         if (clientVote == None) or (int(currentTime) - int(clientVote) >= 0):
             botData = firebaseDB.get('/Infrastructure/botlist/' + str(botID), None) if tipe == "botVotes" else firebaseDB.get('/Infrastructure/serverlist/' + str(botID), None)
             firebaseDB.put('/Infrastructure/Votes/'+ tipe +'/' + str(botID), client["id"], currentTime + 4.32e+7)
             
-            currentVotes = int(botData["upvotes"])
-            currentVotes += 1
-            result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes) if tipe == "botVotes" else firebaseDB.put('/Infrastructure/serverlist/' + str(botID), "upvotes", currentVotes)
-            self.result = result
+            #currentVotes = int(botData["upvotes"])
+            #currentVotes += 1
+            #result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes) if tipe == "botVotes" else firebaseDB.put('/Infrastructure/serverlist/' + str(botID), "upvotes", currentVotes)
+           
+            self.result =  mongoDB().addVote(tipe="botlist", id=botID)
         else:
             self.result = None
             self.canVoteTime = 4.32e+7 - (int(currentTime) - int(clientVote))
