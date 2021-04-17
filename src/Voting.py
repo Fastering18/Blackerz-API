@@ -3,7 +3,7 @@ from flask import jsonify, make_response, render_template, g, session, request, 
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
 from threading import Timer, Thread
-import src.util.database as databaseManager, mongoDB
+import src.util.database as databaseManager
 
 from firebase import firebase
 
@@ -104,7 +104,7 @@ class addVote():
             #currentVotes += 1
             #result = firebaseDB.put('/Infrastructure/botlist/' + str(botID), "upvotes", currentVotes) if tipe == "botVotes" else firebaseDB.put('/Infrastructure/serverlist/' + str(botID), "upvotes", currentVotes)
            
-            self.result =  mongoDB().addVote(tipe="botlist", id=botID)
+            self.result =  databaseManager.mongoDB().addVote(tipe="botlist", id=botID)
         else:
             self.result = None
             self.canVoteTime = 4.32e+7 - (int(currentTime) - int(clientVote))
@@ -153,7 +153,7 @@ class publicVoteApiBot(Resource):
         if userToCheck == None:
             return make_response(jsonify(nouserquery), 400)
         clientAuthV1 = request.headers.get('Authorization')
-        isOwner = verifyOwner(clientAuthV1, str(id))
+        isOwner = databaseManager.mongoDB().is_ownerof(auth=clientAuthV1, tipe="botlist", aset=str(id))  #verifyOwner(clientAuthV1, str(id))
                             
         if isOwner["success"] != True:
            return make_response(jsonify(isOwner["reason"]), 401) 
