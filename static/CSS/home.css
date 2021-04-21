@@ -4,11 +4,11 @@
   }
   
   body {
-    /*margin-top: 0;
+    margin-top: 0;
     margin-left: 0;
-    margin-right: 0;*/
-    margin: auto;
-    padding: 5rem 1rem 1rem 1rem;
+    margin-right: 0;
+    /*margin: auto;
+    padding: 5rem 1rem 1rem 1rem;*/
     background-color: rgba(0, 0, 0, 0.75);
   }
   h1, h2, h3, h4, h5, h6, p, label {
@@ -130,7 +130,7 @@
     outline: none;
     border: none;
   }
-  #discord-front {
+  .discord-front {
     display: block;
     margin-left: auto;
     margin-right: auto; 
