@@ -116,9 +116,11 @@
     align-items: center;*/
   }
   #searchBar {
-    border-radius: 5%;
-    width: 75%;
-    font-size: 130%;
+    border-radius: 50%;
+    width: 85%;
+    font-size: 150%;
+    autocorrect="off"; 
+    autocomplete="off";
     /*position: absolute;
     left: 50%;
     -moz-transform: translateX(-50%);
@@ -127,6 +129,12 @@
     
     outline: none;
     border: none;
+  }
+  #discord-front {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    width: 99.9%;
   }
 
 @media only screen and (max-width: 768px) {
