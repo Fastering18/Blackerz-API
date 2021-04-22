@@ -116,6 +116,22 @@
     {%- endif -%}
   </div>
   </section>
+  <section class="comments">
+    /* comments for bot */
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function() {
+        this.page.url = window.location.href; 
+        this.page.identifier = "dsc-bot-{{ botId }}";
+      };
+      (function() {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blackerz.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>      
+  </section>
   <footer>
       <br>
       <p for="toggle-dark-mode" style="font-size: 120%; margin-bottom: 1%;">Light Mode</p>
