@@ -4,6 +4,7 @@ from flask_compress import Compress
 from flask_hcaptcha import hCaptcha
 from flask_caching import Cache
 import sentry_sdk, requests
+from flask_cors import CORS
 from sentry_sdk.integrations.flask import FlaskIntegration
 from src.util.database import dbInfrastructure, firebaseDB, dbAdmins 
 
@@ -46,6 +47,7 @@ Compress(app)
 hcaptcha.init_app(app)
 cache = Cache(app)
 api = Api(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
     
 app.register_error_handler(404, error_handlers.page_not_found)  
         
