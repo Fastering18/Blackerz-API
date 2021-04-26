@@ -84,7 +84,7 @@
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
-        <input list="taglist" name="tags" class="tagsinput">
+        <input list="taglist" name="tags" class="tagsinput" id="tagsinput">
         <datalist id="taglist">
             <option value="moderation">
             <option value="entertainment">
@@ -113,7 +113,7 @@
                theme: "dark",
           });
           editor.setSize(null, '100%');
-          $("#tags").on('input', function(e) {
+          $("#tagsinput").on('input', function(e) {
              if ($(this).val().endsWith(",")) {
                addTag($(this).val());
                $(this).val("");
