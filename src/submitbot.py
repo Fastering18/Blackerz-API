@@ -33,13 +33,14 @@ class postBot():
             'id': dataREQ["botId"]
         }
         olddata = mongoDB().get_bot(id=dataREQ["botId"])
-        if isinstance(olddata, dict):
-            if not olddata.get("upvotes") : dataFinal["upvotes"] = 0
-            if olddata.get("verified") : dataFinal["verified"] = olddata["verified"]
+        #if isinstance(olddata, dict):
+        if not olddata or not olddata.get("upvotes"): dataFinal["upvotes"] = 0
+        if isinstance(olddata, dict) and olddata.get("verified"): dataFinal["verified"] = olddata["verified"]    
         if dataREQ.get("avatar"): dataFinal["avatar"] = dataREQ["avatar"]
+            
         print(type(olddata).__name__)
         print(type(dataREQ).__name__)
-        #result, hasil = mongoDB().uploadBot(id=dataREQ["botId"], data=dataFinal)
+        result, hasil = mongoDB().uploadBot(id=dataREQ["botId"], data=dataFinal)
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "name", dataREQ['name'])
         #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "owner", {
                     #'id': dataREQ['owner']['id'],
@@ -53,7 +54,7 @@ class postBot():
         #if "inviteLink" in dataREQ:
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['id'], "inviteLink", dataREQ['inviteLink'])
         
-        self.result = "a" #hasil
+        self.result = hasil #hasil
 
 class resource3(Resource):
     def post(self, id):
@@ -71,4 +72,6 @@ class resource3(Resource):
         jsonData["botId"] = str(id)
         result = postBot(jsonData)
         
+        if not result.result.get("sucess"):
+            return make_response(jsonify(result.result), 500)
         return make_response(jsonify(result.result), 201)
