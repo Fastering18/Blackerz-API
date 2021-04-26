@@ -98,12 +98,15 @@
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
+          const tagschoices = [];
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
           function addTag(tag) {
-             tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ") + ",";
+             tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ") + ", ";
              if (tag.length > 20) return "too long";
+             if (tagschoices.includes(tag)) return "already included";
+             tagschoices.push(tag)
              $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag))
           }
           var editor = CodeMirror.fromTextArea(document.getElementById('LongDescriptionInput'), {
