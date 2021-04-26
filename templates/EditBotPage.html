@@ -84,18 +84,26 @@
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
-        <input list="taglist" name="tags">
+        <input list="taglist" name="tags" class="tagsinput">
         <datalist id="taglist">
             <option value="moderation">
             <option value="entertainment">
             <option value="gaming">
         </datalist>
         <br>
+        <div id="tagslist">
+           <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
+        </div>
+        <br><br>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
+          }
+          function addTag(tag) {
+             tag = tag.trim().toLowerCase();
+             $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag).after(", "))
           }
           var editor = CodeMirror.fromTextArea(document.getElementById('LongDescriptionInput'), {
                mode: 'markdown',
@@ -105,6 +113,12 @@
                theme: "dark",
           });
           editor.setSize(null, '100%');
+          $("#tags").on('input', function(e) {
+             if ($(this).val().endsWith(",")) {
+               addTag($(this).val());
+               $(this).val("");
+             };
+          });
         </script>
         <script>
           document.querySelector("#FormEdit").addEventListener("submit", function(event) {
