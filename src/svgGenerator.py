@@ -38,7 +38,6 @@ def putCache(itemID, dataName, value, type="bots"):
   elif value != imagecaches[type][itemID][dataName]:
     return False
   Timer(60.0, deleteCache, [itemID, dataName, type]).start()
-  print(imagecaches)
   return True
   
 class getServerCountBot(Resource):
