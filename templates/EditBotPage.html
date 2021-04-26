@@ -102,8 +102,8 @@
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
           function addTag(tag) {
-             tag = tag.trim().toLowerCase();
-             $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag).after(", "))
+             tag = tag.trim().toLowerCase().replace(/,/, ", ");
+             $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag))
           }
           var editor = CodeMirror.fromTextArea(document.getElementById('LongDescriptionInput'), {
                mode: 'markdown',
@@ -121,6 +121,16 @@
           });
         </script>
         <script>
+          $('form input').keydown(function (e) {
+            if (e.keyCode == 13) {
+             var inputs = $(this).parents("form").eq(0).find(":input");
+             if (inputs[inputs.index(this) + 1] != null) {                    
+               inputs[inputs.index(this) + 1].focus();
+             }
+             e.preventDefault();
+             return false;
+            }
+          });
           document.querySelector("#FormEdit").addEventListener("submit", function(event) {
             event.preventDefault();
             var editedData = {
