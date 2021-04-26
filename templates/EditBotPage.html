@@ -84,7 +84,7 @@
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
-        <input list="taglist" name="tags" class="tagsinput" id="tagsinput">
+        <input list="taglist" name="tags" class="tagsinput" id="tagsinput" onInput="enteredTag(this.value)">
         <datalist id="taglist">
             <option value="moderation">
             <option value="entertainment">
@@ -119,6 +119,16 @@
                $(this).val("");
              };
           });
+          function enteredTag(theTeks) {
+             var opts = document.getElementById('taglist').childNodes;
+             for (var i = 0; i < opts.length; i++) {
+                if (opts[i].value === theTeks) {
+                   addTag(opts[i].value);
+                   $("#tagsinput").val("");
+                   break;
+                }
+             }
+          }
         </script>
         <script>
           $('form input').keydown(function (e) {
