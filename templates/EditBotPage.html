@@ -84,6 +84,12 @@
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <br>
         </div>
+        <input list="taglist" name="tags">
+        <datalist id="taglist">
+            <option value="moderation">
+            <option value="entertainment">
+            <option value="gaming">
+        </datalist>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
