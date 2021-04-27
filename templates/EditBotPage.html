@@ -93,22 +93,25 @@
         <br>
         <div id="tagslist">
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
+           {{ "" }}
         </div>
         <br><br>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
-          const tagschoices = {{ bot['tags'] or "[]" }}
+          const tagschoices = {{ bot['tags'] or "[]" | tojson | safe }}
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
           function addTag(tag) {
-             tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ") + ", ";
+             tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ");
              if (tag.length > 20) return "too long";
+             if (tag.length < 2) return "too short";
              if (tagschoices.length >= 5) return "max 5 tags allowed";
              if (tagschoices.includes(tag)) return "already included";
              tagschoices.push(tag)
-             $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag))
+             $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag + ", "))
+             return true;
           }
           var editor = CodeMirror.fromTextArea(document.getElementById('LongDescriptionInput'), {
                mode: 'markdown',
@@ -120,7 +123,8 @@
           editor.setSize(null, '100%');
           $("#tagsinput").on('input', function(e) {
              if ($(this).val().endsWith(",")) {
-               addTag($(this).val());
+               const result = addTag($(this).val());
+               if (result != true) return alert(result);
                $(this).val("");
              };
           });
@@ -128,7 +132,8 @@
              var opts = document.getElementById('taglist').childNodes;
              for (var i = 0; i < opts.length; i++) {
                 if (opts[i].value === theTeks) {
-                   addTag(opts[i].value);
+                   const result = addTag(opts[i].value);
+                   if (result != true) return alert(result);
                    $("#tagsinput").val("");
                    break;
                 }
