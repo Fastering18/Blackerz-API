@@ -98,13 +98,14 @@
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
-          const tagschoices = [];
+          const tagschoices = {{ bot['tags'] or "[]" }}
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
           function addTag(tag) {
              tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ") + ", ";
              if (tag.length > 20) return "too long";
+             if (tagschoices.length >= 5) return "max 5 tags allowed";
              if (tagschoices.includes(tag)) return "already included";
              tagschoices.push(tag)
              $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag))
@@ -151,6 +152,7 @@
               "shortDescription": document.getElementById("ShortDescriptionInput").value,
               "longDescription": document.getElementById("LongDescriptionInput").value,
               "prefix": document.getElementById("PrefixInput").value,
+              "tags": tagschoices.splice(0, 5)
             }
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(result) {
