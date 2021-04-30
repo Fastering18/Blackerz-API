@@ -79,6 +79,22 @@ class mongoDB():
       }, {'_id': False}, limit=30)), 5)
       return data
    
+   def AutocorrectSearchBot(self, **anydata):
+      return dbInfrastructure.botlist.aggregate([
+            {
+                "$search": {
+                    "autocomplete": {
+                        "query": anydata.get('kueri', "bot"),
+                        "path": "name",
+                        "fuzzy": {
+                            "maxEdits": 3,
+                            "prefixLength": 3
+                        }
+                    }
+                }
+            }
+        ])
+     
    def uploadServer(self, **anydata):
       serverid = str(anydata.get('id', None))
       data = dict(anydata.get('data', {}))
