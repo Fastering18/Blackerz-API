@@ -89,7 +89,7 @@
         </div>
     <div id="headerPage">
         <img class="discordfront" src="/static/Images/discord-front-2.png" width="80%" height="15%" style="display: block; margin-left: auto; margin-right: auto; width: 99.9%;">
-        <input id="searchBar" type="text" placeholder="Search bot by name" onchange="searchQuery(this.value)">
+        <input id="searchBar" type="text" placeholder="Search bot by name">
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
@@ -116,7 +116,7 @@
         <div class="footer-links-holder">
                 <h3 class="footer-header">Contact us</h3>
                 <ul class="footer-links">
-                    <li><a class="text-link" href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a class="text-link" href="mailto:blackerzdiscord@gmail.com">support@blackerz</a></li>
                     <li><a class="text-link" href="/servers/816619389809590322">Discord</a></li>
                 </ul>
             </div>
@@ -212,6 +212,9 @@
                 response(data);
               },
               minLength: 2,
+              select: function(event, ui) {
+                 window.location.href = `/bots/${ui.item.id}`
+              }
             })  
         });
     </script>
