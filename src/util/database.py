@@ -81,7 +81,7 @@ class mongoDB():
       return data
    
    def AutocorrectSearchBot(self, **anydata):
-      return dbInfrastructure.botlist.find({"$text": {"$search": anydata.get('kueri', "bot")}}, {"name": 1, "$id": 0, "_id": 1}).limit(10)
+      return dbInfrastructure.botlist.find({"$text": {"$search": anydata.get('kueri', "bot")}}, {"name": 1, "_id": 0, "id": 1}).limit(10)
       #return dbInfrastructure.botlist.aggregate([
             #{
                 #"$search": {
