@@ -51,11 +51,11 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
     
 app.register_error_handler(404, error_handlers.page_not_found)  
         
-#sentry_sdk.init(
-    #dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
-    #integrations=[FlaskIntegration()],
-    #traces_sample_rate=1.0
-#)  
+sentry_sdk.init(
+    dsn="https://9e4fd61150b74cdaa14638fbb06e2df7@o562461.ingest.sentry.io/5701013",
+    integrations=[FlaskIntegration()],
+    traces_sample_rate=1.0
+)  
 
 #users = firebaseDB.get("/Infrastructure/WebUsers", None)
 #print(users)
@@ -91,6 +91,7 @@ api.add_resource(discordAccountSource.getAccountData, "/api/v1/discord/account/<
 # Discord servers resource
 api.add_resource(allServers.findAllServer, "/api/v1/servers/all")
 api.add_resource(searchServer.findServer, "/api/v1/servers/<int:id>")
+api.add_resource(searchServer.autocorrectServer, "/api/v1/servers/autocorrect")
 api.add_resource(submitServer.postServer, "/api/v1/servers/submit/<int:id>")
 api.add_resource(submitServer.editServer, "/api/v1/servers/<int:id>/edit")
 
