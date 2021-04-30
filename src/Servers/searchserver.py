@@ -39,6 +39,6 @@ class autocorrectServer(Resource):
      kueri = request.values.get("query") or request.values.get("kueri") or request.values.get("q")
      if not kueri:
         return make_response(jsonify({"error": "no `query` parameter"}), 400, {'Content-Type': 'application/json'})
-     servers = mongoDB().AutocorrectSearchServer(kueri=kueri)
+     res = mongoDB().AutocorrectSearchServer(kueri=kueri)
      return make_response(dumps(res), 200, {'Content-Type': 'application/json'})
         
