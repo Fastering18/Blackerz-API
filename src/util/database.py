@@ -80,20 +80,21 @@ class mongoDB():
       return data
    
    def AutocorrectSearchBot(self, **anydata):
-      return dbInfrastructure.botlist.aggregate([
-            {
-                "$search": {
-                    "autocomplete": {
-                        "query": anydata.get('kueri', "bot"),
-                        "path": "name",
-                        "fuzzy": {
-                            "maxEdits": 2,
-                            "prefixLength": 3
-                        }
-                    }
-                }
-            }
-        ])
+      return dbInfrastructure.botlist.find({"$text": {"$search": anydata.get('kueri', "bot")}}).limit(10)
+      #return dbInfrastructure.botlist.aggregate([
+            #{
+                #"$search": {
+                    #"autocomplete": {
+                        #"query": anydata.get('kueri', "bot"),
+                        #"path": "name",
+                        #"fuzzy": {
+                            #"maxEdits": 2,
+                            #"prefixLength": 3
+                        #}
+                    #}
+                #}
+            #}
+        #])
      
    def uploadServer(self, **anydata):
       serverid = str(anydata.get('id', None))
