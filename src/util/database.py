@@ -8,7 +8,7 @@ client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.
 dbInfrastructure = client.Infrastructure
 dbAdmins = client.Admins
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
-#dbInfrastructure.botlist.create_index([('name', pymongo.TEXT)])
+dbInfrastructure.serverlist.create_index([('name', pymongo.TEXT)])
 
  
 # CACHE'S
@@ -96,6 +96,9 @@ class mongoDB():
                 #}
             #}
         #])
+        
+   def AutocorrectSearchServer(self, **anydata):
+      return dbInfrastructure.serverlist.find({"$text": {"$search": anydata.get('kueri', "server")}}, {"name": 1, "_id": 0, "id": 1}).limit(10)
      
    def uploadServer(self, **anydata):
       serverid = str(anydata.get('id', None))
