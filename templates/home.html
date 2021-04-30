@@ -99,7 +99,7 @@
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
              {%- endif -%}
-             <div id="{{dataChild.id}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/bots/${this.id}`">
+             <div id="{{dataChild.id}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.href = `/bots/${this.id}`">
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
                <p id="namaBot" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{ dataChild["name"] }}</p>
              </div>
