@@ -102,3 +102,12 @@ class searchBotQuery(Resource):
     sresult = querySearch(request.values)
     if sresult.warns != None: return make_response(jsonify(sresult.warns), sresult.warns["code"], {'Content-Type': 'application/json'})
     return make_response(dumps(sresult.result), 200, {'Content-Type': 'application/json'})
+  
+class autocorrectsearch(Resource):
+  def get(self):
+    kueri = request.values.get("query") or request.values.get("kueri") or request.values.get("q")
+    if not kueri:
+        return make_response(jsonify({"error": "no `query` parameter"}), 400, {'Content-Type': 'application/json'})       
+    res = mongoDB().AutocorrectSearchBot(kueri=kueri)
+    return make_response(dumps(res), 200, {'Content-Type': 'application/json'})
+    
