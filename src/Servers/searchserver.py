@@ -1,6 +1,6 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, Markup
-import time, requests, markdown
+from flask import jsonify, make_response, Markup, request
+import time, markdown
 from threading import Timer
 from firebase import firebase
 from src.util.database import mongoDB
@@ -33,3 +33,12 @@ class findServer(Resource):
         return make_response(dumps(server), 200, {'Content-Type': 'application/json'})
     else: 
         return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
+
+class autocorrectServer(Resource):
+  def get(self):
+     kueri = request.values.get("query") or request.values.get("kueri") or request.values.get("q")
+     if not kueri:
+        return make_response(jsonify({"error": "no `query` parameter"}), 400, {'Content-Type': 'application/json'})
+     servers = mongoDB().AutocorrectSearchServer(kueri=kueri)
+     return make_response(dumps(res), 200, {'Content-Type': 'application/json'})
+        
