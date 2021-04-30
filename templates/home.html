@@ -123,7 +123,7 @@
         </div>
       <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
     </footer>
-    <!-- link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
@@ -140,7 +140,7 @@
         function searchQuery(query) {
             if (query === "" || typeof(query) !== "string") {window.location.href = "/"; return};
             $("#searchBar").blur();
-            window.location.href = `/search?q=${query.trim().substring(0, 30)}`;
+            document.location.replace(`/search?q=${query.trim().substring(0, 30)}`);
         };
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
