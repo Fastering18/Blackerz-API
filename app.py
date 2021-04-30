@@ -74,6 +74,7 @@ api.add_resource(renderUserPage.blackerzProfile, "/Assets/<path:filename>")
 # Discord bots resource
 api.add_resource(searchBots.getBotFromID, "/api/v1/bots/<int:id>")
 api.add_resource(searchBots.searchBotQuery, "/api/v1/bots/search")
+api.add_resource(searchBots.autocorrectsearch, "/api/v1/bots/autocorrect")
 api.add_resource(resource2, "/api/v1/bots/all")
 api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
 api.add_resource(editBotData.editData, "/api/v1/bots/<int:id>/edit")
