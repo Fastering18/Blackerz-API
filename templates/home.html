@@ -139,7 +139,8 @@
       
         function searchQuery(query) {
             if (query === "" || typeof(query) !== "string") {window.location.href = "/"; return};
-            window.location.href = `/search?q=${query}`
+            $("#searchBar").blur();
+            window.location.href = `/search?q=${query}`;
         };
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
@@ -213,7 +214,7 @@
               },
               minLength: 2,
               select: function(event, ui) {
-                 window.location.href = `/bots/${ui.item.id}`
+                 searchQuery(ui.item.value)
               }
             })  
         });
