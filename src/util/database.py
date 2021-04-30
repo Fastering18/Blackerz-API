@@ -8,7 +8,7 @@ client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.
 dbInfrastructure = client.Infrastructure
 dbAdmins = client.Admins
 scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
-dbInfrastructure.botlist.create_index([('name', pymongo.TEXT)])
+#dbInfrastructure.botlist.create_index([('name', pymongo.TEXT)])
 
  
 # CACHE'S
