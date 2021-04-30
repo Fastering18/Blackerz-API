@@ -203,17 +203,17 @@
                 const randStr = generateRandomString();
             }
             $("#searchBar").autocomplete({
-            source: async function(request, response) {
+              source: async function(request, response) {
                 let data = await fetch(`/search?query=${request.term}`)
                     .then(results => results.json())
                     .then(results => results.map(result => {
                         return { label: result.name, value: result.name, id: result.id };
                     }));
                 response(data);
-            },
-            minLength: 2,
+              },
+              minLength: 2,
             })  
-        };
+        });
     </script>
 </body>
 
