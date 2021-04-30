@@ -87,7 +87,7 @@ class mongoDB():
                         "query": anydata.get('kueri', "bot"),
                         "path": "name",
                         "fuzzy": {
-                            "maxEdits": 3,
+                            "maxEdits": 2,
                             "prefixLength": 3
                         }
                     }
