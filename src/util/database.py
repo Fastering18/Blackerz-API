@@ -65,8 +65,8 @@ class mongoDB():
       if home_botCaches.get("_kueribot " + kueri):
          return home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
-      data = putCache("_kueribot " + kueri, list(dbInfrastructure.botlist.find({
-         "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ], 
+      data = putCache("_kueribot ^" + kueri, list(dbInfrastructure.botlist.find({
+         "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
       }, {'_id': False}, limit=30)), 5)
       return data
@@ -75,8 +75,8 @@ class mongoDB():
       kueri = str(anydata.get('kueri', ""))
       if home_botCaches.get("_kueriserver " + kueri):
          return home_botCaches.get("_kueriserver " + kueri)
-      data = putCache("_kueriserver " + kueri, list(dbInfrastructure.serverlist.find({
-         "$or": [ {"name": {'$regex': kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': kueri, '$options': 'i'}} ]
+      data = putCache("_kueriserver ^" + kueri, list(dbInfrastructure.serverlist.find({
+         "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ]
       }, {'_id': False}, limit=30)), 5)
       return data
    
