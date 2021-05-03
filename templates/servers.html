@@ -101,7 +101,10 @@
     </div>
     <div class="next-page">
       <div class="center">
-       <button class="next-page-button" onclick="getNextPage()">More Servers</button>
+       {%- if page > 1 -%}
+         <button class="previous-page-button" onclick="getNextPage(false)">Previous server</button>
+       {%- endif -%}
+       <button class="next-page-button" onclick="getNextPage(true)">Next servers</button>
       </div>
     </div>
     </section>
@@ -142,7 +145,7 @@
             document.location.replace(`/servers/search?q=${query}`)
         };
         function getNextPage(npage) {
-            document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : page+1))
+            document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : npage == false ? page-1 : page+1))
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
