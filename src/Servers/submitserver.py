@@ -66,8 +66,25 @@ class serverManager():
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "icon", dataREQ['icon'])
         if ("joinLink" in dataREQ) and (dataREQ["joinLink"] != ""):
             firebaseDB.put('/Infrastructure/serverlist/' + self.id, "joinLink", dataREQ['joinLink'])
-              
-        return self
+        
+        dbmongo = mongoDB()
+        
+        finalData = {
+          "icon": dataREQ.get("icon"),
+          "joinLink": dataREQ.get("joinLink"),
+          "memberCount": dataREQ.get("memberCount"),
+          "ShortDescription": dataREQ.get("ShortDescription"),
+          "LongDescription": dataREQ.get("LongDescription"),
+          "name": dataREQ.get("name"),
+          "owner" dataREQ.get("owner")
+        }
+        
+        olddata = dbmongo.get_server(id=str(id))
+        if not olddata or not olddata.get("upvotes"): finalData["upvotes"] = 0
+        
+        data, result = dbmongo.uploadServer(id=str(id), data=jsonData)
+        
+        return self, data, result
             
     def editServer(self, dataREQ):
         if ("icon" in dataREQ and isinstance(dataREQ['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + self.id + '/' + dataREQ['icon']) == False): 
@@ -123,7 +140,7 @@ class postServer(Resource):
             jsonData["id"] = id
             
         jsonData["id"] = str(jsonData["id"])    
-        data, result = mongoDB().uploadServer(id=str(id), data=jsonData)
+        manager, data, result = serverManager(str(id)).submitServer(jsonData)  #mongoDB().uploadServer(id=str(id), data=jsonData)
         #if data.result["error"] != None:
             #return make_response(jsonify(data), 400)
         print(result)
