@@ -102,7 +102,7 @@
     height: 100%;
     position: relative;
   }
-  .next-page .center {
+  .center-horizontally {
     margin: 0;
     position: absolute;
     left: 50%;
