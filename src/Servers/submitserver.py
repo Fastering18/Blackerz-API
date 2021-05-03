@@ -82,7 +82,7 @@ class serverManager():
         olddata = dbmongo.get_server(id=str(id))
         if not olddata or not olddata.get("upvotes"): finalData["upvotes"] = 0
         
-        data, result = dbmongo.uploadServer(id=str(id), data=jsonData)
+        data, result = dbmongo.uploadServer(id=str(id), data=finalData)
         
         return self, data, result
             
