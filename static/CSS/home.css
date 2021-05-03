@@ -98,6 +98,17 @@
     background-color: rgba(0, 0, 0, 85);
     color: rgb(255, 255, 255, 0.7);
   }
+  .next-page {
+    height: 100%;
+    position: relative;
+  }
+  .next-page .center {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
   #botlist {
     color: white;
   }
