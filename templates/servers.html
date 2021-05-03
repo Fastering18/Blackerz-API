@@ -99,10 +99,9 @@
              </div>
           {%- endfor -%}
     </div>
-    <amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-9419528436883042" data-ad-slot="1095974537"
-        data-auto-format="rspv" data-full-width="">
-        <div overflow=""></div>
-    </amp-ad>
+    <div id="next-page">
+       <button class="next-page-button" onclick="getNextPage()">More Servers</button>
+    </div>
     </section>
     <footer>
       <br>
@@ -138,7 +137,10 @@
         function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
             document.location.replace(`/servers/search?q=${query}`)
-        };    
+        };
+        function getNextPage() {
+            document.location.replace(``)
+        }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
                window.location.href = "/user/{{user['id']}}"
