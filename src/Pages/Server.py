@@ -82,7 +82,7 @@ class allServersPage(Resource):
     if "http://" in request.url:
         return redirect(request.url.replace("http://", "https://", 1))
     page = request.values.get("page") or request.values.get("halaman") or request.values.get("pg")
-    page = isinstance(page, int) and page or 1
+    page = page.isdigit() and page or 1
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
     serverDataList = mongoDB().getAllServers(page=page) or []
