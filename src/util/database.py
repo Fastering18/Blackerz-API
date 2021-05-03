@@ -40,6 +40,11 @@ def sortBy(dic, tipe="upvotes"):
     daftr.sort(key=lambda ddata: ddata.get("id"))
     return daftr
 
+def skiplimit(cursor, page_size=20, page_num=1):
+    # Calculate number of documents to skip
+    skips = page_size * (page_num - 1)
+    # Skip and limit, Return documents
+    return cursor.skip(skips).limit(page_size) 
 
 # DATABASES
 class mongoDB():
@@ -56,9 +61,10 @@ class mongoDB():
       return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})), 700)
    
    def getAllServers(self, **anydata):
+      page = anydata.get('page', 1)
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, {'_id': False})), 600)
+      return putCache("_allservers" + str(page), list(skiplimit(dbInfrastructure.serverlist.find({}, {'_id': False}), 20, page)), 600)
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
@@ -112,7 +118,7 @@ class mongoDB():
       if "icon" in data and (not isinstance(data['icon'], str) or (isinstance(data['icon'], str) and isLinkExist('https://cdn.discordapp.com/icons/' + serverid + '/' + data['icon']) == False)): 
          del data['icon']
          warns.append("Icon URL doesn't exist")
-      if ("ShortDescription" in data and (not isinstance(data['ShortDescription'], str) or len(data['ShortDescription']) > 120)): 
+      if (not isinstance(data.get("ShortDescription"), str) or len(data['ShortDescription']) > 120): 
          del data['ShortDescription']
          warns.append("ShortDescription must lower than 120 length characters string")
       if data.get("memberCount") and (not isinstance(data['memberCount'], int) or data['memberCount'] > 10000000 or data['memberCount'] < 1): #("memberCount" in data and (not isinstance(data['memberCount'], int)) or data['memberCount'] > 10000000 or data['memberCount'] < 0):
@@ -138,7 +144,6 @@ class mongoDB():
             if not "owner" in datatopush: datatopush["owner"] = {}
             datatopush["owner"]["name"] = data["owner"]["name"]
       try:
-         print(datatopush)
          result = dbInfrastructure.serverlist.update_one({"id": serverid}, { "$set": datatopush }, upsert=True)
          return result, {"sucess": True, "warns": warns}
       except Exception as keslhn:
