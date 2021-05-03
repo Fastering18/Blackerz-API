@@ -76,7 +76,7 @@ class serverManager():
           "ShortDescription": dataREQ.get("ShortDescription"),
           "LongDescription": dataREQ.get("LongDescription"),
           "name": dataREQ.get("name"),
-          "owner" dataREQ.get("owner")
+          "owner": dataREQ.get("owner")
         }
         
         olddata = dbmongo.get_server(id=str(id))
