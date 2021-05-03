@@ -133,15 +133,16 @@
           botSearchInput.focus();
           botSearchInput.val("{{kueri}}");
         {%- endif -%}
-        const client = JSON.parse('{{ user | tojson | safe }}')
+        const client = JSON.parse('{{ user | tojson | safe }}');
+        const page = {{page}};
         let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
       
         function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
             document.location.replace(`/servers/search?q=${query}`)
         };
-        function getNextPage() {
-            document.location.replace(``)
+        function getNextPage(npage) {
+            document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : page+1))
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
@@ -154,6 +155,25 @@
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
         }
+        function updateURLParameter(url, param, paramVal){
+          var newAdditionalURL = "";
+          var tempArray = url.split("?");
+          var baseURL = tempArray[0];
+          var additionalURL = tempArray[1];
+          var temp = "";
+          if (additionalURL) {
+          tempArray = additionalURL.split("&");
+          for (var i=0; i<tempArray.length; i++){
+            if(tempArray[i].split('=')[0] != param){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+          }
+        }
+
+       var rows_txt = temp + "" + param + "=" + paramVal;
+       return baseURL + "?" + newAdditionalURL + rows_txt;
+       }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
