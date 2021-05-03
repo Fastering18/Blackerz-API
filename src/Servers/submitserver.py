@@ -79,10 +79,10 @@ class serverManager():
           "owner": dataREQ.get("owner")
         }
         
-        olddata = dbmongo.get_server(id=str(id))
+        olddata = dbmongo.get_server(id=str(self.id))
         if not olddata or not olddata.get("upvotes"): finalData["upvotes"] = 0
         
-        data, result = dbmongo.uploadServer(id=str(id), data=finalData)
+        data, result = dbmongo.uploadServer(id=str(self.id), data=finalData)
         
         return self, data, result
             
