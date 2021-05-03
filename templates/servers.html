@@ -88,7 +88,7 @@
     <br>
     <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord servers here.</p>
     <div id="serverListParent">
-          {%- for server in servers -%}
+          {%- for server in servers if server.name and server.id -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "icon" in server and server["icon"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/icons/" + server['id'] + "/" + server.icon + "?size=64" -%}
@@ -100,7 +100,7 @@
           {%- endfor -%}
     </div>
     <div class="next-page">
-      <div class="center">
+      <div class="center-horizontally">
        {%- if page > 1 -%}
          <button class="previous-page-button" onclick="getNextPage(false)">Previous server</button>
        {%- endif -%}
