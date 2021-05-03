@@ -58,7 +58,7 @@ class mongoDB():
    def getAllServers(self, **anydata):
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, {'_id': False}, limit=20)), 600)
+      return putCache("_allservers", list(dbInfrastructure.serverlist.find({}, {'_id': False})), 600)
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
