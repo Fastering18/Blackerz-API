@@ -93,7 +93,7 @@
         <br>
         <div id="tagslist">
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
-           {%- for tag in (bot['tags'] or "[]") -%}
+           {%- for tag in (bot['tags'] or []) -%}
               <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
            {%- endfor -%}
         </div>
@@ -101,7 +101,7 @@
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="input-button submit" type="submit" value="Submit">Submit</button>
         <script>
-          const tagschoices = JSON.parse(("{{ bot['tags'] or '[]' | tojson | safe }}").replace(/&#39;/gi, "\""))
+          const tagschoices = JSON.parse(("{{ bot['tags'] or [] | tojson | safe }}").replace(/&#39;/gi, "\""))
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
