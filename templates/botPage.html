@@ -107,7 +107,7 @@
     {%- endif -%}
     {%- if "tags" in botData and botData["tags"][0] -%}
         <div class="bot-tags">
-            <h3>Tags: </h3>
+            <h3 style="display: inline;">Tags: </h3>
             <div class="tagslist">
              {%- for tag in (botData['tags'] or []) -%}
                  <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
