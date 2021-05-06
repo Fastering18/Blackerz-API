@@ -135,11 +135,16 @@ class dptFile3(Resource):
 class dptFile4(Resource):
   def get(self):
     return make_response(send_file("./static/Images/favicon.ico"), 200)
+
+class dptFile5(Resource):
+  def get(self):
+    return make_response(send_file("./static/opensearch.xml"), 200)
   
 api.add_resource(dptFile, "/robots.txt")
 api.add_resource(dptFile2, "/sitemap.xml")
 api.add_resource(dptFile3, "/arc-sw.js")
 api.add_resource(dptFile4, "/favicon.ico")
+api.add_resource(dptFile5, "/opensearch.xml")
 
 if __name__ == "__main__":
   app.run()
