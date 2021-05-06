@@ -96,7 +96,7 @@
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
            {%- set jlh = 0 -%}
            {%- for tag in (bot['tags'] or []) -%}
-              <p id="bot-tag-{{tag}}" class="tagbot" style="display: inline; padding-right: 1%;" onclick="removeTag(this)" tagid="{{jlh}}">{{ tag }}, </p>
+              <p id="bot-tag-{{tag}}" class="tagbot" style="display: inline; padding-right: 1%;" onclick="removeTag(this)" tagid="{{jlh}}" actualtag="{{tag}}">{{ tag }},</p>
               {%- set jlh = jlh + 1 -%}
            {%- endfor -%}
         </div>
@@ -121,8 +121,7 @@
           function removeTag(tag) {
              const elm = $(tag);
              console.log(elm)
-             console.log(tag.textContent)
-             if (tagschoices.includes(tag.textContent) && elm) {
+             if (tagschoices.includes(tag.attr("actualtag")) && elm) {
                 console.log(tagschoices[Number(elm.attr("tagid"))])
                 tagschoices.splice(Number(elm.attr("tagid")), 1)
                 elm.remove()
