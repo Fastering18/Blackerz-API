@@ -51,7 +51,7 @@
           </div>
         </div>
     <section class="page" id="root-page">
-    <h1 style="color: rgba(255,255,255, 0.85);">Unauthorized</h1>
+    <h1>Unauthorized</h1>
     </section>
     <footer>
       <br>
@@ -75,13 +75,13 @@
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ user | tojson | safe }}')
        function discordLogOutAPI(force) {
-            window.location.href = window.location.origin + "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
        }
        function discordLoginAPI() {
            {%- if user and "username" in user -%}
-               window.location.href = window.location.origin + "/user/" + client.id
+               window.location.href = "/user/{{user['id']}}"
            {%- else -%}
-               window.location.href = "https://blackerz.herokuapp.com/api/v1/discord/login?code=" + localStorage.getItem("stateParameter") + "&host=https://blackerz.herokuapp.com"
+               document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
            {%- endif -%}
        }
     </script>
