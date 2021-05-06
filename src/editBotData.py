@@ -93,7 +93,7 @@ class editData(Resource):
         "ShortDescription": jsonData.get("shortDescription"),
         "LongDescription": jsonData.get("longDescription"),
         "serverCount": jsonData.get("serverCount"),
-        "tags": isinstance(jsonData.get("tags"), list) and jsonData.get("tags") or None
+        "tags": (isinstance(jsonData.get("tags"), list) and len(jsonData["tags"]) < 6) and jsonData.get("tags") or None
     })  #edit(jsonData, str(id))
     
     if result["sucess"] == True:
