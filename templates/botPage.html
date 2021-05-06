@@ -107,10 +107,12 @@
     {%- endif -%}
     {%- if "tags" in botData and botData["tags"][0] -%}
         <div class="bot-tags">
-             Tags: 
+            <h3>Tags: </h3>
+            <div class="tagslist">
              {%- for tag in (botData['tags'] or []) -%}
                  <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
              {%- endfor -%}
+            </div>
         </div>
     {%- endif -%}    
     <hr>
