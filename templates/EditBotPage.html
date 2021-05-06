@@ -94,8 +94,10 @@
         <br>
         <div id="tagslist" class="tag-list">
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
+           {%- set jlh = 0 -%}
            {%- for tag in (bot['tags'] or []) -%}
-              <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
+              <p id="bot-tag-{{tag}}" class="tagbot" style="display: inline; padding-right: 1%;" onclick="removeTag(this)" tagid="{{jlh}}">{{ tag }}, </p>
+              {%- set jlh = jlh + 1 -%}
            {%- endfor -%}
         </div>
         <br><br>
@@ -108,13 +110,21 @@
           }
           function addTag(tag) {
              tag = tag.trim().toLowerCase().replace(/,/g, "").replace(/ +/gi, " ");
-             if (tag.length > 20) return "too long";
-             if (tag.length < 2) return "too short";
-             if (tagschoices.length >= 5) return "max 5 tags allowed";
-             if (tagschoices.includes(tag)) return "already included";
+             if (tag.length > 20) {return "too long";}
+             if (tag.length < 2) {return "too short";}
+             if (tagschoices.length >= 5) {return "max 5 tags allowed";}
+             if (tagschoices.includes(tag)) {return "already included";}
              tagschoices.push(tag)
              $("#tagslist").append($("<p id=\"bot-tag\" class=\"tagbot\" style=\"display: inline;\"></p>").text(tag + ", "))
              return true;
+          }
+          function removeTag(tag) {
+             const elm = $(tag);
+             if (tagschoices.includes(tag.textContent) && elm) {
+                console.log(tagschoices[Number(elm.attr("tagid"))])
+                tagschoices.splice(Number(elm.attr("tagid")), 1)
+                elm.remove()
+             }
           }
           var editor = CodeMirror.fromTextArea(document.getElementById('LongDescriptionInput'), {
                mode: 'markdown',
@@ -142,6 +152,27 @@
                 }
              }
           }
+          /*function removeA(arr) {
+            var what, a = arguments, L = a.length, ax;
+            while (L > 1 && arr.length) {
+              what = a[--L];
+              while ((ax= arr.indexOf(what)) !== -1) {
+                arr.splice(ax, 1);
+              }
+            }
+          return arr;
+         }
+         if(!Array.prototype.indexOf) {
+         Array.prototype.indexOf = function(what, i) {
+           i = i || 0;
+           var L = this.length;
+           while (i < L) {
+            if(this[i] === what) return i;
+            ++i;
+           }
+          return -1;
+       };
+       }*/
         </script>
         <script>
           $('form input').keydown(function (e) {
