@@ -105,6 +105,14 @@
     {%- if "serverCount" in botData -%}
         <p id="serverCount">In {{ botData["serverCount"] }} servers</p>
     {%- endif -%}
+    {%- if "tags" in botData and botData["tags"][0] -%}
+        <div class="bot-tags">
+             Tags: 
+             {%- for tag in (botData['tags'] or []) -%}
+                 <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
+             {%- endfor -%}
+        </div>
+    {%- endif -%}    
     <hr>
     {%- if "LongDescription" in botData -%}
         <div id="longdesc">
@@ -158,14 +166,14 @@
         inviteLink = inviteLink.replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
-            window.location.href = document.location.replace("/api/v1/discord/logout")
+            document.location.replace("/api/v1/discord/logout")
         }
         function inviteBot(element) {
             window.location.href = inviteLink
         }
         function voteBot() {
             {%- if clientUser and "username" in clientUser -%}
-               document.location.replace("/bots/{{botId}}/vote")
+               window.location.href = "/bots/{{botId}}/vote"
             {%- else -%} 
                return discordLoginAPI()
             {%- endif -%}
