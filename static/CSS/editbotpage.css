@@ -1,5 +1,5 @@
 .tag-list p:hover {
-   transition: all .6s;
+   transition: all .45s;
    color: rgba(243, 32, 19, 0.9);
-   background-color: rgba(0, 0, 0, 0.85);
+   background-color: rgba(0, 0, 0, 0.1);
 } 
