@@ -120,6 +120,8 @@
           }
           function removeTag(tag) {
              const elm = $(tag);
+             console.log(elm)
+             console.log(tag.textContent)
              if (tagschoices.includes(tag.textContent) && elm) {
                 console.log(tagschoices[Number(elm.attr("tagid"))])
                 tagschoices.splice(Number(elm.attr("tagid")), 1)
