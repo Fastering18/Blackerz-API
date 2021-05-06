@@ -134,6 +134,7 @@ class mongoDB():
       if data.get("name"): datatopush['name'] = data['name']
       if data.get("icon"): datatopush['icon'] = data['icon']
       if data.get("memberCount"): datatopush['memberCount'] = data['memberCount']
+      if data.get("joinLink"): datatopush["joinLink"] = data["joinLink"]
       if data.get("ShortDescription"): datatopush['ShortDescription'] = data['ShortDescription'] 
       if data.get("LongDescription"): datatopush['LongDescription'] = data['LongDescription'] 
       if data.get("owner"): 
