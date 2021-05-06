@@ -12,28 +12,65 @@
        gtag('js', new Date());
        gtag('config', 'G-HJFCLE2FTR');
     </script>
-    <link rel="icon" href="../../static/Images/Blackerz.jpg" type="image/x-icon">
+    <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/CSS/home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unauthorized 401</title>
 </head>
   <body>
-    <div id='background'></div>
-    <div style="overflow:auto">
-        <div class="topnav">
-            <a class="active" data-text="Home" id="profiletab" href="/"></a>
-            <a href="/servers" data-text="Servers"></a>
-            {%- if user and "username" in user -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-            {%- else -%}
-               <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-               <a id="discordLogOut" onclick="discordLogOutAPI(true)" style="display: none" data-text="Log out"></a>
-            {%- endif -%}
+    <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
+    <div class="topnav">
+            <div class="topnav-pc">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+        <div class="topnav-mobile" style="min-height: 32px;">
+            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
+                <a data-text="Home" id="profiletab" href="/"></a>
+                <a href="/servers" data-text="Servers"></a>
+                {%- if clientUser and "username" in clientUser -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
+                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
+                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
+                {%- else -%}
+                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
+                {%- endif -%}
+            </div>
+            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
+                <i class="fa fa-bars"></i>
+            </a>
+          </div>
         </div>
-    </div>
+    <section class="page" id="root-page">
     <h1 style="color: rgba(255,255,255, 0.85);">Unauthorized</h1>
+    </section>
+    <footer>
+      <br>
+      <p for="toggle-dark-mode" style="font-size: 120%; margin-bottom: 1%;">Light Mode</p>
+      <label class="switch">
+        <input id="toggle-dark-mode" type="checkbox" onclick="toggleDarkMode(this)">
+        <span class="slider round"></span>
+      </label>
+      <div class="footer-nav">
+        <div class="footer-links-holder">
+                <h3 class="footer-header">Contact us</h3>
+                <ul class="footer-links">
+                    <li><a class="text-link" href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
+                    <li><a class="text-link" href="/servers/816619389809590322">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+      <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
+    </footer>
     <script>
        if (window.location.protocol === "http:") window.location.protocol = "https:";
        const client = JSON.parse('{{ user | tojson | safe }}')
