@@ -127,7 +127,7 @@
     align-items: center;*/
   }
   #searchBar {
-    border-radius: 50%;
+    border-radius: 10px;
     width: 85%;
     font-size: 150%;
     autocorrect="off"; 
