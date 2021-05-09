@@ -142,7 +142,7 @@ class dptFile5(Resource):
 
 class dptFile6(Resource):
   def get(self):
-    res = request.get("https://disqusads.com/ads.txt")
+    res = requests.get("https://disqusads.com/ads.txt")
     return make_response(res.content, res.status_code, {'Content-Type': 'text/plain'})
   
 api.add_resource(dptFile, "/robots.txt")
