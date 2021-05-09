@@ -93,7 +93,7 @@
              {%- if "icon" in server and server["icon"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/icons/" + server['id'] + "/" + server.icon + "?size=64" -%}
              {%- endif -%}
-             <div id="{{server['id']}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
+             <div id="{{server['id']}}" style="background: rgba(255, 255, 255, 0.6); display: flex; cursor: pointer; align-items: center; border-color: black; margin-bottom: 0.6%; border-radius: 10%;" onmouseenter="this.style.backgroundColor = 'rgba(255, 255, 255, 0.85)'" onmouseleave="this.style.backgroundColor = 'rgba(255, 255, 255, 0.6)'" onclick="window.location.pathname = `/servers/${this.id}`">
                <img width="6%" height="6%" alt="{{server['ShortDescription']}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
                <p id="namaServer" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{server["name"]}}</p>
              </div>
