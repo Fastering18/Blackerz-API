@@ -44,7 +44,10 @@ def skiplimit(cursor, page_size=20, page_num=1):
     # Calculate number of documents to skip
     skips = page_size * (page_num - 1)
     # Skip and limit, Return documents
-    return cursor.skip(skips).limit(page_size) 
+    return cursor.skip(skips).limit(page_size)
+   
+def nclamp(angka, kecil, maks):
+    return kecil if angka < kecil else maks if angka > maks else angka 
 
 # DATABASES
 class mongoDB():
@@ -61,7 +64,7 @@ class mongoDB():
       return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})), 700)
    
    def getAllServers(self, **anydata):
-      page = anydata.get('page', 1)
+      page = nclamp(anydata.get('page', 1), 1, 10000)
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
       return putCache("_allservers" + str(page), list(skiplimit(dbInfrastructure.serverlist.find({}, {'_id': False}), 20, page)), 600)
