@@ -145,7 +145,7 @@ class logOut(Resource):
         
 class checkUser(Resource):
     def get(self):
-        authv1 = request.headers.get('authorizationv1')
+        authv1 = request.headers.get('Authorization')
         if authv1:
             user = mongoDB().get_user(AuthorizationV1=authv1)
             return make_response(dumps(user) if user != None else jsonify({"error": "User not found", "success": False}), 200 if user != None else 401)
