@@ -1,9 +1,10 @@
 import os, random, string, requests, datetime
-from flask import Flask, g, session, redirect, request, url_for, jsonify, make_response
+from flask import Flask, session, redirect, request, url_for, jsonify, make_response
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
 from firebase import firebase
 from src.util.database import mongoDB
+from bson.json_util import dumps
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -144,6 +145,10 @@ class logOut(Resource):
         
 class checkUser(Resource):
     def get(self):
+        authv1 = request.headers.get('authorizationv1')
+        if authv1:
+            user = mongoDB().get_user(AuthorizationV1=authv1)
+            return make_response(dumps(user) if user != None else jsonify({"error": "User not found", "success": False}), 200 if user != None else 401)
         code = request.headers.get('code')
         clientId = request.headers.get('clientId')
         if clientId == None or code == None:
