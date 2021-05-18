@@ -3,6 +3,7 @@ from flask import Flask, g, session, redirect, request, url_for, jsonify, make_r
 from flask_restful import Resource, reqparse
 from requests_oauthlib import OAuth2Session
 from firebase import firebase
+from src.util.database import mongoDB
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -46,7 +47,11 @@ class data():
         createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
         if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
         if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-        
+        olduser = mongoDB().get_user(id=user["client_id"])
+        if isinstance(olduser, dict): 
+            if not olduser.get("AuthorizationV1"): user["AuthorizationV1"] = generateAuthorizationV1()
+            if not olduser.get("CreatedAt"): user["CreatedAt"] = datetime.datetime.now().isoformat()
+        mongoDB.uploadUser(id=user["client_id"], data=user)
         #timeStamp = time.time()
 
 def make_session(token=None, state=None, scope=None, redirectURL="https://blackerz.herokuapp.com/api/v1/discord/callback"):
@@ -108,11 +113,12 @@ class me(Resource):
      userID = user["id"]
      data({
       'client_id': str(userID),
-      'tag': user["username"] + "#" + user["discriminator"],
-      'username': user["username"],
-      'avatar': user["avatar"],
+      'tag': user.get("username") + "#" + user.get("discriminator"),
+      'username': user.get("username"),
+      'avatar': user.get("avatar"),
       'code': oneTimeCode
      })
+    
      if request.values.get('fromOrigin'):
         return make_response(jsonify(user), 200)
         
