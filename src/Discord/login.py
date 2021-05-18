@@ -51,7 +51,7 @@ class data():
         if isinstance(olduser, dict): 
             if not olduser.get("AuthorizationV1"): user["AuthorizationV1"] = generateAuthorizationV1()
             if not olduser.get("CreatedAt"): user["CreatedAt"] = datetime.datetime.now().isoformat()
-        mongoDB.uploadUser(id=user["client_id"], data=user)
+        mongoDB().uploadUser(id=user["client_id"], data=user)
         #timeStamp = time.time()
 
 def make_session(token=None, state=None, scope=None, redirectURL="https://blackerz.herokuapp.com/api/v1/discord/callback"):
