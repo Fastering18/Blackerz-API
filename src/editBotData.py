@@ -137,8 +137,10 @@ class ServerCountManager(Resource):
         if isOwner["success"] == False:
            return make_response(jsonify(isOwner["reason"]), 401) 
     
+        print(jsonData or request.data)
         if not jsonData or not jsonData.get("servercount"):
            return make_response(jsonify(error1), 400, {'Content-Type': 'application/json'})
+        
         botum, result = mongoDB().uploadBot(id=id, data={"serverCount": jsonData.get("servercount")})  #edit({"serverCount": jsonData.get("servercount")}, str(id))
         
         if result["sucess"] == True:
