@@ -133,11 +133,11 @@
     font-size: 150%;
     autocorrect="off"; 
     autocomplete="off";
-    /*position: absolute;
+    position: absolute;
     left: 50%;
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);*/
+    transform: translateX(-50%);
     
     outline: none;
     border: none;
