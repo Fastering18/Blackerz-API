@@ -132,7 +132,7 @@ class ServerCountManager(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         clientAuthV1 = request.headers.get('Authorization')
         isOwner = mongoDB().is_ownerof(auth=clientAuthV1, tipe="botlist", aset=str(id)) #verifyItemOwner(clientAuthV1, str(id))
-        jsonData = request.get_json()
+        jsonData = request.get_json(force=True)
         
         if isOwner["success"] == False:
            return make_response(jsonify(isOwner["reason"]), 401) 
