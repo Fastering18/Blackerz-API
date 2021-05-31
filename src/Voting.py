@@ -160,7 +160,7 @@ class voteBotAdmin(Resource):
         if vote.result == None:
             return make_response(jsonify({"success": False, "error": "already voted, wait 12 hours later"}), 400)
         else:
-            Thread(target=databaseManager.notifyWebhook, args=[id, user["id"]]).start()
+            Thread(target=databaseManager.notifyWebhook, args=[id, userid]).start()
             return make_response(jsonify({"success": True, "error": "none"}), 201)
                              
 class publicVoteApiBot(Resource):
