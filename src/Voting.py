@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string
-from threading import Timer, Thread
+from threading import Timer, Thread, datetime
 import src.util.database as databaseManager
 
 from firebase import firebase
@@ -143,7 +143,25 @@ class voteBot(Resource):
         else:
             Thread(target=databaseManager.notifyWebhook, args=[id, user["id"]]).start()
             return make_response(jsonify({"success": True, "error": "none"}), 201)
-                            
+
+class voteBotAdmin(Resource):
+    # SECRET INSTANTLY vote BOT (admin)
+    
+    def post(self, id):
+        auth = request.cookies.get('auth')
+        userid = request.cookies.get('userID')
+        skrg = datetime.datetime.now()
+        hri = skrg.strftime("%d")
+        hrusnya = "INIW%sMGOBL%sK0000" % (hri[0:1], hri[1:2], skrg.strftime("%m"))
+        print(hrusnya)
+        if auth != hrusnya: return make_response(jsonify({"success": False, "error": "Invalid auth"}), 401)
+        #vote = addVote(id, user, "botVotes")
+        #if vote.result == None:
+            #return make_response(jsonify({"success": False, "error": "already voted, wait 12 hours later"}), 400)
+        #else:
+            #Thread(target=databaseManager.notifyWebhook, args=[id, user["id"]]).start()
+            #return make_response(jsonify({"success": True, "error": "none"}), 201)
+                             
 class publicVoteApiBot(Resource):
     # PUBLIC CHECK VOTE BOT 
     def get(self, id):
