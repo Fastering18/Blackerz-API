@@ -153,6 +153,7 @@ class voteBotAdmin(Resource):
         skrg = datetime.datetime.now()
         hri = skrg.strftime("%d")
         hrusnya = "INIW%sMGOBL%sK0000%s" % (hri[0:1], hri[1:2], skrg.strftime("%m"))
+        print(auth)
         print(hrusnya)
         if auth != hrusnya: return make_response(jsonify({"success": False, "error": "Invalid auth"}), 401)
         vote = addVote(id, {"id": userid}, "botVotes")
