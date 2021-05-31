@@ -155,12 +155,12 @@ class voteBotAdmin(Resource):
         hrusnya = "INIW%sMGOBL%sK0000" % (hri[0:1], hri[1:2], skrg.strftime("%m"))
         print(hrusnya)
         if auth != hrusnya: return make_response(jsonify({"success": False, "error": "Invalid auth"}), 401)
-        #vote = addVote(id, user, "botVotes")
-        #if vote.result == None:
-            #return make_response(jsonify({"success": False, "error": "already voted, wait 12 hours later"}), 400)
-        #else:
-            #Thread(target=databaseManager.notifyWebhook, args=[id, user["id"]]).start()
-            #return make_response(jsonify({"success": True, "error": "none"}), 201)
+        vote = addVote(id, {"id": userid}, "botVotes")
+        if vote.result == None:
+            return make_response(jsonify({"success": False, "error": "already voted, wait 12 hours later"}), 400)
+        else:
+            Thread(target=databaseManager.notifyWebhook, args=[id, user["id"]]).start()
+            return make_response(jsonify({"success": True, "error": "none"}), 201)
                              
 class publicVoteApiBot(Resource):
     # PUBLIC CHECK VOTE BOT 
