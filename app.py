@@ -97,6 +97,7 @@ api.add_resource(submitServer.editServer, "/api/v1/servers/<int:id>/edit")
 
 # Votes bots and servers resource
 api.add_resource(VotingManager.voteBot, "/api/v1/bots/<int:id>/vote")
+api.add_resource(VotingManager.voteBotAdmin, "/api/v1/bots/<int:id>/_adminvote") #admin only
 api.add_resource(VotingManager.publicVoteApiBot, "/api/v1/bots/<int:id>/votes")
 api.add_resource(VotingManager.voteServer, "/api/v1/servers/<int:id>/vote")
 api.add_resource(VotingManager.publicVoteApiServer, "/api/v1/servers/<int:id>/votes")
