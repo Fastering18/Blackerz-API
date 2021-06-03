@@ -87,7 +87,7 @@ class mongoDB():
          return home_botCaches.get("_kueriserver " + kueri)
       data = putCache("_kueriserver ^" + kueri, list(skiplimit(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ]
-      }, {'_id': False})), 20, page), 5)
+      }, {'_id': False}), 20, page)), 5)
       return data
    
    def AutocorrectSearchBot(self, **anydata):
