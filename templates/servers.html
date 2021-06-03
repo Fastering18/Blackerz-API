@@ -149,7 +149,7 @@
         function getNextPage(npage) {
             //document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : npage == false ? page-1 : page+1))
             const newPageURL = new URL(window.location.href);
-            newPageURL.searchParams.set("page", typeof(npage) == "number" ? npage : npage == false ? --page : ++page);
+            newPageURL.searchParams.set("page", typeof(npage) == "number" ? npage : npage == false ? page-1 : page+1);
             document.location.replace(newPageURL.href);
         }
         function discordLoginAPI() {
