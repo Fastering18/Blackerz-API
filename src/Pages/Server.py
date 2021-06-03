@@ -81,7 +81,7 @@ class allServersPage(Resource):
   def get(self):
     if "http://" in request.url:
         return redirect(request.url.replace("http://", "https://", 1))
-    page = request.values.get("page") or request.values.get("halaman") or request.values.get("pg")
+    page = request.values.get("page") or request.values.get("halaman") or request.values.get("p")
     page = (isinstance(page, str) and page.isdigit()) and int(page) or 1
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
@@ -141,7 +141,9 @@ class searchServerQuery(Resource):
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = mongoDB().serverQuerySearch(kueri=kueri) or []
+    page = request.values.get("page") or request.values.get("halaman") or request.values.get("p")
+    page = (isinstance(page, str) and page.isdigit()) and int(page) or 1
+    serverDataList = mongoDB().serverQuerySearch(kueri=kueri, page=page) or []
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -155,4 +157,4 @@ class searchServerQuery(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=serverDataList, kueri=kueri), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=serverDataList, kueri=kueri, page=page), 200, headers)
