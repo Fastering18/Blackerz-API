@@ -77,16 +77,17 @@ class mongoDB():
       data = putCache("_kueribot ^" + kueri, list(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, {'_id': False}, limit=30)), 5)
+      }, {'_id': False})), 5)
       return data
    
    def serverQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
+      page = nclamp(anydata.get('page', 1), 1, 10000)
       if home_botCaches.get("_kueriserver " + kueri):
          return home_botCaches.get("_kueriserver " + kueri)
-      data = putCache("_kueriserver ^" + kueri, list(dbInfrastructure.serverlist.find({
+      data = putCache("_kueriserver ^" + kueri, list(skiplimit(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ]
-      }, {'_id': False}, limit=30)), 5)
+      }, {'_id': False})), 20, page), 5)
       return data
    
    def AutocorrectSearchBot(self, **anydata):
