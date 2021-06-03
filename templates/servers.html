@@ -142,10 +142,15 @@
       
         function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
-            document.location.replace(`/servers/search?q=${query}`)
+            const newPageURL = new URL(`${window.location.origin}/servers/search`);
+            newPageURL.searchParams.set("q", query);
+            document.location.replace(newPageURL.href);
         };
         function getNextPage(npage) {
-            document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : npage == false ? page-1 : page+1))
+            //document.location.replace(updateURLParameter(window.location.href, "page", typeof(npage) == "number" ? npage : npage == false ? page-1 : page+1))
+            const newPageURL = new URL(window.location.href);
+            newPageURL.searchParams.set("page", typeof(npage) == "number" ? npage : npage == false ? --page : ++page);
+            document.location.replace(newPageURL.href);
         }
         function discordLoginAPI() {
             {%- if user and "username" in user -%}
