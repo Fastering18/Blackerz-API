@@ -227,6 +227,9 @@ class mongoDB():
       if home_botCaches.get("user " + str(find)):
          return home_botCaches.get("user " + str(find))
       return putCache("user " + str(find), dbInfrastructure.users.find_one(find, {'_id': False}), 20)
+     
+   def delete_bot(self, **find):
+      return dbInfrastructure.botlist.delete_one(find)
 
 class IdentifyApiUser():
    def __init__(self, **anydata):
