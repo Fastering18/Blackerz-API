@@ -78,6 +78,7 @@ api.add_resource(searchBots.autocorrectsearch, "/api/v1/bots/autocorrect")
 api.add_resource(resource2, "/api/v1/bots/all")
 api.add_resource(resource3, "/api/v1/bots/submit/<int:id>")
 api.add_resource(editBotData.editData, "/api/v1/bots/<int:id>/edit")
+api.add_resource(searchBots.deleteBotFromID, "/api/v1/bots/<int:id>/delete")
 api.add_resource(editBotData.ServerCountManager, "/api/v1/bots/<int:id>/edit/servercount")
 
 # Discord login resource
