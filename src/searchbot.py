@@ -127,6 +127,6 @@ class deleteBotFromID(Resource):
     
     if bot != None:
         deleteres = mongoDB().delete_bot(id=str(id))
-        return make_response(dumps(deleteres), 200, {'Content-Type': 'application/json'})
+        return make_response(jsonify({"success": deleteres.deleted_count == 1}), 200, {'Content-Type': 'application/json'})
     else: 
         return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
