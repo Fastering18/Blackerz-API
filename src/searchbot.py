@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, session, request, redirect
 import time, json, requests
 from threading import Timer, Thread
-from src.util.database import mongoDB
+from src.util.database import mongoDB, IdentifyApiUser
 from bson.json_util import dumps
 
 from firebase import firebase
@@ -10,6 +10,8 @@ from firebase import firebase
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
 queryBotCaches = {}
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
+unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
 
 def deleteCache(link):
   if not link in queryBotCaches: return False
@@ -111,3 +113,20 @@ class autocorrectsearch(Resource):
     res = mongoDB().AutocorrectSearchBot(kueri=kueri)
     return make_response(dumps(res), 200, {'Content-Type': 'application/json'})
     
+class deleteBotFromID(Resource):
+  def get(self, id):
+    apiKey = request.headers.get('apiKey')
+    if not apiKey:
+        return make_response(jsonify(unauthorizedAcess1), 401)
+      
+    ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
+    if not ApiUser.izin.get("deletebot") and not ApiUser.izin.get("all"): 
+        return make_response(jsonify(unauthorizedAcess2), 401)
+      
+    bot = mongoDB().get_bot(id=str(id))
+    
+    if bot != None:
+        deleteres = mongoDB().delete_bot(id=str(id))
+        return make_response(dumps(deleteres), 200, {'Content-Type': 'application/json'})
+    else: 
+        return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
