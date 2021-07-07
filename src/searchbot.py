@@ -114,7 +114,7 @@ class autocorrectsearch(Resource):
     return make_response(dumps(res), 200, {'Content-Type': 'application/json'})
     
 class deleteBotFromID(Resource):
-  def get(self, id):
+  def delete(self, id):
     apiKey = request.headers.get('apiKey')
     if not apiKey:
         return make_response(jsonify(unauthorizedAcess1), 401)
