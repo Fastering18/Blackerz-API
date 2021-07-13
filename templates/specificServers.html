@@ -158,7 +158,7 @@
         function joinServer(element) {
             window.location.href = joinLink
         }
-        async function getServerWidget(id={{server.id or 'undefined'}}) {
+        async function getServerWidget(id="{{server.id or 'undefined'}}") {
           $.ajax({
             url: `https://discord.com/api/guilds/${id}/widget.json`,
             type: 'GET',
