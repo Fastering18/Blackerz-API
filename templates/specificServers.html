@@ -194,7 +194,7 @@
         }
         
         getServerWidget().then(d => {
-            $("memberCount").text(`With ${d.members.length}/${(d.members.length>{{server["memberCount"] or 1}}}?"???":{{server["memberCount"]}})} Members online`)
+            $("memberCount").text(`With ${d.members.length}/${(d.members.length>{{server["memberCount"] or 1}})?"???":{{server["memberCount"]}}} Members online`)
         }).catch(console.error)
     </script>
   </body>
