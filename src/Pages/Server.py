@@ -87,14 +87,11 @@ def updateServerData(id, oldresult, tipe="serverlist"):
         #print(response.keys())
         
         if response and "id" in response:
-            print("a baka")
             sus, sos = mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
               "icon": response.get("icon"),
               "ShortDescription": oldresult["ShortDescription"]
             })
-            print(sus, sus == None, "ini sus")
-            print(sos, sos == None, "ini sos")
     except Exception as kesalahan:
         print(kesalahan, "error nya") 
             
