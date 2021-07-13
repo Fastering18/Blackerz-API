@@ -96,7 +96,7 @@
     <br>
     <p id="shortDescription">{{ server["ShortDescription"] }}</p>
     {%- if "memberCount" in server -%}
-        <p id="serverCount">With {{ server["memberCount"] }} members</p>
+        <p id="memberCount">With {{ server["memberCount"] }} members</p>
     {%- endif -%}
     <hr>
     {%- if "LongDescription" in server -%}
@@ -158,21 +158,22 @@
         function joinServer(element) {
             window.location.href = joinLink
         }
-        async function getServerWidget(id="{{server.id or 'undefined'}}") {
+        function getServerWidget(id="{{server.id or 'undefined'}}") {
+          return new Promise((ya, gak) => {
           $.ajax({
             url: `https://discord.com/api/guilds/${id}/widget.json`,
             type: 'GET',
             dataType: 'json',
             success: function (data, textStatus ){
                console.log(data);
-               console.log(data.members.length)
-               return data;
+               return ya(data);
             }, 
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function (xhr, opt, err) {
                 console.log(`server id ${id} may unavailable or did not turned on widget`);
-                return undefined;
+                return gak(err);
             },
          });
+         })
        }
         function voteServer(element) {
             {%- if user and "username" in user -%}
@@ -192,7 +193,9 @@
            window.location.href = link
         }
         
-        getServerWidget()
+        getServerWidget().then(d => {
+            $("memberCount").text(`With ${d.members.length}/${(d.members.length>{{server["memberCount"] or 1}}}?"???":{{server["memberCount"]}})} Members online`)
+        }).catch(console.error)
     </script>
   </body>
 </html>
