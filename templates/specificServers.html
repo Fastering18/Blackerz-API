@@ -158,6 +158,22 @@
         function joinServer(element) {
             window.location.href = joinLink
         }
+        async function getServerWidget(id={{server.id or 'undefined'}}) {
+          $.ajax({
+            url: `https://discord.com/api/guilds/${id}/widget.json`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus ){
+               console.log(data);
+               console.log(data.members.length)
+               return data;
+            }, 
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(`server id ${id} may unavailable or did not turned on widget`);
+                return undefined;
+            },
+         });
+       }
         function voteServer(element) {
             {%- if user and "username" in user -%}
                window.location.href = "/servers/{{serverID}}/vote"
@@ -175,6 +191,9 @@
         function redirectKe(link) {
            window.location.href = link
         }
+        $(windows).load(function() {
+             getServerWidget()
+        })
     </script>
   </body>
 </html>
