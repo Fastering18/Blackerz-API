@@ -84,13 +84,13 @@ def updateServerData(id, oldresult, tipe="serverlist"):
         response = r.json() 
         
         print(response)
-        print(response.keys())
+        #print(response.keys())
         
         if response and response.get("id") and response.get("name") and "icon" in response:
-            mongoDB().uploadServer(id=id, data={
+            print(mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
               "icon": response.get("icon") or None
-            })
+            }))
     except Exception as kesalahan:
         print(kesalahan) 
             
