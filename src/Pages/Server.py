@@ -83,10 +83,11 @@ def updateServerData(id, oldresult, tipe="serverlist"):
         r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
         response = r.json() 
         
-        print(response)
+        #print(response)
         #print(response.keys())
         
-        if response and "id" in response and "name" in response:
+        if response and "id" in response:
+            print("a baka")
             sus, sos = mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
               "icon": response.get("icon") or None
