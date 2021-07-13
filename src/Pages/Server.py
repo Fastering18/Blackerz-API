@@ -86,7 +86,7 @@ def updateServerData(id, oldresult, tipe="serverlist"):
         print(response)
         #print(response.keys())
         
-        if response and response.get("id") and response.get("name") and "icon" in response:
+        if response and response.get("id") and response.get("name"):
             print(mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
               "icon": response.get("icon") or None
