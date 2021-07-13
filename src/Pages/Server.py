@@ -77,6 +77,23 @@ def updateUserData(id, tag, username, avatar, code, olduser=None):
     mongoDB().uploadUser(id=id, data=UserData)
     #data("postUserStats", user=UserData)  
     
+def updateServerData(id, oldresult, tipe="serverlist"):
+    try:
+        url = "https://discord.com/api/v8/guilds/" + str(id)
+        r = requests.get(url = url, headers={'Authorization': 'Bot ' + botToken}) 
+        response = r.json() 
+        
+        print(response)
+        
+        #if response and "username" in response and "avatar" in response and "discriminator" in response and response["username"] and response["discriminator"]:
+            #mongoDB().uploadServer(id=id, data={
+              #"name": response["username"],
+              #"icon": response["icon"]
+              #"tag": response["username"] + "#" + response["discriminator"]
+            #})
+    except Exception as kesalahan:
+        print(kesalahan) 
+            
 class allServersPage(Resource):
   def get(self):
     if "http://" in request.url:
@@ -119,6 +136,7 @@ class specificServerPage(Resource):
            user["avatar"],
            oneTimeCode
         ]
+        Thread(target=updateServerData, args=[id, serverData]).start() 
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
