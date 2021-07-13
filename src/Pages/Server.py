@@ -90,7 +90,7 @@ def updateServerData(id, oldresult, tipe="serverlist"):
             sus, sos = mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
               "icon": response.get("icon") or None
-            }))
+            })
             print(sus)
             print(sos)
     except Exception as kesalahan:
