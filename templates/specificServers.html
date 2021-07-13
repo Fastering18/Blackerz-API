@@ -193,7 +193,7 @@
            window.location.href = link
         }
              
-        async function updateWidgetsData() {
+        async function updateWidgetsData(d) {
             $("#memberCount").text(`With ${d.members.length}/${(d.members.length>{{server["memberCount"] or 1}})?"???":{{server["memberCount"]}}} Members online`);
             setTimeout(async () => getServerWidget().then(updateWidgetsData).catch(console.error), 10000)
             // loop 10dtk secara rekursif, berhenti saat error/keluar page.
