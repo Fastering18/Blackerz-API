@@ -136,13 +136,12 @@ class specificServerPage(Resource):
            user["avatar"],
            oneTimeCode
         ]
-        #Thread(target=updateServerData, args=[id, serverData]).start() 
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
         
     if serverData != None:
-        updateServerData(id, serverData)
+        Thread(target=updateServerData, args=[id, serverData]).start() 
         if "LongDescription" in serverData:
             serverData["LongDescription"] = Markup(markdown.markdown(serverData["LongDescription"]))
         return make_response(render_template('specificServers.html', user=user, server=serverData, json=json, serverID=str(id)), 200, headers)
