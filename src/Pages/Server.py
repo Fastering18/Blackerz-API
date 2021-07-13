@@ -89,7 +89,7 @@ def updateServerData(id, oldresult, tipe="serverlist"):
         if response and "id" in response:
             sus, sos = mongoDB().uploadServer(id=id, data={
               "name": response.get("name"),
-              "icon": response.get("icon"),
+              "icon": response.get("icon") or "https://cdn.discordapp.com/embed/avatars/1.png",
               "ShortDescription": oldresult["ShortDescription"]
             })
     except Exception as kesalahan:
