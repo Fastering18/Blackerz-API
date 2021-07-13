@@ -91,8 +91,8 @@ def updateServerData(id, oldresult, tipe="serverlist"):
               "name": response.get("name"),
               "icon": response.get("icon") or None
             })
-            print(sus)
-            print(sos)
+            print(sus, sus == None, "ini sus")
+            print(sos, sos == None, "ini sos")
     except Exception as kesalahan:
         print(kesalahan) 
             
