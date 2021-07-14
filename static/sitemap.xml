@@ -6,6 +6,12 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <sitemap>
+     <loc>http://blackerz.herokuapp.com/bots_sitemap.xml</loc>
+     <lastmod>2021-07-14</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.9</priority>
+  </sitemap>
   <url>
     <loc>https://blackerz.herokuapp.com/servers</loc>
     <lastmod>2021-07-14</lastmod>
