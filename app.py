@@ -32,6 +32,7 @@ import src.Servers.submitserver as submitServer
 
 import src.Voting as VotingManager
 import src.svgGenerator as svggenerator
+import src.AnotherPage as AnotherPage
 
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 hcaptcha = hCaptcha()
@@ -117,6 +118,10 @@ api.add_resource(mainManagement.AddBotPagePublic, "/add/bot")
 
 # Widgets
 api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/servers<string:mime>")
+
+# sitemaps & others
+api.add_resource(AnotherPage.publicBotSitemap, "/bots_sitemap.xml")
+
 
 # FILE
 class dptFile(Resource):
