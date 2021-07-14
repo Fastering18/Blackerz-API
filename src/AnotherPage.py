@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, make_response, render_template, g, session, request, redirect
 from requests_oauthlib import OAuth2Session
 import time, json, requests, os, random, string, datetime
+from datetime import datetime
 #from threading import Timer, Thread
 from src.util.database import mongoDB
 
@@ -20,7 +21,7 @@ class publicBotSitemap(Resource):
         for v in botlist:
             botstr += f"""<url>
             <loc>https://blackerz.herokuapp.com/bots/{v['id']}</loc>
-            <lastmod>2021-07-14</lastmod>
+            <lastmod>{datetime.today().strftime('%Y-%m-%d')}</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
             </url>
