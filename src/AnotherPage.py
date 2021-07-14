@@ -8,7 +8,7 @@ import src.util.database as databaseManager
 
 class publicBotSitemap(Resource):
     # PUBLIC bot_sitemap.xml 
-    def get(self, id):
+    def get(self):
         botlist = mongoDB().getAllBots()
         bots = [{"name": "sus", "id": 1},{"name": "sos", "id": 2}]
         strr = """<?xml version="1.0" encoding="utf-8"?>
