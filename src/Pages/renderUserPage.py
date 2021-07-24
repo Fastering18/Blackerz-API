@@ -114,14 +114,19 @@ class botPage(Resource):
     if "http://" in request.url:
         return redirect(request.url.replace("http://", "https://", 1))
     discord = make_session(token=session.get('oauth2_token'))
-    user = discord.get(API_BASE_URL + '/users/@me').json()
+    user = discord.get(API_BASE_URL + '/users/@me').json() or {}
     bot = mongoDB().get_bot(id=str(id))
     
-    if bot != None:
+    if bot != None and (bot.verified or user.get("id") == bot.owner.id):
         Thread(target=updateBotData, args=[id, bot]).start() 
         if "LongDescription" in bot:
             bot["LongDescription"] = Markup(markdown.markdown(bot["LongDescription"]))
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user), 200, headers)
+    elif not bot.verified:
+        notFound = {
+            'description': "Bot haven't got verified"
+        }
+        return make_response(render_template('404.html', notFound=notFound, clientUser=user, request=request), 400, headers)
     else:
         notFound = {
             'description': "Bot not found"
