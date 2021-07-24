@@ -66,7 +66,7 @@
         </div>
     <section class="root-page" id="main-page">
       <div id="main-content">
-        <form method="POST" id="FormAddBot" onsubmit="disableButton(this, true); return true">
+        <form method="POST" id="FormAddBot" onsubmit="/*disableButton(this, true);*/ return true">
           <h1>Submit your bot! <strong>[BETA]</strong></h1>
           <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
             <input id="botId" name="botId" type="number" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" style="outline: none;" required>
@@ -118,7 +118,8 @@
                 return alert("Failed to get bot data")
               }
               console.log(dataAkun)
-              //if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
+              if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
+              if (!dataAkun.bot) return alert("User is not a bot");
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
               //if (dataAkun) alert(JSON.stringify(dataAkun));
