@@ -106,7 +106,7 @@
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
               event.preventDefault();
-              setVisibility("user-result", false)
+              //setVisibility("user-result", false)
               var botID = document.getElementById("bot-id").value
               console.log(botID)
               var dataAkun = await getDataAkun(botID)
