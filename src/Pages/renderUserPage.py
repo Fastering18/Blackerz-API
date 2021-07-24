@@ -116,7 +116,6 @@ class botPage(Resource):
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json() or {}
     bot = mongoDB().get_bot(id=str(id))
-    print(bot)
     
     if bot != None and (bot.get("verified") or user.get("id") == bot.owner.id):
         Thread(target=updateBotData, args=[id, bot]).start() 
