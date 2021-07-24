@@ -103,7 +103,7 @@
              document.getElementById(id).style.display = isShown == true ? "block" : "none"
            }
           </script>
-          <!--script>
+          <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
               event.preventDefault();
               setVisibility("user-result", false)
@@ -118,12 +118,13 @@
                 disableButton(document.getElementById("FormAddBot"), false)
                 return alert("Failed to get bot data")
               }
-              if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
-              document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
-              setVisibility("user-result", true)
-              if (dataAkun) alert(JSON.stringify(dataAkun));
+              console.log(dataAkun)
+              //if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
+              //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
+              //setVisibility("user-result", true)
+              //if (dataAkun) alert(JSON.stringify(dataAkun));
             })
-          </script-->
+          </script>
         </form>
         <p id="just a note">You will redirected to the your bot page, we will review it to make it public</p>
       </div>
