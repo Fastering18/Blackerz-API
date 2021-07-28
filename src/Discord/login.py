@@ -110,7 +110,7 @@ class me(Resource):
      discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
      user = discord.get(API_BASE_URL + '/users/@me').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
-     print(discord.get(API_BASE_URL + '/oauth2/applications/@me').json())
+     print(discord.get(API_BASE_URL + '/applications/@me').json())
      oneTimeCode = generateRandomKey(8)
      userID = user["id"]
      data({
