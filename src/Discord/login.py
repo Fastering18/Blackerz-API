@@ -76,7 +76,7 @@ class login(Resource):
          code = request.values['code']
     scope = request.args.get(
         'scope',
-        'identify')
+        'identify applications.builds.read')
     discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + "api/v1/discord/callback")
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
@@ -110,6 +110,7 @@ class me(Resource):
      discord = make_session(token=session.get('oauth2_token'), redirectURL=request.url_root + "api/v1/discord/callback")
      user = discord.get(API_BASE_URL + '/users/@me').json()
      # return jsonify(user=user, guilds=guilds, connections=connections)
+     print(user)
      oneTimeCode = generateRandomKey(8)
      userID = user["id"]
      data({
