@@ -76,7 +76,7 @@ class login(Resource):
          code = request.values['code']
     scope = request.args.get(
         'scope',
-        'identify applications.builds.read')
+        'identify applications.entitlements')
     discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + "api/v1/discord/callback")
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
