@@ -26,6 +26,7 @@
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
     <link rel="stylesheet" href="/static/CSS/home.css">
     <link rel="stylesheet" href="/static/CSS/addbotpage.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add bot</title>
     {% endcache %}
@@ -77,7 +78,7 @@
           </label>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
           <br>
-          <input class="submit btn" name="submit" type="submit" value="Submit Bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s;">
+          <input class="submit btn" name="submit" type="submit" value="Check bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s;">
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
@@ -120,6 +121,8 @@
               console.log(dataAkun)
               if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
               if (!dataAkun.bot) return alert("User is not a bot");
+              $("#bot-identity-tag").textContent = dataAkun.username + "#" + dataAkun.discriminator;
+              $("#bot-identity-tag").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp")
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
               //if (dataAkun) alert(JSON.stringify(dataAkun));
@@ -127,6 +130,11 @@
           </script>
         </form>
         <p id="just a note">You will redirected to the your bot page, we will review it to make it public</p>
+        <div id="bot-identity">
+           <img id="bot-identity-profile" style="display: inline;">
+           <h2 id="bot-identity-tag" style="display: inline;"></h2>
+           
+        </div>
       </div>
     </section>
     <footer>
