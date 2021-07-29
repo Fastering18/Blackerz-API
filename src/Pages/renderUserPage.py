@@ -122,7 +122,7 @@ class botPage(Resource):
         if "LongDescription" in bot:
             bot["LongDescription"] = Markup(markdown.markdown(bot["LongDescription"]))
         return make_response(render_template('botPage.html', botData=bot, botId=str(id), clientUser=user), 200, headers)
-    elif not bot.verified:
+    elif not bot["verified"]:
         notFound = {
             'description': "Bot haven't got verified"
         }
