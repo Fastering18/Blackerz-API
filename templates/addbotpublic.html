@@ -78,7 +78,7 @@
           </label>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
           <br>
-          <input class="submit btn" name="submit" type="submit" value="Check bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s;">
+          <input class="submit btn" name="check" type="submit" value="Check bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s;">
           <script>
             function getDataAkun(id) {
               return new Promise((resolve, reject) => {
@@ -107,6 +107,8 @@
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
               event.preventDefault();
+              console.log(event)
+              $("#submit-bot").css({display: "none"})
               //setVisibility("user-result", false)
               var botID = document.getElementById("botId").value
               console.log(botID)
@@ -123,18 +125,20 @@
               if (!dataAkun.bot) return alert("User is not a bot");
               $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
               $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp")
+              $("#submit-bot").css({display: "block"})
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
               //if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
+          <p id="just a note">You will redirected to the your bot page, we will review it to make it public</p>
+          <div id="bot-identity">
+            <img id="bot-identity-profile" style="display: inline;">
+            <h2 id="bot-identity-tag" style="display: inline;"></h2>
+            
+          </div>
+          <input class="submit btn" id="submit-bot" name="submit" type="submit" value="Submit bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s; display: none;">
         </form>
-        <p id="just a note">You will redirected to the your bot page, we will review it to make it public</p>
-        <div id="bot-identity">
-           <img id="bot-identity-profile" style="display: inline;">
-           <h2 id="bot-identity-tag" style="display: inline;"></h2>
-           
-        </div>
       </div>
     </section>
     <footer>
