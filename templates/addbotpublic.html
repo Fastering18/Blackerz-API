@@ -106,7 +106,8 @@
           </script>
           <script>
             document.querySelector("#FormAddBot").addEventListener("submit", async function(event) {
-              if (event.submitter.name === "submit") event.preventDefault();
+              if (event.submitter.name === "submit") return;
+              event.preventDefault();
               console.log(event)
               $("#submit-bot").css({display: "none"})
               //setVisibility("user-result", false)
