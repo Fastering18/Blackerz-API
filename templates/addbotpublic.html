@@ -121,8 +121,8 @@
               console.log(dataAkun)
               if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
               if (!dataAkun.bot) return alert("User is not a bot");
-              $("#bot-identity-tag").textContent = dataAkun.username + "#" + dataAkun.discriminator;
-              $("#bot-identity-tag").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp")
+              $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
+              $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp")
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
               //if (dataAkun) alert(JSON.stringify(dataAkun));
