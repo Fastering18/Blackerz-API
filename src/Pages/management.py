@@ -113,6 +113,7 @@ class data():
                 },
                 'prefix': dataREQ["prefix"],
                 'tag': botData['username'] + "#" + botData['discriminator'],
+                'avatar': botData["avatar"],
                 'verified': False,
                 'upvotes': 0,
                 'id': botID
