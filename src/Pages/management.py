@@ -149,9 +149,9 @@ class AddBotPagePublic(Resource):
         return respen
     
     def post(self):
-        if request.headers.get("X-Forwarded-For") != "180.246.248.238":
-            print(request.remote_addr)
-            return "This feature currently on maintenance,     CLIENT: " + str(request.headers.get("X-Forwarded-For")) + "      SESSION: " + str(session["X_CSRF_TOKEN"]), 404
+        #if request.headers.get("X-Forwarded-For") != "180.246.248.238":
+            #print(request.remote_addr)
+            #return "This feature currently on maintenance,     CLIENT: " + str(request.headers.get("X-Forwarded-For")) + "      SESSION: " + str(session["X_CSRF_TOKEN"]), 404
         
         user = getDiscordUser(session)
         formData = request.form or request.get_json()
