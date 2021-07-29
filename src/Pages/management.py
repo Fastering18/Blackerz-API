@@ -5,6 +5,8 @@ import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
 
+from src.util.database import mongoDB
+
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 BOTTOKEN = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
@@ -107,25 +109,29 @@ class data():
                 'name': botData['username'],
                 'owner': {
                     'id': ownerData['id'],
-                    'name': ownerData['username']
+                    'name': ownerData['username'] + "#" + ownerData['discriminator']
                 },
+                'prefix': dataREQ["prefix"],
                 'tag': botData['username'] + "#" + botData['discriminator'],
                 'verified': False,
-                'upvotes': 0
+                'upvotes': 0,
+                'id': botID
                 }
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", botData['username'])
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
-                    'id': ownerData['id'],
-                    'name': ownerData['username']
-                })
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "tag", botData['username'] + "#" + botData['discriminator'])
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "upvotes", 0)
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "prefix", dataREQ['prefix'])
-            firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "verified", False)
-            if "avatar" in botData:
-                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", botData['avatar'])
-            if "inviteLink" in dataREQ:
-                firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "inviteLink", dataREQ['inviteLink'])
+            botum, result = mongoDB().uploadBot(id=botID, data=dataFinal)
+            print(result)
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", botData['username'])
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
+                    #'id': ownerData['id'],
+                    #'name': ownerData['username']
+                #})
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "tag", botData['username'] + "#" + botData['discriminator'])
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "upvotes", 0)
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "prefix", dataREQ['prefix'])
+            #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "verified", False)
+            #if "avatar" in botData:
+                #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "avatar", botData['avatar'])
+            #if "inviteLink" in dataREQ:
+                #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "inviteLink", dataREQ['inviteLink'])
         
             self.result = {'error': None, 'status': "sucess"}
                 
@@ -148,7 +154,7 @@ class AddBotPagePublic(Resource):
             return "This feature currently on maintenance,     CLIENT: " + str(request.headers.get("X-Forwarded-For")) + "      SESSION: " + str(session["X_CSRF_TOKEN"]), 404
         
         user = getDiscordUser(session)
-        formData = request.form
+        formData = request.form or request.get_json()
         if user and "id" in user and "username" in user:
             Thread(target=updateUser, args=[user]).start()
         else:
