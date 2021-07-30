@@ -85,7 +85,7 @@
            {%- if clientUser and "username" in clientUser -%}
                window.location.href = "/user/{{ clientUser['id'] }}"
            {%- else -%}
-               window.location.href = document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.host}`)
+               document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.host}`)
            {%- endif -%}
        }
     </script>
