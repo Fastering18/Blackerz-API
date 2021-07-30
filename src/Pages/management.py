@@ -183,7 +183,7 @@ class AddBotPagePublic(Resource):
                 return redirect("/bots/" + formData['botId'], code=301)
             else:
                 respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"], warns=result.result['error']), 400, headers))
-                return respe
+                return respen
                 #return make_response(jsonify(result.result), 400, headers)
         else:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
