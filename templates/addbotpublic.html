@@ -125,7 +125,7 @@
                 disableButton(document.getElementById("FormAddBot"), false)
                 return alert("Failed to get bot data")
               }
-              disableButton(this, false)
+              setTimeout(disableButton, 500, this, false)
               console.log(dataAkun)
               if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
               if (!dataAkun.bot) return alert("User is not a bot");
