@@ -321,6 +321,9 @@ def notifyChanges(text, itemId):
     except Exception as kesalahan:
         print(kesalahan)
         return False
+      
+def send_webhook(link, body):
+    return requests.post(link, json = body)
   
   
   
