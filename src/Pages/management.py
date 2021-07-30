@@ -5,7 +5,7 @@ import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
 
-from src.util.database import mongoDB
+from src.util.database import mongoDB, send_webhook
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
@@ -86,6 +86,12 @@ class data():
             ownerData = Data.get('owner', None)
             botData = None
             botID = dataREQ['botId']
+            
+            oldbotdata = mongoDB().get_bot(id=str(botID))
+            if oldbotdata:
+                self.result = {'error': "Bot already exists!", 'status': "not sucess"}
+                return
+            
             try: 
                 botData = requests.get(url = f"{API_BASE_URL}/v8/users/{botID}", headers={'Authorization': f"Bot {BOTTOKEN}"}).json()
             except Exception:
@@ -120,6 +126,10 @@ class data():
                 }
             botum, result = mongoDB().uploadBot(id=botID, data=dataFinal)
             print(result)
+            
+            if result["sucess"]:
+                send_webhook("https://discord.com/api/webhooks/870668015065247784/qg27HSWbAE0cNKAwEGUD5OiwpI_awpCb9bv14_tVZID4dy8oUVGdnQusT_1oMHJrGsry", {"content": f"<@{ownerData['id']}> Added bot <@{botID}> **({dataFinal['tag']})**"})
+                
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", botData['username'])
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
                     #'id': ownerData['id'],
@@ -172,7 +182,9 @@ class AddBotPagePublic(Resource):
             if result.result['error'] == None:
                 return redirect("/bots/" + formData['botId'], code=301)
             else:
-                return make_response(jsonify(result.result), 400, headers)
+                respen = kuki(make_response(render_template('addbotpublic.html', user=user, csrf=session["X_CSRF_TOKEN"], warns=result.result['error']), 400, headers))
+                return respe
+                #return make_response(jsonify(result.result), 400, headers)
         else:
             return make_response(render_template('Unauthorized.html', user=user), 401, headers)
         
