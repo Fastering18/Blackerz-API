@@ -103,6 +103,10 @@ class data():
                 self.result = {'error': "Bot not found", 'status': "not sucess"}
                 return
             
+            if not botData.get("bot"):
+                self.result = {'error': "user is not a bot", 'status': "not sucess"}
+                return
+            
             if not "prefix" in dataREQ:
                 self.result = {'error': "prefix data was not set", 'status': "not sucess"}
                 return
