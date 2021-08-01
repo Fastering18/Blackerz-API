@@ -16,6 +16,7 @@ error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status
 error5 = {'error': "longDescription too long, must lower than 4000 characters length!", 'status': "Not success"}
 error6 = {'error': "prefix too long! must lower than 5 characters length and 1 minimum", 'status': "Not success"}
 error7 = {'error': "prefix must be not empty!", 'status': "Not success"}
+error8 = {'error': "Bot is not found", 'status': "Not success"}
 unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
 unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
@@ -156,12 +157,16 @@ class VerifyBot(Resource):
             return redirect(request.url.replace("http://", "https://", 1))
         apiKey = request.headers.get('apiKey')
         if not apiKey:
-            return make_response(jsonify(unauthorizedAcess1), 401)
+            return make_response(jsonify(unauthorizedAcess1), 401, {'Content-Type': 'application/json'})
         ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
         if not ApiUser.izin.get("verifybot") and not ApiUser.izin.get("all"): 
-            return make_response(jsonify(unauthorizedAcess2), 401)
+            return make_response(jsonify(unauthorizedAcess2), 401, {'Content-Type': 'application/json'})
         
-        botum, result = mongoDB().uploadBot(id=id, data={"verified": True})
+        oldbot = mongoDB().get_bot(id=str(id))
+        if not oldbot:
+            return make_response(jsonify(error8), 400, {'Content-Type': 'application/json'})
+        
+        botum, result = mongoDB().uploadBot(id=str(id), data={"verified": True})
         
         if result["sucess"] == True:
             return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
