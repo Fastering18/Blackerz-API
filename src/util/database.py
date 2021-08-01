@@ -7,7 +7,8 @@ firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebas
 client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority", connect=False)
 dbInfrastructure = client.Infrastructure
 dbAdmins = client.Admins
-scannerWebhook = "https://scanner-blackerz-discord.glitch.me/webchanges"
+scannerWebhook = "https://second-solstice-medusaceratops.glitch.me"
+
 #dbInfrastructure.serverlist.create_index([('name', pymongo.TEXT)])
 
  
