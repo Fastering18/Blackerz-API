@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request, abort
 import time, math, requests
 from threading import Timer, Thread
-from src.util.database import notifyChanges, mongoDB
+from src.util.database import notifyChanges, mongoDB, IdentifyApiUser
 
 from firebase import firebase
 
@@ -16,6 +16,8 @@ error4 = {'error': "Bot not found, you can only edit the existing bot!", 'status
 error5 = {'error': "longDescription too long, must lower than 4000 characters length!", 'status': "Not success"}
 error6 = {'error': "prefix too long! must lower than 5 characters length and 1 minimum", 'status': "Not success"}
 error7 = {'error': "prefix must be not empty!", 'status': "Not success"}
+unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
+unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
 sucess = {'error': "null", 'status': "success"}
 unauthorizedAcess = {'error': "Unauthorized Acess, please provide correct owner credentials", 'status': "Not success"}
 
@@ -147,3 +149,22 @@ class ServerCountManager(Resource):
             return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
         else: 
             return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
+
+class VerifyBot(Resource):
+    def post(self, id):
+        if "http://" in request.url:
+            return redirect(request.url.replace("http://", "https://", 1))
+        apiKey = request.headers.get('apiKey')
+        if not apiKey:
+            return make_response(jsonify(unauthorizedAcess1), 401)
+        ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
+        if not ApiUser.izin.get("verifybot") and not ApiUser.izin.get("all"): 
+            return make_response(jsonify(unauthorizedAcess2), 401)
+        
+        botum, result = mongoDB().uploadBot(id=id, data={"verified": True})
+        
+        if result["sucess"] == True:
+            return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
+        else: 
+            return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
+        
