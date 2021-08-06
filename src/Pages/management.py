@@ -5,7 +5,7 @@ import time, random, string, datetime, json, requests, os
 from threading import Timer, Thread
 from firebase import firebase
 
-from src.util.database import mongoDB, send_webhook
+from src.util.database import mongoDB, notifyChanges
 
 OAUTH2_CLIENT_ID = "798496088750292993"
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
