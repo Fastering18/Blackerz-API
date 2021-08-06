@@ -132,7 +132,8 @@ class data():
             print(result)
             
             if result["sucess"]:
-                send_webhook("https://discord.com/api/webhooks/870668015065247784/qg27HSWbAE0cNKAwEGUD5OiwpI_awpCb9bv14_tVZID4dy8oUVGdnQusT_1oMHJrGsry", {"content": f"<@{ownerData['id']}> Added bot <@{botID}>\nhttps://blackerz.herokuapp.com/bots/{botID}"})
+                Thread(target=notifyChanges, args=["<@{0}> added bot <@{1}>\n> {2}bots/{1}".format(ownerData['id'], str(botID), request.url_root), botID]).start()
+                #send_webhook("https://discord.com/api/webhooks/870668015065247784/qg27HSWbAE0cNKAwEGUD5OiwpI_awpCb9bv14_tVZID4dy8oUVGdnQusT_1oMHJrGsry", {"content": f"<@{ownerData['id']}> Added bot <@{botID}>\nhttps://blackerz.herokuapp.com/bots/{botID}"})
                 
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "name", botData['username'])
             #firebaseDB.put('/Infrastructure/botlist/' + dataREQ['botId'], "owner", {
