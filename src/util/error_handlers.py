@@ -36,7 +36,7 @@ def page_not_found(e):
   discord = make_session(token=session.get('oauth2_token'))
   user = discord.get(API_BASE_URL + '/users/@me').json()
   notFound = {
-     "description": "The requested resource is not found, check your URL again or report to Discord Ghosteez#5936"
+     "description": "The requested resource is not found, check your URL again or report to Discord Ghosteez#1000"
   }
-  print(request.headers.get("Cf-Ipcountry"))
+  #print(request.headers.get("Cf-Ipcountry"))
   return make_response(render_template('404.html', notFound=notFound, clientUser=user), 404, headers)
