@@ -130,7 +130,8 @@ class dptFile(Resource):
     return make_response(
 """user-agent: *
 allow: /
-Sitemap: https://blackerz.herokuapp.com/static/sitemapindex.xml""", 200, {'Content-Type': 'text/plain'})
+Sitemap: https://blackerz.herokuapp.com/static/sitemapindex.xml
+Sitemap: https://blackerz.herokuapp.com/bots_sitemap.xml""", 200, {'Content-Type': 'text/plain'})
 
 class dptFile2(Resource):
   def get(self):
