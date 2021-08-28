@@ -179,12 +179,12 @@
           botSearchInput.focus();
           botSearchInput.val("{{kueri}}");
         {%- endif -%}
-        const loginedUser = JSON.parse('{{ user | tojson | safe }}')
+        const loginedUser = {{ user | tojson | safe }}
         
         const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
       
         function searchQuery(query) {
-            if (query === "" || typeof(query) !== "string") {window.location.href = "/"; return};
+            if (query === "" || typeof(query) !== "string") {document.location.replace("/"); return};
             $("#searchBar").blur();
             document.location.replace(`/search?q=${query.trim().substring(0, 30)}`);
         };
