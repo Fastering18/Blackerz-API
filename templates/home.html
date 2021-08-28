@@ -273,14 +273,18 @@
   // Optional parameters
   direction: 'horizontal',
   loop: true,
-  //slidesPerView: 1,
+  slidesPerView: "auto",
+  spaceBetween: 30,
   paginationClickable: true,
   centeredSlides: true,
+  roundLengths: true,
   autoplay: {
    delay: 5000,
   },
 
-  pagination: '.swiper-pagination',
+  pagination: {
+    el:'.swiper-pagination'
+  },
 
   // Navigation arrows
   navigation: {
