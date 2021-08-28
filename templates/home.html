@@ -119,12 +119,12 @@
     <!-- Slides -->
     <div class="swiper-slide">
       <div class="swiper-zoom-container">
-        <img src="https://cdn.discordapp.com/attachments/806365870484881438/829693358380154931/20210408_192444.jpg" />
+        <img src="https://blackerz.gumlet.io/Images/gokun_bump.jpg" onerror="this.src='https://blackerz.herokuapp.com/static/Images/gokun_bump.jpg'" />
       </div>
     </div>
     <div class="swiper-slide">
       <div class="swiper-zoom-container">
-        <img src="https://cdn.discordapp.com/attachments/806365870484881438/829693358380154931/20210408_192444.jpg" />
+        <img src="https://blackerz.gumlet.io/Images/gokun_bump.jpg" onerror="this.src='https://blackerz.herokuapp.com/static/Images/gokun_bump.jpg'" />
       </div>
     </div>
   </div>
@@ -275,7 +275,6 @@
   loop: true,
   slidesPerView: "auto",
   spaceBetween: 40,
-  paginationClickable: true,
   centeredSlides: true,
   roundLengths: true,
   autoHeight:true, 
@@ -286,7 +285,8 @@
   },
 
   pagination: {
-    el:'.swiper-pagination'
+    el:'.swiper-pagination',
+    clickable: true
   },
 
   // Navigation arrows
