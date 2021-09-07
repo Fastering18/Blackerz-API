@@ -92,7 +92,7 @@
         <br>
         {%- if user and "AuthorizationV1" in user -%}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="navigator.clipboard.writeText(this.value); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif -%}
     </div>
     {% cache 60*10, "jquery" %}
