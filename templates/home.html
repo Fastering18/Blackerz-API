@@ -158,7 +158,7 @@
              </div>
           {%- endfor %}
     </div>
-    {%- if not bots or len(bots) < 1 %}
+    {%- if not bots or not bots[0] %}
          <p class="fw-bolder">Looks like there are no results...</p>                    
     {%- endif %}
     <footer>
