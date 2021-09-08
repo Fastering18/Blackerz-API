@@ -115,7 +115,7 @@
         {%- endif %}
       </ul>
       <form class="d-flex" method="GET" action="/search">
-        <input class="form-control me-2" id="searchBar" type="search" placeholder="Search bot" aria-label="Search" name="q">
+        <input class="form-control me-2" id="searchBarBot" type="search" placeholder="Search bot" aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
@@ -181,8 +181,8 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
+        var botSearchInput = $("#searchBarBot")
         {%- if kueri -%}
-          var botSearchInput = $("#searchBar")
           botSearchInput.focus();
           botSearchInput.val("{{kueri}}");
         {%- endif -%}
@@ -247,9 +247,9 @@
         function redirectKe(link) {
            window.location.href = link
         }
-        $("#searchBar").keyup(function(e) {
+        /*$("#searchBar").keyup(function(e) {
            if (e.keyCode === 13) {searchQuery(this.value)};
-        })
+        })*/
         {% endcache %}
       
         $(document).ready(function () {
@@ -259,7 +259,7 @@
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
             }
-            $("#searchBar").autocomplete({
+            botSearchInput.autocomplete({
               source: async function(request, response) {
                 let data = await fetch(`/api/v1/bots/autocorrect?query=${request.term}`)
                     .then(results => results.json())
