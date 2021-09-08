@@ -6,6 +6,8 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <meta property="og:title" content="Servers" />
     <meta property="og:description" content="Search any Discord servers here." />
     <meta property="og:url" content="{{ request.url_root }}servers" />
@@ -49,42 +51,51 @@
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
   </head>
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-9419528436883042"></amp-auto-ads>
     <div id='background'></div>
     <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
-    <div class="topnav">
-            <div class="topnav-pc">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a class="active" href="/servers" data-text="Servers"></a>
-                {%- if user and "username" in user -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-        <div class="topnav-mobile" style="min-height: 32px;">
-            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a class="active" href="/servers" data-text="Servers"></a>
-                {%- if user and "username" in user -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
-                <i class="fa fa-bars"></i>
-            </a>
-          </div>
-        </div>
-    <section class="root-page" id="main-page">
-    <div id="headerPage">
-        <input id="searchBar" type="text" style="border-radius: 10px;" placeholder="Search server by name">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Blackerz bot list</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/servers">Servers</a>
+        </li>
+        {%- if user and "username" in user %}
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user['id']}}">{{user["username"]}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add/bot">Add bot</a>
+        </li>
+        {%- else %}
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLoginAPI()">Login</a>
+        </li>
+        {%- endif %}
+      </ul>
+      <form class="d-flex" method="GET" action="/servers/search">
+        <input class="form-control me-2" id="searchBarServer" type="search" placeholder="Search bot" aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
+  </div>
+</nav>
+    <section class="root-page" id="main-page">
+    <!-- div id="headerPage">
+        <input id="searchBar" type="text" style="border-radius: 10px;" placeholder="Search server by name">
+    </div --> 
     <br>
     <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord servers here.</p>
     <div id="serverListParent">
@@ -120,25 +131,24 @@
                 <h3 class="footer-header">Contact us</h3>
                 <ul class="footer-links">
                     <li><a class="text-link" href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
-                    <li><a class="text-link" href="/servers/816619389809590322">Discord</a></li>
+                    <li><a class="text-link" href="/servers/795942661163974656">Discord</a></li>
                 </ul>
             </div>
         </div>
       <script>document.getElementById("toggle-dark-mode").checked = localStorage.darkMode == "dark" ? false : true; function toggleDarkMode(elm) {localStorage.darkMode = elm.checked == true ? "light" : "dark"; document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark")}</script>
     </footer>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        {%- if kueri -%}
-          var botSearchInput = $("#searchBar")
-          botSearchInput.focus();
-          botSearchInput.val("{{kueri}}");
-        {%- endif -%}
+        var serverSearchInput = $("#searchBarServer");
+        {%- if kueri %}
+          serverSearchInput.focus();
+          serverSearchInput.val("{{kueri}}");
+        {%- endif %}
         const client = JSON.parse('{{ user | tojson | safe }}');
         const page = {{page}};
-        let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
+        let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }};
       
         function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
@@ -153,11 +163,11 @@
             document.location.replace(newPageURL.href);
         }
         function discordLoginAPI() {
-            {%- if user and "username" in user -%}
+            {%- if user and "username" in user %}
                window.location.href = "/user/{{user['id']}}"
-            {%- else -%}
+            {%- else %}
                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
-            {%- endif -%}
+            {%- endif %}
         }
         {% cache 60*5, None %}
         function discordLogOutAPI(force) {
@@ -206,13 +216,13 @@
         function redirectKe(link) {
            window.location.href = link
         }
-        $("#searchBar").keyup(function(e) {
+        /*$("#searchBar").keyup(function(e) {
            if (e.keyCode === 13) {searchServerQuery(this.value)};
-        })
+        })*/
         $(document).ready(function () {
             if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
             setCookie("dariLink", window.location.host, 1)
-            $("#searchBar").autocomplete({
+            serverSearchInput.autocomplete({
               source: async function(request, response) {
                 let data = await fetch(`/api/v1/servers/autocorrect?query=${request.term}`)
                     .then(results => results.json())
