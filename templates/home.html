@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Search any Discord bots and servers here." />
     <meta property="og:url" content="{{ request.url_root }}" />
@@ -54,6 +55,7 @@
 }
     </style>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     
     <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <meta name="google-site-verification" content="BV_cU5TPHg-X500ItK2v9KCVDpQVmUdAO7zAo7y9nqA" />
@@ -82,35 +84,37 @@
   </head>
   <body>
     <script>document.getElementsByTagName("BODY")[0].setAttribute("dark-mode", localStorage.darkMode == "light" ? "light" : "dark");</script>
-        <div class="topnav">
-            <div class="topnav-pc">
-                <a class="active" data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if user and "username" in user -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-        <div class="topnav-mobile" style="min-height: 32px;">
-            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
-                <a class="active" data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if user and "username" in user -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{user["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
-                <i class="fa fa-bars"></i>
-            </a>
-          </div>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Blackerz bot list</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/servers">Servers</a>
+        </li>
+        {%- if user and "username" in user %}
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user['id']}}">{{user["username"]}}</a>
+        </li>
+        {%- else %}
+        <li class="nav-item">
+          <a class="nav-link" onclick="discordLoginAPI()">Login</a>
+        </li>
+        {%- endif %}
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search bots</button>
+      </form>
+    </div>
+  </div>
+</nav>
     <div id="headerPage">
         <!-- img class="discordfront" src="/static/Images/discord-front-2.png" width="80%" height="15%" style="display: block; margin-left: auto; margin-right: auto; width: 99.9%;" -->
         <div class="swiper">
