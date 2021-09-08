@@ -91,7 +91,7 @@
             {%- for bot in user["botsowned"] %}
                 <!-- a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a -->
                  
-  <div class="card border-dark mb-3" style="width: 17rem; max-height: 40rem;">
+  <div class="card border-dark mb-3" style="width: 17rem; max-height: 40rem;" onclick="window.location.href='/bots/{{ bot['id'] }}'">
     <img class="card-img-top" src="{{ ('https://cdn.discordapp.com/avatars/' + bot['id'] + '/' + bot['avatar'] + '.webp?size=64') if bot['avatar'] else ('https://cdn.discordapp.com/embed/avatars/1.png') }}" alt="{{bot['tag']}} avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <div class="card-body">
       <h5 class="card-title">{{ bot['tag'] }}</h5>
