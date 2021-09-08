@@ -90,14 +90,14 @@
             {%- for bot in user["botsowned"] %}
                 <!-- a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a -->
                  
-  <div class="card">
+  <div class="card border-secondary mb-3" style="max-width: 18rem;">
     <img class="card-img-top" src="{{ ('https://cdn.discordapp.com/avatars/' + bot['id'] + '/' + bot['avatar'] + '.webp?size=64') if bot['avatar'] else ('https://cdn.discordapp.com/embed/avatars/1.png') }}" alt="{{bot['tag']}} avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <div class="card-body">
-      <h5 class="card-title">bot['tag']</h5>
-      <p class="card-text">bot['ShortDescription']</p>
-      <p class="card-text"><small class="fw-normal">Has {{ bot['upvotes'] }} upvotes.</small></p>
+      <h5 class="card-title">{{ bot['tag'] }}</h5>
+      <p class="card-text">{{ bot['ShortDescription'] or 'No description was provided' }}</p>
+      <p class="card-text"><small class="text-muted">Has {{ bot['upvotes'] }} upvotes.</small></p>
       {%- if bot["serverCount"] %}
-        <p class="card-text"><small class="text-muted">Belong in {{ bot["serverCount"] }}</small></p>
+        <p class="card-text"><small class="text-muted">Belong in {{ bot["serverCount"] }} servers.</small></p>
       {%- endif %}
     </div>
   </div>
