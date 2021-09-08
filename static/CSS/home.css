@@ -40,7 +40,7 @@
      text-decoration: none;
      color: rgba(46, 178, 255, 1);
   }
-  .topnav-pc {
+  /*.topnav-pc {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -98,7 +98,7 @@
   .topnav a.active {
     background-color: rgba(0, 0, 0, 85);
     color: rgb(255, 255, 255, 0.7);
-  }
+  }*/
   .next-page {
     width: 100%;
     position: relative;
@@ -127,7 +127,7 @@
 
     align-items: center;*/
   }
-  #searchBar {
+  /*#searchBar {
     border-radius: 10px;
     width: 85%;
     font-size: 150%;
@@ -156,7 +156,8 @@
   .topnav-mobile {
     display: block;
   }
-}
+}*/
+
 
 /* Switch button, https://www.w3schools.com/howto/howto_css_switch.asp */
 .switch {
