@@ -181,14 +181,14 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
-        var botSearchInput = $("#searchBarBot")
-        {%- if kueri -%}
+        var botSearchInput = $("#searchBarBot");
+        {%- if kueri %}
           botSearchInput.focus();
           botSearchInput.val("{{kueri}}");
-        {%- endif -%}
-        const loginedUser = {{ user | tojson | safe }}
+        {%- endif %}
+        const loginedUser = {{ user | tojson | safe }};
         
-        const logined = {{ (user and "id" in user) and "true" or "false" | safe }}
+        const logined = {{ (user and "id" in user) and "true" or "false" | safe }};
       
         function searchQuery(query) {
             if (query === "" || typeof(query) !== "string") {document.location.replace("/"); return};
@@ -196,14 +196,14 @@
             document.location.replace(`/search?q=${query.trim().substring(0, 30)}`);
         };
         function discordLogOutAPI(force) {
-            document.location.replace("/api/v1/discord/logout")
+            document.location.replace("/api/v1/discord/logout");
         }
         function discordLoginAPI() {
-            {%- if user and "username" in user -%}
+            {%- if user and "username" in user %}
                 window.location.href = "/user/{{user['id']}}"
-            {%- else -%}
+            {%- else %}
                 document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
-            {%- endif -%}
+            {%- endif %}
         };
         {% cache 60*10, "basicfunchome" %}
         function generateRandomString() {
