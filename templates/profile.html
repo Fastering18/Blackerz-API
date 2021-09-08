@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/static/Images/Blackerz.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/static/CSS/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="/static/json/profile.webmanifest">
     <meta name="google-site-verification" content="b10OoWMdH8oSIGjd-Lp06ajgSmTFtml140QikmrK_qk" />
@@ -45,49 +46,66 @@
 </head>
 
 <body>
-    <div id='background'></div>
-    <div class="topnav">
-            <div class="topnav-pc">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if client and "username" in client -%}
-                   <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-        <div class="topnav-mobile" style="min-height: 32px;">
-            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if client and "username" in client -%}
-                   <a class="{{ (user and 'AuthorizationV1' in user) and 'active' or 'not-active' }}" id="discordLogin" onclick="discordLoginAPI()" data-text="{{client["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
-                <i class="fa fa-bars"></i>
-            </a>
-          </div>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Blackerz bot list</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/servers">Servers</a>
+        </li>
+        {%- if user and "username" in user %}
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user['id']}}">{{user["username"]}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add/bot">Add bot</a>
+        </li>
+        {%- else %}
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLoginAPI()">Login</a>
+        </li>
+        {%- endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
     <div id="userInfo">
         <h1 id="profileTitle" style="color: rgba(255,255,255, 0.8);">Profile</h1>
         <p id="username" style="color: rgba(255,255,255, 0.8);">{{ user["tag"] }}</p>
         <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <div id="botsowned">
-            <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned: |</h2>
-            {%- for bot in user["botsowned"] -%}
-                <a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a>
-            {%- endfor -%}
-            {%- if not user["botsowned"] -%}
+            <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned:</h2>
+            <div class="card-group">
+            {%- for bot in user["botsowned"] %}
+                <!-- a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a -->
+                 
+  <div class="card">
+    <img class="card-img-top" src="{{bot['avatar'] and ("https://cdn.discordapp.com/avatars/" + bot['id'] + "/" + bot['avatar'] + ".webp?size=64") or "https://cdn.discordapp.com/embed/avatars/1.png"}}" alt="{{bot['tag'] avatar}}">
+    <div class="card-body">
+      <h5 class="card-title">bot['tag']</h5>
+      <p class="card-text">bot['ShortDescription']</p>
+      <p class="card-text"><small class="fw-normal">Has {{ bot['upvotes'] }} upvotes.</small></p>
+      {%- if botData["serverCount"] %}
+        <p class="card-text"><small class="text-muted">Belong in {{ bot["serverCount"] }}</small></p>
+      {%- endif %}
+    </div>
+  </div>
+            {%- endfor %}
+            </div>
+            {%- if not user["botsowned"] %}
                 <p id="no bot" style="color: rgba(255,255,255, 0.8); display: inline;">no bot :v</p>
-            {%- endif -%}
+            {%- endif %}
         </div>
         <br>
         {%- if user and "AuthorizationV1" in user -%}
@@ -95,12 +113,13 @@
             <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif -%}
     </div>
-    {% cache 60*10, "jquery" %}
+    {% cache 60*10, "jquery_bootstrap" %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     {% endcache %}
     <script>
-        const client = JSON.parse('{{ client | tojson | safe }}')
-        const logined = {{ (client and "id" in client) and "true" or "false" | safe }}
+        const client = {{ client | tojson | safe }};
+        const logined = {{ (client and "id" in client) and "true" or "false" | safe }};
 
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
