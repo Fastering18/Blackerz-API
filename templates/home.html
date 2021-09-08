@@ -147,7 +147,7 @@
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
     <div id="botListParent">
-          {%- for dataChild in bots -%}
+          {%- for dataChild in bots %}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
@@ -156,8 +156,11 @@
                <img width="6%" height="6%" alt="{{dataChild.ShortDescription}}" style="display:inline-block; position: relative;" src="{{imgsrc}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></img>
                <p id="namaBot" style="display:inline-block; position: relative; font-size: 140%; padding-left: 1%; color: black;">{{ dataChild["name"] }}</p>
              </div>
-          {%- endfor -%}
+          {%- endfor %}
     </div>
+    {%- if not bots or len(bots) < 1 %}
+         <p class="fw-bolder">Looks like there are no results...</p>                    
+    {%- endif %}
     <footer>
       <br>
       <p for="toggle-dark-mode" style="font-size: 120%; margin-bottom: 1%;">Light Mode</p>
