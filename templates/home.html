@@ -115,14 +115,13 @@
         {%- endif %}
       </ul>
       <form class="d-flex" method="GET" action="/search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <input class="form-control me-2" id="searchBar" type="search" placeholder="Search bot" aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
   </div>
 </nav>
     <div id="headerPage">
-        <!-- img class="discordfront" src="/static/Images/discord-front-2.png" width="80%" height="15%" style="display: block; margin-left: auto; margin-right: auto; width: 99.9%;" -->
         <div class="swiper">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
@@ -138,14 +137,12 @@
       </div>
     </div>
   </div>
-  <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 
-  <!-- If we need navigation buttons -->
   <div class="swiper-button-prev"></div>
   <div class="swiper-button-next"></div>
 </div>
-        <input id="searchBar" type="text" style="border-radius: 10px;" placeholder="Search bot by name">
+        <!-- input id="searchBar" type="text" style="border-radius: 10px;" placeholder="Search bot by name" -->
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
