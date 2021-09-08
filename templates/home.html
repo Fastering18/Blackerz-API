@@ -102,15 +102,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/user/{{user['id']}}">{{user["username"]}}</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="discordLogOutAPI()">Log out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add/bot">Add bot</a>
+        </li>
         {%- else %}
         <li class="nav-item">
           <a class="nav-link" onclick="discordLoginAPI()">Login</a>
         </li>
         {%- endif %}
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search bots</button>
+      <form class="d-flex" method="GET" action="/search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
   </div>
