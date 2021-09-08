@@ -105,13 +105,13 @@
             {%- endfor %}
             </div>
             {%- if not user["botsowned"] %}
-                <p id="no bot" style="color: rgba(255,255,255, 0.8); display: inline;">no bot :v</p>
+                <p id="no bot" style="display: inline;">no bot :v</p>
             {%- endif %}
         </div>
         <br>
         {%- if user and "AuthorizationV1" in user %}
-            <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <h2 id="authHint1">Your authorization v1 key:</h2>
+            <p id="AuthorizationV1"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif %}
     </div>
     <footer>
