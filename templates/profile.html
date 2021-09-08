@@ -85,13 +85,13 @@
         <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
         <p id="description" style="color: rgba(255,255,255, 0.8);">{{ user.description }}</p>
         <div id="botsowned">
-            <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned:</h2>
+            <h3 id="botOwnedTitle" style="color: rgba(255,255,255, 0.8); display: inline;">Bots owned</h2>
             <div class="card-group">
             {%- for bot in user["botsowned"] %}
                 <!-- a href="/bots/{{ bot['id'] }}" style="display: inline;"><p id="{{ bot['id'] }}" style="color: rgba(255,255,255, 0.8); display: inline;">{{ bot["tag"] | safe }} | </p></a -->
                  
   <div class="card">
-    <img class="card-img-top" src="{{bot['avatar'] and ("https://cdn.discordapp.com/avatars/" + bot['id'] + "/" + bot['avatar'] + ".webp?size=64") or "https://cdn.discordapp.com/embed/avatars/1.png"}}" alt="{{bot['tag'] avatar}}">
+    <img class="card-img-top" src="{{ ('https://cdn.discordapp.com/avatars/' + bot['id'] + '/' + bot['avatar'] + '.webp?size=64') if bot['avatar'] else ('https://cdn.discordapp.com/embed/avatars/1.png') }}" alt="{{bot['tag'] avatar}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <div class="card-body">
       <h5 class="card-title">bot['tag']</h5>
       <p class="card-text">bot['ShortDescription']</p>
@@ -108,10 +108,10 @@
             {%- endif %}
         </div>
         <br>
-        {%- if user and "AuthorizationV1" in user -%}
+        {%- if user and "AuthorizationV1" in user %}
             <h2 id="authHint1" style="color: rgba(255,255,255, 0.8);">Your authorization v1 key:</h2>
             <p id="AuthorizationV1" style="color: rgba(255,255,255, 0.8);"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
-        {%- endif -%}
+        {%- endif %}
     </div>
     {% cache 60*10, "jquery_bootstrap" %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
