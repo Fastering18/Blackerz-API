@@ -86,7 +86,7 @@
         {%- endif %}
       </ul>
       <form class="d-flex" method="GET" action="/servers/search">
-        <input class="form-control me-2" id="searchBarServer" type="search" placeholder="Search bot" aria-label="Search" name="q">
+        <input class="form-control me-2" id="searchBarServer" type="search" placeholder="Search servers" aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
@@ -148,7 +148,7 @@
         {%- endif %}
         const client = JSON.parse('{{ user | tojson | safe }}');
         const page = {{page}};
-        let logined = {{ (user and "username" in user) and 'true' or 'false' | safe }};
+        const logined = {{ (user and "username" in user) and 'true' or 'false' | safe }};
       
         function searchServerQuery(query) {
             if (query === "" || typeof (query) !== "string") {window.location.href = "/servers"; return}
