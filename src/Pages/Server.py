@@ -103,7 +103,7 @@ class allServersPage(Resource):
     page = (isinstance(page, str) and page.isdigit()) and int(page) or 1
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    serverDataList = mongoDB().getAllServers(page=page) or []
+    serverDataList, jumlah = mongoDB().getAllServers(page=page) or []
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -117,7 +117,7 @@ class allServersPage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=serverDataList, page=page), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=serverDataList, page=page, hasNextPage=(page*20)<jumlah, results_count=jumlah), 200, headers)
 
 class specificServerPage(Resource):
   def get(self, id):
