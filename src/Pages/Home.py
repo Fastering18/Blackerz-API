@@ -154,9 +154,7 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    
-    print(botDataList)
-    
+        
     respen = make_response(render_template('home.html', user=user, bots=botDataList), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
     respen.set_cookie('cross-site-cookie', '3pcookie-legacy', samesite='Lax', secure=True);
