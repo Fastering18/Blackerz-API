@@ -162,7 +162,7 @@ class searchServerQuery(Resource):
     user = discord.get(API_BASE_URL + '/users/@me').json()
     page = request.values.get("page") or request.values.get("halaman") or request.values.get("p")
     page = (isinstance(page, str) and page.isdigit()) and int(page) or 1
-    serverDataList = mongoDB().serverQuerySearch(kueri=kueri, page=page) or []
+    serverDataList, jumlah = mongoDB().serverQuerySearch(kueri=kueri, page=page) or []
     
     if "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -176,4 +176,4 @@ class searchServerQuery(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
-    return make_response(render_template('servers.html', user=user, servers=serverDataList, kueri=kueri, page=page), 200, headers)
+    return make_response(render_template('servers.html', user=user, servers=serverDataList, kueri=kueri, page=page, hasNextPage=(page*20)<jumlah, results_count=jumlah), 200, headers)
