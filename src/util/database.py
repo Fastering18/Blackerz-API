@@ -73,28 +73,30 @@ class mongoDB():
       return putCache("_allservers" + str(page), list(dt), 600), dt.count()
    
    def botQuerySearch(self, **anydata):
-      kueri = str(anydata.get('kueri', ""))
+      kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
       if home_botCaches.get("_kueribot " + kueri):
          return home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
-      data = putCache("_kueribot ^" + kueri, list(dbInfrastructure.botlist.find({
+      dt = dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, {'_id': False})), 5)
-      return data
+      }, {'_id': False})
+      data = putCache("_kueribot ^" + kueri, list(dt), 5)
+      return data, dt.count()
    
    def serverQuerySearch(self, **anydata):
-      kueri = str(anydata.get('kueri', ""))
+      kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
       page = nclamp(anydata.get('page', 1), 1, 10000)
       if home_botCaches.get("_kueriserver " + kueri):
          return home_botCaches.get("_kueriserver " + kueri)
-      data = putCache("_kueriserver ^" + kueri, list(skiplimit(dbInfrastructure.serverlist.find({
+      dt = skiplimit(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ]
-      }, {'_id': False}), 20, page)), 5)
-      return data
+      }, {'_id': False}), 20, page)
+      data = putCache("_kueriserver ^" + kueri, list(dt), 5)
+      return data, dt.count()
    
    def AutocorrectSearchBot(self, **anydata):
-      return dbInfrastructure.botlist.find({"$text": {"$search": anydata.get('kueri', "bot")}}, {"name": 1, "_id": 0, "id": 1}).limit(10)
+      return dbInfrastructure.botlist.find({"$text": {"$search": anydata.get('kueri', "bot").replace("\\", "\\\\") }}, {"name": 1, "_id": 0, "id": 1}).limit(anydata.get("limit", 10))
       #return dbInfrastructure.botlist.aggregate([
             #{
                 #"$search": {
@@ -111,7 +113,7 @@ class mongoDB():
         #])
         
    def AutocorrectSearchServer(self, **anydata):
-      return dbInfrastructure.serverlist.find({"$text": {"$search": anydata.get('kueri', "server")}}, {"name": 1, "_id": 0, "id": 1}).limit(10)
+      return dbInfrastructure.serverlist.find({"$text": {"$search": anydata.get('kueri', "server").replace("\\", "\\\\") }}, {"name": 1, "_id": 0, "id": 1}).limit(anydata.get("limit", 10))
      
    def uploadServer(self, **anydata):
       serverid = str(anydata.get('id', None))
