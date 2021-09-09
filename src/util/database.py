@@ -60,9 +60,10 @@ class mongoDB():
       
    def getAllBots(self, **anydata):
       vrified = anydata.get('verified', True)
+      page = nclamp(anydata.get('page', 1), 1, 10000)
       if home_botCaches.get("_botsverified") and vrified:
          return list(home_botCaches["_botsverified"]), home_botCaches["_botsverified"].count()
-      dt = dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})
+      dt = skiplimit(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False}), 20, page)
       return list(putCache("_botsverified", dt, 700)), dt.count()
    
    def getAllServers(self, **anydata):
