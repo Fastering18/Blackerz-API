@@ -10,7 +10,7 @@ from src.util.database import mongoDB
 class publicBotSitemap(Resource):
     # PUBLIC bot_sitemap.xml 
     def get(self):
-        botlist = mongoDB().getAllBots()
+        botlist, jmlh = mongoDB().getAllBots()
         bots = [{"name": "sus", "id": 1},{"name": "sos", "id": 2}]
         strr = """<?xml version="1.0" encoding="utf-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
