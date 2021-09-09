@@ -62,13 +62,15 @@ class mongoDB():
       vrified = anydata.get('verified', True)
       if home_botCaches.get("_botsverified") and vrified:
          return home_botCaches["_botsverified"]
-      return putCache("_botsverified", list(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})), 700)
+      dt = dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False})
+      return putCache("_botsverified", list(dt), 700), dt.count()
    
    def getAllServers(self, **anydata):
       page = nclamp(anydata.get('page', 1), 1, 10000)
       if home_botCaches.get("_allservers"):
          return home_botCaches["_allservers"]
-      return putCache("_allservers" + str(page), list(skiplimit(dbInfrastructure.serverlist.find({}, {'_id': False}), 20, page)), 600)
+      dt = skiplimit(dbInfrastructure.serverlist.find({}, {'_id': False}), 20, page)
+      return putCache("_allservers" + str(page), list(dt), 600), dt.count()
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', ""))
