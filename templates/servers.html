@@ -112,10 +112,14 @@
     </div>
     <div class="next-page">
       <div class="center-horizontally">
-       {%- if page > 1 -%}
-         <button class="previous-page-button" onclick="getNextPage(false)">Previous server</button>
-       {%- endif -%}
-       <button class="next-page-button" onclick="getNextPage(true)">Next servers</button>
+       {%- if page > 1 %}
+         <!--button class="previous-page-button" onclick="getNextPage(false)">Previous servers</button-->
+         <a href="?page={{page-1}}" class="btn btn-primary btn-lg" role="button">Previous servers</a>
+       {%- endif %}
+       {%- if hasNextPage == True or hasNextPage == None %}
+         <!--button class="next-page-button" onclick="getNextPage(true)">Next servers</button-->
+         <a href="?page={{page+1}}" class="btn btn-primary btn-lg" role="button">Next servers</a>
+       {%- endif %}
       </div>
     </div>
     </section>
