@@ -140,7 +140,7 @@ class homePage(Resource):
         return redirect(request.url.replace('http:', 'https:', 1), code=301)
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    botDataList = mongoDB().getAllBots() or []
+    botDataList, jumlah = mongoDB().getAllBots() or []
     
     if user and "id" in user and "username" in user:      
         oneTimeCode = generateRandomKey(8)
@@ -154,6 +154,8 @@ class homePage(Resource):
         Thread(target=updateUserData, args=userData).start() 
     else:
         user = "null"
+    
+    print(botDataList)
     
     respen = make_response(render_template('home.html', user=user, bots=botDataList), 200, headers)
     respen.set_cookie('same-site-cookie', '3pcookie', samesite='Lax');
