@@ -63,19 +63,19 @@ class mongoDB():
       page = nclamp(anydata.get('page', 1), 1, 10000)
       botc = home_botCaches.get("_botsverified")
       if botc and vrified:
-         return list(botc[0]), botc[1]
+         return botc[0], botc[1]
       dt = skiplimit(dbInfrastructure.botlist.find({"verified": vrified}, {'_id': False}), 50, page)
       jmlh = dt.count(True)
-      return list(putCache("_botsverified", [dt, jmlh], 700)[0]), jmlh
+      return putCache("_botsverified", [list(dt), jmlh], 700)[0], jmlh
    
    def getAllServers(self, **anydata):
       page = nclamp(anydata.get('page', 1), 1, 10000)
       serverc = home_botCaches.get("_allservers")
       if serverc:
-         return list(serverc[0]), serverc[1]
+         return serverc[0], serverc[1]
       dt = skiplimit(dbInfrastructure.serverlist.find({}, {'_id': False}), 20, page)
       jmlh = dt.count()
-      return list(putCache("_allservers" + str(page), [dt, jmlh], 600)[0]), jmlh
+      return putCache("_allservers" + str(page), [list(dt), jmlh], 600)[0], jmlh
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
@@ -83,13 +83,13 @@ class mongoDB():
       botqc = home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
       if botqc and vrified:
-         return list(botqc[0]), botqc[1]
+         return botqc[0], botqc[1]
       dt = skiplimit(dbInfrastructure.botlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
       }, {'_id': False}), 20, page)
       jmlh = dt.count()
-      data = list(putCache("_kueribot " + kueri, [dt, jmlh], 5)[0])
+      data = putCache("_kueribot " + kueri, [list(dt), jmlh], 5)[0]
       return data, jmlh
    
    def serverQuerySearch(self, **anydata):
@@ -97,12 +97,12 @@ class mongoDB():
       page = nclamp(anydata.get('page', 1), 1, 10000)
       serverqc = home_botCaches.get("_kueriserver " + kueri)
       if serverqc:
-         return list(serverqc[0]), serverqc[1]
+         return serverqc[0], serverqc[1]
       dt = skiplimit(dbInfrastructure.serverlist.find({
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ]
       }, {'_id': False}), 20, page)
       jmlh = dt.count()
-      data = list(putCache("_kueriserver " + kueri, [dt, jmlh], 5)[0])
+      data = putCache("_kueriserver " + kueri, [list(dt), jmlh], 5)[0]
       return data, jmlh 
    
    def AutocorrectSearchBot(self, **anydata):
