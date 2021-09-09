@@ -73,7 +73,7 @@ class querySearch:
             self.warns = {"error": True, "message": 'Invalid \'limit\' query, must be number', "code": 400}
             return
         try:
-            self.result = mongoDB().botQuerySearch(kueri=str(self.keyword)) #requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
+            self.result, jmlh = mongoDB().botQuerySearch(kueri=str(self.keyword)) #requests.get(f'https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy="{self.filter}"&limitToLast={self.limit}').json()
             #if self.keyword:
                 #listres = [] #list(self.result.values())
                 #for kunci in self.result:
