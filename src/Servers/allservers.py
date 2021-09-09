@@ -24,7 +24,7 @@ error1 = {'error': "Server not found", 'status': "Not success"}
         
 class findAllServer(Resource):
   def get(self):
-    servers = mongoDB().getAllServers() #data("getserver")
+    servers, jmlh = mongoDB().getAllServers() #data("getserver")
     
     if servers != None:
         return make_response(dumps(servers), 200, {'Content-Type': 'application/json'})
