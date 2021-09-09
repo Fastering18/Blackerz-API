@@ -93,11 +93,12 @@
   </div>
 </nav>
     <section class="root-page" id="main-page">
-    <!-- div id="headerPage">
-        <input id="searchBar" type="text" style="border-radius: 10px;" placeholder="Search server by name">
-    </div --> 
-    <br>
-    <p id="serverlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord servers here.</p>
+    <figure class="blockquote">
+  <blockquote class="blockquote">
+    <p>Total {{results_count}} {{ kueri and "matching" or "all" }} servers found {{results_count > 2 and "🎉" or "😓"}}</p>
+  </blockquote>
+  <figcaption class="blockquote-footer">Blackerz Discord servers list</figcaption>
+</figure>
     <div id="serverListParent">
           {%- for server in servers if server.name and server.id and server.joinLink -%}
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
