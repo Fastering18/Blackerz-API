@@ -5,7 +5,7 @@ from bson.json_util import dumps
           
 class resource2(Resource):
   def get(self):
-    botlist = mongoDB().getAllBots()
+    botlist, jmlh = mongoDB().getAllBots()
     
     if isinstance(botlist, str):
       return make_response(botlist, 500)
