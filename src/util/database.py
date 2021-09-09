@@ -95,7 +95,7 @@ class mongoDB():
    def serverQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
       page = nclamp(anydata.get('page', 1), 1, 10000)
-      serverqc = home_botCaches.get("_kueriserver " + kueri):
+      serverqc = home_botCaches.get("_kueriserver " + kueri)
       if serverqc:
          return list(serverqc[0]), serverqc[1]
       dt = skiplimit(dbInfrastructure.serverlist.find({
