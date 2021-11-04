@@ -57,6 +57,7 @@
     <title>Home</title>
   </head>
   <body>
+    <div class=“container”>
         <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Blackerz bot list</a>
@@ -117,9 +118,10 @@
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
-    <div class="card-deck" id="botlists">
+    <div class="row" id="botlists">
           {%- for dataChild in bots %}
-             <div class="card" id="bots-{{dataChild.id}}" style="width: 20rem;">
+             <div class="col-md-4 col-xs-6" id="bots-{{dataChild.id}}">
+             <div class="card">
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=64" -%}
@@ -130,6 +132,7 @@
                <p class="card-text">{{dataChild.ShortDescription or "A discord bot"}}</p>
                <p class="card-text"><small class="text-muted">Prefix: <strong>{{ dataChild["prefix"] or "!" }}</strong></small></p>
                <p class="card-text"><small class="text-muted">Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong>{{ dataChild["serverCount"] and (", in " ~ dataChild["serverCount"] ~ " servers.") }}</small></p>
+             </div>
              </div>
              </div>
           {%- endfor %}
@@ -185,6 +188,7 @@
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"></div>
     </footer>
     <!-- Footer -->
+    </div>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
