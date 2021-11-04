@@ -134,6 +134,7 @@
                <p class="card-text"><small class="text-muted">Prefix: <strong>{{ dataChild["prefix"] or "!" }}</strong></small></p>
                <p class="card-text"><small class="text-muted">Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong>{{ dataChild["serverCount"] and (", in " ~ dataChild["serverCount"] ~ " servers.") }}</small></p>
              </div>
+             </a>
              </div>
              </div>
           {%- endfor %}
