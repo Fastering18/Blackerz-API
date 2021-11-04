@@ -147,13 +147,6 @@
                 </ul>
             </div>
         </div>
-      <script>
-        var saklarDark = document.getElementById("toggle-dark-mode");
-        saklarDark.checked = !darkmode.inDarkMode;
-        saklarDark.onclick = function(e) {
-          darkmode.toggleDarkMode();
-        }
-      </script>
     </footer>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
@@ -238,6 +231,7 @@
                 if (getParameterByName("code") == localStorage.getItem("stateParameter")) return;
                 const randStr = generateRandomString();
             }
+          
             botSearchInput.autocomplete({
               source: async function(request, response) {
                 let data = await fetch(`/api/v1/bots/autocorrect?query=${request.term}`)
@@ -252,6 +246,12 @@
                  searchQuery(ui.item.value)
               }
             })  
+          
+            var saklarDark = document.getElementById("toggle-dark-mode");
+            saklarDark.checked = !darkmode.inDarkMode;
+            saklarDark.onclick = function(e) {
+              darkmode.toggleDarkMode();
+            }
         });
     </script>
     <script>
