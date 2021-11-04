@@ -57,7 +57,6 @@
   </head>
   <body>
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-9419528436883042"></amp-auto-ads>
-    <div id='background'></div>
     <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/servers">Blackerz bot list</a>
@@ -331,6 +330,34 @@
             }
         });
         {% endcache %}
+    </script>
+    <script>
+      const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  slidesPerView: "auto",
+  spaceBetween: 40,
+  centeredSlides: true,
+  roundLengths: true,
+  autoHeight:true, 
+  autoWidth:true, 
+  loopAdditionalSlides: 30,
+  autoplay: {
+   delay: 5000,
+  },
+
+  pagination: {
+    el:'.swiper-pagination',
+    clickable: true
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
     </script>
 </body>
 
