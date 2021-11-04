@@ -119,7 +119,7 @@
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
     <div class="card-deck" id="botlists">
           {%- for dataChild in bots %}
-             <div class="card" id="bots-{{dataChild.id}}">
+             <div class="card" id="bots-{{dataChild.id}}" style="width: 20rem;">
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" + dataChild.id + "/" + dataChild.avatar + ".webp?size=64" -%}
