@@ -121,7 +121,7 @@
     <div class="row" id="botlists">
           {%- for dataChild in bots %}
              <div class="col-md-3 col-xs-6">
-             <div class="card h-100" id="bots-{{dataChild.id}}">
+             <div class="card h-100 mt-2" id="bots-{{dataChild.id}}">
              <a href="/bots/{{dataChild.id}}" class="btn btn-fix text-left">
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
