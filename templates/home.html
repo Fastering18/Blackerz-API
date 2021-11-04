@@ -128,7 +128,7 @@
           {%- endfor %}
     </div>
     {%- if not bots or not bots[0] %}
-         <p class="fw-bolder">400 Looks like there are no results...</p>                    
+         <p class="fw-bolder">400, Looks like there are no results...</p>                    
     {%- endif %}
     <footer>
       <br>
@@ -147,8 +147,8 @@
             </div>
         </div>
       <script>
-        var saklarDark = document.getElementById("#toggle-dark-mode")
-        saklarDark.checked = !darkmode.inDarkMode
+        var saklarDark = document.getElementById("toggle-dark-mode");
+        saklarDark.checked = !darkmode.inDarkMode;
         saklarDark.onclick = function(e) {
           darkmode.toggleDarkMode();
         }
