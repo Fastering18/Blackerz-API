@@ -127,7 +127,7 @@
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=64" -%}
              {%- endif -%}
-             <img class="card-img-top" src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
+             <img class="card-img-top rounded" src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
              <div class="card-body">
                <h5 class="card-title">{{ dataChild["name"] }}</h5>
                <p class="card-text">{{dataChild.ShortDescription or "A discord bot"}}</p>
