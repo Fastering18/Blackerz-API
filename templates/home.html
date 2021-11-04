@@ -131,6 +131,7 @@
                <p class="card-text"><small class="text-muted">Prefix: <strong>{{ dataChild["prefix"] or "!" }}<strong></small></p>
                <p class="card-text"><small class="text-muted">Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong>{{ dataChild["serverCount"] and (", in <strong>" ~ dataChild["serverCount"] ~ "</strong> servers") }}.</small></p>
              </div>
+             </div>
           {%- endfor %}
     </div>
     {%- if not bots or not bots[0] %}
