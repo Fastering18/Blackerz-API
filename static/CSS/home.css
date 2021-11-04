@@ -11,17 +11,17 @@
     padding: 5rem 1rem 1rem 1rem;*/
     background-color: rgba(0, 0, 0, 0.75);
   }
-  h1, h2, h3, h4, h5, h6, p, label {
+  /*h1, h2, h3, h4, h5, h6, p, label {
     color: white;
   }
   body[dark-mode="light"] {
     background-color: rgba(0, 0, 0, 0.15);
     transition: background-color .6s;
   }
-  /*body[dark-mode="light"] h1, h2, h3, h4, h5, h6, p {
+  body[dark-mode="light"] h1, h2, h3, h4, h5, h6, p {
     color:  black;
     transition: color .55s;
-  }*/
+  }
   body[dark-mode="light"] h1, 
   body[dark-mode="light"] h2, 
   body[dark-mode="light"] h3,
@@ -32,7 +32,7 @@
   body[dark-mode="light"] label {
     color:  black;
     transition: color .55s;
-  }
+  }*/
   [data-text]::after {
      content: attr(data-text);
   }
@@ -110,9 +110,10 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
+  /*
   #botlist {
     color: white;
-  }
+  }*/
   #headerPage {
     width: 100%;
     height: 25%;
@@ -127,29 +128,8 @@
 
     align-items: center;*/
   }
-  /*#searchBar {
-    border-radius: 10px;
-    width: 85%;
-    font-size: 150%;
-    autocorrect="off"; 
-    autocomplete="off";
-    position: absolute;
-    left: 50%;
-    -moz-transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    
-    outline: none;
-    border: none;
-  }
-  .discordfront {
-    display: block;
-    margin-left: auto;
-    margin-right: auto; 
-    width: 99.9%;
-  }
-
-@media only screen and (max-width: 768px) {
+  
+/*@media only screen and (max-width: 768px) {
   .topnav-pc {
    display: none;    
   }
@@ -210,7 +190,6 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -221,3 +200,31 @@ input:checked + .slider:before {
 }
 
 /* end switch button */
+
+/* swiper */
+.swiper-container {
+  width: 90%;
+  height: 40%;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  width: 90%;
+  height: 40%;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+/* end swiper */
