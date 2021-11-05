@@ -125,7 +125,7 @@
              <a href="/bots/{{dataChild.id}}" class="btn btn-fix text-left">
              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
-                 {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=64" -%}
+                 {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=128" -%}
              {%- endif -%}
              <img class="card-img-top rounded" src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
              <div class="card-body">
