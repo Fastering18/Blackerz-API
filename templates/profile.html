@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" data-theme="dark">
+<html lang="en" data-bs-color-scheme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -186,7 +186,7 @@
             {%- if client and "username" in client -%}
                 window.location.href = "/user/{{client['id']}}"
             {%- else -%}
-                window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
             {%- endif -%}
         }
         function getCookie(cname) {
@@ -206,9 +206,13 @@
         function redirectKe(link) {
            window.location.href = link
         }
-        window.onload = function () {
-            console.log("loaded")
-        }
+        $(document).ready(function () {
+            var saklarDark = document.getElementById("toggle-dark-mode");
+            saklarDark.checked = !darkmode.inDarkMode;
+            saklarDark.onclick = function(e) {
+              darkmode.toggleDarkMode();
+            }
+        })
     </script>
 </body>
 
