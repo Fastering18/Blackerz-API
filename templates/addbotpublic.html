@@ -80,16 +80,27 @@
       <div id="main-content">
         <form method="POST" id="FormAddBot" onsubmit="disableButton(this, true); return true">
           <h1>Submit your bot! <strong>[BETA]</strong></h1>
-          <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot id
-            <input id="botId" name="botId" type="number" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" style="outline: none;" required>
-          </label>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="botId">Enter your bot id</label>
+              <input id="botId" name="botId" type="number" class="form-control" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" required>
+              <small id="botIdHelp" class="form-text text-muted">Bot id must be the same client id of your bot.</small>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="prefix">Enter your bot prefix</label>
+              <input id="prefix" name="prefix" type="text" class="form-control" autocorrect="off" autocomplete="off" maxlength="5" placeholder="Your bot prefix" required>
+              <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputShortDescription">Short description of the bot</label>
+            <input type="text" name="shortDescription" class="form-control" id="inputShortDescription" maxlength="120" placeholder="A multipurpose bot!">
+            <small id="shortDescriptionHelp" class="form-text text-muted">Short description must be 8-120 characters long.</small>
+          </div>
           <br>
-          <label style="margin-top: 0%; margin-botom: 0.25%;">Enter your bot prefix
-            <input id="prefix" name="prefix" type="text" autocorrect="off" autocomplete="off" maxlength="5" placeholder="Your bot prefix" style="outline: none;" required>
-          </label>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
           <br>
-          <input class="submit btn" name="check" type="submit" value="Check bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s;">
+          <button class="btn btn-info btn-lg" name="check" type="submit">Check Bot</button>
           <script>
             {%- if warns -%}
             alert("{{ warns }}");
