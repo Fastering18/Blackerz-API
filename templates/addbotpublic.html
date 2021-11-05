@@ -51,7 +51,7 @@
           <a class="nav-link" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/servers">Servers</a>
+          <a class="nav-link" href="/servers">Servers</a>
         </li>
         {%- if user and "username" in user %}
         <li class="nav-item">
@@ -61,7 +61,7 @@
           <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/add/bot">Add bot</a>
+          <a class="nav-link active" href="/add/bot">Add bot</a>
         </li>
         {%- else %}
         <li class="nav-item">
