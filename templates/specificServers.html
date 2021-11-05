@@ -58,6 +58,7 @@
     {% endcache %}
 </head>
     <body>
+    <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/servers">Blackerz bot list</a>
@@ -185,6 +186,7 @@
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"></div>
     </footer>
     <!-- Footer -->
+    </div>
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -192,7 +194,7 @@
         var serverSearchInput = $("#searchBarServer");
         const client = JSON.parse(('{{ user | tojson | safe }}'))
         const logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
-        let joinLink = "{{ 'https://discord.gg/' + server['joinLink'] if server and server.get('joinLink') else 'https://discord.gg/' | safe }}"
+        let joinLink = "{{ 'https://discord.gg/' ~ server['joinLink'] if server and server.get('joinLink') else 'https://discord.gg/' | safe }}"
         
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
