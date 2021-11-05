@@ -99,8 +99,8 @@
           </div>
           <br>
           <input id="cEeSeReF" name="cEeSeReF" type="hidden" value="{{csrf}}">
-          <br>
           <button class="btn btn-info btn-lg" name="check" type="submit">Check Bot</button>
+          <hr>
           <script>
             {%- if warns -%}
             alert("{{ warns }}");
@@ -147,15 +147,21 @@
               } catch(er) {
                 console.log(er)
                 disableButton(document.getElementById("FormAddBot"), false)
+                $("#submit-bot").css({display: "none"});
                 return alert("Failed to get bot data")
               }
               setTimeout(disableButton, 750, this, false)
               console.log(dataAkun)
-              if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
+              if (dataAkun.message && dataAkun.message == "Unknown User") {
+                disableButton(document.getElementById("FormAddBot"), false);
+                $("#bot-identity").css({display: "none"});
+                return alert("Bot not found");
+              };
               if (!dataAkun.bot) return alert("User is not a bot");
               $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
               $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp?size=128");
-              $("#prefix-preview").text("Prefix: " + )
+              $("#prefix-preview").text("Prefix: " + botPrefix);
+              $("#bot-identity").css({display: "block"});                          
               $("#submit-bot").css({display: "block"});
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
@@ -165,7 +171,7 @@
           <blockquote class="blockquote">
             <p class="mb-0">You will redirected to the your bot page, we will review it to make it public.</p>
           </blockquote>
-          <div class="card h-100 mb-2" id="bot-identity">
+          <div class="card h-100 mb-2" id="bot-identity" style="display: none;">
             <img id="bot-identity-profile" class="card-img-top rounded" alt="User bot avatar">
             <div class="card-body">
                <h5 id="bot-identity-tag" class="card-title">
