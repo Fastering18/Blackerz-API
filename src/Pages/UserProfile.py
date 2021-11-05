@@ -134,10 +134,9 @@ class ProfileUsers(Resource):
     user = dict(user)
     user["userId"] = str(id)
     user["botsowned"] = mongoDB().get_owned(tipe="botlist", id=str(id)) #getUserBots(str(id))
-    if userProfile and "id" in userProfile:  
-        if str(id) != userProfile["id"]:
-            if user.get("AuthorizationV1"): del user["AuthorizationV1"]
-    else:
-        if user.get("AuthorizationV1"): del user["AuthorizationV1"]
+    user = json.loads(json_util.dumps(user))
+    if userProfile.get("id") != str(id):
+        del user["AuthorizationV1"]
+        del user["code"]
 
-    return make_response(render_template('profile.html', user=json.loads(json_util.dumps(user)), client=userProfile), 200, headers)
+    return make_response(render_template('profile.html', user=user, client=userProfile), 200, headers)
