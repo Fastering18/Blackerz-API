@@ -82,18 +82,18 @@
           <h1>Submit your bot! <strong>[BETA]</strong></h1>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="botId">Enter your bot id</label>
+              <label for="botId">Bot ID*</label>
               <input id="botId" name="botId" type="number" class="form-control" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" required>
               <small id="botIdHelp" class="form-text text-muted">Bot id must be the same client id of your bot.</small>
             </div>
             <div class="form-group col-md-6">
-              <label for="prefix">Enter your bot prefix</label>
+              <label for="prefix">Prefix*</label>
               <input id="prefix" name="prefix" type="text" class="form-control" autocorrect="off" autocomplete="off" maxlength="5" placeholder="Your bot prefix" required>
               <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
             </div>
           </div>
           <div class="form-group">
-            <label for="inputShortDescription">Short description of the bot</label>
+            <label for="inputShortDescription">Short description</label>
             <input type="text" name="shortDescription" class="form-control" id="inputShortDescription" maxlength="120" placeholder="A multipurpose bot!">
             <small id="shortDescriptionHelp" class="form-text text-muted">Short description must be 8-120 characters long.</small>
           </div>
@@ -137,8 +137,10 @@
               console.log(event)
               $("#submit-bot").css({display: "none"})
               //setVisibility("user-result", false)
-              var botID = document.getElementById("botId").value
+              var botID = $("#botId").val(), 
+              botPrefix = $("#prefix").val();
               console.log(botID)
+              
               var dataAkun = await getDataAkun(botID)
               try {
                 dataAkun = JSON.parse(dataAkun)
@@ -147,23 +149,29 @@
                 disableButton(document.getElementById("FormAddBot"), false)
                 return alert("Failed to get bot data")
               }
-              setTimeout(disableButton, 500, this, false)
+              setTimeout(disableButton, 750, this, false)
               console.log(dataAkun)
               if (dataAkun.message && dataAkun.message == "Unknown User") {disableButton(document.getElementById("FormAddBot"), false); return alert("Bot not found")};
               if (!dataAkun.bot) return alert("User is not a bot");
               $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
-              $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp")
-              $("#submit-bot").css({display: "block"})
+              $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp?size=128");
+              $("#prefix-preview").text("Prefix: " + )
+              $("#submit-bot").css({display: "block"});
               //document.getElementById("username_result").textContent = `${dataAkun.username}#${dataAkun.discriminator}`
               //setVisibility("user-result", true)
               //if (dataAkun) alert(JSON.stringify(dataAkun));
             })
           </script>
-          <p id="just a note">You will redirected to the your bot page, we will review it to make it public</p>
-          <div id="bot-identity">
-            <img id="bot-identity-profile" style="display: inline;">
-            <h2 id="bot-identity-tag" style="display: inline;"></h2>
-            
+          <blockquote class="blockquote">
+            <p class="mb-0">You will redirected to the your bot page, we will review it to make it public.</p>
+          </blockquote>
+          <div class="card h-100 mb-2" id="bot-identity">
+            <img id="bot-identity-profile" class="card-img-top rounded" alt="User bot avatar">
+            <div class="card-body">
+               <h5 id="bot-identity-tag" class="card-title">
+               <p class="card-text">Bot preview</p>
+               <p class="card-text"><small class="text-muted" id="prefix-preview"></small></p>
+            </div>
           </div>
           <input class="submit btn" id="submit-bot" name="submit" type="submit" value="Submit bot" style="border-radius: 4px; min-width: 90px; width: 12%; height: 12%; cursor: pointer; outline: none; border: none; transition: all 0.7s; display: none;">
         </form>
