@@ -82,12 +82,12 @@
           <h1>Submit your bot! <strong>[BETA]</strong></h1>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="botId">Bot ID<span class="text-danger">*</span></label>
+              <label for="botId">Bot ID <span class="text-danger">*</span></label>
               <input id="botId" name="botId" type="number" class="form-control" autocorrect="off" autocomplete="off" maxlength="23" placeholder="Your bot id" required>
               <small id="botIdHelp" class="form-text text-muted">Bot id must be the same client id of your bot.</small>
             </div>
             <div class="form-group col-md-6">
-              <label for="prefix">Prefix<span class="text-danger">*</span></label>
+              <label for="prefix">Prefix <span class="text-danger">*</span></label>
               <input id="prefix" name="prefix" type="text" class="form-control" autocorrect="off" autocomplete="off" maxlength="5" placeholder="Your bot prefix" required>
               <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
             </div>
@@ -171,13 +171,15 @@
           <blockquote class="blockquote">
             <p class="mb-0">You will redirected to the your bot page, we will review it to make it public.</p>
           </blockquote>
+          <div class="col-md-3 col-xs-6">
           <div class="card h-100 mb-2" id="bot-identity" style="display: none;">
             <img id="bot-identity-profile" class="card-img-top rounded" alt="User bot avatar">
             <div class="card-body">
                <h5 id="bot-identity-tag" class="card-title">
                <p class="card-text">Bot preview</p>
-               <p class="card-text"><small class="text-muted" id="prefix-preview"></small></p>
+               <p class="card-text"><small class="text-muted" id="prefix-preview">Prefix: </small></p>
             </div>
+          </div>
           </div>
           <input class="btn btn-success btn-lg btn-block" id="submit-bot" name="submit" type="submit" value="Submit bot" style="transition: all 0.7s; display: none;">
         </form>
