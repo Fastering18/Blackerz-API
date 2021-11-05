@@ -65,7 +65,7 @@
         </li>
         {%- if user and "username" in client %}
         <li class="nav-item">
-          <a class="nav-link{{ ' active' if client['id'] == user['userId'] }} else ''}}" href="/user/{{user['id']}}">{{client["username"]}}</a>
+          <a class="nav-link{{ ' active' if client['id'] == user['userId'] }} else ''}}" href="/user/{{client['id']}}">{{client["username"]}}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
@@ -82,11 +82,18 @@
     </div>
   </div>
 </nav>
-    <div id="userInfo">
-        <h1 id="profileTitle">Profile</h1>
-        <p id="username">{{ user["tag"] }}</p>
-        <img id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar">
-        <p id="description">{{ user['description'] }}</p>
+    <div class="card" id="userInfo">
+        {%- if user and "username" in client %}
+       <div class="jumbotron bg-image img-fluid" style="background-image: url('');"></div>
+        {%- endif %}
+        <h2 class="card-title" id="profileTitle">Profile</h1>
+        <!-- img class="rounded" id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar"-->
+        <div class="card-body">
+          <img class="img-thumbnail rounded float-left m-2" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" alt="user avatar" style="max-width: 30%; min-width: 150px;">
+           <h4 class="card-title" id="username">{{ user["tag"] }}</p>
+           <p class="card-text mx-auto" id="description">{{ user['description'] }}</p>
+       </div>
+   </div>
         <div class="row" id="botsowned">
             <h3 id="botOwnedTitle" style="display: inline;">Bots owned</h2>
             {%- for bot in user["botsowned"] %} 
@@ -108,13 +115,13 @@
             {%- endfor %}
             </div>
             {%- if not user["botsowned"] %}
-                <p id="no bot" style="display: inline;">no bot :v</p>
+                <p id="no bot" class="text-muted" style="display: inline;">no bot :v</p>
             {%- endif %}
         </div>
         <br>
         {%- if user and "AuthorizationV1" in user %}
             <h2 id="authHint1">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1"> Authorization: <mark onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <p id="AuthorizationV1"> Authorization: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
         {%- endif %}
     </div>
     <div class="form-check form-switch">
@@ -172,6 +179,7 @@
     <script>
         const client = {{ client | tojson | safe }};
         const logined = {{ (client and "id" in client) and "true" or "false" | safe }};
+        const profileOfUser = {{ user | tojson | safe }};
 
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
