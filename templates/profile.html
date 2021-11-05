@@ -37,14 +37,22 @@
     <link rel="manifest" href="/static/json/profile.webmanifest">
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-    <style media="screen">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/js/darkmode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJFCLE2FTR"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-HJFCLE2FTR');
+    </script>
+    <!--style media="screen">
         mark {
             background-color: rgba(0, 0, 0, 0.68);
             color: rgba(255, 26, 26, 1);
             font-weight: medium;
             font-family: verdana;
         }
-    </style>
+    </style-->
     <title>{{ user["username"] }} - User</title>
 </head>
 
