@@ -4,6 +4,7 @@ from requests_oauthlib import OAuth2Session
 import time, json, requests, datetime, os, random, string
 from threading import Timer, Thread
 from src.util.database import mongoDB
+from bson import json_util
 
 from firebase import firebase
 
@@ -139,4 +140,4 @@ class ProfileUsers(Resource):
     else:
         if user.get("AuthorizationV1"): del user["AuthorizationV1"]
 
-    return make_response(render_template('profile.html', user=user, client=userProfile), 200, headers)
+    return make_response(render_template('profile.html', user=json.loads(json_util.dumps(user)), client=userProfile), 200, headers)
