@@ -78,6 +78,7 @@ def updateUserData(id, tag, username, avatar, code, olduser=None):
        'code': code
     }
     if olduser == None: olduser = mongoDB().get_user(id=str(id))
+    print(olduser)
     if isinstance(olduser, dict): 
         if olduser.get("AuthorizationV1") == None: UserData["AuthorizationV1"] = generateAuthorizationV1()
         if olduser.get("CreatedAt") == None: UserData["CreatedAt"] = datetime.datetime.now().isoformat()
@@ -120,8 +121,7 @@ class ProfileUsers(Resource):
            userProfile["username"] + "#" + userProfile["discriminator"],
            userProfile["username"],
            userProfile["avatar"],
-           oneTimeCode,
-           userProfile 
+           oneTimeCode 
         ] 
         Thread(target=updateUserData, args=userData).start()         
         
