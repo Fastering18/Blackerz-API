@@ -83,6 +83,7 @@
             <label for="PrefixInput">Prefix <span class="text-danger">*</span></label>
             <input class="form-control" id="PrefixInput" type="text" name="prefix" value="{{bot['prefix']}}" placeholder="!" autocomplete="off" maxlength="5" required>
             <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
+            <br>
         </div>
         <div id="ShortDescription">
             <label for="ShortDescriptionInput">Short description <span class="text-danger">*</span></label>
@@ -91,17 +92,19 @@
             <br>
         </div>
         <div id="LongDescription">
-            <label for="LongDescriptionInput">long description <span class="text-danger">*</span></label>
+            <label for="LongDescriptionInput">Long description <span class="text-danger">*</span></label>
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <small id="longDescriptionHelp" class="form-text text-muted">Long description max 4000 characters long.</small>
             <br>
         </div>
+        <div id="TagsInput">
         <input list="taglist" name="tags" class="tagsinput" id="tagsinput" onInput="enteredTag(this.value)">
         <datalist id="taglist">
             <option value="moderation">
             <option value="entertainment">
             <option value="gaming">
         </datalist>
+        </div>
         <br>
         <div id="tagslist" class="tag-list">
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
@@ -113,7 +116,7 @@
         </div>
         <br><br>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
-        <button class="btn btn-success btn-lg col-12" type="submit" value="Submit">Submit</button>
+        <button class="btn btn-success btn-lg col-12" type="submit" value="Submit">Save</button>
         <script>
           const tagschoices = JSON.parse(("{{ bot['tags'] or [] | tojson | safe }}").replace(/&#39;/gi, "\""))
           function disableButton(elmnt, disabl) {            
