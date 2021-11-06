@@ -46,7 +46,7 @@
           <a class="nav-link" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/servers">Servers</a>
+          <a class="nav-link" href="/servers">Servers</a>
         </li>
         {%- if clientUser and "username" in clientUser %}
         <li class="nav-item">
@@ -98,6 +98,7 @@
             <br>
         </div>
         <div id="TagsInput">
+          <br>
           <label for="tagsinput">Tags</label>
         <input list="taglist" name="tags" class="tagsinput" id="tagsinput" onInput="enteredTag(this.value)">
         <datalist id="taglist">
