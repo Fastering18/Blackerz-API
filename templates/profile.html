@@ -134,7 +134,7 @@
 <div class="card p-3" id="AuthV1Card">
 <h3 class="card-title">Your Authorization V1 key:</h3>    
 <div class="card-body">
-            <p id="AuthorizationV1">Token: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); $('success-copy').removeClass('d-none').addClass('d-block');">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <p id="AuthorizationV1">Token: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); $('#success-copy').removeClass('d-none').addClass('d-block');">{{ user["AuthorizationV1"] | safe }}</mark></p>
       </div>
     </div>
 </div>
