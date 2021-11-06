@@ -136,8 +136,9 @@
               console.log(event)
               $("#submit-bot").css({display: "none"})
               //setVisibility("user-result", false)
-              var botID = $("#botId").val(), 
-              botPrefix = $("#prefix").val();
+              const botID = $("#botId").val(), 
+              botPrefix = $("#prefix").val(),
+              botShortDescription = $("#inputShortDescription").val();
               console.log(botID)
               
               var dataAkun = await getDataAkun(botID)
@@ -159,6 +160,7 @@
               if (!dataAkun.bot) return alert("User is not a bot");
               $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
               $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp?size=256");
+              $("#bot-identity-short-description").text(botShortDescription || "Bot preview");
               $("#prefix-preview").text("Prefix: " + botPrefix);
               $("#bot-identity").css({display: "block"});                          
               $("#submit-bot").css({display: "block"});
@@ -175,7 +177,7 @@
             <img id="bot-identity-profile" class="card-img-top rounded" alt="User bot avatar">
             <div class="card-body">
                <h5 id="bot-identity-tag" class="card-title"></h5>
-               <p class="card-text">Bot preview</p>
+               <p id="bot-identity-short-description" class="card-text">Bot preview</p>
                <p class="card-text"><small class="text-muted" id="prefix-preview">Prefix: </small></p>
             </div>
           </div>
