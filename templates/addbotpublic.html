@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en" data-bs-color-scheme="dark">
   
   <head>
@@ -159,7 +158,7 @@
               };
               if (!dataAkun.bot) return alert("User is not a bot");
               $("#bot-identity-tag").text(dataAkun.username + "#" + dataAkun.discriminator);
-              $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp?size=128");
+              $("#bot-identity-profile").attr("src", "https://cdn.discordapp.com/avatars/" + botID + "/" + dataAkun.avatar + ".webp?size=256");
               $("#prefix-preview").text("Prefix: " + botPrefix);
               $("#bot-identity").css({display: "block"});                          
               $("#submit-bot").css({display: "block"});
@@ -175,7 +174,7 @@
           <div class="card h-100 mb-2" id="bot-identity" style="display: none;">
             <img id="bot-identity-profile" class="card-img-top rounded" alt="User bot avatar">
             <div class="card-body">
-               <h5 id="bot-identity-tag" class="card-title">
+               <h5 id="bot-identity-tag" class="card-title"></h5>
                <p class="card-text">Bot preview</p>
                <p class="card-text"><small class="text-muted" id="prefix-preview">Prefix: </small></p>
             </div>
