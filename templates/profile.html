@@ -113,11 +113,9 @@
     <img class="card-img-top rounded" src="{{ ('https://cdn.discordapp.com/avatars/' ~ bot['id'] ~ '/' ~ bot['avatar'] ~ '.webp?size=128') if bot['avatar'] else ('https://cdn.discordapp.com/embed/avatars/1.png') }}" alt="{{bot['tag']}} avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <div class="card-body">
       <h5 class="card-title">{{ bot['tag'] }}</h5>
-      <p class="card-text">{{ bot['ShortDescription'] or 'No description was provided' }}</p>
-      <p class="card-text"><small class="text-muted">Has {{ bot['upvotes'] }} upvotes.</small></p>
-      {%- if bot["serverCount"] %}
-        <p class="card-text"><small class="text-muted">Belong in {{ bot["serverCount"] }} servers.</small></p>
-      {%- endif %}
+      <p class="card-text">{{ bot['ShortDescription'] or 'A discord bot' }}</p>
+      <p class="card-text"><small class="text-muted">Prefix: <strong>{{ bot["prefix"] or "!" }}</strong></small></p>
+      <p class="card-text"><small class="text-muted">Upvotes <strong>{{ bot["upvotes"] or "0" }}</strong>{{ bot["serverCount"] and (", in " ~ bot["serverCount"] ~ " servers.") }}</small></p>
     </div>
     </a>
     </div>
@@ -125,9 +123,9 @@
             {%- endfor %}
             </div>
             {%- if not user["botsowned"] %}
-                <p id="no bot" class="text-muted" style="display: inline;">no bot :v</p>
+                <p id="no bot" class="text-muted" style="display: inline;">Did not have any bot published :/</p>
             {%- endif %}
-        <br>
+        <hr>
         {%- if user and "AuthorizationV1" in user %}
             <h2 id="authHint1">Your authorization v1 key:</h2>
             <p id="AuthorizationV1"> Authorization: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
