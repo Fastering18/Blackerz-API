@@ -92,12 +92,13 @@
             <br>
         </div>
         <div id="LongDescription">
-            <label for="LongDescriptionInput">Long description <span class="text-danger">*</span></label>
+            <label for="LongDescriptionInput">Long description</label>
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <small id="longDescriptionHelp" class="form-text text-muted">Long description max 4000 characters long.</small>
             <br>
         </div>
         <div id="TagsInput">
+          <label for="tagsinput">Tags</label>
         <input list="taglist" name="tags" class="tagsinput" id="tagsinput" onInput="enteredTag(this.value)">
         <datalist id="taglist">
             <option value="moderation">
