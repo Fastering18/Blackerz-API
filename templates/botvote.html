@@ -11,7 +11,7 @@
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
     {%- if "avatar" in botData -%}
-        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + botId + "/" + botData["avatar"] + "?size=128" -%}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" ~ botId ~ "/" ~ botData["avatar"] ~ "?size=256" -%}
     {%- endif -%}
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta itemprop="name" content="{{ botData["name"] }} - Discord bot">
@@ -81,16 +81,12 @@
         </li>
         {%- endif %}
       </ul>
-      <form class="d-flex" method="GET" action="/servers/search">
-        <input class="form-control me-2" id="searchBarServer" type="search" placeholder="Search servers" aria-label="Search" name="q">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
       <div class="botumInfo">
         <h1 style="text-align: center; display: flex; flex-direction: column; justify-content: center;" id="botName">{{ botData["name"] }}</h1>
-        <p style="text-align:center;"><img style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
+        <p style="text-align:center;"><img class="img rounded" style="margin: 0 auto; width: 15%; height: 15%;" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"></p>
       </div>
       <form style="text-align: center; witdh: 150%; height: 13%;" id="CaptchaForm" method="post" action="/api/v1/bots/{{ botId }}/vote">   
        <script src="https://hcaptcha.com/1/api.js" async="" defer=""></script>
