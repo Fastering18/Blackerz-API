@@ -127,8 +127,17 @@
             {%- endif %}
         <hr>
         {%- if user and "AuthorizationV1" in user %}
-            <h2 id="authHint1">Your authorization v1 key:</h2>
-            <p id="AuthorizationV1"> Authorization: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); alert('token copied!')">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <div id="AuthV1">
+<div class="alert alert-success fade show d-none" id="success-copy" role="alert">
+  <strong>Token copied!</strong> Now you can paste it on your code.
+  </div>
+<div class="card p-3" id="AuthV1Card">
+<h3 class="card-title">Your Authorization V1 key:</h3>    
+<div class="card-body">
+            <p id="AuthorizationV1">Token: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); $('success-copy').removeClass('d-none').addClass('d-block');">{{ user["AuthorizationV1"] | safe }}</mark></p>
+      </div>
+    </div>
+</div>
         {%- endif %}
     <br>
     <div class="form-check form-switch">
