@@ -170,7 +170,7 @@ class VerifyBot(Resource):
         
         if result["sucess"] == True:
             print(ApiUser.data)
-            Thread(target=notifyChanges, args=["<@{0}> approved bot <@{1}>\n> {2}/{1}".format(ApiUser.data.get('clientId'), str(id), request.url_root), id]).start()
+            Thread(target=notifyChanges, args=["<@{0}> approved bot <@{1}>\n> {2}bots/{1}".format(ApiUser.data.get('clientId'), str(id), request.url_root), id]).start()
             return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
         else: 
             return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
