@@ -169,6 +169,8 @@ class VerifyBot(Resource):
         botum, result = mongoDB().uploadBot(id=str(id), data={"verified": True})
         
         if result["sucess"] == True:
+            print(ApiUser.data)
+            Thread(target=notifyChanges, args=["<@{0}> approved bot <@{1}>\n> {2}/{1}".format(ApiUser.data.get('clientId'), str(id), request.url_root), id]).start()
             return make_response(jsonify(result), 201, {'Content-Type': 'application/json'})
         else: 
             return make_response(jsonify(result), 400, {'Content-Type': 'application/json'})
