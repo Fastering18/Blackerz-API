@@ -12,7 +12,7 @@
     <meta name="og:site_name" content="Blackerz Bot List">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" %}
     {%- if botData.get("avatar") %}
-        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" + botId + "/" + botData["avatar"] + ".webp?size=64" %}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" ~ botId ~ "/" ~ botData["avatar"] ~ ".webp?size=128" %}
     {%- endif %}
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta itemprop="name" content="{{ botData["name"] }} - Discord bot">
@@ -28,7 +28,7 @@
     <!-- script data-ad-client="ca-pub-9419528436883042" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script-->
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" media="all" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-blackbox.min.css">
     <link rel="stylesheet" href="https://blackerz.gumlet.net/CSS/home.css">
     <link rel="stylesheet" href="https://blackerz.gumlet.net/CSS/contentpage.css">
@@ -107,11 +107,17 @@
     <h1 id="botName">{{ botData["name"] }}</h1>
     <img id="botAvatar" src={{ avatarUser }}
       style="display:inline-block; position: relative;" width="10%" height="10%" alt="bot avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
-    <button id="addOrInvite-btn" class="green-btn" onclick="inviteBot(this)"><span>Invite Bot</span></button>
+    <a id="inviteButton" class="btn btn-outline-primary btn-lg" onclick="inviteBot()" role="button"><i class="fa fa-plus-square"></i> Invite Bot</a>
+    <!--button id="addOrInvite-btn" class="green-btn" onclick="inviteBot(this)"><span>Invite Bot</span></button-->
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] %}
-        <button id="edit-btn" class="green-btn" onclick="window.location.href = '/bots/{{botId}}/edit'"><span>Edit</span></button>
+        <a id="editBot" class="btn btn-outline-primary btn-lg" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
+        <!--button id="edit-btn" class="green-btn" onclick="window.location.href = '/bots/{{botId}}/edit'"><span>Edit</span></button-->
     {%- endif %}
-    <button id="vote-btn" class="green-btn" onclick="voteBot()"><span id="voteBotSpan">{{ botData["upvotes"] }} Votes </span></button>
+    <button id="voteButton" class="btn btn-outline-success btn-lg" onclick="voteBot()">
+      <i class="fa fa-chevron-up"></i>
+      {{ botData["upvotes"] }} Votes
+    </button>
+    <!--button id="vote-btn" class="green-btn" onclick="voteBot()"><span id="voteBotSpan">{{ botData["upvotes"] }} Votes </span></button-->
     <br>
     <p id="shortDescription">{{ botData["ShortDescription"] | safe }}</p>
     {%- if "serverCount" in botData %}
@@ -213,7 +219,7 @@
         function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
         }
-        function inviteBot(element) {
+        function inviteBot() {
             window.location.href = inviteLink
         }
         function voteBot() {
