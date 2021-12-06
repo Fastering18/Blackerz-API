@@ -101,11 +101,17 @@
     <div class="serverInfo">
     <h1 id="serverName">{{ server["name"] }}</h1>
     <img id="serverAvatar" src="{{ serverIcon }}" style="display:inline-block; position: relative;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" width="14.9%" height="15%" alt="server avatar">
-    <button id="addOrInvite-btn" class="green-btn" onclick="joinServer(this)"><span>Join server</span></button>
+    <a id="joinButton" class="btn btn-outline-info btn-lg" onclick="joinServer()" role="button">Join Server</a>
+    <!-- button id="addOrInvite-btn" class="green-btn" onclick="joinServer()"><span>Join server</span></button-->
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
-        <button id="edit-btn" class="green-btn" onclick="window.location.href='/servers/{{ serverID }}/edit'"><span>Edit</span></button>
+        <a id="editServer" class="btn btn-outline-warning btn-lg" href="/servers/{{serverID}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
+        <!--button id="edit-btn" class="green-btn" onclick="window.location.href='/servers/{{ serverID }}/edit'"><span>Edit</span></button-->
     {%- endif -%}
-    <button id="vote-btn" class="green-btn" onclick="voteServer(this)"><span>{{ server["upvotes"] }} Votes </span></button>
+    <button id="voteButton" class="btn btn-outline-success btn-lg" onclick="voteServer()">
+      <i class="fa fa-chevron-up"></i>
+      {{ server["upvotes"] }} Votes
+    </button>
+    <!--button id="vote-btn" class="green-btn" onclick="voteServer()"><span>{{ server["upvotes"] }} Votes </span></button-->
     <br>
     <p id="shortDescription">{{ server["ShortDescription"] }}</p>
     {%- if "memberCount" in server -%}
@@ -193,15 +199,15 @@
     <script>
         if (window.location.protocol === "http:") window.location.protocol = "https:";
         var serverSearchInput = $("#searchBarServer");
-        const client = JSON.parse(('{{ user | tojson | safe }}'))
-        const logined = {{ (user and "username" in user) and 'true' or 'false' | safe }}
+        const client = {{ user | tojson | safe }};
+        const logined = {{ (user and "username" in user) and 'true' or 'false' | safe }};
         let joinLink = "{{ 'https://discord.gg/' ~ server['joinLink'] if server and server.get('joinLink') else 'https://discord.gg/' | safe }}"
         
         function discordLogOutAPI(force) {
-            document.location.replace("/api/v1/discord/logout")
+            document.location.replace("/api/v1/discord/logout");
         }
         function joinServer(element) {
-            window.location.href = joinLink
+            window.location.href = joinLink;
         }
         function getServerWidget(id="{{server.id or 'undefined'}}") {
           return new Promise((ya, gak) => {
@@ -220,7 +226,7 @@
          });
          })
        }
-        function voteServer(element) {
+        function voteServer() {
             {%- if user and "username" in user -%}
                window.location.href = "/servers/{{serverID}}/vote"
             {%- else -%} 
