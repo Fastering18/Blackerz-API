@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, render_template, session, request, redirect
 import time, json, requests
 from threading import Timer, Thread
-from src.util.database import mongoDB, IdentifyApiUser
+from src.util.database import mongoDB, IdentifyApiUser, notifyChanges
 from bson.json_util import dumps
 
 from firebase import firebase
@@ -10,6 +10,7 @@ from firebase import firebase
 botToken = "Nzk4NDk2MDg4NzUwMjkyOTkz.X_13bg.sBzU_MurYpOqy_Px5WvW2GF7VT8"
 queryBotCaches = {}
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
+error1 = {'error': "Bot not found", 'status': "Not success"}
 unauthorizedAcess1 = {'error': "Unauthorized Acess, tidak terdapat api key.", 'status': "Not success"}
 unauthorizedAcess2 = {'error': "Unauthorized Acess, api key yang di inputkan salah, kontak developer untuk mendapatkan api key.", 'status': "Not success"}
 
@@ -50,9 +51,6 @@ class data():
             putCache(str(id) + "_bot", self.data)
         else:
             self.data = None
-
-timeStamp = 0
-error1 = {'error': "Bot not found", 'status': "Not success"}
 
 class querySearch:
     def __init__(self, query, dataName="botlist"):
@@ -116,17 +114,32 @@ class autocorrectsearch(Resource):
 class deleteBotFromID(Resource):
   def delete(self, id):
     apiKey = request.headers.get('apiKey')
-    if not apiKey:
+    cauth = request.headers.get('Authorization')
+    notify = request.values.get('notify')
+    if not apiKey and not cauth:
         return make_response(jsonify(unauthorizedAcess1), 401)
       
-    ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
-    if not ApiUser.izin.get("deletebot") and not ApiUser.izin.get("all"): 
-        return make_response(jsonify(unauthorizedAcess2), 401)
+    deleter = "0"
+      
+    if apiKey:
+        ApiUser = IdentifyApiUser(apikey=apiKey).get_user()
+        if not ApiUser.izin.get("deletebot") and not ApiUser.izin.get("all"): 
+            return make_response(jsonify(unauthorizedAcess2), 401)
+        deleter = ApiUser.data.get('clientId')
+    
+    if cauth:
+        isOwner = mongoDB().is_ownerof(auth=cauth, tipe="botlist", aset=str(id))
+        if isOwner["success"] != True:
+            return make_response(jsonify(isOwner["reason"]), 401)
+        deleter = isOwner["user"].get("id")
       
     bot = mongoDB().get_bot(id=str(id))
     
     if bot != None:
         deleteres = mongoDB().delete_bot(id=str(id))
-        return make_response(jsonify({"success": deleteres.deleted_count == 1}), 200, {'Content-Type': 'application/json'})
+        delete_status = deleteres.deleted_count == 1
+        if delete_status: Thread(target=notifyChanges, args=["<@{0}> deleted bot <@{1}>\n> {2}bots/{1}".format(deleter, str(id), request.url_root), id]).start()
+        
+        return make_response(jsonify({"success": delete_status}), 200, {'Content-Type': 'application/json'})
     else: 
         return make_response(jsonify(error1), 404, {'Content-Type': 'application/json'})
