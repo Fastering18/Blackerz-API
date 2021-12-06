@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#7289DA">
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" %}
     {%- if "avatar" in user %}
-        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" ~ user["userId"] ~ "/" ~ user["avatar"] ~ ".webp?size=128" %}
+        {%- set avatarUser = "https://cdn.discordapp.com/avatars/" ~ user["userId"] ~ "/" ~ user["avatar"] ~ ".webp?size=512" %}
     {%- endif %}
     <meta property="og:image" content="{{ avatarUser }}" />
     <meta property="twitter:card" content="summary">
@@ -91,16 +91,16 @@
     </div>
   </div>
 </nav>
-    <div class="card p-3" id="userInfo">
+    <div class="border p-3" id="userInfo">
         {%- if user and client and client['id'] == user['userId'] %}
          <div class="jumbotron bg-image img-fluid" style="background-image: url('');"></div>
         {%- endif %}
-        <h2 class="card-title" id="profileTitle">Profile</h2>
+        <h2>Profile</h2>
         <!-- img class="rounded" id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar"-->
-        <div class="card-body">
-          <img class="img-thumbnail rounded float-left m-2" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" alt="user avatar" style="max-width: 30%; min-width: 150px;">
-           <h4 class="card-title" id="username">{{ user["tag"] }}</h4>
-           <p class="card-text mx-auto" id="description">{{ user['description'] }}</p>
+        <div class="clearfix">
+          <img class="img-thumbnail rounded col-md-3 float-md-start mb-3 mx-3 ms-md-1" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" alt="user avatar" style="max-width: 30%; min-width: 150px;">
+          <h3 id="userName">{{ user["tag"] }}</h4>
+          <p class="mx-auto" id="userDescription">{{ user['description'] }}</p>
        </div>
    </div>
         <hr>
