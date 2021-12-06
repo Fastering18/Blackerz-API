@@ -11,6 +11,7 @@
     <meta property="og:title" content="{{ user["username"] }} - User" />
     <meta property="og:description" content="{{ user.description }}">
     <meta name="theme-color" content="#7289DA">
+    {%- set sameUser = user and client and client['id'] == user['userId'] %}
     {%- set avatarUser = "https://cdn.discordapp.com/embed/avatars/1.png" %}
     {%- if "avatar" in user %}
         {%- set avatarUser = "https://cdn.discordapp.com/avatars/" ~ user["userId"] ~ "/" ~ user["avatar"] ~ ".webp?size=512" %}
@@ -74,7 +75,7 @@
         </li>
         {%- if user and "username" in client %}
         <li class="nav-item">
-          <a class="nav-link{{ ' active' if client['id'] == user['userId'] }} else ''}}" href="/user/{{client['id']}}">{{client["username"]}}</a>
+          <a class="nav-link{{ ' active' if sameUser else ''}}" href="/user/{{client['id']}}">{{client["username"]}}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
@@ -94,8 +95,10 @@
     <div class="border p-3" id="userInfo">
         {%- if user and client and client['id'] == user['userId'] %}
          <div class="jumbotron bg-image img-fluid" style="background-image: url('');"></div>
+         <h2>Profile <i class="fa fa-edit" id="editBtn"></i></h2>
+        {%- else %}
+         <h2>Profile</h2>
         {%- endif %}
-        <h2>Profile</h2>
         <!-- img class="rounded" id="serverAvatar" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" style="display:inline-block; position: relative;" width="14.9%" height="15%" alt="user avatar"-->
         <div class="clearfix">
           <img class="img-thumbnail rounded col-md-3 float-md-start mb-3 mx-3 ms-md-1" src="{{avatarUser}}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" alt="user avatar" style="max-width: 30%; min-width: 150px;">
@@ -236,6 +239,10 @@
             saklarDark.onclick = function(e) {
               darkmode.toggleDarkMode();
             }
+            
+            $("editBtn").click(function() {
+               alert("coming soon!")
+            })
         })
     </script>
 </body>
