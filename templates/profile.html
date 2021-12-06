@@ -134,7 +134,7 @@
 <div class="card p-3" id="AuthV1Card">
 <h3 class="card-title">Your Authorization V1 key:</h3>    
 <div class="card-body">
-            <p id="AuthorizationV1">Token: <mark class="text-danger bg-dark" onclick="navigator.clipboard.writeText(this.innerText); $('#success-copy').removeClass('d-none').addClass('d-block');">{{ user["AuthorizationV1"] | safe }}</mark></p>
+            <p id="AuthorizationV1" onclick="navigator.clipboard.writeText('{{user["AuthorizationV1"] | safe}}'); $('#success-copy').removeClass('d-none').addClass('d-block');">Token:<mark class="text-danger bg-dark mx-1">{{ user["AuthorizationV1"] | safe }}</mark><i class="fa fa-copy"></i></p>
       </div>
     </div>
 </div>
@@ -196,7 +196,7 @@
         const client = {{ client | tojson | safe }};
         const logined = {{ (client and "id" in client) and "true" or "false" | safe }};
         const profileOfUser = {{ user | tojson | safe }};
-
+        
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
