@@ -106,11 +106,11 @@
     <div class="botumInfo">
     <h1 id="botName">{{ botData["name"] }}</h1>
     <img id="botAvatar" src={{ avatarUser }}
-      style="display:inline-block; position: relative;" width="10%" height="10%" alt="bot avatar" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
-    <a id="inviteButton" class="btn btn-outline-primary btn-lg" onclick="inviteBot()" role="button"><i class="fa fa-plus-square"></i> Invite Bot</a>
+      style="display:inline-block; position: relative;" width="10%" height="10%" alt="{{ botData['ShortDescription'] or 'Bot avatar' }}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
+    <a id="inviteButton" class="btn btn-outline-info btn-lg" onclick="inviteBot()" role="button"><i class="fa fa-plus-square"></i> Invite Bot</a>
     <!--button id="addOrInvite-btn" class="green-btn" onclick="inviteBot(this)"><span>Invite Bot</span></button-->
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] %}
-        <a id="editBot" class="btn btn-outline-primary btn-lg" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
+        <a id="editBot" class="btn btn-outline-warning btn-lg" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
         <!--button id="edit-btn" class="green-btn" onclick="window.location.href = '/bots/{{botId}}/edit'"><span>Edit</span></button-->
     {%- endif %}
     <button id="voteButton" class="btn btn-outline-success btn-lg" onclick="voteBot()">
