@@ -64,10 +64,6 @@
         </li>
         {%- endif %}
       </ul>
-      <form class="d-flex" method="GET" action="/servers/search">
-        <input class="form-control me-2" id="searchBarServer" type="search" placeholder="Search servers" aria-label="Search" name="q">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
@@ -79,19 +75,19 @@
       </div>
       <br>
       <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
-        <div id="BotPrefix">
+        <div id="BotPrefix" class="pb-3">
             <label for="PrefixInput">Prefix <span class="text-danger">*</span></label>
             <input class="form-control" id="PrefixInput" type="text" name="prefix" value="{{bot['prefix']}}" placeholder="!" autocomplete="off" maxlength="5" required>
             <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
             <br>
         </div>
-        <div id="ShortDescription">
+        <div id="ShortDescription" class="pb-3">
             <label for="ShortDescriptionInput">Short description <span class="text-danger">*</span></label>
             <input class="form-control" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description" autocomplete="off" maxlength="120" required>
             <small id="shortDescriptionHelp" class="form-text text-muted">Short description must be 8-120 characters long.</small>
             <br>
         </div>
-        <div id="LongDescription">
+        <div id="LongDescription" class="pb-3">
             <label for="LongDescriptionInput">Long description</label>
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <small id="longDescriptionHelp" class="form-text text-muted">Long description max 4000 characters long.</small>
