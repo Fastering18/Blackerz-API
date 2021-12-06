@@ -47,7 +47,7 @@
         </li>
         {%- if clientUser and "username" in clientUser %}
         <li class="nav-item">
-          <a class="nav-link" href="/user/{{user['id']}}">{{clientUser["username"]}}</a>
+          <a class="nav-link" href="/user/{{clientUser['id']}}">{{clientUser["username"]}}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
