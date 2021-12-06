@@ -81,19 +81,19 @@
             <small id="prefixHelp" class="form-text text-muted">Prefix must be 1-5 characters long (put in long description otherwise).</small>
             <br>
         </div>
-        <div id="ShortDescription" class="pb-3">
+        <div id="ShortDescription" class="mb-3">
             <label for="ShortDescriptionInput">Short description <span class="text-danger">*</span></label>
             <input class="form-control" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{bot['ShortDescription']}}" placeholder="Bot short description" autocomplete="off" maxlength="120" required>
             <small id="shortDescriptionHelp" class="form-text text-muted">Short description must be 8-120 characters long.</small>
             <br>
         </div>
-        <div id="LongDescription" class="pb-3">
+        <div id="LongDescription" class="mb-1">
             <label for="LongDescriptionInput">Long description</label>
             <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="Bot long description" autocomplete="off" maxlength="4000">{{bot['LongDescription']}}</textarea>
             <small id="longDescriptionHelp" class="form-text text-muted">Long description max 4000 characters long.</small>
             <br>
         </div>
-        <div id="TagsInput">
+        <div id="TagsInput" class="mb-2">
           <br>
           <label for="tagsinput">Tags</label>
         <input list="taglist" name="tags" class="tagsinput" id="tagsinput" onInput="enteredTag(this.value)">
@@ -103,8 +103,7 @@
             <option value="gaming">
         </datalist>
         </div>
-        <br>
-        <div id="tagslist" class="tag-list">
+        <div id="tagslist" class="tag-list mb-4">
            <!-- <p id="bot-tag" class="tagbot" style="display: inline;">moderation</p> !-->
            {%- set jlh = 0 -%}
            {%- for tag in (bot['tags'] or []) -%}
@@ -112,9 +111,8 @@
               {%- set jlh = jlh + 1 -%}
            {%- endfor -%}
         </div>
-        <br><br>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
-        <button class="btn btn-success btn-lg col-12" type="submit" value="Submit">Save</button>
+        <button class="btn btn-success btn-lg col-12" type="submit" value="Submit"><i class="fa fa-save"></i> Update</button>
         <script>
           const tagschoices = JSON.parse(("{{ bot['tags'] or [] | tojson | safe }}").replace(/&#39;/gi, "\""))
           function disableButton(elmnt, disabl) {            
