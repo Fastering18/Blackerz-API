@@ -128,6 +128,7 @@ class deleteBotFromID(Resource):
         deleter = ApiUser.data.get('clientId')
     
     if cauth:
+        print(cauth)
         isOwner = mongoDB().is_ownerof(auth=cauth, tipe="botlist", aset=str(id))
         if isOwner["success"] != True:
             return make_response(jsonify(isOwner["reason"]), 401)
