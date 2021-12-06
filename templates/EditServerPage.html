@@ -27,55 +27,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/js/darkmode.min.js"></script>
     <script src="https://blackerz.gumlet.io/lib/codemirror.js"></script>
     <script src="https://blackerz.gumlet.io/lib/markdown.js"></script>
+    <meta name="color-scheme" content="dark light">
     <title>{{server["name"]}} Dashboard</title>
 </head>
   <body>
     <link rel="stylesheet" href="https://blackerz.gumlet.io/lib/codemirror.css">
-    <div id='background'></div>
-    <div class="topnav">
-            <div class="topnav-pc">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if clientUser and "username" in clientUser -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-        <div class="topnav-mobile" style="min-height: 32px;">
-            <div class="buttonssnavmobile" id="buttonssnavmobile" style="display: none;">
-                <a data-text="Home" id="profiletab" href="/"></a>
-                <a href="/servers" data-text="Servers"></a>
-                {%- if clientUser and "username" in clientUser -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="{{clientUser["username"]}}"></a>
-                   <a id="discordLogOut" onclick="discordLogOutAPI(true)" data-text="Log out"></a>
-                   <a id="addBot" onclick="redirectKe('/add/bot')" data-text="Add bot"></a>
-                {%- else -%}
-                   <a id="discordLogin" onclick="discordLoginAPI()" data-text="Login"></a>
-                {%- endif -%}
-            </div>
-            <a href="javascript:void(0);" class="navicon" onclick="document.getElementById('buttonssnavmobile').style.display = document.getElementById('buttonssnavmobile').style.display == 'block' ? 'none' : 'block'">
-                <i class="fa fa-bars"></i>
-            </a>
-          </div>
-        </div>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Blackerz bot list</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/servers">Servers</a>
+        </li>
+        {%- if user and "username" in clientUser %}
+        <li class="nav-item">
+          <a class="nav-link" href="/user/{{user['id']}}">{{user["username"]}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLogOutAPI()">Log out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add/bot">Add bot</a>
+        </li>
+        {%- else %}
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" onclick="discordLoginAPI()">Login</a>
+        </li>
+        {%- endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div class="container">
     <section class="root-page" id="main-page">
-      <h2 style="color: rgba(255,255,255, 0.85);">{{server["name"]}} Dashboard</h1>
-      <hr>
-      <br>
+      <h2 style="color: rgba(255,255,255, 0.85); font-size: 120%">{{server["name"]}} Dashboard</h2>
+      <hr style="color: rgba(255,255,255, 0.85);">
       <form method="PUT" id="FormEdit" onsubmit="disableButton(this, true); return true">
-        <div id="ShortDescription">
-            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">Short description <span class="required-input">*</span></label>
-            <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Short description of your server, max 120 characters.</p>
-            <input class="input-text description" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{server['ShortDescription']}}" placeholder="server short description">
-            <br><br>
+        <div id="ShortDescription" class="pb-3">
+            <label for="ShortDescriptionInput">Short description <span class="text-danger">*</span></label>
+            <input class="form-control" id="ShortDescriptionInput" type="text" name="ShortDescription" value="{{server['ShortDescription']}}" placeholder="server short description">
+            <small id="shortDescriptionHelp" class="form-text text-muted">Short description must be 8-120 characters long.</small>
+            <br>
         </div>
-        <div id="LongDescription">
-            <label class="input-title" for="ShortDescriptionInput" style="font-size: 120%; color: rgba(255,255,255, 0.85);">long description <span class="required-input">*</span></label>
-            <p class="input-description" style="font-size: 90%; color: rgba(255,255,255, 0.85);">Long description of your server, max 4000 characters.</p>
-            <textarea class="input-text long-description" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="server long description">{{server['LongDescription']}}</textarea>
+        <div id="LongDescription" class="pb-3">
+            <label for="LongDescriptionInput">Long description</label>
+            <textarea class="form-control" id="LongDescriptionInput" type="text" name="LongDescription" placeholder="server long description">{{server['LongDescription']}}</textarea>
+            <small id="longDescriptionHelp" class="form-text text-muted">Long description of server max 4000 characters long.</small>
             <br>
         </div>
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
@@ -118,34 +123,79 @@
         </script>
       </form>
     </section>
-    <footer>
-      <br>
-      <div class="footer-nav">
-        <div class="footer-links-holder">
-                <h3 class="footer-header" style="color: rgba(255,255,255, 0.85);">Contact us</h3>
-                <ul class="footer-links">
-                    <li><a href="mailto:Fastering18@gmail.com">support@blackerz</a></li>
-                    <li><a href="/servers/816619389809590322">Discord</a></li>
-                </ul>
-            </div>
+    <br>  
+    <div class="form-check form-switch">
+      <input id="toggle-dark-mode" class="form-check-input" type="checkbox">
+      <label class="form-check-label" for="toggle-dark-mode">Light mode</label>
+    </div>
+    <!-- Footer -->
+  <footer class="bg-secondary text-white text-center text-md-start">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Blackerz Discord</h5>
+          <p>
+            Discord bot and servers listing (Beta).<br>
+            Customize your Discord server with bots and explore wide variety of Discord server.
+          </p>
         </div>
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Contact us</h5>
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="/servers/795942661163974656" class="text-white">Join discord server</a>
+            </li>
+            <li>
+              <a href="mailto:blackerzdiscord@gmail.com" class="text-white">Email support</a>
+            </li>
+            <li>
+              <a href="tel:+625100879325" class="text-white">Contact number</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-0">Links</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a href="https://blackerzdiscord.blogspot.com" class="text-white">Blogs</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+    <!-- Grid container -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"></div>
     </footer>
+    <!-- Footer -->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script>
-       if (window.location.protocol === "http:") window.location.protocol = "https:";
-       const client = JSON.parse('{{ clientUser | tojson | safe }}')
+       const client = {{ clientUser | tojson | safe }};
        function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+            document.location.replace("/api/v1/discord/logout")
        }
        function discordLoginAPI() {
            {%- if clientUser and "username" in clientUser -%}
                window.location.href = "/user/{{clientUser['id']}}"
            {%- else -%}
-               window.location.href = `/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`
+               document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
            {%- endif -%}
        }
        function redirectKe(link) {
            window.location.href = link
        }
+       $(document).ready(function () {
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
+            var saklarDark = document.getElementById("toggle-dark-mode");
+            saklarDark.checked = !darkmode.inDarkMode;
+            saklarDark.onclick = function(e) {
+              darkmode.toggleDarkMode();
+            }
+       })     
     </script>
  <body>
