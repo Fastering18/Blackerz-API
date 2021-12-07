@@ -233,7 +233,7 @@
         }
         {% cache 60*5, None %}
         function discordLogOutAPI(force) {
-            document.location.replace("/api/v1/discord/logout")
+            document.location.replace(`/api/v1/discord/logout?to=${window.location.href}`)
         }
         function updateURLParameter(url, param, paramVal){
           var newAdditionalURL = "";
