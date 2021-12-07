@@ -209,7 +209,7 @@
             {%- if clientUser and "username" in clientUser -%}
                 window.location.href = "/user/{{clientUser['id']}}"
             {%- else -%}
-                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&to=${window.location.href}`)
             {%- endif -%}
         };
         function redirectKe(link) {
