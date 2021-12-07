@@ -77,11 +77,12 @@ class login(Resource):
     scope = request.args.get(
         'scope',
         'identify')
-    discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + "api/v1/discord/callback" + ("?to=%s" % (request.values['to'] if request.values.get('to') else "")) )
+    discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + "api/v1/discord/callback" )
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
     if request.values.get('to'):
-         authorization_url = authorization_url + "&to=" + str(request.values['to'])
+         session['prev_page'] = str(request.values['to'])
+         #authorization_url = authorization_url + "&to=" + str(request.values['to'])
     response = redirect(authorization_url)
     return response
         
@@ -102,7 +103,7 @@ class callback(Resource):
          authorization_response=request.url)
      session['oauth2_token'] = token
      
-     return redirect(url_for('.me', to=request.values['to']) if request.values.get('to') else url_for('.me')) 
+     return redirect(url_for('.me', to=session.pop('prev_page')) if session.get('prev_page') else url_for('.me')) 
   
 class me(Resource):
   def get(self):
