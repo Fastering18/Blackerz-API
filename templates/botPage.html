@@ -217,7 +217,7 @@
         var inviteLink = ("{{ botData['inviteLink'] if botData and 'inviteLink' in botData and botData['inviteLink'] else 'https://discord.com/oauth2/authorize?client_id=' + botId + '&permissions=335578198&scope=bot' | safe }}").replace(/amp;/gi, "")
         
         function discordLogOutAPI(force) {
-            document.location.replace("/api/v1/discord/logout")
+            document.location.replace(`/api/v1/discord/logout?to=${window.location.href}`)
         }
         function inviteBot() {
             window.location.href = inviteLink
