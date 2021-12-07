@@ -141,8 +141,8 @@ class logOut(Resource):
       print(session.keys())
       session.clear()
       host = url_for('.homepage')
-      if request.values.get('callback'):
-          host = request.values.get('callback')
+      if request.values.get('to'):
+          host = request.values['to']
       return redirect(host)
         
 class checkUser(Resource):
