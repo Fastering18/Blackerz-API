@@ -206,8 +206,8 @@
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
-        function discordLogOutAPI(force) {
-            window.location.href = "/api/v1/discord/logout"
+        function discordLogOutAPI() {
+            document.location.replace(`/api/v1/discord/logout?to=${window.location.href}`)
         }
         function discordLoginAPI() {
             {%- if client and "username" in client -%}
