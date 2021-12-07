@@ -219,7 +219,7 @@
             {%- if user and "username" in user %}
                 window.location.href = "/user/{{user['id']}}"
             {%- else %}
-                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&to=${window.location.href}`)
             {%- endif %}
         };
         {% cache 60*10, "basicfunchome" %}
