@@ -213,7 +213,7 @@
             {%- if client and "username" in client -%}
                 window.location.href = "/user/{{client['id']}}"
             {%- else -%}
-                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&host=${window.location.origin}`)
+                document.location.replace(`/api/v1/discord/login?code=${localStorage.getItem("stateParameter")}&to=${window.location.href}`)
             {%- endif -%}
         }
         function getCookie(cname) {
