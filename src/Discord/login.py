@@ -80,30 +80,29 @@ class login(Resource):
     discord = make_session(scope=scope.split(' '), redirectURL=request.url_root + "api/v1/discord/callback")
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
-    host = ""
-    if request.values.get('host'):
-         host = "&host=" + request.values['host']
+    if request.values.get('to'):
+         authorization_url = authorization_url + "&to=" + str(request.values['to'])
     response = redirect(authorization_url)
     return response
         
 class callback(Resource):
   def get(self):
      print(request.url)
-     if request.values.get('error'):
-         host = "https://blackerz.web.app/" 
-         if request.cookies.get('dariLink'):
-             host = request.cookies['dariLink']
-             if (host == "blackerz.herokuapp.com"): 
-                 host = "https://" + host
-         return redirect(host)
+     #if request.values.get('error'):
+     #    host = "https://blackerz.web.app/" 
+     #    if request.cookies.get('dariLink'):
+     #        host = request.cookies['dariLink']
+     #        if (host == "blackerz.herokuapp.com"): 
+     #            host = "https://" + host
+     #    return redirect(host)
      discord = make_session(state=session.get('oauth2_state'), redirectURL=request.url_root + "api/v1/discord/callback")
      token = discord.fetch_token(
          TOKEN_URL,
          client_secret=OAUTH2_CLIENT_SECRET,
          authorization_response=request.url)
      session['oauth2_token'] = token
-        
-     return redirect(url_for('.me')) 
+     
+     return redirect(url_for('.me', to=request.values['to']) if request.values.get('to') else url_for('.me')) 
   
 class me(Resource):
   def get(self):
@@ -121,17 +120,18 @@ class me(Resource):
       'code': oneTimeCode
      })
     
-     if request.values.get('fromOrigin'):
-        return make_response(jsonify(user), 200)
+     #if request.values.get('fromOrigin'):
+     #   return make_response(jsonify(user), 200)
         
-     host = "https://blackerz.web.app/" 
-     params = "?code=" + oneTimeCode + "&client_id=" + userID
-     if request.cookies.get('dariLink'):
-        host = request.cookies['dariLink']
-        if (host == "blackerz.herokuapp.com" or host == "blackerz.tk"): 
-            params = ""
-            host = "https://" + host
-     print(host)  
+     host = request.values['to'] if request.values.get('to') else "https://blackerz.herokuapp.com" 
+     params = ""
+     #params = "?code=" + oneTimeCode + "&client_id=" + userID
+     #if request.cookies.get('dariLink'):
+     #   host = request.cookies['dariLink']
+     #   if (host == "blackerz.herokuapp.com" or host == "blackerz.tk"): 
+     #       params = ""
+     #       host = "https://" + host
+     #print(host)  
      return redirect(host + params)
      #return make_response(jsonify(user), 200)
 
