@@ -107,21 +107,21 @@
     <img id="botAvatar" src="{{ avatarUser }}" class="img-thumbnail rounded col-md-3 float-md-start mb-3 mx-3 ms-md-1"
       style="max-width: 15%; min-width: 150px;" alt="{{ botData['ShortDescription'] or 'Bot avatar' }}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <h1 id="botName">{{ botData["name"] }}</h1>
-    <p id="shortDescription">{{ botData["ShortDescription"] | safe }}</p>
+    <p id="shortDescription" class="mb-1">{{ botData["ShortDescription"] | safe }}</p>
     {%- if "serverCount" in botData %}
-        <p id="serverCount">In {{ botData["serverCount"] }} servers</p>
+        <small id="serverCount">In {{ botData["serverCount"] }} servers</small>
     {%- endif %}
     {%- if "tags" in botData and botData["tags"][0] %}
-        <div class="bot-tags">
-            <h3 style="display: inline;">Tags: </h3>
-            <div class="tagslist" style="display: inline;">
+        <div class="mb-3 mt-2 bot-tags">
+            <h5 class="d-inline">#Tags</h5>
+            <div class="d-inline mx-1">
              {%- for tag in (botData['tags'] or []) %}
-                 <p id="bot-tag" class="tagbot" style="display: inline;">{{ tag }}, </p>
+                 <a id="bot-tag" href="#" class="badge rounded-pill bg-info">#{{ tag }}</a>
              {%- endfor %}
             </div>
         </div>
     {%- endif %} 
-    <div id="buttonsBot">
+    <div id="buttonsBot" class="d-inline">
     <a id="inviteButton" class="btn btn-outline-info btn-lg" onclick="inviteBot()" role="button">Invite Bot</a>
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] %}
         <a id="editBot" class="btn btn-outline-warning btn-lg" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
