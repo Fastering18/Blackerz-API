@@ -122,11 +122,11 @@
         </div>
     {%- endif %} 
     <div id="buttonsBot" class="d-inline">
-    <a id="inviteButton" class="btn btn-outline-info btn-lg" onclick="inviteBot()" role="button">Invite Bot</a>
+    <a id="inviteButton" class="btn btn-outline-info btn-sm" onclick="inviteBot()" role="button">Invite Bot</a>
     {%- if clientUser and "id" in clientUser and clientUser["id"] == botData["owner"]["id"] %}
-        <a id="editBot" class="btn btn-outline-warning btn-lg" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
+        <a id="editBot" class="btn btn-outline-warning btn-sm" href="/bots/{{botId}}/edit" role="button"><i class="fa fa-edit"></i> Edit</a>
     {%- endif %}
-    <button id="voteButton" class="btn btn-outline-success btn-lg" onclick="voteBot()">
+    <button id="voteButton" class="btn btn-outline-success btn-sm" onclick="voteBot()">
       <i class="fa fa-chevron-up"></i>
       {{ botData["upvotes"] }} Votes
     </button>
