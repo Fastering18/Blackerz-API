@@ -126,9 +126,8 @@ class deleteBotFromID(Resource):
         if not ApiUser.izin.get("deletebot") and not ApiUser.izin.get("all"): 
             return make_response(jsonify(unauthorizedAcess2), 401)
         deleter = ApiUser.data.get('clientId')
-    
-    if cauth:
-        print(cauth)
+    else:
+        print("authv1; ", cauth)
         isOwner = mongoDB().is_ownerof(auth=cauth, tipe="botlist", aset=str(id))
         if isOwner["success"] != True:
             return make_response(jsonify(isOwner["reason"]), 401)
