@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" data-theme="dark">  
+<html lang="en" data-bs-color-scheme="dark">  
   <head>
     <title>{{ serverData["name"] }} - Server</title>
     <meta charset="UTF-8">
@@ -47,6 +47,7 @@
     <meta name="twitter:description" content="{{ serverData["ShortDescription"] }}">
     <meta name="twitter:image" content="{{ avatarUser }}">
     
+    <meta name="color-scheme" content="dark light">
     <script type="application/ld+json">
       {"@context":"https://schema.org/","@type":"Product","description":"Add {{ serverData["name"] }} Discord server!","image":"{{ avatarUser }}","name":"{{ serverData["name"] }}","sku":"{{ serverId }}","review":null,"aggregateRating":null,"offers":{"@type":"Offer","availability":"https://schema.org/OnlineOnly","price":"0.00","priceCurrency":"XXX"}}
     </script>
