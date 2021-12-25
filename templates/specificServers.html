@@ -103,9 +103,11 @@
       style="max-width: 15%; min-width: 150px;" alt="{{ server['ShortDescription'] or 'Server avatar' }}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
     <h1 id="serverName">{{ server["name"] }}</h1>
     <p id="shortDescription" class="mb-1">{{ server["ShortDescription"] | safe }}</p>
-    {%- if "memberCount" in server -%}
+    {%- if "memberCount" in server %}
         <small id="memberCount">With {{ server["memberCount"] }} members</small>
-    {%- endif -%}
+    {%- else %}
+        <br>
+    {%- endif %}
     {%- if "tags" in server %}
         <div class="mb-3 mt-2 bot-tags">
             <h5 class="d-inline">#Tags</h5>
