@@ -106,6 +106,16 @@
     {%- if "memberCount" in server -%}
         <small id="memberCount">With {{ server["memberCount"] }} members</small>
     {%- endif -%}
+    {%- if "tags" in server %}
+        <div class="mb-3 mt-2 bot-tags">
+            <h5 class="d-inline">#Tags</h5>
+            <div class="d-inline mx-1">
+             {%- for tag in (server['tags'] or []) %}
+                 <a id="bot-tag" href="#" class="badge rounded-pill bg-info">#{{ tag }}</a>
+             {%- endfor %}
+            </div>
+        </div>
+    {%- endif %} 
     <div id="buttonsServer" class="d-inline">
     <a id="joinButton" class="btn btn-outline-info btn-sm" onclick="joinServer()" role="button">Join Server</a>
     {%- if user and "id" in user and user["id"] == server["owner"]["id"] -%}
