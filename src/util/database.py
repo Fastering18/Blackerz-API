@@ -79,15 +79,21 @@ class mongoDB():
    
    def botQuerySearch(self, **anydata):
       kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
+      tags = anydata.get('tag', None)
       page = nclamp(anydata.get('page', 1), 1, 10000)
       botqc = home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
       if botqc and vrified:
          return botqc[0], botqc[1]
-      dt = skiplimit(dbInfrastructure.botlist.find({
+       
+      optkueri = {
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, {'_id': False}), 20, page)
+      }, {'_id': False}
+      if tags:
+         optkueri["$in"] = tags 
+      
+      dt = skiplimit(dbInfrastructure.botlist.find(optkueri), 20, page)
       jmlh = dt.count()
       data = putCache("_kueribot " + kueri, [list(dt), jmlh], 5)[0]
       return data, jmlh
