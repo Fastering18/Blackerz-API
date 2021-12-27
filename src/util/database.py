@@ -89,11 +89,11 @@ class mongoDB():
       optkueri = {
          "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
-      }, {'_id': False}
+      }
       if tags:
          optkueri["$in"] = tags 
       
-      dt = skiplimit(dbInfrastructure.botlist.find(optkueri), 20, page)
+      dt = skiplimit(dbInfrastructure.botlist.find(optkueri, {'_id': False}), 20, page)
       jmlh = dt.count()
       data = putCache("_kueribot " + kueri, [list(dt), jmlh], 5)[0]
       return data, jmlh
