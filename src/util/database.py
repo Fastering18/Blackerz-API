@@ -78,20 +78,21 @@ class mongoDB():
       return putCache("_allservers" + str(page), [list(dt), jmlh], 600)[0], jmlh
    
    def botQuerySearch(self, **anydata):
-      kueri = str(anydata.get('kueri', "")).replace("\\", "\\\\")
+      kueri = anydata.get('kueri', None)
       tags = anydata.get('tag', None)
       page = nclamp(anydata.get('page', 1), 1, 10000)
-      botqc = home_botCaches.get("_kueribot " + kueri)
       vrified = anydata.get('verified', True)
-      if botqc and vrified:
-         return botqc[0], botqc[1]
        
       optkueri = {
-         "$or": [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ], 
          "verified": vrified
       }
+      if kueri:
+         kueri = kueri.replace("\\", "\\\\")
+         botqc = home_botCaches.get("_kueribot " + kueri)
+         if botqc and vrified:
+            return botqc[0], botqc[1]
+         optkueri["$or"] = [ {"name": {'$regex': "^" + kueri, '$options': 'i'}}, {"ShortDescription": {'$regex': "^" + kueri, '$options': 'i'}} ] 
       if tags:
-         print(tags)
          optkueri["tags"] = {"$in": tags} 
       
       dt = skiplimit(dbInfrastructure.botlist.find(optkueri, {'_id': False}), 20, page)
