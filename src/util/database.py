@@ -91,7 +91,7 @@ class mongoDB():
          "verified": vrified
       }
       if tags:
-         optkueri["tags"] = {"$all": tags} 
+         optkueri["tags"] = {"$any": tags} 
       
       dt = skiplimit(dbInfrastructure.botlist.find(optkueri, {'_id': False}), 20, page)
       jmlh = dt.count()
