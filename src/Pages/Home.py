@@ -83,22 +83,6 @@ class data():
             createdAt = firebaseDB.get('/Infrastructure/WebUsers/' + user["client_id"] + "/CreatedAt", None)
             if authV1 == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "AuthorizationV1", generateAuthorizationV1())
             if createdAt == None : firebaseDB.put('/Infrastructure/WebUsers/' + user["client_id"], "CreatedAt", datetime.datetime.now().isoformat())
-        #elif tipe == "allBot":
-            #if "botsverified" in botCaches:
-                #self.data = botCaches["botsverified"]
-                #return 
-            #try:
-                #result = requests.get('https://blackerz-default-rtdb.firebaseio.com/Infrastructure/botlist.json?orderBy=%22verified%22&equalTo=true').json() 
-                #self.data = sortBy(result)
-                #putCache("botsverified", self.data)
-            #except Exception as kesalahan:
-                #print(kesalahan)
-                #try:
-                    #result = firebaseDB.get('/Infrastructure/botlist', None)
-                    #self.data = sortBy(result)
-                #except Exception as kesalahan2:
-                    #print(kesalahan2)
-                    #self.data = "Internal error, this is not your error, please report this issues to github."
         elif tipe == "querySearch":
             kueri = Data.get('kueri', "bot")
             self.filter = "verified"
@@ -163,6 +147,7 @@ class homePage(Resource):
 class BotSearchPage(Resource):
     def get(self):
         kueri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
+        tags = request.values.get("t") or request.values.get("tags")
         if kueri == None:
             return redirect(url_for('.homepage'), code=301)
         if request.url.startswith('http://'):
@@ -170,7 +155,7 @@ class BotSearchPage(Resource):
         
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botsdata, jmlh = mongoDB().botQuerySearch(kueri=kueri) or []
+        botsdata, jmlh = mongoDB().botQuerySearch(kueri=kueri,tags=tags.split(",") if tags else None) or []
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
