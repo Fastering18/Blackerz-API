@@ -149,7 +149,7 @@ class BotSearchPage(Resource):
         kueri = request.values.get("q") or request.values.get("query") or request.values.get("kueri")
         tags = request.values.get("t") or request.values.get("tags")
         if kueri == None and tags == None:
-            print(tags)
+            print(request.values)
             return redirect(url_for('.homepage'), code=301)
         if request.url.startswith('http://'):
             return redirect(request.url.replace('http:', 'https:', 1), code=301)
