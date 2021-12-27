@@ -97,7 +97,7 @@ class mongoDB():
       
       dt = skiplimit(dbInfrastructure.botlist.find(optkueri, {'_id': False}), 20, page)
       jmlh = dt.count()
-      data = putCache("_kueribot " + kueri, [list(dt), jmlh], 5)[0]
+      data = putCache("_kueribot " + kueri, [list(dt), jmlh], 5)[0] if kueri else list(dt)
       return data, jmlh
    
    def serverQuerySearch(self, **anydata):
