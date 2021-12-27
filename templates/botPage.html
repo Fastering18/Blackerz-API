@@ -116,7 +116,7 @@
             <h5 class="d-inline">#Tags</h5>
             <div class="d-inline mx-1">
              {%- for tag in (botData['tags'] or []) %}
-                 <a id="bot-tag" href="#" class="badge rounded-pill bg-info">#{{ tag }}</a>
+                 <a id="bot-tag" href="/search?tag={{tag}}" class="badge rounded-pill bg-info">#{{ tag }}</a>
              {%- endfor %}
             </div>
         </div>
