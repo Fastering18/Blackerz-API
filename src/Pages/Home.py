@@ -155,7 +155,7 @@ class BotSearchPage(Resource):
         
         discord = make_session(token=session.get('oauth2_token'))
         user = discord.get(API_BASE_URL + '/users/@me').json()
-        botsdata, jmlh = mongoDB().botQuerySearch(kueri=kueri,tags=tags.split(",") if tags else None) or []
+        botsdata, jmlh = mongoDB().botQuerySearch(kueri=kueri,tag=tags.split(",") if tags else None) or []
         
         if user and "id" in user and "username" in user:      
             oneTimeCode = generateRandomKey(8)
