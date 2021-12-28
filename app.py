@@ -122,6 +122,7 @@ api.add_resource(svggenerator.getServerCountBot, "/api/v1/bots/<int:id>/widgets/
 
 # sitemaps & others
 api.add_resource(AnotherPage.publicBotSitemap, "/bots_sitemap.xml")
+api.add_resource(AnotherPage.publicServerSitemap, "/servers_sitemap.xml")
 
 
 # FILE
@@ -131,7 +132,8 @@ class dptFile(Resource):
 """user-agent: *
 allow: /
 Sitemap: https://blackerz.herokuapp.com/static/sitemapindex.xml
-Sitemap: https://blackerz.herokuapp.com/bots_sitemap.xml""", 200, {'Content-Type': 'text/plain'})
+Sitemap: https://blackerz.herokuapp.com/bots_sitemap.xml
+Sitemap: https://blackerz.herokuapp.com/servers_sitemap.xml""", 200, {'Content-Type': 'text/plain'})
 
 class dptFile2(Resource):
   def get(self):
