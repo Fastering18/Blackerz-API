@@ -115,7 +115,7 @@
         <input name="Authorization" hidden="" type="text" value="{{ clientData['AuthorizationV1'] }}">
         <button class="btn btn-info btn-lg col-12" type="submit" value="Submit"><i class="fa fa-save"></i> Update</button>
         <script>
-          const tagschoices = {{ bot['tags'] or [] | tojson | safe }};
+          const tagschoices = {{ (bot['tags'] or []) | tojson | safe }};
           function disableButton(elmnt, disabl) {            
             elmnt.querySelector('button[type="submit"]').disabled = disabl != undefined ? disabl : true;
           }
@@ -292,7 +292,7 @@
            window.location.href = link
        }
        function checkReminder() {
-          window.onbeforeunload = bot.prefix == $("#PrefixInput").val() && bot.ShortDescription == $("#ShortDescriptionInput").val() && bot.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true } 
+          window.onbeforeunload = oldBot.prefix == $("#PrefixInput").val() && oldBot.ShortDescription == $("#ShortDescriptionInput").val() && oldBot.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
        }
        $(document).ready(function () {
             if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
