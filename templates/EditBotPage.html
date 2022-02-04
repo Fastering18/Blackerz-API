@@ -292,7 +292,7 @@
            window.location.href = link
        }
        function checkReminder() {
-          window.onbeforeunload = oldBot.prefix == $("#PrefixInput").val() || oldBot.ShortDescription == $("#ShortDescriptionInput").val() || oldBot.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
+          window.onbeforeunload = oldBot.prefix == $("#PrefixInput").val() && oldBot.ShortDescription == $("#ShortDescriptionInput").val() && oldBot.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
        }
        $(document).ready(function () {
             if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
