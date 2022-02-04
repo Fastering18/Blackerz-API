@@ -173,6 +173,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script>
        const client = {{ clientUser | tojson | safe }};
+       const oldServer = {{ server | tojson | safe }};
        function discordLogOutAPI(force) {
             document.location.replace("/api/v1/discord/logout")
        }
@@ -186,6 +187,9 @@
        function redirectKe(link) {
            window.location.href = link
        }
+       function checkReminder() {
+          window.onbeforeunload = oldServer.prefix == $("#PrefixInput").val() || oldServer.ShortDescription == $("#ShortDescriptionInput").val() || oldServer.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
+       }
        $(document).ready(function () {
             if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
             var saklarDark = document.getElementById("toggle-dark-mode");
@@ -193,6 +197,10 @@
             saklarDark.onclick = function(e) {
               darkmode.toggleDarkMode();
             }
+         
+            $("#PrefixInput").change(checkReminder)
+            $("#ShortDescriptionInput").change(checkReminder)
+            $("#LongDescriptionInput").change(checkReminder)
        })     
     </script>
  <body>
