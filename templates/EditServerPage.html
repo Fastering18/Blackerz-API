@@ -198,9 +198,9 @@
               darkmode.toggleDarkMode();
             }
          
-            $("#PrefixInput").change(checkReminder)
-            $("#ShortDescriptionInput").change(checkReminder)
-            $("#LongDescriptionInput").change(checkReminder)
+            $("#PrefixInput").on("keydown change", checkReminder)
+            $("#ShortDescriptionInput").on("keydown change", checkReminder)
+            $("#LongDescriptionInput").on("keydown change", checkReminder)
        })     
     </script>
  <body>
