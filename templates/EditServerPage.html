@@ -188,7 +188,7 @@
            window.location.href = link
        }
        function checkReminder() {
-          window.onbeforeunload = oldServer.prefix == $("#PrefixInput").val() || oldServer.ShortDescription == $("#ShortDescriptionInput").val() || oldServer.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
+          window.onbeforeunload = oldServer.prefix == $("#PrefixInput").val() && oldServer.ShortDescription == $("#ShortDescriptionInput").val() && oldServer.LongDescription == $("#LongDescriptionInput").val() ? null : function() { return true }; 
        }
        $(document).ready(function () {
             if ('serviceWorker' in navigator) navigator.serviceWorker.register('/static/build/sw.js');
