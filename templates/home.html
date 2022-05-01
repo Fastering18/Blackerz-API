@@ -131,7 +131,7 @@
              <img class="card-img-top rounded" src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
              <div class="card-body">
                <h5 class="card-title">{{ dataChild["name"] }}</h5>
-               <p class="card-text">{{dataChild.ShortDescription or "A discord bot"}}</p>
+               <p class="card-text">{{dataChild.ShortDescription or "No description available..."}}</p>
                <p class="card-text"><small class="text-muted">Prefix: <strong>{{ dataChild["prefix"] or "!" }}</strong></small></p>
                <p class="card-text"><small class="text-muted">Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong>{{ dataChild["serverCount"] and (", in " ~ dataChild["serverCount"] ~ " servers.") }}</small></p>
              </div>
