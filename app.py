@@ -37,6 +37,8 @@ import src.AnotherPage as AnotherPage
 OAUTH2_CLIENT_SECRET = "aGcXd7_izART3A5zT-V6yhPqu-Fmr3-M"
 hcaptcha = hCaptcha()
 
+print("Initializing flask...")
+
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
 app.config['UPLOAD_FOLDER'] = "Images"
@@ -164,5 +166,6 @@ api.add_resource(dptFile4, "/favicon.ico")
 api.add_resource(dptFile5, "/opensearch.xml")
 api.add_resource(dptFile6, "/ads.txt")
 
+print("launching flask, " + __name__)
 if __name__ == "__main__":
   app.run()
