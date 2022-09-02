@@ -1,1 +1,1 @@
-web: nix-env -iA nixpkgs.cairo && gunicorn app:app
+web: gunicorn app:app
