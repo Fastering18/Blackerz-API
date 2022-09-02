@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import jsonify, make_response, request, redirect, render_template, Markup
 import time, json, requests, string
 from threading import Timer
-#from cairosvg import svg2png
+from cairosvg import svg2png
 from src.util.database import notifyChanges, mongoDB
 
 from firebase import firebase
@@ -42,7 +42,7 @@ def putCache(itemID, dataName, value, type="bots"):
   
 class getServerCountBot(Resource):
   def get(self, id, mime):
-    if not mime in [".svg", "./png"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
+    if not mime in [".svg", ".png"]: return make_response(render_template('404.html', notFound="Invalid mime type"), 404, htmlheaders)
     id = str(id)
     if id in imagecaches["bots"] and mime == ".svg" and "servercount" in imagecaches["bots"][id]:
       return make_response(Markup(imagecaches["bots"][id]["servercount"]), 200, svgheaders)
