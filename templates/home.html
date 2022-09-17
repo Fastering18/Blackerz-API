@@ -121,23 +121,35 @@
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
     <div class="row" id="botlists">
           {%- for dataChild in bots %}
-             <div class="col-md-3 col-xs-6">
-             <div class="card h-100 mb-2" id="bots-{{dataChild.id}}">
-             <a href="/bots/{{dataChild.id}}" class="btn btn-fix text-left">
-             {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
+              {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=128" -%}
              {%- endif -%}
-             <img class="card-img-top rounded" src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
-             <div class="card-body">
-               <h5 class="card-title">{{ dataChild["name"] }}</h5>
-               <p class="card-text">{{dataChild.ShortDescription or "No description available..."}}</p>
-               <p class="card-text"><small class="text-muted">Prefix: <strong>{{ dataChild["prefix"] or "!" }}</strong></small></p>
-               <p class="card-text"><small class="text-muted">Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong>{{ dataChild["serverCount"] and (", in " ~ dataChild["serverCount"] ~ " servers.") }}</small></p>
-             </div>
-             </a>
-             </div>
-             </div>
+              <div class="plx-card gold">
+    <div class="pxc-bg" style="background-image:url('https://i.gyazo.com/a846fc87cca5ebd3942ae1e038bb5083.png')"> </div>
+    <div class="pxc-avatar"><img
+        src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" />
+    </div>
+    <div class="pxc-stopper"> </div>
+    <div class="pxc-subcard">
+      <div class="pxc-title">{{ dataChild["name"] }}</div>
+      <div class="pxc-sub"> {{dataChild.ShortDescription or "No description available..."}} </div>
+      <div class="pxc-feats"><span>Prefix {{ dataChild["prefix"] or "!" }}</span><span>Upvotes {{ dataChild["upvotes"] or "0" }}</span> {{dataChild.LongDescription or ""}}
+      </div>
+      <div class="pxc-tags">
+        {%- for tag in (dataChild['tags'] or []) %}
+          <a id="bot-tag" href="/search?tag={{tag}}"><div>#{{ tag }}</div></a>
+        {%- endfor %}
+      </div>
+      <div class="bottom-row">
+        <div class="pxc-info">
+          <div class="region">Global</div>
+        </div>
+        <div class="links"><a class="site" uk-tooltip="WEBSITE"><i class="fas fa-globe-americas"> </i></a><a
+            class="link discordLink" uk-tooltip="DISCORD SERVER"><i class="fab fa-discord"></i></a></div>
+      </div>
+    </div>
+  </div>
           {%- endfor %}
     </div>
     {%- if not bots or not bots[0] %}
