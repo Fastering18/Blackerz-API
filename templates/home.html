@@ -3,7 +3,7 @@
   
   <head>
     <meta charset=UTF-8>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap">
     <meta property="og:title" content="Blackerz" />
     <meta property="og:description" content="Customize your Discord server with bots and explore wide variety of Discord server." />
@@ -120,13 +120,14 @@
     </div>
     <br>
     <p id="botlist" style="color: rgba(255, 255, 255, 0.753);background-color: rgba(0, 0, 0, 0.75);">Search any Discord bots here.</p>
-    <div class="row" id="botlists">
+    <div class="row mx-auto justify-content-center" id="botlists">
           {%- for dataChild in bots %}
               {%- set imgsrc = "https://cdn.discordapp.com/embed/avatars/1.png" -%}
              {%- if "avatar" in dataChild and dataChild["avatar"] != None -%}
                  {% set imgsrc = "https://cdn.discordapp.com/avatars/" ~ dataChild.id ~ "/" ~ dataChild.avatar ~ ".webp?size=128" -%}
              {%- endif -%}
               <div class="plx-card gold">
+                <a href="/bots/{{dataChild.id}}">
     <div class="pxc-bg" style="background-image:url('https://i.gyazo.com/a846fc87cca5ebd3942ae1e038bb5083.png')"> </div>
     <div class="pxc-avatar"><img
         src="{{imgsrc}}" alt="{{ dataChild["name"] }} user avatar." onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'" />
@@ -150,6 +151,7 @@
             class="link discordLink" uk-tooltip="DISCORD SERVER"><i class="fab fa-discord"></i></a></div>
       </div>
     </div>
+                </a>
   </div>
           {%- endfor %}
     </div>
