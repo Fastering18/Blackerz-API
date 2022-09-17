@@ -136,7 +136,7 @@
     <div class="pxc-subcard">
       <div class="pxc-title">{{ dataChild["name"] }}</div>
       <div class="pxc-sub"> {{dataChild.ShortDescription or "No description available..."}} </div>
-      <div class="pxc-feats"><span>Prefix {{ dataChild["prefix"] or "!" }}</span><span>Upvotes {{ dataChild["upvotes"] or "0" }}</span> {{dataChild.LongDescription or ""}}
+      <div class="pxc-feats"><span>Prefix <strong>{{ dataChild["prefix"] or "!" }}</strong></span><span>Upvotes <strong>{{ dataChild["upvotes"] or "0" }}</strong></span>
       </div>
       <div class="pxc-tags">
         {%- for tag in (dataChild['tags'] or []) %}
