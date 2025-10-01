@@ -4,7 +4,7 @@ from bson import ObjectId, json_util
 from threading import Timer, Thread
 
 firebaseDB = firebase.FirebaseApplication('https://blackerz-default-rtdb.firebaseio.com/', None)
-client = pymongo.MongoClient("mongodb+srv://Fastering:35E8rQNJ93OboVUl@blackerz.ayxqe.mongodb.net/Infrastructure?authSource=admin&retryWrites=true&w=majority", connect=False)
+client = pymongo.MongoClient("mongodb+srv://Fastering18:RVZYmDB7gykJnMs3@devcluster.ahl6j3z.mongodb.net/?retryWrites=true&w=majority&appName=DevCluster", connect=False)
 dbInfrastructure = client.Infrastructure
 dbAdmins = client.Admins
 scannerWebhook = "https://second-solstice-medusaceratops.glitch.me/webchanges"
